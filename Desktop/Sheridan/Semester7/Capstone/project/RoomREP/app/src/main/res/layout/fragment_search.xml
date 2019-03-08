@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Province:" />
+
+        <Spinner
+            android:id="@+id/spnProvinces"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="City:" />
+
+        <Spinner
+            android:id="@+id/cities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Range:" />
+
+        <SeekBar
+            android:id="@+id/skbRange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtRange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="200km" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price:" />
+
+        <SeekBar
+            android:id="@+id/skbPriceRange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txtPriceRange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$500" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Amenities" />
+
+        <CheckBox
+            android:id="@+id/chkSnowRemoval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Snow Removal" />
+
+        <CheckBox
+            android:id="@+id/chkHeating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Heating" />
+
+
+
+        <Button
+            android:id="@+id/btnSearchListings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search" />
+    </LinearLayout>
+
+</FrameLayout>

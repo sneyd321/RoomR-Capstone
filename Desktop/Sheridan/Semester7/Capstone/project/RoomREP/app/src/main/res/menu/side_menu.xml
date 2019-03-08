@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/lblRent"
+        android:title="Rent"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/lblRepair"
+        android:title="Repair"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/lblListing"
+        android:title="Listings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/lblSettings"
+        android:title="Settings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/lblLogout"
+        android:title="Logout"
+        app:showAsAction="never"/>
+</menu>
