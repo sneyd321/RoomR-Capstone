@@ -20,6 +20,7 @@ import android.widget.Toolbar;
 public class MainActivityTenant extends AppCompatActivity{
 
 
+
     BottomNavigationView bottomMenu;
 
     SearchFragment searchFragment;
