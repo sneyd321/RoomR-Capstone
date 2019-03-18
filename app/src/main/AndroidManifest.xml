@@ -16,10 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PayRentActivity" />
-        <activity android:name=".ConfirmRentActivity" />
-        <activity android:name=".CompleteRentActivity" />
+
         <activity android:name=".TenantMessagRActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

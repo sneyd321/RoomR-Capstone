@@ -1,6 +1,7 @@
 package com.example.ryan.roomrep;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -17,10 +18,16 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+
 public class MainActivityTenant extends AppCompatActivity{
 
 
-
+    String result = "";
     BottomNavigationView bottomMenu;
 
     SearchFragment searchFragment;
@@ -107,6 +114,8 @@ public class MainActivityTenant extends AppCompatActivity{
                 case R.id.navSplitR:
                     break;
                 case R.id.navUseR:
+                    ConnectMySql connectMySql = new ConnectMySql();
+                    connectMySql.execute("");
                     break;
                 default:
                     return false;
@@ -114,4 +123,52 @@ public class MainActivityTenant extends AppCompatActivity{
             return false;
         }
     };
+
+
+
+    private class ConnectMySql extends AsyncTask<String, Void, String> {
+        String res = "";
+        private String url = "jdbc:mysql://146.148.82.166:3306/RoomRDB";
+        private String user = "sneyd321";
+        private String pass = "";
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection(url, user, pass);
+
+                String result = "Database Connection Successful\n";
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("select * from Users");
+
+                while (rs.next()) {
+                    result += rs.getString("firstName") + "\n";
+                }
+                res = result;
+            } catch (Exception e) {
+                e.printStackTrace();
+                res = e.toString();
+            }
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(MainActivityTenant.this, s, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
+
+
+
+
 }
