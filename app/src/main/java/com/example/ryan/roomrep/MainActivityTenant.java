@@ -146,12 +146,13 @@ public class MainActivityTenant extends AppCompatActivity{
 
                 String result = "Database Connection Successful\n";
                 Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select * from Users");
+                ResultSet rs = st.executeQuery("select * from Landlords");
 
                 while (rs.next()) {
                     result += rs.getString("firstName") + "\n";
                 }
                 res = result;
+                con.close();
             } catch (Exception e) {
                 e.printStackTrace();
                 res = e.toString();
