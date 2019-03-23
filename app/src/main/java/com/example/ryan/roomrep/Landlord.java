@@ -1,15 +1,26 @@
 package com.example.ryan.roomrep;
 
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Landlord {
 
     String res = "";
 
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     private String firstName;
@@ -65,30 +76,29 @@ public class Landlord {
         this.email = email;
     }
 
-    public String addValues(){
-        String url = "jdbc:mysql://146.148.82.166:3306/RoomRDB";
-        String user = "sneyd321";
-        String pass = "";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(url, user, pass);
+    public void addValues(){
 
-            String result = "Database Connection Successful\n";
-            Statement st = con.createStatement();
-            String sql = "INSERT INTO Landlords VALUES ('"
-                    + this.firstName + "','"
-                    + this.lastName + "','"
-                    + "" + this.password + "','"
-                    + this.email + "')";
-            st.executeUpdate(sql);
+        Map<String, Object> landlord = new HashMap<>();
+        landlord.put("FirstName", this.firstName);
+        landlord.put("LastName", this.lastName);
+        landlord.put("Password", this.password);
+        landlord.put("Email", this.email);
 
-            res = result;
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            res = e.toString();
-        }
-        return res;
+        db.collection("Landlord")
+                .add(landlord)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
     }
 
 

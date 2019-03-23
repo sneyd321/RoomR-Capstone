@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "959426188245",
+    "firebase_url": "https://roomr-222721.firebaseio.com",
+    "project_id": "roomr-222721",
+    "storage_bucket": "roomr-222721.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959426188245:android:24e0a2f4c1b8215b",
+        "android_client_info": {
+          "package_name": "com.example.ryan.roomrep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "959426188245-klupin6i30gs1hkfikr0c2qujp3qieqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCubvXLPf4c_4_5UiI5QSSTYzanzngweCQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

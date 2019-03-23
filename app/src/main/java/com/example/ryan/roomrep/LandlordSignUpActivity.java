@@ -51,11 +51,8 @@ public class LandlordSignUpActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (password.getText().toString().equals(password2.getText().toString())){
-
-                //String result = landlord.addValues();
-                ConnectMySql connectMySql = new ConnectMySql();
-                connectMySql.execute("");
-                //Toast.makeText(LandlordSignUpActivity.this, result, Toast.LENGTH_LONG).show();
+                Landlord landlord = new Landlord(firstName.getText().toString(), lastName.getText().toString(), password2.getText().toString(), email.getText().toString());
+                landlord.addValues();
             }
             else {
                 Toast.makeText(LandlordSignUpActivity.this, "Invalid Password", Toast.LENGTH_SHORT).show();
@@ -63,52 +60,6 @@ public class LandlordSignUpActivity extends AppCompatActivity {
 
         }
     };
-    private class ConnectMySql extends AsyncTask<String, Void, String> {
-        String res = "";
-        private String url = "jdbc:mysql://146.148.82.166:3306/RoomRDB";
-        private String user = "sneyd321";
-        private String pass = "";
-        Landlord landlord = new Landlord(firstName.getText().toString(), lastName.getText().toString(), password2.getText().toString(), email.getText().toString());
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-
-        }
-
-
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection(url, user, pass);
-
-                String result = "Database Connection Successful\n";
-                Statement st = con.createStatement();
-
-                String sql = "INSERT INTO Landlords VALUES ("
-                        + "2,'"
-                        + landlord.getFirstName() + "','"
-                        + landlord.getLastName() + "',"
-                        + "SHA1('" + landlord.getPassword() + "'),'"
-                        + landlord.getEmail() + "')";
-
-                st.executeUpdate(sql);
-                res = result;
-                con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                res = e.toString();
-            }
-            return res;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            Toast.makeText(LandlordSignUpActivity.this, s, Toast.LENGTH_LONG).show();
-        }
-    }
 
 
 

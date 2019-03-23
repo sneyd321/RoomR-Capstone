@@ -34,6 +34,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +55,9 @@ public class LoginActivity extends AppCompatActivity  {
     Button login;
     Button listings;
     TextView signup;
+    EditText password;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +73,8 @@ public class LoginActivity extends AppCompatActivity  {
         listings.setOnClickListener(onViewListings);
         signup = findViewById(R.id.txtSignUp);
         signup.setOnTouchListener(onSignUp);
+        password = findViewById(R.id.edtPassword);
+
 
     }
 
@@ -87,8 +100,29 @@ public class LoginActivity extends AppCompatActivity  {
     View.OnClickListener onLogin = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
-            startActivity(intent);
+            db.collection("Landlord")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()){
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+
+
+                                    if (document.get("Password").equals("e")){
+                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
+                                        startActivity(intent);
+                                    }
+                                    else {
+                                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+
         }
     };
 
