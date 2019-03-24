@@ -1,23 +1,30 @@
-package com.example.ryan.roomrep;
+package com.example.ryan.roomrep.Adapters;
+
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import android.media.Image;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.ryan.roomrep.Classes.House;
+import com.example.ryan.roomrep.R;
 
 import java.util.List;
 
-public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecycleViewAdapter.ViewHolder>{
+public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<HousesRecyclerViewAdapter.ViewHolder> {
 
-    private List<String> mData;
+    private List<House> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    MessagrRecycleViewAdapter(Context context, List<String> data) {
+    public HousesRecyclerViewAdapter(Context context, List<House> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -25,16 +32,15 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.messagr_row, parent, false);
+        View view = mInflater.inflate(R.layout.house_row, parent, false);
         return new ViewHolder(view);
     }
-
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String animal = mData.get(position);
-        holder.myTextView.setText(animal);
+        House house = mData.get(position);
+        holder.address.setText(house.getAddress());
     }
 
     // total number of rows
@@ -46,11 +52,13 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        TextView address;
+        ImageView image;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.txtMessage);
+            address = itemView.findViewById(R.id.txtAddress);
+            image = itemView.findViewById(R.id.imgHouse);
             itemView.setOnClickListener(this);
         }
 
@@ -61,7 +69,7 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
+    House getItem(int id) {
         return mData.get(id);
     }
 
@@ -73,6 +81,6 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
-    }
 
+    }
 }

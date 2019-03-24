@@ -1,4 +1,4 @@
-package com.example.ryan.roomrep;
+package com.example.ryan.roomrep.TenantFragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ryan.roomrep.R;
 
 
 public class CompleteRentFragment extends Fragment {

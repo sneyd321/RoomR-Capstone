@@ -8,25 +8,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
-import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ExpertSystemFragment;
 import com.example.ryan.roomrep.TenantFragments.ListingsFragment;
 import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
+import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
 import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
 
-public class MainActivityTenant extends AppCompatActivity{
+public class MainActivityLandlord extends AppCompatActivity {
 
 
-    String result = "";
     BottomNavigationView bottomMenu;
 
-
+    Toolbar myToolbar;
     private StatePagerAdapter statePagerAdapter;
     private ViewPager viewPager;
 
@@ -34,10 +34,12 @@ public class MainActivityTenant extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_tenant);
+        setContentView(R.layout.activity_main_landlord);
+        myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
-        bottomMenu = findViewById(R.id.navBar);
-        viewPager = findViewById(R.id.container);
+        bottomMenu = findViewById(R.id.navBarLandlord);
+        viewPager = findViewById(R.id.containerLandlord);
 
 
         statePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
@@ -46,20 +48,12 @@ public class MainActivityTenant extends AppCompatActivity{
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
         setupPageAdapter(viewPager);
 
-    }
 
+    }
 
     private void setupPageAdapter(ViewPager pager){
         StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SearchFragment(), "Search");
-        adapter.addFragment(new ListingsFragment(), "Listings");
-        adapter.addFragment(new PayRentFragment(), "Pay Rent");
-        adapter.addFragment(new ConfirmRentFragment(), "Confirm Rent");
-        adapter.addFragment(new CompleteRentFragment(), "Complete Rent");
-        adapter.addFragment(new RepairPictureFragment(), "Repair Photo");
-        adapter.addFragment(new ExpertSystemFragment(), "Expert System");
-        adapter.addFragment(new TenantRepairFragment(), "Tenant Repair");
-        adapter.addFragment(new MessagRFragment(), "MessagR");
+        adapter.addFragment(new AddHouseFragment(), "Add House");
         viewPager.setAdapter(adapter);
     }
 
@@ -70,25 +64,21 @@ public class MainActivityTenant extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.side_menu_tenant, menu);
+        inflater.inflate(R.menu.side_menu_landlord, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.lblRent:
+            case R.id.lblFindTenants:
                 setViewPager(2);
                 break;
-            case R.id.lblRepair:
+            case R.id.lblSettingsLandlord:
                 setViewPager(5);
                 break;
-            case R.id.lblListing:
+            case R.id.lblLogoutLandlord:
                 setViewPager(0);
-                break;
-            case R.id.lblSettings:
-                break;
-            case R.id.lblLogout:
                 break;
             default:
                 return false;
@@ -118,14 +108,4 @@ public class MainActivityTenant extends AppCompatActivity{
     };
 
 
-
-
 }
-
-
-
-
-
-
-
-

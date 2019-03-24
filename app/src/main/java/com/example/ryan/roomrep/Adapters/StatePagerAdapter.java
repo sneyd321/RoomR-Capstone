@@ -1,4 +1,4 @@
-package com.example.ryan.roomrep;
+package com.example.ryan.roomrep.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

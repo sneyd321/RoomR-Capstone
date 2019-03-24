@@ -1,4 +1,4 @@
-package com.example.ryan.roomrep;
+package com.example.ryan.roomrep.LoginActivities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.R;
+
 public class ChooseAccountActivity extends AppCompatActivity {
 
     ImageButton ibtnTenant;
@@ -18,11 +20,7 @@ public class ChooseAccountActivity extends AppCompatActivity {
     Button btnLandlord;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        getSupportActionBar().hide(); // hide the title bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
         setContentView(R.layout.activity_choose_account);
 
         btnTenant = findViewById(R.id.btnTenant);
