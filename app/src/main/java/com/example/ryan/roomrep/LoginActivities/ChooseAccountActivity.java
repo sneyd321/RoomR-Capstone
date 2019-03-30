@@ -21,6 +21,7 @@ public class ChooseAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_account);
 
         btnTenant = findViewById(R.id.btnTenant);
