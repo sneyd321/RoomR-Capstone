@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
@@ -23,6 +24,9 @@ public class House {
     private int bedNumber;
     private int bathNumber;
 
+    private boolean isSuccessful;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public House() {
 
@@ -100,34 +104,47 @@ public class House {
     public void setBathNumber(int bathNumber) {
         this.bathNumber = bathNumber;
     }
-    /*
+
+    public boolean isSuccessful() {
+        return isSuccessful;
+    }
+
+    public void setSuccessful(boolean successful) {
+        isSuccessful = successful;
+    }
+
+
     public Task<Void> addValues(){
 
         final Map<String, Object> house = new HashMap<>();
-        house.put("Address", this.firstName);
-        house.put("", this.lastName);
-        house.put("Password", this.password);
-        house.put("Email", this.email);
+        house.put("Address", this.address);
+        house.put("Amenities", this.getCheckboxes());
+        house.put("Bath Number", this.bathNumber);
+        house.put("Bed Number", this.bedNumber);
+        house.put("Description", this.description);
+        house.put("Rent", this.rent);
+        house.put("Size", this.size);
 
-        final Landlord landlordRef = this;
-        return db.collection("Landlord").document(this.email)
-                .set(landlord)
+        final House houseRef = this;
+        return db.collection("House").document(this.address)
+                .set(house)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        landlordRef.setSuccessful(true);
+                        houseRef.setSuccessful(true);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        landlordRef.setSuccessful(false);
+                        houseRef.setSuccessful(false);
                     }
                 });
 
     }
 
-    */
+
+
 }
 
 

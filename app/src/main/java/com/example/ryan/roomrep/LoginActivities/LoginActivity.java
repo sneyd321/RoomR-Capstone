@@ -1,6 +1,8 @@
 package com.example.ryan.roomrep.LoginActivities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -22,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 /**
  * A login screen that offers login via email/password.
@@ -47,6 +50,8 @@ public class LoginActivity extends AppCompatActivity  {
         signup.setOnTouchListener(onSignUp);
         password = findViewById(R.id.edtPassword);
         userName = findViewById(R.id.edtUsername);
+
+
 
 
     }
@@ -85,11 +90,15 @@ public class LoginActivity extends AppCompatActivity  {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
                                 if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
                                     Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
                                     startActivity(intent);
                                     break;
                                 }
+
+
+
                             }
 
                         }

@@ -1,6 +1,7 @@
 package com.example.ryan.roomrep.Classes;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -19,6 +20,7 @@ public class Login {
 
 
     public Task<QuerySnapshot> GetAccountInfo(){
+
         return db.collection("Landlord").get();
     }
 

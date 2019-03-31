@@ -63,8 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name"
+                android:inputType="number"
+                android:text="1200"
                 tools:layout_editor_absoluteX="63dp"
                 tools:layout_editor_absoluteY="90dp" />
 
@@ -94,7 +94,7 @@
                 android:id="@+id/chkWasherDryerL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Washer/Dryer" />
+                android:text="Washer Dryer" />
 
             <CheckBox
                 android:id="@+id/chkAirConditioningL"

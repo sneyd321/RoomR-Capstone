@@ -1,7 +1,9 @@
 package com.example.ryan.roomrep;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +18,9 @@ import android.widget.ImageView;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.House;
+import com.google.gson.Gson;
+
+import java.util.prefs.Preferences;
 
 public class MainActivityLandlord extends AppCompatActivity {
 
@@ -44,6 +49,11 @@ public class MainActivityLandlord extends AppCompatActivity {
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
         setupPageAdapter(viewPager);
         house = new House();
+
+
+
+
+
 
 
     }
@@ -110,8 +120,27 @@ public class MainActivityLandlord extends AppCompatActivity {
         return house;
     }
 
+    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+        }
 
+        @Override
+        public void onPageSelected(int position) {
+            if (position == 0){
+                if (!house.getAddress().isEmpty()){
+
+                }
+
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
 
 }
