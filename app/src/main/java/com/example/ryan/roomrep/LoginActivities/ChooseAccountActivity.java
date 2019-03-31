@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 
 public class ChooseAccountActivity extends AppCompatActivity {
@@ -50,6 +51,7 @@ public class ChooseAccountActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(ChooseAccountActivity.this, LandlordSignUpActivity.class);
+            //Intent intent = new Intent(ChooseAccountActivity.this, MainActivityTenant.class);
             startActivity(intent);
         }
     };
