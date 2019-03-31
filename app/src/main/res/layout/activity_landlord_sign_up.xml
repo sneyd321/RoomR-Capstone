@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivities.LandlordSignUpActivity"
-    android:background="@drawable/examplehouse"
+    android:background="@drawable/house"
     >
 
     <TextView

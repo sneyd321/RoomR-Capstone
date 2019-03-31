@@ -1,86 +1,82 @@
 package com.example.ryan.roomrep;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.ImageView;
 
-import com.example.ryan.roomrep.Adapters.HousesRecyclerViewAdapter;
-import com.example.ryan.roomrep.Adapters.MessagrRecycleViewAdapter;
 import com.example.ryan.roomrep.Classes.House;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
 
 
 public class AddHouseFragment extends Fragment {
-    HousesRecyclerViewAdapter adapter;
-    RecyclerView houseList;
-    ArrayList<House> houses;
-    ImageButton addHouse;
 
+    ImageView houseImage;
+    EditText address;
+    Button next;
+    Button takePhoto;
+    House house;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_house, container, false);
-        addHouse = view.findViewById(R.id.iBtnAddHouse);
-        addHouse.setOnClickListener(onAddItem);
-        houses = new ArrayList<>();
-        Bitmap houseImage = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.examplehouse);
+
+        houseImage = view.findViewById(R.id.imgHouse);
+        address = view.findViewById(R.id.edtAddress);
+        next = view.findViewById(R.id.btnNextLAH);
+        next.setOnClickListener(onNext);
+        house = ((MainActivityLandlord)getActivity()).getHouse();
+        takePhoto = view.findViewById(R.id.btnTakeHousePicture);
+        takePhoto.setOnClickListener(onTakePicture);
 
 
-        House house = new House("123 Example St.", bitmapToString(houseImage));
 
 
-        houses.add(house);
-        houseList = view.findViewById(R.id.rcyHouses);
 
-        houseList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new HousesRecyclerViewAdapter(getActivity(), houses);
-        //adapter.setClickListener(this);
-        houseList.setAdapter(adapter);
-
-        houseList.setItemAnimator(new DefaultItemAnimator());
         return view;
-
     }
 
-
-
-
-
-    private View.OnClickListener onAddItem = new View.OnClickListener() {
+    View.OnClickListener onTakePicture = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Bitmap houseImage = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.house);
-            House house = new House("123 Example St.", bitmapToString(houseImage));
-            houses.add(house);
-            adapter.notifyDataSetChanged();
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(takePictureIntent, 1);
+
         }
     };
 
 
-    private String bitmapToString(Bitmap bitmap){
-        ByteArrayOutputStream btmp = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, btmp);
-        byte [] bytes = btmp.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
-    }
+    View.OnClickListener onNext = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            house.setAddress(address.getText().toString());
 
+            Bitmap bmp = ((BitmapDrawable)houseImage.getDrawable()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            house.setImage(byteArray);
+            ((MainActivityLandlord)getActivity()).setViewPager(2);
+
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Bundle extras = data.getExtras();
+        Bitmap imageBitmap = (Bitmap) extras.get("data");
+        houseImage.setImageBitmap(imageBitmap);
+    }
 }

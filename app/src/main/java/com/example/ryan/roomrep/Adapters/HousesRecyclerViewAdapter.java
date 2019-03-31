@@ -2,7 +2,11 @@ package com.example.ryan.roomrep.Adapters;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
+import android.support.annotation.NonNull;
 import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.ryan.roomrep.Classes.House;
+import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
@@ -22,11 +32,14 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<HousesRecycl
     private List<House> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context context;
+    final long ONE_MEGABYTE = 1024 * 1024;
 
     // data is passed into the constructor
     public HousesRecyclerViewAdapter(Context context, List<House> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.context = context;
     }
 
     // inflates the row layout from xml when needed
@@ -38,9 +51,28 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<HousesRecycl
 
     // binds the data to the TextView in each row
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         House house = mData.get(position);
         holder.address.setText(house.getAddress());
+        try{
+            house.getStorageReference().getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    holder.image.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }catch (NullPointerException ex){
+
+        }
+
+
+
     }
 
     // total number of rows
@@ -58,7 +90,7 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<HousesRecycl
         ViewHolder(View itemView) {
             super(itemView);
             address = itemView.findViewById(R.id.txtAddress);
-            image = itemView.findViewById(R.id.imgHouse);
+            image = itemView.findViewById(R.id.imgHouseRow);
             itemView.setOnClickListener(this);
         }
 

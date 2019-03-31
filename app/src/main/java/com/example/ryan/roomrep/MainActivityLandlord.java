@@ -1,5 +1,8 @@
 package com.example.ryan.roomrep;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
@@ -9,17 +12,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
-import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
-import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
-import com.example.ryan.roomrep.TenantFragments.ExpertSystemFragment;
-import com.example.ryan.roomrep.TenantFragments.ListingsFragment;
-import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
-import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
-import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
-import com.example.ryan.roomrep.TenantFragments.SearchFragment;
-import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
+import com.example.ryan.roomrep.Classes.House;
 
 public class MainActivityLandlord extends AppCompatActivity {
 
@@ -29,7 +25,7 @@ public class MainActivityLandlord extends AppCompatActivity {
     Toolbar myToolbar;
     private StatePagerAdapter statePagerAdapter;
     private ViewPager viewPager;
-
+    private House house;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +43,16 @@ public class MainActivityLandlord extends AppCompatActivity {
 
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
         setupPageAdapter(viewPager);
+        house = new House();
 
 
     }
 
     private void setupPageAdapter(ViewPager pager){
         StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new HouseFragment(), "House");
         adapter.addFragment(new AddHouseFragment(), "Add House");
+        adapter.addFragment(new HouseDetailFragment(), "House Detail");
         viewPager.setAdapter(adapter);
     }
 
@@ -106,6 +105,13 @@ public class MainActivityLandlord extends AppCompatActivity {
             return false;
         }
     };
+
+    public House getHouse(){
+        return house;
+    }
+
+
+
 
 
 }

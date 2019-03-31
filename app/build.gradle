@@ -30,6 +30,9 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation files('libs/mysql-connector.jar')
     implementation 'com.google.firebase:firebase-firestore:18.1.0'
+    implementation 'com.google.firebase:firebase-storage:16.1.0'
+    implementation 'com.firebaseui:firebase-ui-storage:4.1.0'
+
 
 
 }
