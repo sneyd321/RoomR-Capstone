@@ -1,5 +1,6 @@
 package com.example.ryan.roomrep;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
@@ -116,10 +117,6 @@ public class MainActivityTenant extends AppCompatActivity{
             return false;
         }
     };
-
-
-
-
 }
 
 

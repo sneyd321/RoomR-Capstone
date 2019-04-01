@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.MainActivityLandlord;
+import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -86,7 +87,7 @@ public class LoginActivity extends AppCompatActivity  {
                         if (task.isSuccessful()){
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
-                                    Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
                                     startActivity(intent);
                                     break;
                                 }
