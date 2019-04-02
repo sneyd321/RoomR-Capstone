@@ -52,6 +52,7 @@ public class MainActivityTenant extends AppCompatActivity{
 
     private void setupPageAdapter(ViewPager pager){
         StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
+
         adapter.addFragment(new SearchFragment(), "Search");
         adapter.addFragment(new ListingsFragment(), "Listings");
         adapter.addFragment(new PayRentFragment(), "Pay Rent");

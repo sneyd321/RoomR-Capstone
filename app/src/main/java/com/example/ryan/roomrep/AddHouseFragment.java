@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.House;
 
@@ -61,13 +62,18 @@ public class AddHouseFragment extends Fragment {
         @Override
         public void onClick(View v) {
             house.setAddress(address.getText().toString());
+            if (houseImage.getDrawable() != null){
+                Bitmap bmp = ((BitmapDrawable)houseImage.getDrawable()).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                house.setImage(byteArray);
+                ((MainActivityLandlord)getActivity()).setViewPager(2);
+            }
+            else {
+                Toast.makeText(getActivity(), "Please take a photo", Toast.LENGTH_SHORT).show();
+            }
 
-            Bitmap bmp = ((BitmapDrawable)houseImage.getDrawable()).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            house.setImage(byteArray);
-            ((MainActivityLandlord)getActivity()).setViewPager(2);
 
         }
     };

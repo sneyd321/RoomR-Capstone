@@ -1,8 +1,11 @@
 package com.example.ryan.roomrep;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +20,14 @@ import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.House;
 import com.example.ryan.roomrep.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,28 +145,15 @@ public class HouseDetailFragment extends Fragment {
             for (CheckBox checkBox : checkBoxes){
                 amenities.put(checkBox.getText().toString(), checkBox.isChecked());
             }
+
+
             house.setCheckboxes(amenities);
             house.setSize(Integer.parseInt(size.getText().toString()));
             house.setDescription(description.getText().toString());
 
-            String path = "houses/" + house.getAddress() + ".png";
-            StorageReference houseRef = storage.getReference(path);
 
-            StorageMetadata metadata = new StorageMetadata.Builder()
-                    .setCustomMetadata("text", "test")
-                    .build();
-
-            UploadTask uploadTask = houseRef.putBytes(house.getImage(), metadata);
-            uploadTask.addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
-                    StorageReference reference = storage.getReference();
-                    StorageReference pathReference = reference.child("houses/" + house.getAddress() + ".png");
-                    house.setStorageReference(pathReference);
-                    ((MainActivityLandlord)getActivity()).setViewPager(0);
-                }
-            });
+            insertPhotoIntoStorage();
+            insertValuesIntoHouse();
 
 
 
@@ -168,6 +161,39 @@ public class HouseDetailFragment extends Fragment {
 
         }
     };
+
+
+    private void insertPhotoIntoStorage(){
+        String path = "Houses/" + house.getAddress() + ".png";
+        StorageReference houseRef = storage.getReference(path);
+
+        StorageMetadata metadata = new StorageMetadata.Builder()
+                .setCustomMetadata("text", "test")
+                .build();
+
+        UploadTask uploadTask = houseRef.putBytes(house.getImage(), metadata);
+        uploadTask.addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                StorageReference reference = storage.getReference();
+                StorageReference pathReference = reference.child("Houses/" + house.getAddress() + ".png");
+                house.setStorageReference(pathReference);
+
+            }
+        });
+    }
+
+    private void insertValuesIntoHouse(){
+        Task<Void> result = house.addValues();
+        result.addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (house.isSuccessful()){
+                    ((MainActivityLandlord)getActivity()).setViewPager(0);
+                }
+            }
+        });
+    }
 
 
 
