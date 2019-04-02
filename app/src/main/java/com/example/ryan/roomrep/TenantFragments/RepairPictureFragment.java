@@ -58,7 +58,7 @@ public class RepairPictureFragment extends Fragment {
     public static final int PICK_PICTURE = 2;
 
     //192.168.2.28
-    String urlString = "http://10.142.0.2:8000/photo";
+    String urlString = "http://34.73.26.89:8000/photo";
 
 
     @Override
