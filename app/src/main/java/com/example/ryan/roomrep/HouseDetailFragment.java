@@ -56,6 +56,9 @@ public class HouseDetailFragment extends Fragment {
     House house;
     Map amenities;
     ArrayList<CheckBox> checkBoxes;
+    int bedNum;
+    int bathNum;
+
 
 
     @Override
@@ -98,7 +101,6 @@ public class HouseDetailFragment extends Fragment {
         checkBoxes.add(pool);
         checkBoxes.add(pets);
 
-        house = ((MainActivityLandlord)getActivity()).getHouse();
 
 
 
@@ -114,12 +116,12 @@ public class HouseDetailFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String value = parent.getItemAtPosition(position).toString();
-            house.setBedNumber(Integer.parseInt(value));
+            bedNum = Integer.parseInt(value);
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-            house.setBedNumber(1);
+            bedNum = 1;
         }
     };
 
@@ -128,12 +130,12 @@ public class HouseDetailFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String value = parent.getItemAtPosition(position).toString();
-            house.setBathNumber(Integer.parseInt(value));
+            bathNum = Integer.parseInt(value);
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-            house.setBathNumber(1);
+            bathNum = 1;
         }
     };
 
@@ -142,6 +144,10 @@ public class HouseDetailFragment extends Fragment {
     View.OnClickListener onNext = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            int lastPosition = ((MainActivityLandlord)getActivity()).getHouse().size() - 1;
+            house = ((MainActivityLandlord)getActivity()).getHouse().get(lastPosition);
+
             for (CheckBox checkBox : checkBoxes){
                 amenities.put(checkBox.getText().toString(), checkBox.isChecked());
             }
@@ -165,6 +171,7 @@ public class HouseDetailFragment extends Fragment {
 
     private void insertPhotoIntoStorage(){
         String path = "Houses/" + house.getAddress() + ".png";
+        house.setStorageReference(path);
         StorageReference houseRef = storage.getReference(path);
 
         StorageMetadata metadata = new StorageMetadata.Builder()
@@ -175,9 +182,7 @@ public class HouseDetailFragment extends Fragment {
         uploadTask.addOnSuccessListener(getActivity(), new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                StorageReference reference = storage.getReference();
-                StorageReference pathReference = reference.child("Houses/" + house.getAddress() + ".png");
-                house.setStorageReference(pathReference);
+
 
             }
         });

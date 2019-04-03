@@ -20,7 +20,7 @@ public class House {
     private int size;
     private Map checkboxes;
     private String description;
-    private StorageReference storageReference;
+    private String storageReference;
     private int bedNumber;
     private int bathNumber;
 
@@ -81,11 +81,11 @@ public class House {
         this.description = descripton;
     }
 
-    public StorageReference getStorageReference() {
+    public String getStorageReference() {
         return storageReference;
     }
 
-    public void setStorageReference(StorageReference storageReference) {
+    public void setStorageReference(String storageReference) {
         this.storageReference = storageReference;
     }
 
@@ -124,6 +124,7 @@ public class House {
         house.put("Description", this.description);
         house.put("Rent", this.rent);
         house.put("Size", this.size);
+        house.put("StorageReference", this.storageReference);
 
         final House houseRef = this;
         return db.collection("House").document(this.address)

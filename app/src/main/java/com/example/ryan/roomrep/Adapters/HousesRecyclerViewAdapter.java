@@ -24,6 +24,8 @@ import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<HousesRecycl
     private ItemClickListener mClickListener;
     private Context context;
     final long ONE_MEGABYTE = 1024 * 1024;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+
 
     // data is passed into the constructor
     public HousesRecyclerViewAdapter(Context context, List<House> data) {
@@ -54,8 +58,10 @@ public class HousesRecyclerViewAdapter extends RecyclerView.Adapter<HousesRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         House house = mData.get(position);
         holder.address.setText(house.getAddress());
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference = storageRef.child(house.getStorageReference());
         try{
-            house.getStorageReference().getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
