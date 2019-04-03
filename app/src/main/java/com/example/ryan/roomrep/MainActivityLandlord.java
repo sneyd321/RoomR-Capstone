@@ -32,6 +32,7 @@ public class MainActivityLandlord extends AppCompatActivity {
     private ViewPager viewPager;
     private House house;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,8 @@ public class MainActivityLandlord extends AppCompatActivity {
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
         setupPageAdapter(viewPager);
         house = new House();
+
+
 
 
 
@@ -128,12 +131,7 @@ public class MainActivityLandlord extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            if (position == 0){
-                if (!house.getAddress().isEmpty()){
 
-                }
-
-            }
         }
 
         @Override
