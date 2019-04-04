@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.House;
+import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -78,6 +79,10 @@ public class MainActivityLandlord extends AppCompatActivity {
     }
 
 
+    public Task<QuerySnapshot> getTenants(){
+        return db.collection("Tenant").get();
+    }
+
 
 
     public Task<QuerySnapshot> getHouses(){
@@ -90,6 +95,7 @@ public class MainActivityLandlord extends AppCompatActivity {
         adapter.addFragment(new HouseFragment(), "House");
         adapter.addFragment(new AddHouseFragment(), "Add House");
         adapter.addFragment(new HouseDetailFragment(), "House Detail");
+        adapter.addFragment(new AddTenantFragment(), "Add Tenant");
         viewPager.setAdapter(adapter);
     }
 

@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
-public class HouseFragment extends Fragment implements HousesRecyclerViewAdapter.ItemClickListener{
+public class HouseFragment extends Fragment {
     HousesRecyclerViewAdapter adapter;
     RecyclerView houseList;
     ImageButton addHouse;
@@ -70,6 +71,7 @@ public class HouseFragment extends Fragment implements HousesRecyclerViewAdapter
                     adapter = new HousesRecyclerViewAdapter(getActivity(), ((MainActivityLandlord)getActivity()).getHouse());
                     //adapter.setClickListener(this);
                     houseList.setAdapter(adapter);
+                    adapter.setClickListener(onItemClick);
                     adapter.notifyDataSetChanged();
                     if (!((MainActivityLandlord)getActivity()).getHouse().isEmpty()){
                         houseTitle.setText("Houses");
@@ -98,8 +100,14 @@ public class HouseFragment extends Fragment implements HousesRecyclerViewAdapter
     };
 
 
-    @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(getActivity(), "TODO: Add Tenants", Toast.LENGTH_SHORT).show();
-    }
+
+    HousesRecyclerViewAdapter.ItemClickListener onItemClick = new HousesRecyclerViewAdapter.ItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            Toast.makeText(getActivity(), "TODO: Add Tenants", Toast.LENGTH_SHORT).show();
+            ((MainActivityLandlord)getActivity()).setViewPager(3);
+        }
+    };
+
+
 }

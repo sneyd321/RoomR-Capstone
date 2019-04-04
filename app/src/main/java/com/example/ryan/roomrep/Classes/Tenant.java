@@ -32,10 +32,10 @@ public class Tenant {
 
 
     public String validateTenant(){
-        if (this.firstName.isEmpty()){
+        if (this.getFirstName().isEmpty()){
             return "Please enter a first name.";
         }
-        if (this.lastName.isEmpty()){
+        if (this.getLastName().isEmpty()){
             return "Please enter a last name";
         }
         if (this.password.isEmpty()){
@@ -61,8 +61,8 @@ public class Tenant {
 
     public Task<Void> addValues(){
         final Map<String, Object> tenant = new HashMap<>();
-        tenant.put("FirstName", this.firstName);
-        tenant.put("LastName", this.lastName);
+        tenant.put("FirstName", this.getFirstName());
+        tenant.put("LastName", this.getLastName());
         tenant.put("Password", this.password);
         tenant.put("Email", this.email);
         tenant.put("Bio", this.bio);
@@ -84,6 +84,14 @@ public class Tenant {
                 });
     }
 
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
 
 
 }
