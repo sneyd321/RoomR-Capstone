@@ -18,8 +18,16 @@ import android.widget.ImageView;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.House;
+import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.LoginActivities.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 public class MainActivityLandlord extends AppCompatActivity {
@@ -30,7 +38,12 @@ public class MainActivityLandlord extends AppCompatActivity {
     Toolbar myToolbar;
     private StatePagerAdapter statePagerAdapter;
     private ViewPager viewPager;
-    private House house;
+
+
+    private ArrayList<House> houses;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +61,14 @@ public class MainActivityLandlord extends AppCompatActivity {
 
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
         setupPageAdapter(viewPager);
-        house = new House();
+
+        houses = new ArrayList<>();
+
+
+
+
+
+
 
 
 
@@ -58,11 +78,24 @@ public class MainActivityLandlord extends AppCompatActivity {
 
     }
 
+
+    public Task<QuerySnapshot> getTenants(){
+        return db.collection("Tenant").get();
+    }
+
+
+
+    public Task<QuerySnapshot> getHouses(){
+        return db.collection("House").get();
+    }
+
+
     private void setupPageAdapter(ViewPager pager){
         StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new HouseFragment(), "House");
         adapter.addFragment(new AddHouseFragment(), "Add House");
         adapter.addFragment(new HouseDetailFragment(), "House Detail");
+        adapter.addFragment(new AddTenantFragment(), "Add Tenant");
         viewPager.setAdapter(adapter);
     }
 
@@ -116,8 +149,8 @@ public class MainActivityLandlord extends AppCompatActivity {
         }
     };
 
-    public House getHouse(){
-        return house;
+    public ArrayList<House> getHouse(){
+        return houses;
     }
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -128,12 +161,7 @@ public class MainActivityLandlord extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            if (position == 0){
-                if (!house.getAddress().isEmpty()){
 
-                }
-
-            }
         }
 
         @Override

@@ -19,9 +19,14 @@ public class Login {
     }
 
 
-    public Task<QuerySnapshot> GetAccountInfo(){
+    public Task<QuerySnapshot> GetLandlordAccountInfo(){
 
         return db.collection("Landlord").get();
+    }
+
+    public Task<QuerySnapshot> GetTenantAccountInfo(){
+
+        return db.collection("Tenant").get();
     }
 
     public void verifyAccountType(){

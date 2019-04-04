@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
+import com.example.ryan.roomrep.ProfileActivity;
 import com.example.ryan.roomrep.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -74,7 +75,8 @@ public class LoginActivity extends AppCompatActivity  {
     View.OnClickListener onViewListings = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(LoginActivity.this, "TODO: Listing", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+            startActivity(intent);
         }
     };
 
@@ -85,29 +87,63 @@ public class LoginActivity extends AppCompatActivity  {
             if (ValidateInputs()){
                 final Login login = new Login(userName.getText().toString(), password.getText().toString());
 
-                Task<QuerySnapshot> accountInfo = login.GetAccountInfo();
-                accountInfo.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
-                                    Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
-                                    startActivity(intent);
-                                    break;
-                                }
+                LoginLandlord(login);
+                LoginTenant(login);
 
 
-
-                            }
-
-                        }
-                    }
-                });
             }
         }
     };
+
+
+    private void LoginLandlord(Login l){
+        final Login login = l;
+        Task<QuerySnapshot> landlordAccountInfo = login.GetLandlordAccountInfo();
+        landlordAccountInfo.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                        if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
+                            Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
+                            startActivity(intent);
+                            break;
+                        }
+
+
+
+                    }
+
+                }
+            }
+        });
+    }
+
+    private void LoginTenant(Login l){
+        final Login login = l;
+        Task<QuerySnapshot> tenantAccountInfo = login.GetTenantAccountInfo();
+        tenantAccountInfo.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                        if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
+                            Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
+                            startActivity(intent);
+                            break;
+                        }
+
+
+
+                    }
+
+                }
+            }
+        });
+    }
+
 
     private boolean ValidateInputs(){
         boolean valid = true;

@@ -13,28 +13,27 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:largeHeap="true">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".ProfileActivity"></activity>
         <activity
             android:name=".MainActivityLandlord"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".LoginActivities.LandlordSignUpActivity" />
-        <activity
-            android:name=".LoginActivities.ChooseAccountActivity" />
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".LoginActivities.LandlordSignUpActivity" />
+        <activity android:name=".LoginActivities.ChooseAccountActivity" />
         <activity
             android:name=".MainActivityTenant"
             android:label="@string/title_activity_login" />
         <activity android:name=".LoginActivities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TenantFragments.TenantMessagRActivity" />
+        <activity android:name=".TenantFragments.TenantMessagRActivity" />
     </application>
 
 </manifest>

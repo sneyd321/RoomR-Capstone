@@ -18,7 +18,6 @@
     </string>
 
 
-
     <string-array name="bedNumbers">
         <item>1</item>
         <item>2</item>
@@ -44,8 +43,6 @@
         <item>9</item>
         <item>10</item>
     </string-array>
-
-
 
 
 </resources>

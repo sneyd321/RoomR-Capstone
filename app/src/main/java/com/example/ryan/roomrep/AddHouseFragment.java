@@ -37,7 +37,7 @@ public class AddHouseFragment extends Fragment {
         address = view.findViewById(R.id.edtAddress);
         next = view.findViewById(R.id.btnNextLAH);
         next.setOnClickListener(onNext);
-        house = ((MainActivityLandlord)getActivity()).getHouse();
+        house = new House();
         takePhoto = view.findViewById(R.id.btnTakeHousePicture);
         takePhoto.setOnClickListener(onTakePicture);
 
@@ -68,6 +68,7 @@ public class AddHouseFragment extends Fragment {
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 byte[] byteArray = stream.toByteArray();
                 house.setImage(byteArray);
+                ((MainActivityLandlord)getActivity()).getHouse().add(house);
                 ((MainActivityLandlord)getActivity()).setViewPager(2);
             }
             else {
