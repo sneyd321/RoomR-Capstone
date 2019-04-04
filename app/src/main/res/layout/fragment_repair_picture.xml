@@ -6,75 +6,106 @@
     android:layout_height="match_parent"
     tools:context=".TenantFragments.RepairPictureFragment">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center">
 
         <ImageView
             android:id="@+id/imgView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="55dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintBottom_toTopOf="@+id/spn_predictions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars[0]" />
+
         <Spinner
             android:id="@+id/spn_predictions"
-            android:layout_marginBottom="100px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="42dp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_error"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgView" />
 
         <TextView
-            android:layout_marginTop="10px"
             android:id="@+id/txt_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="ERROR" />
+            android:layout_marginBottom="3dp"
+            android:text="ERROR"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spn_predictions" />
+
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_marginTop="10px"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="167dp"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_marginBottom="77dp"
             android:max="100"
-            android:progress="50" />
+            android:progress="50"
+            app:layout_constraintBottom_toTopOf="@+id/btn_takePicture"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_error" />
 
         <Button
-            android:layout_marginTop="200px"
             android:id="@+id/btn_takePicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:text="Take Photo" />
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="7dp"
+            android:text="Take Photo"
+            app:layout_constraintBottom_toTopOf="@+id/btn_pickImage"
+            app:layout_constraintStart_toStartOf="@+id/btn_predict"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
         <Button
             android:id="@+id/btn_pickImage"
-            android:layout_marginTop="20px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick Photo" />
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="8dp"
+            android:text="Pick Photo"
+            app:layout_constraintBottom_toTopOf="@+id/btn_predict"
+            app:layout_constraintEnd_toEndOf="@+id/btn_takePicture"
+            app:layout_constraintTop_toBottomOf="@+id/btn_takePicture" />
+
         <Button
             android:id="@+id/btn_predict"
-            android:layout_marginTop="20px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="Predict Image" />
+            android:layout_marginBottom="7dp"
+            android:text="Predict Image"
+            app:layout_constraintBottom_toTopOf="@+id/btn_sendProblem"
+            app:layout_constraintStart_toStartOf="@+id/btn_sendProblem"
+            app:layout_constraintTop_toBottomOf="@+id/btn_pickImage" />
+
         <Button
             android:id="@+id/btn_sendProblem"
-            android:layout_marginTop="20px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:text="Send Problem" />
-    </LinearLayout>
+            android:layout_marginBottom="13dp"
+            android:text="Send Problem"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_predict" />
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

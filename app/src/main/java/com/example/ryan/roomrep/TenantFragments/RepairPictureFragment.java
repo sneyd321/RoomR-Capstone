@@ -1,17 +1,20 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,26 +22,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ryan.roomrep.Classes.PhotoManager;
+import com.example.ryan.roomrep.Classes.Prediction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import static android.R.layout.simple_spinner_item;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -52,13 +56,21 @@ public class RepairPictureFragment extends Fragment {
     TextView txtError;
     ProgressBar progressBar;
     ImageView imgView;
+
     String imageString;
+    ArrayList<Prediction> predictionArray;
+    String predictionPicked;
+
+    private static ProgressDialog mProgressDialog;
+
+    private ArrayList<String> predictionLabels = new ArrayList<>();
+
 
     public static final int PICTURE_TAKER = 1;
     public static final int PICK_PICTURE = 2;
 
     //192.168.2.28
-    String urlString = "http://34.73.26.89:8000/photo";
+    String urlString = "http://34.73.104.43:8000/photo";
 
 
     @Override
@@ -79,6 +91,7 @@ public class RepairPictureFragment extends Fragment {
         btnPredictPhoto.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         predictionResults.setVisibility(View.INVISIBLE);
+        btnSendPhoto.setVisibility(View.INVISIBLE);
         txtError.setVisibility(View.INVISIBLE);
 
         //initializing onclick listeners for the buttons
@@ -86,8 +99,19 @@ public class RepairPictureFragment extends Fragment {
         btnTakePhoto.setOnClickListener(onTakePhoto);
         btnPredictPhoto.setOnClickListener(onPredictPhoto);
         btnPickPhoto.setOnClickListener(onPickPhoto);
-        return view;
 
+        predictionResults.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                predictionPicked = adapterView.getItemAtPosition(pos).toString();
+                //Log.d("RESULTS BABY", "onItemSelected: " + predictionPicked);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        return view;
     }
 
     View.OnClickListener onPickPhoto = new View.OnClickListener() {
@@ -109,7 +133,7 @@ public class RepairPictureFragment extends Fragment {
     View.OnClickListener onTakePhoto = new View.OnClickListener(){
         @Override
         public void onClick(View view) {
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
             startActivityForResult(takePictureIntent, PICTURE_TAKER);
         }
@@ -118,35 +142,21 @@ public class RepairPictureFragment extends Fragment {
     View.OnClickListener onPredictPhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            predictionArray = new ArrayList<Prediction>();
+            clearSpinner();
             requestPrediction();
         }
     };
 
-
-    //Converts Bitmap into a string.
-    private String convertBitmapToString(Bitmap bitmap){
-        ByteArrayOutputStream btmp = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, btmp);
-        byte [] bytes = btmp.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    public void clearSpinner(){
+        //TODO: CLEAR SPINNER AS IT APPENDS MORE ITEMS!
     }
 
-    //Function that rotates image
-    public Bitmap rotateImage(Bitmap bMap){
-        Matrix matrix;
-        //Create object of new Matrix.
-        matrix = new Matrix();
-        //set image rotation value to 90 degrees in matrix.
-        matrix.postRotate(90);
-        //Create bitmap with new values.
-        Bitmap bMapRotate = Bitmap.createBitmap(bMap, 0, 0, bMap.getWidth(), bMap.getHeight(), matrix, true);
-        return bMapRotate;
-    }
-
-    //creates the JSON request
-    private JSONObject createJsonObject(){
+    //creates the JSON request This is for the post request.
+    private JSONObject createJsonObject(String imgString){
         //initalize json object
         JSONObject photo = new JSONObject();
+        String imageString = imgString;
         try {
             //put photo string in json object
             photo.put("photo", imageString);
@@ -160,12 +170,15 @@ public class RepairPictureFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        btnPredictPhoto.setVisibility(View.VISIBLE);
+        btnSendPhoto.setVisibility(View.VISIBLE);
+        PhotoManager photoManager;
         if (requestCode == PICTURE_TAKER){
             imageString = "";
-            btnPredictPhoto.setVisibility(View.VISIBLE);
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageString = convertBitmapToString(imageBitmap);
+            photoManager = new PhotoManager(imageBitmap);
+            imageString = photoManager.convertBitmapToString();
             imgView.setImageBitmap(imageBitmap);
             btnTakePhoto.setText("Retake Photo");
         }
@@ -191,8 +204,9 @@ public class RepairPictureFragment extends Fragment {
                 //if an image is found
                 if (imageBitmap != null){
                     //convert bitmap to string
-                    imageBitmap = rotateImage(imageBitmap);
-                    imageString = convertBitmapToString(imageBitmap);
+                    photoManager = new PhotoManager(imageBitmap);
+                    imageBitmap = photoManager.rotateImage();
+                    imageString = photoManager.convertBitmapToString();
 
                     imgView.setImageBitmap(imageBitmap);
                 }
@@ -203,18 +217,43 @@ public class RepairPictureFragment extends Fragment {
             }
         }
     }
+
     public void requestPrediction(){
+        showSimpleProgressDialog(getContext(), "Loading...","Predicting Image",false);
         RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
-        final String json = createJsonObject().toString();
+        final String json = createJsonObject(imageString).toString();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, urlString, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG).show();
+                predictionArray = new ArrayList<>();
+                try{
+
+                    for(int i = 0; i < response.length(); i++){
+                        JSONObject predictionRow = response.getJSONObject(i);
+                        Prediction prediction = new Prediction();
+                        prediction.setLabel(predictionRow.getString("label"));
+                        prediction.setScore(predictionRow.getString("scored"));
+                        predictionArray.add(prediction);
+                    }
+                    for(int i = 0; i < predictionArray.size(); i++){
+                        predictionLabels.add(predictionArray.get(i).getLabel());
+                    }
+                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), simple_spinner_item , predictionLabels);
+                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    predictionResults.setAdapter(spinnerArrayAdapter);
+                    removeSimpleProgressDialog();
+                    predictionResults.setVisibility(View.VISIBLE);
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+
             }
         }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), "Error Connecting to Predictions, Please try again later", Toast.LENGTH_LONG).show();
             }
         }){
             @Override
@@ -231,5 +270,45 @@ public class RepairPictureFragment extends Fragment {
         };
 
         MyRequestQueue.add(jsonArrayRequest);
+    }
+
+    public static void removeSimpleProgressDialog() {
+        try {
+            if (mProgressDialog != null) {
+                if (mProgressDialog.isShowing()) {
+                    mProgressDialog.dismiss();
+                    mProgressDialog = null;
+                }
+            }
+        } catch (IllegalArgumentException ie) {
+            ie.printStackTrace();
+
+        } catch (RuntimeException re) {
+            re.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void showSimpleProgressDialog(Context context, String title,
+                                                String msg, boolean isCancelable) {
+        try {
+            if (mProgressDialog == null) {
+                mProgressDialog = ProgressDialog.show(context, title, msg);
+                mProgressDialog.setCancelable(isCancelable);
+            }
+
+            if (!mProgressDialog.isShowing()) {
+                mProgressDialog.show();
+            }
+
+        } catch (IllegalArgumentException ie) {
+            ie.printStackTrace();
+        } catch (RuntimeException re) {
+            re.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

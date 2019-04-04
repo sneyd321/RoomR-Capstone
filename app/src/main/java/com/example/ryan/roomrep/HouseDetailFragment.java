@@ -64,9 +64,6 @@ public class HouseDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_house_detail, container, false);
 
-
-
-
         bedNumber = view.findViewById(R.id.spnBedNum);
         bathNumber = view.findViewById(R.id.spnBathNum);
         size = view.findViewById(R.id.edtSize);
@@ -99,11 +96,6 @@ public class HouseDetailFragment extends Fragment {
         checkBoxes.add(pets);
 
         house = ((MainActivityLandlord)getActivity()).getHouse();
-
-
-
-
-
 
         return view;
 
