@@ -54,12 +54,12 @@ public class RepairPictureFragment extends Fragment {
     Button btnPickPhoto;
     Spinner predictionResults;
     TextView txtError;
-    ProgressBar progressBar;
     ImageView imgView;
 
     String imageString;
     ArrayList<Prediction> predictionArray;
     String predictionPicked;
+    ArrayAdapter<String> spinnerArrayAdapter;
 
     private static ProgressDialog mProgressDialog;
 
@@ -70,7 +70,7 @@ public class RepairPictureFragment extends Fragment {
     public static final int PICK_PICTURE = 2;
 
     //192.168.2.28
-    String urlString = "http://34.73.104.43:8000/photo";
+    String urlString = "http://35.203.34.131:8000/photo";
 
 
     @Override
@@ -84,12 +84,12 @@ public class RepairPictureFragment extends Fragment {
         btnPredictPhoto = view.findViewById(R.id.btn_predict);
         predictionResults = view.findViewById(R.id.spn_predictions);
         txtError = view.findViewById(R.id.txt_error);
-        progressBar = view.findViewById(R.id.progressBar);
         imgView = view.findViewById(R.id.imgView);
+
+        ArrayAdapter<String> spinnerArrayAdapter;
 
         //Setting visibility to invisible until prediction is done.
         btnPredictPhoto.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
         predictionResults.setVisibility(View.INVISIBLE);
         btnSendPhoto.setVisibility(View.INVISIBLE);
         txtError.setVisibility(View.INVISIBLE);
@@ -104,7 +104,6 @@ public class RepairPictureFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
                 predictionPicked = adapterView.getItemAtPosition(pos).toString();
-                //Log.d("RESULTS BABY", "onItemSelected: " + predictionPicked);
             }
 
             @Override
@@ -142,14 +141,22 @@ public class RepairPictureFragment extends Fragment {
     View.OnClickListener onPredictPhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            predictionArray = new ArrayList<Prediction>();
-            clearSpinner();
-            requestPrediction();
+            predictionArray = new ArrayList<>();
+            btnSendPhoto.setVisibility(View.VISIBLE);
+            if ((spinnerArrayAdapter == null) || spinnerArrayAdapter.isEmpty()) {
+                requestPrediction();
+            }else{
+                clearSpinner();
+                requestPrediction();
+            }
+            //requestPrediction();
         }
     };
 
     public void clearSpinner(){
-        //TODO: CLEAR SPINNER AS IT APPENDS MORE ITEMS!
+        spinnerArrayAdapter.clear();
+        predictionPicked = "";
+        spinnerArrayAdapter.notifyDataSetChanged();
     }
 
     //creates the JSON request This is for the post request.
@@ -171,7 +178,6 @@ public class RepairPictureFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         btnPredictPhoto.setVisibility(View.VISIBLE);
-        btnSendPhoto.setVisibility(View.VISIBLE);
         PhotoManager photoManager;
         if (requestCode == PICTURE_TAKER){
             imageString = "";
@@ -239,13 +245,14 @@ public class RepairPictureFragment extends Fragment {
                     for(int i = 0; i < predictionArray.size(); i++){
                         predictionLabels.add(predictionArray.get(i).getLabel());
                     }
-                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), simple_spinner_item , predictionLabels);
+                    spinnerArrayAdapter = new ArrayAdapter<>(getContext(), simple_spinner_item , predictionLabels);
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     predictionResults.setAdapter(spinnerArrayAdapter);
                     removeSimpleProgressDialog();
                     predictionResults.setVisibility(View.VISIBLE);
                 }catch (JSONException e){
                     e.printStackTrace();
+                    removeSimpleProgressDialog();
                 }
 
 
@@ -254,6 +261,7 @@ public class RepairPictureFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), "Error Connecting to Predictions, Please try again later", Toast.LENGTH_LONG).show();
+                removeSimpleProgressDialog();
             }
         }){
             @Override
