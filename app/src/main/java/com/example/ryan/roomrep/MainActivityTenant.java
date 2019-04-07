@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
@@ -19,7 +20,13 @@ import com.example.ryan.roomrep.TenantFragments.ListingsFragment;
 import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
 import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
+import com.example.ryan.roomrep.TenantFragments.SendRepair;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class MainActivityTenant extends AppCompatActivity{
 
@@ -30,6 +37,10 @@ public class MainActivityTenant extends AppCompatActivity{
 
     private StatePagerAdapter statePagerAdapter;
     private ViewPager viewPager;
+
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ArrayList<Repair> repairs;
 
 
     @Override
@@ -45,6 +56,8 @@ public class MainActivityTenant extends AppCompatActivity{
 
 
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
+        repairs = new ArrayList<>();
+
         setupPageAdapter(viewPager);
 
     }
@@ -62,6 +75,7 @@ public class MainActivityTenant extends AppCompatActivity{
         adapter.addFragment(new ExpertSystemFragment(), "Expert System");
         adapter.addFragment(new TenantRepairFragment(), "Tenant Repair");
         adapter.addFragment(new MessagRFragment(), "MessagR");
+        adapter.addFragment(new SendRepair(), "Send Repair"); //9
         viewPager.setAdapter(adapter);
     }
 
@@ -118,6 +132,16 @@ public class MainActivityTenant extends AppCompatActivity{
             return false;
         }
     };
+
+    //public Task<QuerySnapshot> getRepairs(){ return db.collection("Repair").get();}
+
+    public ArrayList<Repair> getRepair(){
+        return repairs;
+    }
+
+
+
+
 }
 
 

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.House;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +42,7 @@ public class MainActivityLandlord extends AppCompatActivity {
 
 
     private ArrayList<House> houses;
+    private ArrayList<Repair> repairs;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -63,18 +65,7 @@ public class MainActivityLandlord extends AppCompatActivity {
         setupPageAdapter(viewPager);
 
         houses = new ArrayList<>();
-
-
-
-
-
-
-
-
-
-
-
-
+        repairs = new ArrayList<>();
 
     }
 
@@ -89,6 +80,10 @@ public class MainActivityLandlord extends AppCompatActivity {
         return db.collection("House").get();
     }
 
+    public Task<QuerySnapshot> getRepairs(){
+        return db.collection("Repair").get();
+    }
+
 
     private void setupPageAdapter(ViewPager pager){
         StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
@@ -96,6 +91,7 @@ public class MainActivityLandlord extends AppCompatActivity {
         adapter.addFragment(new AddHouseFragment(), "Add House");
         adapter.addFragment(new HouseDetailFragment(), "House Detail");
         adapter.addFragment(new AddTenantFragment(), "Add Tenant");
+        adapter.addFragment(new RepairHistoryLandlordFragment(),"Repair History");
         viewPager.setAdapter(adapter);
     }
 
@@ -151,6 +147,10 @@ public class MainActivityLandlord extends AppCompatActivity {
 
     public ArrayList<House> getHouse(){
         return houses;
+    }
+
+    public ArrayList<Repair> getRepair(){
+        return repairs;
     }
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {

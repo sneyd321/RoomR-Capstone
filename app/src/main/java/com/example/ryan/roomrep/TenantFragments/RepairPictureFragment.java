@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ryan.roomrep.Classes.PhotoManager;
 import com.example.ryan.roomrep.Classes.Prediction;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 import com.google.gson.JsonObject;
@@ -38,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,6 +63,7 @@ public class RepairPictureFragment extends Fragment {
     ArrayList<Prediction> predictionArray;
     String predictionPicked;
     ArrayAdapter<String> spinnerArrayAdapter;
+    Repair repair;
 
     private static ProgressDialog mProgressDialog;
 
@@ -70,7 +74,7 @@ public class RepairPictureFragment extends Fragment {
     public static final int PICK_PICTURE = 2;
 
     //192.168.2.28
-    String urlString = "http://35.203.34.131:8000/photo";
+    String urlString = "http://35.196.105.241:8000/photo";
 
 
     @Override
@@ -85,6 +89,7 @@ public class RepairPictureFragment extends Fragment {
         predictionResults = view.findViewById(R.id.spn_predictions);
         txtError = view.findViewById(R.id.txt_error);
         imgView = view.findViewById(R.id.imgView);
+        repair = new Repair();
 
         ArrayAdapter<String> spinnerArrayAdapter;
 
@@ -124,8 +129,18 @@ public class RepairPictureFragment extends Fragment {
     View.OnClickListener onSendPhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((MainActivityTenant)getActivity()).setViewPager(6);
-
+            repair.setProblemIdentification(predictionPicked);
+            if(imgView.getDrawable() != null){
+                Bitmap bmp = ((BitmapDrawable)imgView.getDrawable()).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                repair.setImage(byteArray);
+                ((MainActivityTenant)getActivity()).getRepair().add(repair);
+                ((MainActivityTenant)getActivity()).setViewPager(9);
+            }else{
+                Toast.makeText(getActivity(), "Please take a photo", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
