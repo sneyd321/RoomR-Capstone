@@ -48,8 +48,14 @@ public class LandlordSignUpActivity extends AppCompatActivity {
     View.OnClickListener onSignUp = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             if (password.getText().toString().equals(password2.getText().toString())){
                 final Landlord landlord = new Landlord(firstName.getText().toString(), lastName.getText().toString(), password2.getText().toString(), email.getText().toString());
+                String validate = landlord.validateLandlord();
+                if (!validate.isEmpty()){
+                    Toast.makeText(LandlordSignUpActivity.this, validate, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Task<Void> result = landlord.addValues();
                 result.addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

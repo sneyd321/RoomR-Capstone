@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.House;
@@ -26,6 +28,8 @@ public class AddHouseFragment extends Fragment {
     Button next;
     Button takePhoto;
     House house;
+    SeekBar seekBar;
+    TextView rent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +45,10 @@ public class AddHouseFragment extends Fragment {
         house.setLandlord(((MainActivityLandlord)getActivity()).getLandlord());
         takePhoto = view.findViewById(R.id.btnTakeHousePicture);
         takePhoto.setOnClickListener(onTakePicture);
+        seekBar = view.findViewById(R.id.skbRent);
+        rent = view.findViewById(R.id.txtRentDisplay);
+        seekBar.setMax(1000);
+        seekBar.setOnSeekBarChangeListener(onChangeRent);
 
 
 
@@ -48,6 +56,25 @@ public class AddHouseFragment extends Fragment {
 
         return view;
     }
+
+
+    SeekBar.OnSeekBarChangeListener onChangeRent = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            rent.setText(Integer.toString(progress));
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
+
 
     View.OnClickListener onTakePicture = new View.OnClickListener() {
         @Override
@@ -63,6 +90,7 @@ public class AddHouseFragment extends Fragment {
         @Override
         public void onClick(View v) {
             house.setAddress(address.getText().toString());
+            house.setRent(Integer.parseInt(rent.getText().toString()));
             if (houseImage.getDrawable() != null){
                 Bitmap bmp = ((BitmapDrawable)houseImage.getDrawable()).getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();

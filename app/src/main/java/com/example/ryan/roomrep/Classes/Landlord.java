@@ -78,4 +78,21 @@ public class Landlord {
     public String getLastName() {
         return lastName;
     }
+
+    public String validateLandlord(){
+        if (this.firstName.isEmpty()){
+            return "Please enter a first name.";
+        }
+        if (this.lastName.isEmpty()){
+            return "Please enter a last name";
+        }
+        if (this.password.isEmpty()){
+            return "Please enter a password";
+        }
+        if (this.email.isEmpty()){
+            return "please enter a email";
+        }
+        return "";
+    }
+
 }

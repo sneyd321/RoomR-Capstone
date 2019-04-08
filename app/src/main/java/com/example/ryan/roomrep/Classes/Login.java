@@ -38,11 +38,6 @@ public class Login {
 
 
 
-    public void verifyAccountType(){
-
-    }
-
-
     public String getUserName() {
         return userName;
     }
