@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/chatuserList"
+    tools:context=".TenantFragments.ListTargetChatUserFragment">
+    <!--This is a comment-->
+
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/user"
+        android:text="Select people"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"/>-->
+    <ListView
+        android:id="@+id/chatList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:gravity="center">
+
+    </ListView>
+
+</FrameLayout>
