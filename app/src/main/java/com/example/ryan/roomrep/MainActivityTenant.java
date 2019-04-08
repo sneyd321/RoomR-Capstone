@@ -1,6 +1,5 @@
 package com.example.ryan.roomrep;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
@@ -20,11 +19,9 @@ import com.example.ryan.roomrep.TenantFragments.ListingsFragment;
 import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
 import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
-import com.example.ryan.roomrep.TenantFragments.SendRepair;
+import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -75,7 +72,7 @@ public class MainActivityTenant extends AppCompatActivity{
         adapter.addFragment(new ExpertSystemFragment(), "Expert System");
         adapter.addFragment(new TenantRepairFragment(), "Tenant Repair");
         adapter.addFragment(new MessagRFragment(), "MessagR");
-        adapter.addFragment(new SendRepair(), "Send Repair"); //9
+        adapter.addFragment(new SendRepairFragment(), "Send Repair"); //9
         viewPager.setAdapter(adapter);
     }
 

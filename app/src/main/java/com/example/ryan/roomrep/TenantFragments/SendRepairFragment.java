@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class SendRepair extends Fragment {
+public class SendRepairFragment extends Fragment {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     Button btn_send;

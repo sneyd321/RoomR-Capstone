@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +32,6 @@ import com.example.ryan.roomrep.Classes.Prediction;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +61,7 @@ public class RepairPictureFragment extends Fragment {
     String predictionPicked;
     ArrayAdapter<String> spinnerArrayAdapter;
     Repair repair;
+    PhotoManager photoManager;
 
     private static ProgressDialog mProgressDialog;
 
@@ -90,6 +88,7 @@ public class RepairPictureFragment extends Fragment {
         txtError = view.findViewById(R.id.txt_error);
         imgView = view.findViewById(R.id.imgView);
         repair = new Repair();
+        photoManager = new PhotoManager();
 
         ArrayAdapter<String> spinnerArrayAdapter;
 
@@ -175,7 +174,7 @@ public class RepairPictureFragment extends Fragment {
     }
 
     //creates the JSON request This is for the post request.
-    private JSONObject createJsonObject(String imgString){
+    /*private JSONObject createJsonObject(String imgString){
         //initalize json object
         JSONObject photo = new JSONObject();
         String imageString = imgString;
@@ -187,19 +186,17 @@ public class RepairPictureFragment extends Fragment {
         }
         //return json object
         return photo;
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         btnPredictPhoto.setVisibility(View.VISIBLE);
-        PhotoManager photoManager;
         if (requestCode == PICTURE_TAKER){
             imageString = "";
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            photoManager = new PhotoManager(imageBitmap);
-            imageString = photoManager.convertBitmapToString();
+            imageString = photoManager.convertBitmapToString(imageBitmap);
             imgView.setImageBitmap(imageBitmap);
             btnTakePhoto.setText("Retake Photo");
         }
@@ -225,9 +222,9 @@ public class RepairPictureFragment extends Fragment {
                 //if an image is found
                 if (imageBitmap != null){
                     //convert bitmap to string
-                    photoManager = new PhotoManager(imageBitmap);
-                    imageBitmap = photoManager.rotateImage();
-                    imageString = photoManager.convertBitmapToString();
+                    photoManager = new PhotoManager();
+                    imageBitmap = photoManager.rotateImage(imageBitmap);
+                    imageString = photoManager.convertBitmapToString(imageBitmap);
 
                     imgView.setImageBitmap(imageBitmap);
                 }
@@ -242,14 +239,13 @@ public class RepairPictureFragment extends Fragment {
     public void requestPrediction(){
         showSimpleProgressDialog(getContext(), "Loading...","Predicting Image",false);
         RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
-        final String json = createJsonObject(imageString).toString();
+        final String json = photoManager.createJsonObject(imageString).toString();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, urlString, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG).show();
                 predictionArray = new ArrayList<>();
                 try{
-
                     for(int i = 0; i < response.length(); i++){
                         JSONObject predictionRow = response.getJSONObject(i);
                         Prediction prediction = new Prediction();
@@ -276,6 +272,7 @@ public class RepairPictureFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), "Error Connecting to Predictions, Please try again later", Toast.LENGTH_LONG).show();
+                btnSendPhoto.setVisibility(View.INVISIBLE);
                 removeSimpleProgressDialog();
             }
         }){
