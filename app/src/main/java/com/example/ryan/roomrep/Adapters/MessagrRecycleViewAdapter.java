@@ -2,11 +2,13 @@ package com.example.ryan.roomrep.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ryan.roomrep.Classes.ChatMessage;
 import com.example.ryan.roomrep.R;
 
 import java.util.List;
@@ -16,6 +18,8 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private ChatMessage infoMessage = new ChatMessage();
+
 
     // data is passed into the constructor
     public MessagrRecycleViewAdapter(Context context, List<String> data) {
@@ -26,7 +30,8 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.messagr_row, parent, false);
+        //View view = mInflater.inflate(R.layout.messagr_row, parent, false);
+        View view = mInflater.inflate(R.layout.message_structure, parent, false);
         return new ViewHolder(view);
     }
 
@@ -34,8 +39,13 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         String animal = mData.get(position);
         holder.myTextView.setText(animal);
+        String name = "Andy";
+        holder.userName.setText(name);
+        holder.time.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
+                infoMessage.getMessageTime()));
     }
 
     // total number of rows
@@ -48,10 +58,15 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        TextView userName;
+        TextView time;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.txtMessage);
+            //myTextView = itemView.findViewById(R.id.txtMessage);
+            myTextView = itemView.findViewById(R.id.message_text);
+            userName = itemView.findViewById(R.id.message_user);
+            time = itemView.findViewById(R.id.message_time);
             itemView.setOnClickListener(this);
         }
 
