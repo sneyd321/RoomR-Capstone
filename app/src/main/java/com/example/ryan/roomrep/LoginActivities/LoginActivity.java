@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
@@ -24,9 +25,17 @@ import com.example.ryan.roomrep.ProfileActivity;
 import com.example.ryan.roomrep.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
+
+import org.w3c.dom.Document;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A login screen that offers login via email/password.
@@ -38,6 +47,10 @@ public class LoginActivity extends AppCompatActivity  {
     TextView signup;
     EditText password;
     EditText userName;
+
+    private ArrayList<String> landlords;
+    private ArrayList<String> houses;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +66,7 @@ public class LoginActivity extends AppCompatActivity  {
         password = findViewById(R.id.edtPassword);
         userName = findViewById(R.id.edtUsername);
 
-
+        landlords = new ArrayList<>();
 
 
     }
@@ -88,7 +101,7 @@ public class LoginActivity extends AppCompatActivity  {
                 final Login login = new Login(userName.getText().toString(), password.getText().toString());
 
                 LoginLandlord(login);
-                LoginTenant(login);
+                //LoginTenant(login);
 
 
             }
@@ -104,44 +117,49 @@ public class LoginActivity extends AppCompatActivity  {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     for (QueryDocumentSnapshot document : task.getResult()) {
-
+                        landlords.add(document.get("Email").toString());
                         if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
+
                             Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
+                            intent.putExtra("LandlordFirstName", document.get("FirstName").toString());
+                            intent.putExtra("LandlordLastName", document.get("LastName").toString());
+                            intent.putExtra("LandlordEmail", document.get("Email").toString());
                             startActivity(intent);
                             break;
                         }
-
-
-
                     }
+                    LoginTenant(login, landlords);
 
                 }
             }
         });
     }
 
-    private void LoginTenant(Login l){
+    private void LoginTenant(Login l, ArrayList<String> landlords){
         final Login login = l;
-        Task<QuerySnapshot> tenantAccountInfo = login.GetTenantAccountInfo();
-        tenantAccountInfo.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+        for (String landlord : landlords){
+            Task<QuerySnapshot> result = login.GetTenantAccountInfo(landlord);
+            result.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()){
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
+                                Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
 
-                        if (document.get("Password").equals(login.getPassword()) && document.get("Email").equals(login.getUserName())){
-                            Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
-                            startActivity(intent);
-                            break;
+                                startActivity(intent);
+                                break;
+                            }
                         }
-
-
-
                     }
-
                 }
-            }
-        });
+            });
+        }
+
+
+
+
+
     }
 
 

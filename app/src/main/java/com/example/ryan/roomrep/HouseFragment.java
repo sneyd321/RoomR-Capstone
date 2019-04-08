@@ -64,6 +64,7 @@ public class HouseFragment extends Fragment {
                         House house = new House();
                         house.setAddress(document.get("Address").toString());
                         house.setStorageReference(document.get("StorageReference").toString());
+                        house.setLandlord(((MainActivityLandlord)getActivity()).getLandlord());
                         ((MainActivityLandlord)getActivity()).getHouse().add(house);
 
                     }
@@ -105,6 +106,7 @@ public class HouseFragment extends Fragment {
         @Override
         public void onItemClick(View view, int position) {
             Toast.makeText(getActivity(), "TODO: Add Tenants", Toast.LENGTH_SHORT).show();
+            ((MainActivityLandlord)getActivity()).setCurrentPosition(position);
             ((MainActivityLandlord)getActivity()).setViewPager(3);
         }
     };

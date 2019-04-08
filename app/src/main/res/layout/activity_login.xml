@@ -35,7 +35,7 @@
         android:backgroundTint="@color/White"
         android:ems="10"
         android:hint="Username"
-        android:text="a@s.com"
+        android:text="ryan@roomr.com"
         android:inputType="textPersonName"
         android:textColor="@color/White"
         android:textColorHint="@color/LightGray"

@@ -38,6 +38,7 @@ public class AddHouseFragment extends Fragment {
         next = view.findViewById(R.id.btnNextLAH);
         next.setOnClickListener(onNext);
         house = new House();
+        house.setLandlord(((MainActivityLandlord)getActivity()).getLandlord());
         takePhoto = view.findViewById(R.id.btnTakeHousePicture);
         takePhoto.setOnClickListener(onTakePicture);
 

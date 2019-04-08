@@ -26,6 +26,8 @@ public class House {
 
     private boolean isSuccessful;
 
+    private Landlord landlord;
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public House() {
@@ -127,7 +129,7 @@ public class House {
         house.put("StorageReference", this.storageReference);
 
         final House houseRef = this;
-        return db.collection("House").document(this.address)
+        return db.collection("Landlord").document(this.landlord.getEmail()).collection("Houses").document(this.address)
                 .set(house)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -145,7 +147,13 @@ public class House {
     }
 
 
+    public Landlord getLandlord() {
+        return landlord;
+    }
 
+    public void setLandlord(Landlord landlord) {
+        this.landlord = landlord;
+    }
 }
 
 

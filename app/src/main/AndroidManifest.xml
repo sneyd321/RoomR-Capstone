@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".LoginActivities.TenantSignUpActivity"></activity>
+        <activity android:name=".ProfileActivity" />
         <activity
             android:name=".MainActivityLandlord"
             android:windowSoftInputMode="adjustPan" />

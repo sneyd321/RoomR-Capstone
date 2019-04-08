@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.Classes.Profile;
+
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     EditText bio;
     Button createProfile;
 
-    Tenant tenant;
+    Profile profile;
 
 
 
@@ -58,10 +59,10 @@ public class ProfileActivity extends AppCompatActivity {
             String mail = email.getText().toString();
             String b = bio.getText().toString();
             if (pw1.equals(pw2)){
-                tenant = new Tenant(fName, lName, pw1, mail, b);
-                String validationResult = tenant.validateTenant();
-                if (tenant.validateTenant().isEmpty()){
-                    Task<Void> result = tenant.addValues();
+                profile = new Profile(fName, lName, pw1, mail, b);
+                String validationResult = profile.validateProfile();
+                if (profile.validateProfile().isEmpty()){
+                    Task<Void> result = profile.addValues();
                     result.addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

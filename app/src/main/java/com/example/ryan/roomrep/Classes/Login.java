@@ -1,9 +1,15 @@
 package com.example.ryan.roomrep.Classes;
 
+import android.support.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class Login {
     private String userName;
@@ -24,10 +30,13 @@ public class Login {
         return db.collection("Landlord").get();
     }
 
-    public Task<QuerySnapshot> GetTenantAccountInfo(){
+    public Task<QuerySnapshot> GetTenantAccountInfo(String landlord){
 
-        return db.collection("Tenant").get();
+        return db.collection("Landlord").document(landlord).collection("Tenants").get();
     }
+
+
+
 
     public void verifyAccountType(){
 

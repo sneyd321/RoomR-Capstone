@@ -24,6 +24,13 @@ public class Landlord {
     private String password;
     private String email;
 
+
+    public Landlord(String firstName, String lastName, String email){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
     public Landlord(String firstName, String lastName, String password, String email){
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,12 +45,12 @@ public class Landlord {
 
     public Task<Void> addValues(){
         final Map<String, Object> landlord = new HashMap<>();
-        landlord.put("FirstName", this.firstName);
-        landlord.put("LastName", this.lastName);
+        landlord.put("FirstName", this.getFirstName());
+        landlord.put("LastName", this.getLastName());
         landlord.put("Password", this.password);
-        landlord.put("Email", this.email);
+        landlord.put("Email", this.getEmail());
         final Landlord landlordRef = this;
-        return db.collection("Landlord").document(this.email)
+        return db.collection("Landlord").document(this.getEmail())
                 .set(landlord)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -60,10 +67,15 @@ public class Landlord {
     }
 
 
+    public String getFirstName() {
+        return firstName;
+    }
 
+    public String getEmail() {
+        return email;
+    }
 
-
-
-
-
+    public String getLastName() {
+        return lastName;
+    }
 }

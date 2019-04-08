@@ -18,8 +18,9 @@ import android.widget.ImageView;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.House;
+import com.example.ryan.roomrep.Classes.Landlord;
 import com.example.ryan.roomrep.Classes.Repair;
-import com.example.ryan.roomrep.Classes.Tenant;
+
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,10 +40,11 @@ public class MainActivityLandlord extends AppCompatActivity {
     Toolbar myToolbar;
     private StatePagerAdapter statePagerAdapter;
     private ViewPager viewPager;
-
+    private int currentPosition = 0;
 
     private ArrayList<House> houses;
     private ArrayList<Repair> repairs;
+    private Landlord landlord;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -53,6 +55,9 @@ public class MainActivityLandlord extends AppCompatActivity {
         setContentView(R.layout.activity_main_landlord);
         myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        Intent intent = getIntent();
+        landlord = new Landlord(intent.getStringExtra("LandlordFirstName"), intent.getStringExtra("LandlordLastName"), intent.getStringExtra("LandlordEmail"));
+        getSupportActionBar().setTitle(landlord.getFirstName() + " " + landlord.getLastName());
 
         bottomMenu = findViewById(R.id.navBarLandlord);
         viewPager = findViewById(R.id.containerLandlord);
@@ -69,15 +74,34 @@ public class MainActivityLandlord extends AppCompatActivity {
 
     }
 
+    public Landlord getLandlord(){
+        return this.landlord;
+    }
 
-    public Task<QuerySnapshot> getTenants(){
-        return db.collection("Tenant").get();
+    public void setCurrentPosition(int currentPosition){
+        this.currentPosition = currentPosition;
+    }
+
+    public int getCurrentPosition(){
+        return this.currentPosition;
+    }
+
+
+    public Task<QuerySnapshot> getProfiles(){
+        return db.collection("Profile").get();
+    }
+
+
+    public Task<QuerySnapshot> getTenants(String address){
+        return db.collection("Landlord").document(landlord.getEmail()).collection("Houses").document(address).collection("Tenants").get();
     }
 
 
 
+
+
     public Task<QuerySnapshot> getHouses(){
-        return db.collection("House").get();
+        return db.collection("Landlord").document(landlord.getEmail()).collection("Houses").get();
     }
 
     public Task<QuerySnapshot> getRepairs(){

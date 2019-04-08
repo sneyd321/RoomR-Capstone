@@ -43,7 +43,8 @@ public class ChooseAccountActivity extends AppCompatActivity {
     View.OnClickListener onTenant = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(ChooseAccountActivity.this, "Tenant", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ChooseAccountActivity.this, TenantSignUpActivity.class);
+            startActivity(intent);
         }
     };
 

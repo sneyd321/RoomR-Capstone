@@ -6,92 +6,117 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Tenant {
 
+
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private boolean isSuccessful;
 
     private String firstName;
     private String lastName;
     private String password;
-    private String email;
-    private String bio;
+    private String tenantEmail;
+    private String landlordEmail;
 
-    public Tenant(String firstName, String lastName, String password, String email, String bio){
+
+
+    public Tenant(){
+
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
-        this.email = email;
-        this.bio = bio;
     }
 
-
-    public String validateTenant(){
-        if (this.getFirstName().isEmpty()){
-            return "Please enter a first name.";
-        }
-        if (this.getLastName().isEmpty()){
-            return "Please enter a last name";
-        }
-        if (this.password.isEmpty()){
-            return "Please enter a password";
-        }
-        if (this.email.isEmpty()){
-            return "please enter a email";
-        }
-        if (this.bio.isEmpty()){
-            return "Please enter a bio";
-        }
-        return "";
+    public String getEmail() {
+        return tenantEmail;
     }
 
-    public boolean isSuccessful() {
-        return isSuccessful;
+    public void setEmail(String email) {
+        this.tenantEmail = email;
     }
 
-    public void setSuccessful(boolean successful) {
-        isSuccessful = successful;
+    public Task<QuerySnapshot> verifyLogin(String landlordEmail, String address){
+        return db.collection("Landlord").document(landlordEmail).collection("Houses").document(address).collection("Tenants").get();
     }
-
 
     public Task<Void> addValues(){
         final Map<String, Object> tenant = new HashMap<>();
         tenant.put("FirstName", this.getFirstName());
         tenant.put("LastName", this.getLastName());
         tenant.put("Password", this.password);
-        tenant.put("Email", this.email);
-        tenant.put("Bio", this.bio);
+        tenant.put("Email", this.getEmail());
 
-        final Tenant tenantRef = this;
-        return db.collection("Tenant").document(this.email)
+        return db.collection("Landlord").document(this.landlordEmail).collection("Tenants").document(this.tenantEmail)
                 .set(tenant)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        tenantRef.setSuccessful(true);
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        tenantRef.setSuccessful(false);
+
                     }
                 });
     }
 
 
-    public String getLastName() {
-        return lastName;
+    public String validateTenant(){
+        if (this.firstName.isEmpty()){
+            return "Please enter a first name.";
+        }
+        if (this.lastName.isEmpty()){
+            return "Please enter a first name.";
+        }
+
+        if (this.tenantEmail.isEmpty()){
+            return "Please enter your email address.";
+        }
+        if (this.landlordEmail.isEmpty()){
+            return "Please enter your landlord's email address.";
+        }
+        if (this.password.isEmpty()){
+            return "Please enter a password.";
+        }
+        return "";
     }
 
-    public String getFirstName() {
-        return firstName;
+
+    public String getLandlordEmail() {
+        return landlordEmail;
     }
 
-
+    public void setLandlordEmail(String landlordEmail) {
+        this.landlordEmail = landlordEmail;
+    }
 }
