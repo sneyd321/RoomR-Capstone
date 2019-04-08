@@ -82,10 +82,11 @@ public class MessagRFragment extends Fragment implements MessagrRecycleViewAdapt
 
     public void saveMessage(){
         String message = editText.getText().toString();
+        ChatMessage infoMessage = new ChatMessage(message,"King");
         if (message.isEmpty()){return;}
         Map<String, Object> dataToSave =new HashMap<String, Object>();
         dataToSave.put(MESSAGE_KEY,message);
-        mDocRef.set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
+        mDocRef.set(infoMessage).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getActivity(),"success to read data",Toast.LENGTH_LONG).show();
