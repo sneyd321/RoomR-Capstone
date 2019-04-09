@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -96,5 +97,9 @@ public class Repair {
                         repairRef.setSuccessful(false);
                     }
                 });
+    }
+
+    public Task<QuerySnapshot> getRepairsFirebase(){
+        return db.collection("Repair").get();
     }
 }
