@@ -38,7 +38,7 @@ public class ListTargetChatUserFragment extends Fragment {
                 getFragmentManager()
                                   .beginTransaction()
                                      .addToBackStack(null)  //put back to other fragement
-                                     .replace(R.id.chatuserList, new MessagRFragment(),null)
+                                     .replace(R.id.messageR, new MessagRFragment(),null)
                                         .commit();
             }
         });

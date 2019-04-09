@@ -7,7 +7,7 @@
     tools:context=".TenantFragments.ListTargetChatUserFragment">
     <!--This is a comment-->
 
-    <!--<TextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -16,14 +16,14 @@
         android:text="Select people"
         android:gravity="center"
         android:layout_marginBottom="20dp"
-        android:textSize="18sp"/>-->
+        android:textSize="18sp"/>
     <ListView
         android:id="@+id/chatList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="5dp"
-        android:padding="5dp"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
         android:gravity="center">
 
     </ListView>
