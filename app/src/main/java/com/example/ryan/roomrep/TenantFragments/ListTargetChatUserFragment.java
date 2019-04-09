@@ -11,7 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 
 
@@ -35,11 +37,7 @@ public class ListTargetChatUserFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                getFragmentManager()
-                                  .beginTransaction()
-                                     .addToBackStack(null)  //put back to other fragement
-                                     .replace(R.id.messageR, new MessagRFragment(),null)
-                                        .commit();
+                ((MainActivityTenant)getActivity()).setViewPager(9);
             }
         });
         return view;
