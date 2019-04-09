@@ -22,6 +22,7 @@ import com.example.ryan.roomrep.Classes.Landlord;
 import com.example.ryan.roomrep.Classes.Repair;
 
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
+import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -116,6 +117,7 @@ public class MainActivityLandlord extends AppCompatActivity {
         adapter.addFragment(new HouseDetailFragment(), "House Detail");
         adapter.addFragment(new AddTenantFragment(), "Add Tenant");
         adapter.addFragment(new RepairHistoryLandlordFragment(),"Repair History");
+        adapter.addFragment(new MessagRFragment(), "MessagR");
         viewPager.setAdapter(adapter);
     }
 
