@@ -38,7 +38,12 @@ public class RepairHistoryLandlordFragment extends Fragment {
 
         repairList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        //Task<QuerySnapshot> result = ((MainActivityLandlord)getActivity()).getRepairs();
+        setUpRepairs();
+
+        return view;
+    }
+
+    public void setUpRepairs(){
         Task<QuerySnapshot> result =  db.collection("Repair").get();
         //Request all the documents in the data collection "repair"
         result.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -59,17 +64,13 @@ public class RepairHistoryLandlordFragment extends Fragment {
                     //adapter.setClickListener(this);
                     repairList.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    if (!((MainActivityLandlord)getActivity()).getHouse().isEmpty()){
+                    if (!((MainActivityLandlord)getActivity()).getRepair().isEmpty()){
                         numberofRepairs.setText("Total Repairs: " +  ((MainActivityLandlord)getActivity()).getRepair().size());
                     }
 
                 }
             }
         });
-
-
-
-        return view;
     }
 
 }
