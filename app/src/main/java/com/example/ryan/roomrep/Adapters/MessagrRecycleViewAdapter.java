@@ -42,7 +42,8 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
 
         String animal = mData.get(position);
         holder.myTextView.setText(animal);
-        String name = "Andy";
+        String name = "Ryan";
+
         holder.userName.setText(name);
         holder.time.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
                 infoMessage.getMessageTime()));

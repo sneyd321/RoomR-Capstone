@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -49,6 +50,7 @@ public class MessagRFragment extends Fragment implements MessagrRecycleViewAdapt
     TextView time;
     ChatMessage inputInfo;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +75,20 @@ public class MessagRFragment extends Fragment implements MessagrRecycleViewAdapt
         ////adapter.setClickListener(this);
         messageList.setAdapter(adapter);
         messageList.setItemAnimator(new DefaultItemAnimator());
+        //DocumentReference docRef = db.collection("cities").document("BJ");
+        mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                //City city = documentSnapshot.toObject(City.class);
+                inputInfo = documentSnapshot.toObject(ChatMessage.class);
+                //Toast.makeText(getActivity(), inputInfo.getMessageUser(), Toast.LENGTH_LONG).show();
+                messages.add(inputInfo.getMessageText());
+                //userName.setText("Andy");
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
         return view;
 
 
@@ -82,25 +98,9 @@ public class MessagRFragment extends Fragment implements MessagrRecycleViewAdapt
 
     public void saveMessage(){
         String message = editText.getText().toString();
-        ChatMessage infoMessage = new ChatMessage(message,"King");
+        ChatMessage infoMessage = new ChatMessage(message,"Ryan");
         if (message.isEmpty()){return;}
-        Map<String, Object> dataToSave =new HashMap<String, Object>();
-        dataToSave.put(MESSAGE_KEY,message);
-        mDocRef.set(infoMessage).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getActivity(),"success to read data",Toast.LENGTH_LONG).show();
-                Log.wtf(TAG,"ERROR---------------------------------------------Failed to save");
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(),"fail to read data",Toast.LENGTH_LONG).show();
-                Log.wtf(TAG,"ERROR---------------------------------------------Failed to save", e);
-
-            }
-        });
+        mDocRef.set(infoMessage);
     }
 
     @Override
@@ -113,11 +113,15 @@ public class MessagRFragment extends Fragment implements MessagrRecycleViewAdapt
         @Override
         public void onClick(View v) {
 
+
+
+            saveMessage();
+
+
+
             messages.add(editText.getText().toString());
             //userName.setText("Andy");
             adapter.notifyDataSetChanged();
-            saveMessage();
-
 
             editText.setText("");
 

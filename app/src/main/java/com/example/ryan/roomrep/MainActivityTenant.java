@@ -72,9 +72,9 @@ public class MainActivityTenant extends AppCompatActivity{
         adapter.addFragment(new RepairPictureFragment(), "Repair Photo");
         adapter.addFragment(new ExpertSystemFragment(), "Expert System");
         adapter.addFragment(new TenantRepairFragment(), "Tenant Repair");
-        adapter.addFragment(new ListTargetChatUserFragment(), "List chat user");
-        adapter.addFragment(new SendRepairFragment(), "Send Repair"); //9
         adapter.addFragment(new MessagRFragment(), "MessagR");
+        adapter.addFragment(new SendRepairFragment(), "Send Repair"); //9
+
         viewPager.setAdapter(adapter);
     }
 

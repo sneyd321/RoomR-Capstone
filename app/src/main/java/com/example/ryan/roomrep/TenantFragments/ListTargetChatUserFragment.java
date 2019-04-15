@@ -13,13 +13,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 
 
 public class ListTargetChatUserFragment extends Fragment {
 
-    String[]  chatList ={"Group chat","mike"};
+    String[]  chatList ={"Group chat","Andy"};
 
     private ListView list;
     private TextView playName;
@@ -37,7 +38,7 @@ public class ListTargetChatUserFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ((MainActivityTenant)getActivity()).setViewPager(10);
+                ((MainActivityLandlord)getActivity()).setViewPager(6);
             }
         });
         return view;
