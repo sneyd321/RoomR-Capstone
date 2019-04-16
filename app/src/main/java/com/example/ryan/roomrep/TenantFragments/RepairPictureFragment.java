@@ -243,7 +243,7 @@ public class RepairPictureFragment extends Fragment {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, urlString, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG).show();
                 predictionArray = new ArrayList<>();
                 try{
                     for(int i = 0; i < response.length(); i++){

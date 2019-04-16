@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.Repair;
@@ -39,13 +40,15 @@ public class MainActivityTenant extends AppCompatActivity{
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ArrayList<Repair> repairs;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tenant);
-
+        toolbar = findViewById(R.id.tenantToolbar);
+        setSupportActionBar(toolbar);
         bottomMenu = findViewById(R.id.navBar);
         viewPager = findViewById(R.id.container);
 

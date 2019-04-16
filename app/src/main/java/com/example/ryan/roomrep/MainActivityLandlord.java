@@ -162,12 +162,12 @@ public class MainActivityLandlord extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navMessagR:
-                    setViewPager(8);
+                case R.id.navRepairTrackR:
+                    setViewPager(4);
                     break;
-                case R.id.navSplitR:
+                case R.id.navHouses:
                     break;
-                case R.id.navUseR:
+                case R.id.navNotifyR:
 
                     break;
                 default:

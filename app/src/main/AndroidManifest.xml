@@ -26,7 +26,8 @@
         <activity android:name=".LoginActivities.ChooseAccountActivity" />
         <activity
             android:name=".MainActivityTenant"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".LoginActivities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
