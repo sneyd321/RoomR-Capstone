@@ -38,9 +38,15 @@ public class ListTargetChatUserFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ((MainActivityLandlord)getActivity()).setViewPager(6);
+                if (position == 0) {
+                    ((MainActivityLandlord) getActivity()).setViewPager(7);
+                }
+                if(position==1){
+                    ((MainActivityLandlord) getActivity()).setViewPager(6);
+                }
             }
         });
+
         return view;
     }
 
@@ -53,6 +59,8 @@ public class ListTargetChatUserFragment extends Fragment {
 
 
         list.setAdapter(adapter);
+
+
     }
 
 

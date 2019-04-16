@@ -33,10 +33,12 @@ import static android.support.constraint.Constraints.TAG;
 
 public class MessageLandlord extends Fragment {
 
-    private DocumentReference mDocRef = FirebaseFirestore.getInstance().document("communication/message");
+    private DocumentReference mDocRef = FirebaseFirestore.getInstance().document("communication/message2");
     public static final String MESSAGE_KEY = "message";
-    private ListView list;
+     ListView list;
     ChatMessage globalMessage;
+    FloatingActionButton fab;
+    EditText userInput;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +47,8 @@ public class MessageLandlord extends Fragment {
         View view = inflater.inflate(R.layout.fragment_message_landlord, container, false);
         list = view.findViewById(R.id.list_of_messages);
         //View view = inflater.inflate(R.layout.fragment_messag_r, container, false);
-        FloatingActionButton fab = view.findViewById(R.id.fabLOL);
+         fab = view.findViewById(R.id.fabLOL);
+          userInput= view.findViewById(R.id.inputdataLOL);
 
         mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -66,15 +69,15 @@ public class MessageLandlord extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText inputttttt = view.findViewById(R.id.inputdataLOL);
-                String message = inputttttt.getText().toString();
-                ChatMessage infoMessage = new ChatMessage(message, "King");
+
+                String message = userInput.getText().toString();
+                ChatMessage infoMessage = new ChatMessage(message, "Ryan");
                 if (message.isEmpty()) {
                     return;
                 }
                 ;
                 mDocRef.set(infoMessage);
-                inputttttt.setText("");
+                userInput.setText("");
                 //db.collection("cities").document("LA").set(city);
                 //Map<String, Object> dataToSave =new HashMap<String, Object>();
                 //dataToSave.put(MESSAGE_KEY,new ChatMessage(message,"Fucker"));

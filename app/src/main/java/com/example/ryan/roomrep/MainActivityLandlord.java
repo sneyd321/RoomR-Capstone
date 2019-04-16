@@ -22,6 +22,7 @@ import com.example.ryan.roomrep.Classes.Landlord;
 import com.example.ryan.roomrep.Classes.Repair;
 
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
+import com.example.ryan.roomrep.TenantFragments.AddGroup;
 import com.example.ryan.roomrep.TenantFragments.ListTargetChatUserFragment;
 import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
 import com.example.ryan.roomrep.TenantFragments.MessageLandlord;
@@ -121,7 +122,8 @@ public class MainActivityLandlord extends AppCompatActivity {
         adapter.addFragment(new RepairHistoryLandlordFragment(),"Repair History");
         adapter.addFragment(new ListTargetChatUserFragment(), "List chat user");
         adapter.addFragment(new MessagRFragment(), "MessagR");
-        
+        adapter.addFragment(new MessageLandlord(), "Group chat");
+        adapter.addFragment(new AddGroup(), "Add group");
         viewPager.setAdapter(adapter);
     }
 
