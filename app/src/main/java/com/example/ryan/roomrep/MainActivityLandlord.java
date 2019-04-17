@@ -122,8 +122,8 @@ public class MainActivityLandlord extends AppCompatActivity {
         adapter.addFragment(new RepairHistoryLandlordFragment(),"Repair History");
         adapter.addFragment(new ListTargetChatUserFragment(), "List chat user");
         adapter.addFragment(new MessagRFragment(), "MessagR");
-        adapter.addFragment(new MessageLandlord(), "Group chat");
         adapter.addFragment(new AddGroup(), "Add group");
+        adapter.addFragment(new MessageLandlord(), "Group chat");
         viewPager.setAdapter(adapter);
     }
 

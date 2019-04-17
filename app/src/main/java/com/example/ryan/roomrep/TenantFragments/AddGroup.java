@@ -43,6 +43,7 @@ public class AddGroup extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Successfully Added",
                         Toast.LENGTH_LONG).show();
+                ((MainActivityLandlord) getActivity()).setViewPager(8);
             }
         });
         addpeople();
