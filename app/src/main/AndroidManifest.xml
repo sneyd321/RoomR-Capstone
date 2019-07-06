@@ -21,7 +21,14 @@
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".MainActivityLandlord"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".LoginActivities.LandlordSignUpActivity" />
         <activity android:name=".LoginActivities.ChooseAccountActivity" />
         <activity
@@ -29,11 +36,7 @@
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".LoginActivities.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".TenantFragments.TenantMessagRActivity" />
     </application>

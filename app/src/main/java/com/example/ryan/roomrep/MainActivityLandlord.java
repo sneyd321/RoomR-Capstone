@@ -7,7 +7,11 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.House;
@@ -36,125 +41,76 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
-public class MainActivityLandlord extends AppCompatActivity {
+public class MainActivityLandlord extends AppCompatActivity  {
 
 
     BottomNavigationView bottomMenu;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
     Toolbar myToolbar;
-    private StatePagerAdapter statePagerAdapter;
-    private ViewPager viewPager;
-    private int currentPosition = 0;
-
-    private ArrayList<House> houses;
-    private ArrayList<Repair> repairs;
-    private Landlord landlord;
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_landlord);
-        myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        Intent intent = getIntent();
-        landlord = new Landlord(intent.getStringExtra("LandlordFirstName"), intent.getStringExtra("LandlordLastName"), intent.getStringExtra("LandlordEmail"));
-        getSupportActionBar().setTitle(landlord.getFirstName() + " " + landlord.getLastName());
-
+        myToolbar = findViewById(R.id.toolbarLandlord);
+        drawerLayout = findViewById(R.id.drawer_layout);
         bottomMenu = findViewById(R.id.navBarLandlord);
-        viewPager = findViewById(R.id.containerLandlord);
+        navigationView = findViewById(R.id.nav_view);
 
 
-        statePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
 
 
+
+        navigationView.setNavigationItemSelectedListener(onNavigationMenu);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
-        setupPageAdapter(viewPager);
+        setSupportActionBar(myToolbar);
 
-        houses = new ArrayList<>();
-        repairs = new ArrayList<>();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, myToolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
-    }
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-    public Landlord getLandlord(){
-        return this.landlord;
-    }
+        if (savedInstanceState == null){
 
-    public void setCurrentPosition(int currentPosition){
-        this.currentPosition = currentPosition;
-    }
-
-    public int getCurrentPosition(){
-        return this.currentPosition;
-    }
-
-
-    public Task<QuerySnapshot> getProfiles(){
-        return db.collection("Profile").get();
-    }
-
-
-    public Task<QuerySnapshot> getTenants(String address){
-        return db.collection("Landlord").document(landlord.getEmail()).collection("Houses").document(address).collection("Tenants").get();
-    }
-
-
-
-
-
-    public Task<QuerySnapshot> getHouses(){
-        return db.collection("Landlord").document(landlord.getEmail()).collection("Houses").get();
-    }
-
-    public Task<QuerySnapshot> getRepairs(){
-        return db.collection("Repair").get();
-    }
-
-
-    private void setupPageAdapter(ViewPager pager){
-        StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new HouseFragment(), "House");
-        adapter.addFragment(new AddHouseFragment(), "Add House");
-        adapter.addFragment(new HouseDetailFragment(), "House Detail");
-        adapter.addFragment(new AddTenantFragment(), "Add Tenant");
-        adapter.addFragment(new RepairHistoryLandlordFragment(),"Repair History");
-        adapter.addFragment(new ListTargetChatUserFragment(), "List chat user");
-        adapter.addFragment(new MessagRFragment(), "MessagR");
-        adapter.addFragment(new AddGroup(), "Add group");
-        adapter.addFragment(new MessageLandlord(), "Group chat");
-        viewPager.setAdapter(adapter);
-    }
-
-    public void setViewPager(int fragmentNumber){
-        viewPager.setCurrentItem(fragmentNumber);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.side_menu_landlord, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.lblFindTenants:
-                setViewPager(2);
-                break;
-            case R.id.lblSettingsLandlord:
-                setViewPager(5);
-                break;
-            case R.id.lblLogoutLandlord:
-                setViewPager(0);
-                break;
-            default:
-                return false;
         }
-        return false;
+
+
     }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        super.onBackPressed();
+
+    }
+
+
+
+    private NavigationView.OnNavigationItemSelectedListener onNavigationMenu = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.nav_listings:
+                    Toast.makeText(MainActivityLandlord.this, "My Listings", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_settings:
+                    Toast.makeText(MainActivityLandlord.this, "Settings", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_logout:
+                    Toast.makeText(MainActivityLandlord.this, "Logout", Toast.LENGTH_SHORT).show();
+
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+
+            return true;
+        }
+    };
 
     private BottomNavigationView.OnNavigationItemSelectedListener onBottomMenu = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -163,7 +119,6 @@ public class MainActivityLandlord extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navRepairTrackR:
-                    setViewPager(4);
                     break;
                 case R.id.navHouses:
                     break;
@@ -177,30 +132,8 @@ public class MainActivityLandlord extends AppCompatActivity {
         }
     };
 
-    public ArrayList<House> getHouse(){
-        return houses;
-    }
 
-    public ArrayList<Repair> getRepair(){
-        return repairs;
-    }
 
-    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-        }
-    };
 
 
 }

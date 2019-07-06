@@ -39,10 +39,10 @@ public class ListTargetChatUserFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
-                    ((MainActivityLandlord) getActivity()).setViewPager(7);
+                    //((MainActivityLandlord) getActivity()).setViewPager(7);
                 }
                 if(position==1){
-                    ((MainActivityLandlord) getActivity()).setViewPager(6);
+                    //((MainActivityLandlord) getActivity()).setViewPager(6);
                 }
             }
         });
