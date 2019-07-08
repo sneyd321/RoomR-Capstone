@@ -47,5 +47,18 @@
     
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- String for Houses Fragment -->
+    <string name="houses_greeting">Hello,</string>
+    <string name="houses_add_house">Add House</string>
+    <string name="houses_view_my_listings">View My Listings</string>
+    <!-- Strings for Add Houses Fragment -->
+    <string name="add_house_address">Address</string>
+    <string name="add_house_rent_title">Rent:</string>
+    <string name="add_house_add_utility">Add Utility</string>
+    <string name="add_house_next">Next</string>
+    <!-- Strings for Add Utility Dialog Fragment -->
+    <string name="add_utility_name">Utility Name</string>
+    <string name="add_utility_amount">Amount:</string>
+    <string name="add_utility_add_utility">Add Utility</string>
 
 </resources>
