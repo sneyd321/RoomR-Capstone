@@ -44,6 +44,14 @@
         <item>10</item>
     </string-array>
 
+    <string-array name="utilityFrequency">
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Every Other Month</item>
+        <item>Yearly</item>
+
+    </string-array>
+
     
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -55,10 +63,16 @@
     <string name="add_house_address">Address</string>
     <string name="add_house_rent_title">Rent:</string>
     <string name="add_house_add_utility">Add Utility</string>
-    <string name="add_house_next">Next</string>
+    <string name="add_house_bedrooms_title">Bedrooms:</string>
+    <string name="add_house_bathrooms_title">Bathrooms:</string>
+    <string name="add_house_size">Size</string>
+    <string name="add_house_sqft">SqFt</string>
+    <string name="add_house_amenities_title">Amenities:</string>
+    <string name="add_house_add_house">Add House</string>
     <!-- Strings for Add Utility Dialog Fragment -->
     <string name="add_utility_name">Utility Name</string>
     <string name="add_utility_amount">Amount:</string>
     <string name="add_utility_add_utility">Add Utility</string>
+
 
 </resources>

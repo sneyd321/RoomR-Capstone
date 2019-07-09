@@ -4,9 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.R;
+
+import java.util.ArrayList;
 
 public class Router implements RouterActionListener{
 
@@ -24,8 +27,16 @@ public class Router implements RouterActionListener{
         manageBackstack(housesFragment, navigateBack);
     }
 
+    public void navigateToHouses(boolean navigateBack, House house){
+        HousesFragment housesFragment = new HousesFragment();
+        housesFragment.setRouterAction(this);
+        housesFragment.addHouse(house);
+        manageBackstack(housesFragment, navigateBack);
+    }
+
     public void navigateToAddHouse(boolean navigateBack) {
         AddHouseFragment addHouseFragment = new AddHouseFragment();
+        addHouseFragment.setRouterAction(this);
         manageBackstack(addHouseFragment, navigateBack);
     }
 
@@ -38,7 +49,7 @@ public class Router implements RouterActionListener{
             fragmentTransaction.commit();
         }
         else {
-            fragmentManager.popBackStack(1, 0);
+            fragmentManager.popBackStack();
         }
     }
 
@@ -46,4 +57,11 @@ public class Router implements RouterActionListener{
     public void onNavigateToHousesAdd() {
         navigateToAddHouse(false);
     }
+
+    @Override
+    public void onNavigateToHouses(House house) {
+        navigateToHouses(false, house);
+    }
+
+
 }

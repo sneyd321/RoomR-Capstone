@@ -1,7 +1,6 @@
 package com.example.ryan.roomrep.LandlordFragments;
 
-import com.example.ryan.roomrep.Classes.Utility;
-import com.mysql.jdbc.Util;
+import com.example.ryan.roomrep.Classes.House.Utility;
 
 public interface UtilityDialogActionListener {
 

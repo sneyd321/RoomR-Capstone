@@ -7,84 +7,256 @@
     android:background="@color/White">
 
 
-    <EditText
-        android:id="@+id/edtAddHouseAddress"
+    <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/add_house_address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtRentTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/add_house_rent_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtAddHouseAddress" />
-
-    <SeekBar
-        android:id="@+id/skbAddHouseRent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRentTitle" />
-
-    <TextView
-        android:id="@+id/txtAddHouseSkbOutput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/skbAddHouseRent" />
-
-    <Button
-        android:id="@+id/btnAddHouseAddUtility"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/add_house_add_utility"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtAddHouseSkbOutput" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/add_house_next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcyUtilities"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddHouseAddUtility" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtAddHouseAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@string/add_house_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtRentTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_house_rent_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtAddHouseAddress" />
+
+            <SeekBar
+                android:id="@+id/skbAddHouseRent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRentTitle" />
+
+            <TextView
+                android:id="@+id/txtAddHouseSkbOutput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/skbAddHouseRent" />
+
+            <Button
+                android:id="@+id/btnAddHouseAddUtility"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_house_add_utility"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtAddHouseSkbOutput" />
+
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcyUtilities"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnAddHouseAddUtility" />
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:stretchColumns="*"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcyUtilities">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_house_bedrooms_title"
+                        tools:layout_editor_absoluteX="40dp"
+                        tools:layout_editor_absoluteY="406dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_house_bathrooms_title"
+                        tools:layout_editor_absoluteX="40dp"
+                        tools:layout_editor_absoluteY="406dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <Spinner
+                        android:id="@+id/spnNumberOfBedrooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:layout_editor_absoluteX="8dp"
+                        tools:layout_editor_absoluteY="437dp" />
+
+                    <Spinner
+                        android:id="@+id/spnNumberOfBathrooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:layout_editor_absoluteX="8dp"
+                        tools:layout_editor_absoluteY="437dp" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+            <EditText
+                android:id="@+id/edtAddHouseSize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="number"
+                android:hint="@string/add_house_size"
+                app:layout_constraintEnd_toStartOf="@+id/textView9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/add_house_sqft"
+                app:layout_constraintBottom_toBottomOf="@+id/edtAddHouseSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edtAddHouseSize" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/add_house_amenities_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtAddHouseSize" />
+
+            <TableLayout
+                android:id="@+id/tableLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:stretchColumns="*"
+                app:layout_constraintBottom_toTopOf="@+id/btnAddHouseAddHouse"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+                <TableRow>
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAddHouse1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CheckBox"
+                        tools:layout_editor_absoluteX="74dp"
+                        tools:layout_editor_absoluteY="601dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAddHouse2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CheckBox"
+                        tools:layout_editor_absoluteX="74dp"
+                        tools:layout_editor_absoluteY="601dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAddHouse3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CheckBox"
+                        tools:layout_editor_absoluteX="74dp"
+                        tools:layout_editor_absoluteY="601dp" />
+                </TableRow>
+
+                <TableRow>
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAddHouse4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CheckBox"
+                        tools:layout_editor_absoluteX="74dp"
+                        tools:layout_editor_absoluteY="601dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAddHouse5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CheckBox"
+                        tools:layout_editor_absoluteX="74dp"
+                        tools:layout_editor_absoluteY="601dp" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxAddHouse6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CheckBox"
+                        tools:layout_editor_absoluteX="74dp"
+                        tools:layout_editor_absoluteY="601dp" />
+                </TableRow>
+
+            </TableLayout>
+
+            <Button
+                android:id="@+id/btnAddHouseAddHouse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/add_house_add_house"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>

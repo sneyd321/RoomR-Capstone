@@ -8,9 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.Utility;
+import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.R;
-import com.mysql.jdbc.Util;
 
 import java.util.List;
 

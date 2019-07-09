@@ -9,15 +9,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.Utility;
+import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.R;
-import com.mysql.jdbc.Util;
 
 public class UtilityDialogFragment extends DialogFragment implements SetUtilityDialogActionListener {
 
@@ -29,6 +30,7 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
     Spinner spnFrequency;
     Button btnAddUtility;
     UtilityDialogActionListener dialogActionListener;
+    String selectedFreqency = "Weekly";
 
     @Override
     public void onStart() {
@@ -55,14 +57,30 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
         skbAmount.setMax(MAX_UTILITY);
         skbAmount.setProgress(MAX_UTILITY/2);
 
-
-
+        ArrayAdapter<CharSequence> frequencyAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.utilityFrequency, android.R.layout.simple_spinner_item);
+        frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnFrequency.setOnItemSelectedListener(onFrequencySelected);
+        spnFrequency.setAdapter(frequencyAdapter);
         btnAddUtility.setOnClickListener(onAddUtility);
 
 
         return view;
     }
 
+
+    private Spinner.OnItemSelectedListener onFrequencySelected = new Spinner.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String item = parent.getItemAtPosition(position).toString();
+            selectedFreqency = item;
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     private SeekBar.OnSeekBarChangeListener onSeekBarAmount = new SeekBar.OnSeekBarChangeListener() {
         @Override
@@ -89,7 +107,10 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
         @Override
         public void onClick(View v) {
             if (dialogActionListener != null) {
-                Utility utility = new Utility("Hydro", 25.0, "Weekly");
+
+                String utilityName = edtName.getText().toString();
+                int utilityAmount = Integer.parseInt(txtSkbOutput.getText().toString());
+                Utility utility = new Utility(utilityName, utilityAmount, selectedFreqency);
                 dialogActionListener.setUtility(utility);
                 getDialog().dismiss();
             }

@@ -1,6 +1,7 @@
-package com.example.ryan.roomrep.Classes;
+package com.example.ryan.roomrep.Classes.House;
 
-public class Utility {
+
+public class Utility extends UtilityComponent {
 
     private String name;
     private double amount;
@@ -26,4 +27,6 @@ public class Utility {
     public String getFrequency() {
         return frequency;
     }
+
+
 }
