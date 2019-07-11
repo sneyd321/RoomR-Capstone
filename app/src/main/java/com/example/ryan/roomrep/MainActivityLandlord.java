@@ -50,7 +50,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
         router = new Router(getSupportFragmentManager());
         if (savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_listings);
-            router.navigateToHouses(false);
+            router.navigateToHouses();
         }
 
 
@@ -61,8 +61,6 @@ public class MainActivityLandlord extends AppCompatActivity  {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-
-        router.manageBackstack(null, true);
         super.onBackPressed();
 
 

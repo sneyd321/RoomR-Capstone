@@ -49,7 +49,13 @@
         <item>Monthly</item>
         <item>Every Other Month</item>
         <item>Yearly</item>
+    </string-array>
 
+    <string-array name="utilityName">
+        <item>Hydro</item>
+        <item>Internet</item>
+        <item>Cable</item>
+        <item>Phone Line</item>
     </string-array>
 
     

@@ -24,13 +24,14 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
 
     private final static int MAX_UTILITY = 1000;
 
-    EditText edtName;
+    Spinner spnName;
     SeekBar skbAmount;
     TextView txtSkbOutput;
     Spinner spnFrequency;
     Button btnAddUtility;
     UtilityDialogActionListener dialogActionListener;
     String selectedFreqency = "Weekly";
+    String selectedName = "Hydro";
 
     @Override
     public void onStart() {
@@ -48,7 +49,7 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.utility_dialog_fragment, container, false);
-        edtName = view.findViewById(R.id.edtAddUtilityName);
+        spnName = view.findViewById(R.id.spnAddUtilityName);
         skbAmount = view.findViewById(R.id.skbAddUtility);
         txtSkbOutput = view.findViewById(R.id.txtAddUtilitySkbOutput);
         spnFrequency = view.findViewById(R.id.spnAddUtilitiesPaymentFrequency);
@@ -60,6 +61,15 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
         ArrayAdapter<CharSequence> frequencyAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.utilityFrequency, android.R.layout.simple_spinner_item);
         frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        ArrayAdapter<CharSequence> nameAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.utilityName, android.R.layout.simple_spinner_item);
+        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spnName.setOnItemSelectedListener(onNameSelected);
+        spnName.setAdapter(nameAdapter);
+
         spnFrequency.setOnItemSelectedListener(onFrequencySelected);
         spnFrequency.setAdapter(frequencyAdapter);
         btnAddUtility.setOnClickListener(onAddUtility);
@@ -67,6 +77,19 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
 
         return view;
     }
+
+    private Spinner.OnItemSelectedListener onNameSelected = new Spinner.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            selectedName = parent.getItemAtPosition(position).toString();
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
 
     private Spinner.OnItemSelectedListener onFrequencySelected = new Spinner.OnItemSelectedListener() {
@@ -107,10 +130,8 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
         @Override
         public void onClick(View v) {
             if (dialogActionListener != null) {
-
-                String utilityName = edtName.getText().toString();
                 int utilityAmount = Integer.parseInt(txtSkbOutput.getText().toString());
-                Utility utility = new Utility(utilityName, utilityAmount, selectedFreqency);
+                Utility utility = new Utility(selectedName, utilityAmount, selectedFreqency);
                 dialogActionListener.setUtility(utility);
                 getDialog().dismiss();
             }

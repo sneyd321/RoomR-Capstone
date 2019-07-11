@@ -8,5 +8,8 @@ public interface RouterActionListener {
 
     void onNavigateToHouses(House house);
 
+    void onNavigateToLandlordListings();
+
+
 
 }

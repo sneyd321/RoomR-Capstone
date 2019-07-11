@@ -25,6 +25,7 @@ public class HousesFragment extends Fragment implements SetRouterAction {
 
     Button btnAddHouse;
     RouterActionListener routerActionListener;
+    Button btnViewListings;
 
     RecyclerView rcyHouses;
 
@@ -37,15 +38,19 @@ public class HousesFragment extends Fragment implements SetRouterAction {
         View view = inflater.inflate(R.layout.fragment_house, container, false);
         btnAddHouse = view.findViewById(R.id.btnHousesAddHouse);
         rcyHouses = view.findViewById(R.id.rcyHouses);
+        btnViewListings = view.findViewById(R.id.btnHousesViewListings);
+
+
 
         rcyHouses.setLayoutManager(new LinearLayoutManager(getActivity()));
         HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
         rcyHouses.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
+
         btnAddHouse.setOnClickListener(onAddHouse);
 
-
+        btnViewListings.setOnClickListener(onViewListings);
 
         return view;
     }
@@ -53,23 +58,30 @@ public class HousesFragment extends Fragment implements SetRouterAction {
     private View.OnClickListener onAddHouse = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            routerActionListener.onNavigateToHousesAdd();
+            if (routerActionListener != null){
+                routerActionListener.onNavigateToHousesAdd();
+            }
+
+        }
+    };
+
+
+    private View.OnClickListener onViewListings = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (routerActionListener != null){
+                routerActionListener.onNavigateToLandlordListings();
+            }
         }
     };
 
     @Override
     public void setRouterAction(RouterActionListener routerActionListener) {
-        if (routerActionListener != null) {
-            this.routerActionListener = routerActionListener;
-        }
-
+        this.routerActionListener = routerActionListener;
     }
 
     public void addHouse(House house) {
         this.houses.add(house);
-
-
-
     }
 
 

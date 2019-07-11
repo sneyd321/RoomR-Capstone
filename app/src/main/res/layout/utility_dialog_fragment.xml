@@ -9,11 +9,11 @@
 
     <TextView
         android:id="@+id/txtAddUtilityClose"
+        style="@style/close_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="X"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,30 +30,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtAddUtilityClose">
 
-        <EditText
-            android:id="@+id/edtAddUtilityName"
+        <TextView
+            android:id="@+id/txtUtilityDialogTitle"
+            style="@style/title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Add Utility"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spnAddUtilityName"
+            style="@style/spinner_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/add_utility_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/constraint_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/txtUtilityDialogTitle" />
 
 
         <TextView
             android:id="@+id/txtAddUtilityAmountTitle"
+            style="@style/general_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/add_utility_amount"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edtAddUtilityName" />
+            app:layout_constraintTop_toBottomOf="@+id/spnAddUtilityName" />
 
         <SeekBar
             android:id="@+id/skbAddUtility"
@@ -63,21 +73,23 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtAddUtilityAmountTitle" />
 
         <TextView
             android:id="@+id/txtAddUtilitySkbOutput"
+            style="@style/general_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/skbAddUtility" />
 
         <Spinner
             android:id="@+id/spnAddUtilitiesPaymentFrequency"
+            style="@style/spinner_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -90,6 +102,7 @@
 
         <Button
             android:id="@+id/btnAddUtilityAddUtility"
+            style="@style/button_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -101,6 +114,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnAddUtilitiesPaymentFrequency" />
+
+
     </android.support.constraint.ConstraintLayout>
 
 

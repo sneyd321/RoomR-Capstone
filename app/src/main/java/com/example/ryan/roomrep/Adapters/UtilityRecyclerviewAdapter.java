@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.House.Utility;
@@ -50,6 +51,7 @@ public class UtilityRecyclerviewAdapter extends RecyclerView.Adapter<UtilityRecy
         TextView txtName;
         TextView txtAmount;
         TextView txtFrequency;
+        Button btnRemove;
 
 
 
@@ -58,6 +60,8 @@ public class UtilityRecyclerviewAdapter extends RecyclerView.Adapter<UtilityRecy
             txtName = itemView.findViewById(R.id.txtUtilityName);
             txtAmount = itemView.findViewById(R.id.txtUtilityAmount);
             txtFrequency = itemView.findViewById(R.id.txtUtilityFrequency);
+            btnRemove = itemView.findViewById(R.id.btnHouseRowRemoveUtility);
+            btnRemove.setOnClickListener(onRemove);
             itemView.setOnClickListener(this);
         }
 
@@ -67,6 +71,15 @@ public class UtilityRecyclerviewAdapter extends RecyclerView.Adapter<UtilityRecy
                 clickListener.onItemClick(v, getAdapterPosition());
             }
         }
+
+        private View.OnClickListener onRemove = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.remove(getAdapterPosition());
+                notifyDataSetChanged();
+            }
+        };
+
     }
 
 
@@ -75,7 +88,4 @@ public class UtilityRecyclerviewAdapter extends RecyclerView.Adapter<UtilityRecy
     }
 
 
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }
 }
