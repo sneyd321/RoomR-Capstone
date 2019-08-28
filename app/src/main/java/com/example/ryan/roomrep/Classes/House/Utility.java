@@ -1,7 +1,7 @@
 package com.example.ryan.roomrep.Classes.House;
 
 
-public class Utility extends UtilityComponent {
+public class Utility {
 
     private String name;
     private double amount;

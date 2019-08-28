@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -20,15 +21,19 @@ import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.UtilityRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.House.HouseBuilder;
 import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.Classes.Router.RouterActionListener;
-import com.example.ryan.roomrep.Classes.Router.SetRouterAction;
 import com.example.ryan.roomrep.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 
-
-public class AddHouseFragment extends Fragment implements UtilityDialogActionListener, SetRouterAction {
+public class AddHouseFragment extends Fragment implements UtilityDialogActionListener {
 
 
     private final static int MAX_RENT = 5000;
@@ -41,13 +46,22 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
     Spinner spnBedNumber;
     Spinner spnBathNumber;
     EditText edtSize;
+
+
     Button btnAddHouse;
 
     RouterActionListener routerActionListener;
 
     UtilityRecyclerviewAdapter adapter;
 
+    List<CheckBox> checkBoxList = new ArrayList<>();
+    List<Utility> utilities = new ArrayList<>();
+    int bedNumber = 0;
+    int bathNumber = 0;
+
     House house;
+
+
 
 
     @Nullable
@@ -65,6 +79,13 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         spnBathNumber = view.findViewById(R.id.spnNumberOfBathrooms);
         edtSize = view.findViewById(R.id.edtAddHouseSize);
         btnAddHouse = view.findViewById(R.id.btnAddHouseAddHouse);
+        checkBoxList.add((CheckBox) view.findViewById(R.id.chkAddHouseAmenity1));
+        checkBoxList.add((CheckBox) view.findViewById(R.id.chkAddHouseAmenity2));
+        checkBoxList.add((CheckBox) view.findViewById(R.id.chkAddHouseAmenity3));
+        checkBoxList.add((CheckBox) view.findViewById(R.id.chkAddHouseAmenity4));
+        checkBoxList.add((CheckBox) view.findViewById(R.id.chkAddHouseAmenity5));
+        checkBoxList.add((CheckBox) view.findViewById(R.id.chkAddHouseAmenity6));
+
         btnAddHouse.setOnClickListener(onAddHouse);
 
         skbRent.setOnSeekBarChangeListener(onRentChange);
@@ -72,6 +93,8 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         skbRent.setProgress(MAX_RENT/2);
 
         rcyUtilities.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new UtilityRecyclerviewAdapter(getActivity(), utilities);
+        rcyUtilities.setAdapter(adapter);
 
         ArrayAdapter<CharSequence> bedAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.bedNumbers, android.R.layout.simple_spinner_item);
@@ -81,20 +104,10 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
                 R.array.bathNumbers, android.R.layout.simple_spinner_item);
         bathAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
         spnBedNumber.setAdapter(bedAdapter);
         spnBedNumber.setOnItemSelectedListener(onBedNumberSelected);
         spnBathNumber.setAdapter(bathAdapter);
         spnBathNumber.setOnItemSelectedListener(onBathNumberSelected);
-
-        Utility utility = new Utility("Hydro", 40.0, "Monthly");
-        house = new House();
-        house.add(utility);
-
-        adapter = new UtilityRecyclerviewAdapter(getActivity(), house.getUtilities());
-        rcyUtilities.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
 
         return view;
     }
@@ -104,7 +117,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String item = parent.getItemAtPosition(position).toString();
-            house.setBedNumber(Integer.parseInt(item));
+            bedNumber = Integer.parseInt(item);
         }
 
         @Override
@@ -117,7 +130,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String item = parent.getItemAtPosition(position).toString();
-            house.setBathNumber(Integer.parseInt(item));
+            bathNumber = Integer.parseInt(item);
         }
 
         @Override
@@ -149,12 +162,54 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         }
     };
 
+    private Map<String, Boolean> setAmenities(){
+        Map<String, Boolean> amenities = new LinkedHashMap<>();
+        for (CheckBox checkBox : this.checkBoxList){
+            amenities.put(checkBox.getText().toString(), checkBox.isChecked());
+        }
+        return amenities;
+    }
+
+
+
+
+
+
     private View.OnClickListener onAddHouse = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            house.setAddress(edtAddress.getText().toString());
-            house.setRent(Integer.parseInt(skbOutput.getText().toString()));
-            house.setSize(Integer.parseInt(edtSize.getText().toString()));
+
+            HouseBuilder houseBuilder = new HouseBuilder();
+
+            if (edtAddress.getText() == null) {
+                edtAddress.setError("Please enter an address.");
+                return;
+            }
+
+            if (edtSize.getText() == null) {
+                edtSize.setError("Please enter the size of the available space.");
+            }
+
+
+            int rent = parseInt(skbOutput.getText().toString());
+            int size = parseInt(edtSize.getText().toString());
+            if (rent == 0){
+                skbOutput.setError("Please enter rent greater than 0.");
+                return;
+            }
+
+            if (size == 0){
+                edtSize.setError("Please enter a size greater than 0.");
+                return;
+            }
+
+            String address = edtAddress.getText().toString();
+
+            house = new House(address, rent, size, bedNumber, bathNumber, setAmenities(), utilities);
+            house = houseBuilder.addAmenities(house);
+            house.getAmenityDescription();
+
+
 
             if (routerActionListener != null){
                 routerActionListener.onNavigateToHouses(house);
@@ -163,6 +218,16 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         }
     };
 
+    private int parseInt(String text) {
+        int parsedText;
+        try {
+            parsedText = Integer.parseInt(text);
+            return parsedText;
+        }
+        catch (NullPointerException ex){
+            return 0;
+        }
+    }
 
     private View.OnClickListener onAddUtility = new View.OnClickListener() {
         @Override
@@ -180,13 +245,10 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
 
     @Override
     public void setUtility(Utility utility) {
-        house.add(utility);
-        UtilityRecyclerviewAdapter adapter = new UtilityRecyclerviewAdapter(getActivity(), house.getUtilities());
-        rcyUtilities.setAdapter(adapter);
+        utilities.add(utility);
         adapter.notifyDataSetChanged();
     }
 
-    @Override
     public void setRouterAction(RouterActionListener routerActionListener) {
         this.routerActionListener = routerActionListener;
     }

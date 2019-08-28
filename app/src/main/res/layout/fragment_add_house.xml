@@ -218,26 +218,26 @@
                 <TableRow>
 
                     <CheckBox
-                        android:id="@+id/checkBoxAddHouse1"
+                        android:id="@+id/chkAddHouseAmenity1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CheckBox"
+                        android:text="Pets"
                         tools:layout_editor_absoluteX="74dp"
                         tools:layout_editor_absoluteY="601dp" />
 
                     <CheckBox
-                        android:id="@+id/checkBoxAddHouse2"
+                        android:id="@+id/chkAddHouseAmenity2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CheckBox"
+                        android:text="Smoking"
                         tools:layout_editor_absoluteX="74dp"
                         tools:layout_editor_absoluteY="601dp" />
 
                     <CheckBox
-                        android:id="@+id/checkBoxAddHouse3"
+                        android:id="@+id/chkAddHouseAmenity3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CheckBox"
+                        android:text="Public Transit"
                         tools:layout_editor_absoluteX="74dp"
                         tools:layout_editor_absoluteY="601dp" />
                 </TableRow>
@@ -245,26 +245,26 @@
                 <TableRow>
 
                     <CheckBox
-                        android:id="@+id/checkBoxAddHouse4"
+                        android:id="@+id/chkAddHouseAmenity4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CheckBox"
+                        android:text="Laundry"
                         tools:layout_editor_absoluteX="74dp"
                         tools:layout_editor_absoluteY="601dp" />
 
                     <CheckBox
-                        android:id="@+id/checkBoxAddHouse5"
+                        android:id="@+id/chkAddHouseAmenity5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CheckBox"
+                        android:text="Snow Removal"
                         tools:layout_editor_absoluteX="74dp"
                         tools:layout_editor_absoluteY="601dp" />
 
                     <CheckBox
-                        android:id="@+id/checkBoxAddHouse6"
+                        android:id="@+id/chkAddHouseAmenity6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CheckBox"
+                        android:text="Air Conditioning"
                         tools:layout_editor_absoluteX="74dp"
                         tools:layout_editor_absoluteY="601dp" />
                 </TableRow>

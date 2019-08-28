@@ -1,8 +1,12 @@
 package com.example.ryan.roomrep.Classes.House;
 
-import java.util.ArrayList;
+import com.example.ryan.roomrep.Classes.House.Amenities.Amenity;
 
-public class House extends UtilityComponent {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class House {
 
     private String address;
     private int rent;
@@ -11,25 +15,28 @@ public class House extends UtilityComponent {
     private int bedNumber;
     private int bathNumber;
 
-    private ArrayList<Utility> utilities;
+    private List<Amenity> items = new ArrayList<>();
 
 
-    public House(){
-        address = "";
-        rent = 0;
-        size = 0;
-        bedNumber = 0;
-        bathNumber = 0;
-        utilities = new ArrayList<>();
-    }
+    private List<Utility> utilities;
 
-    public House(String address, int rent, int size, int bedNumber, int bathNumber){
+    private Map<String, Boolean> amenities;
+
+    private int applicants;
+
+
+
+
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities){
         this.address = address;
         this.rent = rent;
         this.size = size;
         this.bedNumber = bedNumber;
         this.bathNumber = bathNumber;
-        utilities = new ArrayList<>();
+        this.amenities = amenities;
+        this.utilities = utilities;
+        this.applicants = 0;
+
     }
 
 
@@ -53,44 +60,58 @@ public class House extends UtilityComponent {
         return bathNumber;
     }
 
-    public ArrayList<Utility> getUtilities() {
+    public List<Utility> getUtilities() {
         return utilities;
     }
 
-    @Override
-    public void add(Utility utility) {
-        utilities.add(utility);
+
+    public Map<String, Boolean> getAmenities() {
+        return amenities;
     }
 
-    @Override
-    public void remove(Utility utility) {
-        utilities.remove(utility);
+    public int getApplicants() {
+        return applicants;
     }
 
-    @Override
-    public Utility getChild(int position) {
-        return utilities.get(position);
+    public void setApplicants(int applicants) {
+        this.applicants = applicants;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+
+    public void addAmenity(Amenity item){
+        items.add(item);
     }
 
-    public void setRent(int rent) {
-        this.rent = rent;
+    public String getAmenityDescription(){
+        String description = "This house offers amenities such as: ";
+        StringBuilder builder = new StringBuilder();
+
+        if (items.size() == 1){
+            description = "This house offers one amenity, " + items.get(0).name() + ".";
+            return description;
+        }
+        if (items.isEmpty()){
+            description = "This house does not offer any amenities.";
+            return description;
+        }
+
+        builder.append(description);
+        int listSize = items.size();
+        for (int i = 0; i < items.size(); i++) {
+            if (i != listSize - 1){
+                builder.append(items.get(i).name() + ", ");
+                continue;
+            }
+            builder.replace(builder.length() - 2, builder.length(), " and ");
+            builder.append(items.get(i).name());
+
+        }
+        return builder.toString() + ".";
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
 
-    public void setBedNumber(int bedNumber) {
-        this.bedNumber = bedNumber;
-    }
 
-    public void setBathNumber(int bathNumber) {
-        this.bathNumber = bathNumber;
-    }
+
 }
 
 

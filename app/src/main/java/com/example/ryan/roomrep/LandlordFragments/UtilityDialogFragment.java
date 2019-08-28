@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.R;
 
-public class UtilityDialogFragment extends DialogFragment implements SetUtilityDialogActionListener {
+public class UtilityDialogFragment extends DialogFragment {
 
     private final static int MAX_UTILITY = 1000;
 
@@ -140,7 +140,7 @@ public class UtilityDialogFragment extends DialogFragment implements SetUtilityD
     };
 
 
-    @Override
+
     public void setDialogActionListener(UtilityDialogActionListener dialogActionListener) {
         this.dialogActionListener = dialogActionListener;
     }

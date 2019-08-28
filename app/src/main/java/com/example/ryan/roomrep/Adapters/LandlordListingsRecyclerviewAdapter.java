@@ -39,13 +39,14 @@ public class LandlordListingsRecyclerviewAdapter extends RecyclerView.Adapter<La
     public void onBindViewHolder(@NonNull LandlordListingsRecyclerviewAdapter.ViewHolder holder, int position) {
         House house = data.get(position);
         holder.txtAddress.setText(house.getAddress());
+        holder.txtApplicants.setText(Integer.toString(house.getApplicants()));
     }
 
 
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

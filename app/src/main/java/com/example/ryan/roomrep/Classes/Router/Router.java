@@ -8,9 +8,11 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
+import com.example.ryan.roomrep.LandlordFragments.TenantProfilesFragment;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Router implements RouterActionListener{
 
@@ -35,28 +37,9 @@ public class Router implements RouterActionListener{
         manageBackstack(housesFragment);
     }
 
-    public void navigateToHouses(House house){
-        if (housesFragment == null){
-            initHouseFragment();
-        }
-        housesFragment.setRouterAction(this);
-        housesFragment.addHouse(house);
-        manageBackstack(housesFragment);
-    }
-
-    public void navigateToAddHouse() {
-        AddHouseFragment addHouseFragment = new AddHouseFragment();
-        addHouseFragment.setRouterAction(this);
-        manageBackstack(addHouseFragment);
-    }
 
 
-    public void navigateToLandlordListings() {
-        LandlordListingsFragment landlordListingsFragment = new LandlordListingsFragment();
-        landlordListingsFragment.setRouterAction(this);
-        manageBackstack(landlordListingsFragment);
 
-    }
 
 
     public void manageBackstack(Fragment fragment) {
@@ -78,17 +61,33 @@ public class Router implements RouterActionListener{
 
     @Override
     public void onNavigateToHousesAdd() {
-        navigateToAddHouse();
+        AddHouseFragment addHouseFragment = new AddHouseFragment();
+        addHouseFragment.setRouterAction(this);
+        manageBackstack(addHouseFragment);
     }
 
     @Override
     public void onNavigateToHouses(House house) {
-        navigateToHouses(house);
+        if (housesFragment == null){
+            initHouseFragment();
+        }
+        housesFragment.setRouterAction(this);
+        housesFragment.addHouse(house);
+        manageBackstack(housesFragment);
     }
 
     @Override
-    public void onNavigateToLandlordListings() {
-        navigateToLandlordListings();
+    public void onNavigateToLandlordListings(List<House> houses) {
+        LandlordListingsFragment landlordListingsFragment = new LandlordListingsFragment();
+        landlordListingsFragment.setHouseList(houses);
+        landlordListingsFragment.setRouterAction(this);
+        manageBackstack(landlordListingsFragment);
+    }
+
+    @Override
+    public void onNavigateToTenantProfile() {
+        TenantProfilesFragment tenantProfilesFragment = new TenantProfilesFragment();
+        manageBackstack(tenantProfilesFragment);
     }
 
 
