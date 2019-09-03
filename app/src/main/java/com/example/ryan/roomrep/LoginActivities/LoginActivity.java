@@ -97,14 +97,17 @@ public class LoginActivity extends AppCompatActivity  {
     View.OnClickListener onLogin = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (ValidateInputs()){
-                final Login login = new Login(userName.getText().toString(), password.getText().toString());
 
-                LoginLandlord(login);
-                //LoginTenant(login);
+            //final Login login = new Login(userName.getText().toString(), password.getText().toString());
+
+            // LoginLandlord(login);
+            //LoginTenant(login);
+            Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
+            startActivity(intent);
 
 
-            }
+
+
         }
     };
 

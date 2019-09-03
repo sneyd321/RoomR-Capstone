@@ -68,7 +68,48 @@ public class TestHouse {
         Assert.assertEquals("Description is not valid on no entries added.", description, "This house does not offer any amenities.");
     }
 
+    @Test
+    public void EmptyAddressTest() {
+        house = new House("", 1234, 1234, 0, 0, null, null);
+        Map<Integer,String> validator = house.getValidator();
+        String expected = validator.get(0);
 
+        Assert.assertEquals("Address empty validation failed", expected, "Please enter an address.");
+
+    }
+
+    @Ignore
+    public void ValidAddressTest() {
+        house = new House("123 AddressName", 1234, 1234, 0, 0, null, null);
+        Map<Integer,String> validator = house.getValidator();
+        String expected = validator.get(1);
+        Assert.assertEquals("Address regex validation failed", expected, "");
+    }
+
+    @Ignore
+    public void InvalidAddressTest() {
+        house = new House("vfadfdasfdasfads", 1234, 1234, 0, 0, null, null);
+        Map<Integer,String> validator = house.getValidator();
+        String expected = validator.get(1);
+        Assert.assertEquals("Address regex validation failed", expected, "Please enter a valid address in the format '123 AddressName'.");
+    }
+
+
+    @Test
+    public void RentIsZeroTest() {
+        house = new House("123 AddressName", 0, 1234, 0, 0, null, null);
+        Map<Integer,String> validator = house.getValidator();
+        String expected = validator.get(2);
+        Assert.assertEquals("Rent validation failed", expected, "Please enter a rent greater than 0.");
+    }
+
+    @Test
+    public void SizeIsZeroTest() {
+        house = new House("123 AddressName", 1324, 0, 0, 0, null, null);
+        Map<Integer,String> validator = house.getValidator();
+        String expected = validator.get(3);
+        Assert.assertEquals("Size validation failed", expected, "Please enter a size greater than 0.");
+    }
 
 
 }

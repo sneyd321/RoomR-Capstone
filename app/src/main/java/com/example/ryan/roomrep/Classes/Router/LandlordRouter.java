@@ -11,16 +11,15 @@ import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
 import com.example.ryan.roomrep.LandlordFragments.TenantProfilesFragment;
 import com.example.ryan.roomrep.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Router implements RouterActionListener{
+public class LandlordRouter implements LandlordRouterAction {
 
 
     FragmentManager fragmentManager;
     HousesFragment housesFragment;
 
-    public Router(FragmentManager fragmentManager){
+    public LandlordRouter(FragmentManager fragmentManager){
         this.fragmentManager = fragmentManager;
     }
 

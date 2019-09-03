@@ -7,14 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ryan.roomrep.Classes.Router.TenantRouter;
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
+
+import java.math.RoundingMode;
 
 
 public class PayRentFragment extends Fragment {
 
 
     Button Confirm;
+
+    private TenantRouterAction actionListener;
 
 
     @Override
@@ -27,7 +33,9 @@ public class PayRentFragment extends Fragment {
         Confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivityTenant)getActivity()).setViewPager(3);
+                if (actionListener != null) {
+                    actionListener.onNavigateToConfirmRent();
+                }
 
             }
         });
@@ -37,4 +45,7 @@ public class PayRentFragment extends Fragment {
     }
 
 
+    public void setActionListener(TenantRouterAction actionListener) {
+        this.actionListener = actionListener;
+    }
 }

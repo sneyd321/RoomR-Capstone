@@ -4,7 +4,7 @@ import com.example.ryan.roomrep.Classes.House.House;
 
 import java.util.List;
 
-public interface RouterActionListener {
+public interface LandlordRouterAction {
 
     void onNavigateToHousesAdd();
 

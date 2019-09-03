@@ -30,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ryan.roomrep.Classes.PhotoManager;
 import com.example.ryan.roomrep.Classes.Prediction;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 
@@ -67,6 +68,7 @@ public class RepairPictureFragment extends Fragment {
 
     private ArrayList<String> predictionLabels = new ArrayList<>();
 
+    private TenantRouterAction actionListener;
 
     public static final int PICTURE_TAKER = 1;
     public static final int PICK_PICTURE = 2;
@@ -136,7 +138,9 @@ public class RepairPictureFragment extends Fragment {
                 byte[] byteArray = stream.toByteArray();
                 repair.setImage(byteArray);
                 ((MainActivityTenant)getActivity()).getRepair().add(repair);
-                ((MainActivityTenant)getActivity()).setViewPager(9);
+                if (actionListener != null) {
+                    actionListener.onNavigateToSendRepair();
+                }
             }else{
                 Toast.makeText(getActivity(), "Please take a photo", Toast.LENGTH_SHORT).show();
             }
@@ -330,5 +334,9 @@ public class RepairPictureFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setActionListener(TenantRouterAction actionListener) {
+        this.actionListener = actionListener;
     }
 }

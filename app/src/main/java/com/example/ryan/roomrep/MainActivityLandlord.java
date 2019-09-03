@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Classes.Router.Router;
+import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 
 public class MainActivityLandlord extends AppCompatActivity  {
 
@@ -22,7 +22,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
     NavigationView navigationView;
 
     Toolbar myToolbar;
-    Router router;
+    LandlordRouter router;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        router = new Router(getSupportFragmentManager());
+        router = new LandlordRouter(getSupportFragmentManager());
         if (savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_listings);
             router.navigateToHouses();

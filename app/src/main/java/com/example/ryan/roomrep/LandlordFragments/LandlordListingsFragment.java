@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordListingsRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.Router.RouterActionListener;
+import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
 
     RecyclerView rcyLandlordListings;
 
-    private RouterActionListener routerActionListener;
+    private LandlordRouterAction routerActionListener;
     private List<House> houses;
     private LandlordListingsRecyclerviewAdapter adapter;
 
@@ -42,7 +42,7 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
     }
 
 
-    public void setRouterAction(RouterActionListener routerActionListener) {
+    public void setRouterAction(LandlordRouterAction routerActionListener) {
         this.routerActionListener = routerActionListener;
     }
 

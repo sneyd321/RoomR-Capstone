@@ -13,12 +13,10 @@ import android.widget.Button;
 
 import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.House.Utility;
-import com.example.ryan.roomrep.Classes.Router.RouterActionListener;
+import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class HousesFragment extends Fragment {
@@ -26,7 +24,7 @@ public class HousesFragment extends Fragment {
 
     Button btnAddHouse;
 
-    RouterActionListener routerActionListener;
+    LandlordRouterAction routerActionListener;
 
     Button btnViewListings;
 
@@ -43,11 +41,12 @@ public class HousesFragment extends Fragment {
         btnAddHouse = view.findViewById(R.id.btnHousesAddHouse);
         rcyHouses = view.findViewById(R.id.rcyHouses);
         btnViewListings = view.findViewById(R.id.btnHousesViewListings);
-        House house = new House("test st.", 0, 0, 0, 0, new HashMap<String, Boolean>(), new ArrayList<Utility>());
-        houses.add(house);
+
 
         rcyHouses.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
+
         rcyHouses.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -77,13 +76,16 @@ public class HousesFragment extends Fragment {
         }
     };
 
-    public void setRouterAction(RouterActionListener routerActionListener) {
+    public void setRouterAction(LandlordRouterAction routerActionListener) {
         this.routerActionListener = routerActionListener;
     }
 
     public void addHouse(House house) {
         this.houses.add(house);
+
     }
+
+
 
 
 }

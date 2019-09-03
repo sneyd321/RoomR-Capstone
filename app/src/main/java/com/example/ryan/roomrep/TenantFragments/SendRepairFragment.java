@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +40,9 @@ public class SendRepairFragment extends Fragment {
     EditText txt_description;
     ImageView img_problem;
     Repair repair;
+
+    private TenantRouterAction actionListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,10 +122,15 @@ public class SendRepairFragment extends Fragment {
             public void onComplete(@NonNull Task<Void> task) {
                 if(repair.isSuccessful()){
                     Toast.makeText(getActivity(),"Repair Problem has been uploaded", Toast.LENGTH_SHORT).show();
-                    ((MainActivityTenant)getActivity()).setViewPager(0);
+                    if (actionListener != null) {
+                        actionListener.onNavigateToSearch();
+                    }
                 }
             }
         });
     }
 
+    public void setActionListener(TenantRouterAction actionListener) {
+        this.actionListener = actionListener;
+    }
 }

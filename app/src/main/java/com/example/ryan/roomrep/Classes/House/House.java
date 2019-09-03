@@ -15,7 +15,7 @@ public class House {
     private int bedNumber;
     private int bathNumber;
 
-    private List<Amenity> items = new ArrayList<>();
+    private transient List<Amenity> items = new ArrayList<>();
 
 
     private List<Utility> utilities;
@@ -23,6 +23,10 @@ public class House {
     private Map<String, Boolean> amenities;
 
     private int applicants;
+
+    private String description;
+
+    private transient String url = "";
 
 
 
@@ -83,16 +87,16 @@ public class House {
     }
 
     public String getAmenityDescription(){
-        String description = "This house offers amenities such as: ";
+        this.description = "This house offers amenities such as: ";
         StringBuilder builder = new StringBuilder();
 
         if (items.size() == 1){
-            description = "This house offers one amenity, " + items.get(0).name() + ".";
-            return description;
+            this.description = "This house offers one amenity, " + items.get(0).name() + ".";
+            return this.description;
         }
         if (items.isEmpty()){
-            description = "This house does not offer any amenities.";
-            return description;
+            this.description = "This house does not offer any amenities.";
+            return this.description;
         }
 
         builder.append(description);
@@ -106,10 +110,22 @@ public class House {
             builder.append(items.get(i).name());
 
         }
-        return builder.toString() + ".";
+        this.description = builder.toString() + ".";
+        return this.description;
     }
 
+    public Map<Integer, String> getValidator() {
+        Validator validator = new HouseValidator();
+        return validator.validateHouse(this);
+    }
 
+    public void setUrl(String url){
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.ryan.roomrep.LandlordFragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,22 +19,24 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryan.roomrep.Adapters.UtilityRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.HouseBuilder;
 import com.example.ryan.roomrep.Classes.House.Utility;
-import com.example.ryan.roomrep.Classes.Router.RouterActionListener;
+import com.example.ryan.roomrep.Classes.Network.AddHouseListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class AddHouseFragment extends Fragment implements UtilityDialogActionListener {
+public class AddHouseFragment extends Fragment implements UtilityDialogActionListener, AddHouseListener {
 
 
     private final static int MAX_RENT = 5000;
@@ -50,7 +53,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
 
     Button btnAddHouse;
 
-    RouterActionListener routerActionListener;
+    LandlordRouterAction routerActionListener;
 
     UtilityRecyclerviewAdapter adapter;
 
@@ -60,9 +63,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
     int bathNumber = 0;
 
     House house;
-
-
-
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -170,6 +171,14 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         return amenities;
     }
 
+    private String validateEditText(EditText editText, String errorMessage) {
+        if (editText.getText().toString().length() == 0) {
+            editText.setError(errorMessage);
+            return errorMessage;
+        }
+        return "";
+    }
+
 
 
 
@@ -180,40 +189,39 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         public void onClick(View v) {
 
             HouseBuilder houseBuilder = new HouseBuilder();
-
-            if (edtAddress.getText() == null) {
-                edtAddress.setError("Please enter an address.");
+            if (!validateEditText(edtAddress, "Please enter an address.").isEmpty()){
                 return;
             }
 
-            if (edtSize.getText() == null) {
-                edtSize.setError("Please enter the size of the available space.");
-            }
-
-
-            int rent = parseInt(skbOutput.getText().toString());
-            int size = parseInt(edtSize.getText().toString());
-            if (rent == 0){
-                skbOutput.setError("Please enter rent greater than 0.");
-                return;
-            }
-
-            if (size == 0){
-                edtSize.setError("Please enter a size greater than 0.");
+            if (!validateEditText(edtSize, "Please enter a size.").isEmpty()) {
                 return;
             }
 
             String address = edtAddress.getText().toString();
+            int rent = parseInt(skbOutput.getText().toString());
+            int size = parseInt(edtSize.getText().toString());
 
             house = new House(address, rent, size, bedNumber, bathNumber, setAmenities(), utilities);
+            Map<Integer, String> validator = house.getValidator();
+            for (Map.Entry<Integer, String> entry : validator.entrySet()){
+                if (!entry.getValue().isEmpty()){
+                    Toast.makeText(getActivity(), entry.getValue(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
             house = houseBuilder.addAmenities(house);
             house.getAmenityDescription();
 
 
 
-            if (routerActionListener != null){
-                routerActionListener.onNavigateToHouses(house);
-            }
+            Network network = new Network();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Add House...");
+            progressDialog.show();
+            network.registerAddHouseListener(AddHouseFragment.this);
+            network.uploadHouse(house);
+
 
         }
     };
@@ -224,7 +232,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
             parsedText = Integer.parseInt(text);
             return parsedText;
         }
-        catch (NullPointerException ex){
+        catch (NumberFormatException ex){
             return 0;
         }
     }
@@ -249,7 +257,21 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         adapter.notifyDataSetChanged();
     }
 
-    public void setRouterAction(RouterActionListener routerActionListener) {
+    public void setRouterAction(LandlordRouterAction routerActionListener) {
         this.routerActionListener = routerActionListener;
     }
+
+    @Override
+    public void onAddHouse(String response) {
+
+        if (routerActionListener != null) {
+            house.setUrl(response);
+            progressDialog.dismiss();
+            routerActionListener.onNavigateToHouses(house);
+        }
+
+
+    }
+
+
 }
