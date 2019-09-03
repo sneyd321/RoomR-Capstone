@@ -71,12 +71,12 @@ public class MessageLandlord extends Fragment {
             public void onClick(View view) {
 
                 String message = userInput.getText().toString();
-                ChatMessage infoMessage = new ChatMessage(message, "Ryan");
+                //ChatMessage infoMessage = new ChatMessage(message, "Ryan");
                 if (message.isEmpty()) {
                     return;
                 }
                 ;
-                mDocRef.set(infoMessage);
+                //mDocRef.set(infoMessage);
                 userInput.setText("");
                 //db.collection("cities").document("LA").set(city);
                 //Map<String, Object> dataToSave =new HashMap<String, Object>();
