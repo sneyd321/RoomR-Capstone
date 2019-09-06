@@ -54,7 +54,7 @@ public class MainActivityTenant extends AppCompatActivity{
         router = new TenantRouter(getSupportFragmentManager());
 
         if (savedInstanceState == null) {
-            router.onNavigateToMessages();
+            router.onNavigateToMessagesPeopleList();
         }
 
     }

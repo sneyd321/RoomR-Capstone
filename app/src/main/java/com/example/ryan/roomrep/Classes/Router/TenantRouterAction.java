@@ -21,6 +21,8 @@ public interface TenantRouterAction {
 
     void onNavigateToMessages();
 
+    void onNavigateToMessagesPeopleList();
+
     void onNavigateToSendRepair();
 
 }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/chatuserList"
+    android:gravity="center_vertical"
     tools:context=".TenantFragments.ListTargetChatUserFragment">
     <!--This is a comment-->
 
@@ -13,11 +14,13 @@
         android:padding="5dp"
         android:layout_marginTop="5dp"
         android:id="@+id/user"
-        android:text="Select people"
+        android:text="Choose your opinions"
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:textSize="18sp"/>
     <ListView
+
+        android:layout_gravity="center_vertical"
         android:id="@+id/chatList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

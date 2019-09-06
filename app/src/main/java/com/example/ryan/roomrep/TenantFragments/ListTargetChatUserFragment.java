@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.Router.TenantRouter;
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
@@ -20,10 +22,14 @@ import com.example.ryan.roomrep.R;
 
 public class ListTargetChatUserFragment extends Fragment {
 
-    String[]  chatList ={"Group chat","Andy"};
+    private String[]  chatList ={"House chatting room","Talk to Landlord"};
+
+    private TenantRouterAction actionListener;
 
     private ListView list;
-    private TextView playName;
+
+    //TenantRouter router;
+
 
 
 
@@ -39,11 +45,22 @@ public class ListTargetChatUserFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
+                    if (actionListener != null) {
+                        actionListener.onNavigateToMessages();
+                    }
+                    //router.onNavigateToMessages();
+                    //Toast.makeText(getActivity(),"POSTION 1", Toast.LENGTH_SHORT).show();
                     //((MainActivityLandlord) getActivity()).setViewPager(7);
                 }
                 if(position==1){
+                    if (actionListener != null) {
+                        actionListener.onNavigateToMessages();
+                    }
+                    //router.onNavigateToMessages();
                     //((MainActivityLandlord) getActivity()).setViewPager(6);
                 }
+
+
             }
         });
 
@@ -62,6 +79,11 @@ public class ListTargetChatUserFragment extends Fragment {
 
 
     }
+    public void setActionListener(TenantRouterAction actionListener) {
+
+                this.actionListener = actionListener;
+
+            }
 
 
 
