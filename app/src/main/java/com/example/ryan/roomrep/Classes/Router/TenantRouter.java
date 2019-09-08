@@ -9,6 +9,7 @@ import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ExpertSystemFragment;
+import com.example.ryan.roomrep.TenantFragments.ListTargetChatUserFragment;
 import com.example.ryan.roomrep.TenantFragments.ListingsFragment;
 import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
 import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
@@ -16,6 +17,7 @@ import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
 import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
+
 
 import java.util.List;
 
@@ -108,7 +110,18 @@ public class TenantRouter implements TenantRouterAction {
     public void onNavigateToMessages() {
         MessagRFragment messagRFragment = new MessagRFragment();
         //messagRFragment.setActionListener(this);
+
         manageBackstack(messagRFragment);
+
+    }
+
+    @Override
+    public void onNavigateToMessagesPeopleList() {
+
+        ListTargetChatUserFragment listTargetChatUserFragment = new ListTargetChatUserFragment();
+        listTargetChatUserFragment.setActionListener(this);
+
+        manageBackstack(listTargetChatUserFragment);
     }
 
     @Override
