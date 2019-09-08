@@ -10,15 +10,15 @@
 
     <TextView
         android:id="@+id/txtLandlordSignUpTitle"
-        android:textColor="@color/White"
-        android:layout_width="294dp"
-        android:layout_height="59dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Sign Up"
         android:textAlignment="center"
-        android:textSize="24dp"
+        android:textColor="@color/White"
+        android:textSize="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,109 +26,105 @@
 
     <EditText
         android:id="@+id/edtLSUfirstName"
+        style="@style/sign_up_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp"
+        android:text="Ryan"
         android:hint="First Name"
-        android:textColor="@color/White"
+        app:layout_constraintBottom_toTopOf="@+id/edtLSUlastName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLandlordSignUpTitle" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edtLSUlastName"
-        android:textColor="@color/White"
-        android:layout_width="match_parent"
+        style="@style/sign_up_edittext"
+        android:layout_width="0dp"
+        android:text="Sneyd"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp"
         android:hint="Last Name"
+        app:layout_constraintBottom_toTopOf="@+id/edtLSUpassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLSUfirstName" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edtLSUpassword"
-        android:layout_width="match_parent"
+        style="@style/sign_up_edittext"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textVisiblePassword"
+        android:layout_marginBottom="16dp"
+        android:text="aaaaaa"
         android:hint="Password"
-        android:textColor="@color/White"
+        app:layout_constraintBottom_toTopOf="@+id/edtLSUpassword2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLSUlastName" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edtLSUpassword2"
-        android:layout_width="match_parent"
+        style="@style/sign_up_edittext"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:text="aaaaaa"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textVisiblePassword"
+        android:layout_marginBottom="16dp"
         android:hint="Re-Type Password"
-        android:textColor="@color/White"
+        app:layout_constraintBottom_toTopOf="@+id/edtLSUemail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLSUpassword" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edtLSUemail"
-        android:layout_width="match_parent"
+        style="@style/sign_up_edittext"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
+        android:layout_marginBottom="64dp"
+        android:text="rts1234567@hotmail.com"
         android:hint="E-mail"
-        android:textColor="@color/White"
+        app:layout_constraintBottom_toTopOf="@+id/btnLSUsignup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLSUpassword2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnLSUsignup"
-        android:layout_width="match_parent"
+        style="@style/button_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         android:text="Sign Up"
+        app:layout_constraintBottom_toTopOf="@+id/txtLSUback"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLSUemail" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtLSUback"
-        android:textColor="@color/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="back"
+        android:padding="8dp"
+        android:text="Back"
+        android:textColor="@color/White"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLSUsignup" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

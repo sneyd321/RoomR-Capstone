@@ -8,7 +8,9 @@ public interface LandlordRouterAction {
 
     void onNavigateToHousesAdd();
 
-    void onNavigateToHouses(House house);
+    void onAddHouseToHouses(House house);
+
+    void onNavigateToHouses();
 
     void onNavigateToLandlordListings(List<House> houses);
 

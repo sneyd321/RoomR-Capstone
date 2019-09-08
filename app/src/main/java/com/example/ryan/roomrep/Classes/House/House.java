@@ -1,32 +1,32 @@
 package com.example.ryan.roomrep.Classes.House;
 
+
 import com.example.ryan.roomrep.Classes.House.Amenities.Amenity;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 public class House {
 
+    private int id;
     private String address;
     private int rent;
     private int size;
-
     private int bedNumber;
     private int bathNumber;
+    private int applicants;
+
+    private String description;
+    private String url = "";
 
     private transient List<Amenity> items = new ArrayList<>();
-
 
     private List<Utility> utilities;
 
     private Map<String, Boolean> amenities;
-
-    private int applicants;
-
-    private String description;
-
-    private transient String url = "";
 
 
 
@@ -42,6 +42,7 @@ public class House {
         this.applicants = 0;
 
     }
+
 
 
     public String getAddress() {
@@ -126,6 +127,7 @@ public class House {
     public String getUrl() {
         return this.url;
     }
+
 
 
 }

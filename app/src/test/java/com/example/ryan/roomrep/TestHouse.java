@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep;
 
+import android.content.Context;
+
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.HouseBuilder;
 
@@ -12,7 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TestHouse {
+public class TestHouse  {
 
 
     private Map<String, Boolean> amenities;
@@ -110,6 +112,8 @@ public class TestHouse {
         String expected = validator.get(3);
         Assert.assertEquals("Size validation failed", expected, "Please enter a size greater than 0.");
     }
+
+
 
 
 }

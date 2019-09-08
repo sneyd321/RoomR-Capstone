@@ -15,7 +15,7 @@ public class Login {
     private String userName;
     private String password;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
 
     public Login(String userName, String password){
@@ -23,18 +23,6 @@ public class Login {
         this.setPassword(password);
 
     }
-
-
-    public Task<QuerySnapshot> GetLandlordAccountInfo(){
-
-        return db.collection("Landlord").get();
-    }
-
-    public Task<QuerySnapshot> GetTenantAccountInfo(String landlord){
-
-        return db.collection("Landlord").document(landlord).collection("Tenants").get();
-    }
-
 
 
 

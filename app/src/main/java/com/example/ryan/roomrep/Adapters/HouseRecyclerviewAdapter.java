@@ -13,6 +13,7 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -38,7 +39,11 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
     @Override
     public void onBindViewHolder(@NonNull  HouseRecyclerviewAdapter.ViewHolder holder, int position) {
         House house = data.get(position);
-        Picasso.get().load(house.getUrl()).into(holder.imgHouse);
+        if (house.getUrl().isEmpty()){
+           return;
+        }
+
+        Picasso.get().load(house.getUrl()).placeholder(R.drawable.house).noFade().into(holder.imgHouse);
         holder.txtAddress.setText(house.getAddress());
     }
 

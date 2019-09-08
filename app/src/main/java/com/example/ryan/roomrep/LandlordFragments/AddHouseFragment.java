@@ -267,7 +267,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         if (routerActionListener != null) {
             house.setUrl(response);
             progressDialog.dismiss();
-            routerActionListener.onNavigateToHouses(house);
+            routerActionListener.onAddHouseToHouses(house);
         }
 
 

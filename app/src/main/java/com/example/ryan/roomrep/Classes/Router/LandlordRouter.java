@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
@@ -21,24 +22,8 @@ public class LandlordRouter implements LandlordRouterAction {
 
     public LandlordRouter(FragmentManager fragmentManager){
         this.fragmentManager = fragmentManager;
-    }
-
-    private void initHouseFragment(){
         housesFragment = new HousesFragment();
     }
-
-
-    public void navigateToHouses(){
-        if (housesFragment == null){
-            initHouseFragment();
-        }
-        housesFragment.setRouterAction(this);
-        manageBackstack(housesFragment);
-    }
-
-
-
-
 
 
     public void manageBackstack(Fragment fragment) {
@@ -66,14 +51,18 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onNavigateToHouses(House house) {
-        if (housesFragment == null){
-            initHouseFragment();
-        }
+    public void onAddHouseToHouses(House house) {
         housesFragment.setRouterAction(this);
         housesFragment.addHouse(house);
         manageBackstack(housesFragment);
     }
+
+    @Override
+    public void onNavigateToHouses() {
+        housesFragment.setRouterAction(this);
+        manageBackstack(housesFragment);
+    }
+
 
     @Override
     public void onNavigateToLandlordListings(List<House> houses) {

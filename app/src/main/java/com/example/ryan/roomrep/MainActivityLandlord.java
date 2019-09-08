@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 
 public class MainActivityLandlord extends AppCompatActivity  {
@@ -23,6 +24,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
 
     Toolbar myToolbar;
     LandlordRouter router;
+    Landlord landlord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,8 @@ public class MainActivityLandlord extends AppCompatActivity  {
         navigationView = findViewById(R.id.nav_view);
 
 
-
+        Bundle bundle = getIntent().getExtras();
+        landlord = bundle.getParcelable("LANDLORD_DATA");
 
 
         navigationView.setNavigationItemSelectedListener(onNavigationMenu);
@@ -50,10 +53,14 @@ public class MainActivityLandlord extends AppCompatActivity  {
         router = new LandlordRouter(getSupportFragmentManager());
         if (savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_listings);
-            router.navigateToHouses();
+            router.onNavigateToHouses();
         }
 
 
+    }
+
+    public Landlord getLandlord(){
+        return this.landlord;
     }
 
     @Override

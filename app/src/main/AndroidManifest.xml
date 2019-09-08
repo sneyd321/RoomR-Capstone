@@ -25,7 +25,8 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".LoginActivities.LandlordSignUpActivity" />
+        <activity android:name=".LoginActivities.LandlordSignUpActivity" >
+        </activity>
         <activity android:name=".LoginActivities.ChooseAccountActivity" />
         <activity
             android:name=".MainActivityTenant"
