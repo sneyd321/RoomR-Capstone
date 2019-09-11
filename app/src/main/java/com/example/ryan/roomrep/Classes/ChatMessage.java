@@ -18,6 +18,7 @@ public class ChatMessage {
     private String messageText;
     private String messageUser;
     private String messageTime;
+    private String chatRoomName;
     private boolean isSuccessful;
 
 
@@ -26,6 +27,13 @@ public class ChatMessage {
         this.messageUser = messageUser;
         this.messageTime = messageTime;
 
+    }
+
+    public ChatMessage(String messageText, String messageUser, String messageTime, String chatRoomName){
+        this.messageText = messageText;
+        this.messageUser = messageUser;
+        this.messageTime = messageTime;
+        this.chatRoomName = chatRoomName;
     }
 
     public ChatMessage(){
@@ -61,6 +69,10 @@ public class ChatMessage {
         this.messageTime = messageTime;
     }
 
+    public String getChatRoomName(){return  chatRoomName;}
+
+    public void setChatRoomName(String chatRoomName){this.chatRoomName = chatRoomName;}
+
     public boolean isSuccessful() {
         return isSuccessful;
     }
@@ -68,6 +80,7 @@ public class ChatMessage {
     public void setSuccessful(boolean successful) {
         isSuccessful = successful;
     }
+
     public Task<Void> addValues(){
         final Map<String, Object> message = new HashMap<>();
         message.put("messageText", this.messageText);
@@ -77,6 +90,30 @@ public class ChatMessage {
 
         final ChatMessage chatMessage = this;
         return db.collection("Test").document(this.messageTime)
+                .set(message)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        chatMessage.setSuccessful(true);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        chatMessage.setSuccessful(false);
+                    }
+                });
+    }
+
+    public Task<Void> addNewValues(){
+        final Map<String, Object> message = new HashMap<>();
+        message.put("messageText", this.messageText);
+        message.put("messageTime", this.messageTime);
+        message.put("messageUser", this.messageUser);
+
+
+        final ChatMessage chatMessage = this;
+        return db.collection("Test2").document("ChatRoom").collection(chatRoomName).document(this.messageTime)
                 .set(message)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

@@ -38,6 +38,8 @@ public class MainActivityTenant extends AppCompatActivity{
     private ArrayList<Repair> repairs;
     Toolbar toolbar;
 
+    public String chatRoomNameInMainActivityTenant = "TheRegularOne";
+    //This String is an example when login activity passed data to MainActivityTenant
 
 
 
@@ -52,6 +54,8 @@ public class MainActivityTenant extends AppCompatActivity{
         repairs = new ArrayList<>();
 
         router = new TenantRouter(getSupportFragmentManager());
+
+
 
         if (savedInstanceState == null) {
             router.onNavigateToListings();
@@ -97,7 +101,8 @@ public class MainActivityTenant extends AppCompatActivity{
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navMessagR:
-                    router.onNavigateToMessages();
+                    //router.onNavigateToMessages();
+                    router.onNavigateToMessagesPeopleList();
                     break;
                 case R.id.navSplitR:
                     break;
@@ -116,6 +121,8 @@ public class MainActivityTenant extends AppCompatActivity{
     public ArrayList<Repair> getRepair(){
         return repairs;
     }
+
+    //public String GetChatRoomNameInMainActivityTenant(){return chatRoomNameInMainActivityTenant;}
 
 
 

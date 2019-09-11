@@ -61,6 +61,8 @@ public class MessagRFragment extends Fragment
     ArrayList<ChatMessage> infMessages = new ArrayList<>();
     Button send;
     EditText editText;
+    //String chatRoomName;
+            //String chatRoomName = "TheTestOne";
     //TextView userName;
     //TextView time;
     //ChatMessage inputInfo;
@@ -69,7 +71,10 @@ public class MessagRFragment extends Fragment
             @Override
             public void onStart() {
                 super.onStart();
-                db.collection("Test").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                String chatRoomName = ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant;
+                        // ((MainActivityTenant)getActivity()).getRepair().add(repair);
+                db.collection("Test2").document("ChatRoom").collection(chatRoomName).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                //db.collection("Test").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
@@ -132,12 +137,15 @@ public class MessagRFragment extends Fragment
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String chatRoomName = ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant;
+
                             if(!editText.getText().toString().equals("")){
                                 //Toast.makeText(getActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
                 messageSend= new ChatMessage();
 
                 messageSend.setMessageUser("FATHER");
                 messageSend.setMessageText(editText.getText().toString());
+                messageSend.setChatRoomName(chatRoomName);
 
                 String sendDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                 DateFormat sendTime = new SimpleDateFormat("hh:mm:ss ");
@@ -218,7 +226,9 @@ public class MessagRFragment extends Fragment
 //    };
 
     public void getMessageFromDataBase(){
-        Task<QuerySnapshot> result =  db.collection("Test").get();
+        String chatRoomName = ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant;
+        Task<QuerySnapshot> result = db.collection("Test2").document("ChatRoom").collection(chatRoomName).get();
+        //Task<QuerySnapshot> result =  db.collection("Test").get();
         //Task<QuerySnapshot> result =  db.collection("Repair").get();
         //Request all the documents in the data collection "communication"
         result.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -251,7 +261,8 @@ public class MessagRFragment extends Fragment
     }
 
             private void sendDataTodataBase(){
-                Task<Void> result = messageSend.addValues();
+                //Task<Void> result = messageSend.addValues();
+                Task<Void> result = messageSend.addNewValues();
                 result.addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
