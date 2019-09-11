@@ -25,6 +25,7 @@ import com.example.ryan.roomrep.Adapters.UtilityRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.HouseBuilder;
 import com.example.ryan.roomrep.Classes.House.Utility;
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.AddHouseListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
@@ -64,6 +65,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
 
     House house;
     ProgressDialog progressDialog;
+    Landlord landlord;
 
     @Nullable
     @Override
@@ -201,7 +203,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
             int rent = parseInt(skbOutput.getText().toString());
             int size = parseInt(edtSize.getText().toString());
 
-            house = new House(address, rent, size, bedNumber, bathNumber, setAmenities(), utilities);
+            house = new House(address, rent, size, bedNumber, bathNumber, setAmenities(), utilities, landlord.getEmail());
             Map<Integer, String> validator = house.getValidator();
             for (Map.Entry<Integer, String> entry : validator.entrySet()){
                 if (!entry.getValue().isEmpty()){
@@ -259,6 +261,10 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
 
     public void setRouterAction(LandlordRouterAction routerActionListener) {
         this.routerActionListener = routerActionListener;
+    }
+
+    public void setLandlord(Landlord landlord) {
+        this.landlord = landlord;
     }
 
     @Override

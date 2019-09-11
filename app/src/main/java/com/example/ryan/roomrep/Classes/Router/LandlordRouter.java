@@ -44,9 +44,10 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onNavigateToHousesAdd() {
+    public void onNavigateToHousesAdd(Landlord landlord) {
         AddHouseFragment addHouseFragment = new AddHouseFragment();
         addHouseFragment.setRouterAction(this);
+        addHouseFragment.setLandlord(landlord);
         manageBackstack(addHouseFragment);
     }
 
@@ -58,8 +59,9 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onNavigateToHouses() {
+    public void onNavigateToHouses(Landlord landlord) {
         housesFragment.setRouterAction(this);
+        housesFragment.setLandlord(landlord);
         manageBackstack(housesFragment);
     }
 

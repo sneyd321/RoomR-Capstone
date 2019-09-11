@@ -37,7 +37,13 @@ public class MainActivityLandlord extends AppCompatActivity  {
 
 
         Bundle bundle = getIntent().getExtras();
-        landlord = bundle.getParcelable("LANDLORD_DATA");
+        if (bundle == null){
+            landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
+        }
+        else {
+            landlord = bundle.getParcelable("LANDLORD_DATA");
+        }
+
 
 
         navigationView.setNavigationItemSelectedListener(onNavigationMenu);
@@ -53,15 +59,13 @@ public class MainActivityLandlord extends AppCompatActivity  {
         router = new LandlordRouter(getSupportFragmentManager());
         if (savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_listings);
-            router.onNavigateToHouses();
+            router.onNavigateToHouses(landlord);
         }
 
 
     }
 
-    public Landlord getLandlord(){
-        return this.landlord;
-    }
+
 
     @Override
     public void onBackPressed() {

@@ -2,6 +2,7 @@ package com.example.ryan.roomrep.Classes.House;
 
 
 import com.example.ryan.roomrep.Classes.House.Amenities.Amenity;
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 
 
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import java.util.Map;
 
 public class House {
 
-    private int id;
     private String address;
     private int rent;
     private int size;
@@ -28,10 +28,12 @@ public class House {
 
     private Map<String, Boolean> amenities;
 
+    private String landlordEmail;
 
 
 
-    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities){
+
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail){
         this.address = address;
         this.rent = rent;
         this.size = size;
@@ -40,6 +42,7 @@ public class House {
         this.amenities = amenities;
         this.utilities = utilities;
         this.applicants = 0;
+        this.landlordEmail = landlordEmail;
 
     }
 
@@ -129,7 +132,9 @@ public class House {
     }
 
 
-
+    public String getLandlordEmail() {
+        return landlordEmail;
+    }
 }
 
 

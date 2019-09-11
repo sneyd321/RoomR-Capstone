@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     EditText edtPassword;
     EditText edtUserName;
     Button btnTempTenantLogin;
+    Button btnTempLandlordLogin;
 
 
 
@@ -63,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         edtUserName = findViewById(R.id.edtUsername);
         btnTempTenantLogin = findViewById(R.id.button2);
         btnTempTenantLogin.setOnClickListener(onTenantLogin);
+        btnTempLandlordLogin = findViewById(R.id.button5);
+        btnTempLandlordLogin.setOnClickListener(onLandlordLogin);
 
 
 
@@ -72,6 +75,14 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
 
     }
+
+    View.OnClickListener onLandlordLogin = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener onTenantLogin = new OnClickListener() {
         @Override

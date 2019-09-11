@@ -24,7 +24,8 @@ import okhttp3.Response;
 
 public class Network {
 
-    private final String SERVER_URL = "http://10.16.27.189:8080/";
+    private final String SERVER_URL = "http://10.16.27.88:8080/";
+
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private AddHouseListener addHouseListener;
@@ -77,12 +78,14 @@ public class Network {
     }
 
 
-    public void getLandlordHouses(){
+    public void getLandlordHouses(Landlord landlord){
 
-
+        Gson gson = new Gson();
+        String json = gson.toJson(landlord);
+        RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(SERVER_URL + "GetHouse/" + "abc")
-                .get()
+                .post(body)
                 .build();
 
         OkHttpClient client = new OkHttpClient();

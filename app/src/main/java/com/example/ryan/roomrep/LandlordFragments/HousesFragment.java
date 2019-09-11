@@ -38,9 +38,11 @@ public class HousesFragment extends Fragment implements HouseMainListener {
 
     RecyclerView rcyHouses;
 
+    Button btnNavigateAddTenant;
+
     private List<House> houses = new ArrayList<>();
 
-
+    Landlord landlord;
 
     @Nullable
     @Override
@@ -50,12 +52,12 @@ public class HousesFragment extends Fragment implements HouseMainListener {
         btnAddHouse = view.findViewById(R.id.btnHousesAddHouse);
         rcyHouses = view.findViewById(R.id.rcyHouses);
         btnViewListings = view.findViewById(R.id.btnHousesViewListings);
+        btnNavigateAddTenant = view.findViewById(R.id.button6);
 
-        Landlord landlord = ((MainActivityLandlord)getActivity()).getLandlord();
 
         Network network = new Network();
         network.registerHouseListener(this);
-        network.getLandlordHouses();
+        network.getLandlordHouses(landlord);
 
 
         rcyHouses.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -72,11 +74,18 @@ public class HousesFragment extends Fragment implements HouseMainListener {
         return view;
     }
 
+    private View.OnClickListener onNavigateToAddTenant = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
+
     private View.OnClickListener onAddHouse = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (routerActionListener != null){
-                routerActionListener.onNavigateToHousesAdd();
+                routerActionListener.onNavigateToHousesAdd(landlord);
             }
         }
     };
@@ -98,6 +107,10 @@ public class HousesFragment extends Fragment implements HouseMainListener {
     public void addHouse(House house) {
         this.houses.add(house);
 
+    }
+
+    public void setLandlord(Landlord landlord) {
+        this.landlord = landlord;
     }
 
 
