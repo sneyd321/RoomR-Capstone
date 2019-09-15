@@ -1,90 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".TenantFragments.SearchFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/txtSearchTitle"
+        style="@style/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="28sp"
+        android:text="Search Listings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spnProvinces"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        style="@style/spinner_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSearchTitle" />
+
+    <Spinner
+        android:id="@+id/cities"
+        style="@style/spinner_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnProvinces" />
+
+    <TextView
+        android:id="@+id/textView14"
+        style="@style/title_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Province:" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Range:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cities" />
 
-        <Spinner
-            android:id="@+id/spnProvinces"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <SeekBar
+        android:id="@+id/skbRange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="City:" />
+    <TextView
+        android:id="@+id/txtRange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="200km"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skbRange" />
 
-        <Spinner
-            android:id="@+id/cities"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textView15"
+        style="@style/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Price:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRange" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Range:" />
+    <SeekBar
+        android:id="@+id/skbPriceRange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-        <SeekBar
-            android:id="@+id/skbRange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/txtPriceRange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="$500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skbPriceRange" />
 
-        <TextView
-            android:id="@+id/txtRange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="200km" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Price:" />
-
-        <SeekBar
-            android:id="@+id/skbPriceRange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/txtPriceRange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="$500" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Amenities" />
-
-        <CheckBox
-            android:id="@+id/chkSnowRemoval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Snow Removal" />
-
-        <CheckBox
-            android:id="@+id/chkHeating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Heating" />
+    <TextView
+        android:id="@+id/textView13"
+        style="@style/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Amenities:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPriceRange" />
 
 
+    <TableLayout
+        android:id="@+id/tableLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:stretchColumns="*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
 
-        <Button
-            android:id="@+id/btnSearchListings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Search" />
-    </LinearLayout>
+        <TableRow>
 
-</FrameLayout>
+            <CheckBox
+                android:id="@+id/chkSearchAmenity1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pets"
+                tools:layout_editor_absoluteX="74dp"
+                tools:layout_editor_absoluteY="601dp" />
+
+            <CheckBox
+                android:id="@+id/chkSearchAmenity2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Smoking"
+                tools:layout_editor_absoluteX="74dp"
+                tools:layout_editor_absoluteY="601dp" />
+
+            <CheckBox
+                android:id="@+id/chkSearchAmenity3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Public Transit"
+                tools:layout_editor_absoluteX="74dp"
+                tools:layout_editor_absoluteY="601dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <CheckBox
+                android:id="@+id/chkSearchAmenity4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Laundry"
+                tools:layout_editor_absoluteX="74dp"
+                tools:layout_editor_absoluteY="601dp" />
+
+            <CheckBox
+                android:id="@+id/chkSearchAmenity5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Snow Removal"
+                tools:layout_editor_absoluteX="74dp"
+                tools:layout_editor_absoluteY="601dp" />
+
+            <CheckBox
+                android:id="@+id/chkSearchAmenity6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Air Conditioning"
+                tools:layout_editor_absoluteX="74dp"
+                tools:layout_editor_absoluteY="601dp" />
+        </TableRow>
+
+    </TableLayout>
+
+
+    <Button
+        android:id="@+id/btnSearchListings"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        style="@style/button_layout"
+        android:text="Search"
+        app:layout_constraintBottom_toTopOf="@+id/textView18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout3" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:padding="8dp"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

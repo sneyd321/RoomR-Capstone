@@ -3,7 +3,10 @@ package com.example.ryan.roomrep.Classes.Network;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
+import com.example.ryan.roomrep.Classes.Profile.Profile;
+import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
+import com.example.ryan.roomrep.TenantFragments.AddProfileFragment;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,13 +27,15 @@ import okhttp3.Response;
 
 public class Network {
 
-    private final String SERVER_URL = "http://10.16.27.88:8080/";
+    private final String SERVER_URL = "http://10.16.26.209:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     private AddHouseListener addHouseListener;
     private HouseMainListener getHouseListener;
     private LoginListener loginListener;
+    private AddProfileListener addProfileListener;
+    private PostListingListener postListingListener;
 
     public void registerAddHouseListener(AddHouseListener addHouseListener){
         this.addHouseListener = addHouseListener;
@@ -42,6 +47,14 @@ public class Network {
 
     public void registerLoginListener(LoginListener loginListener){
         this.loginListener = loginListener;
+    }
+
+    public void registerAddProfileListener(AddProfileListener addProfileListener) {
+        this.addProfileListener = addProfileListener;
+    }
+
+    public void registerPostListingListener(PostListingListener postListingListener){
+        this.postListingListener = postListingListener;
     }
 
 
@@ -165,6 +178,103 @@ public class Network {
                     }
                 }
                 response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void getTenant(Login login) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(login);
+        RequestBody body = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "GetTenant")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    if (loginListener != null){
+                        Tenant tenant = gson.fromJson(response.body().string(), Tenant.class);
+                        loginListener.onLoginTenant(tenant);
+                    }
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void addProfile(Profile profile) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(profile);
+        RequestBody body = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "AddProfile")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    if (addProfileListener != null){
+                        Profile profile = gson.fromJson(response.body().string(), Profile.class);
+                        addProfileListener.onAddProfile(profile);
+                    }
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+
+    public void postListing(House house) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(house);
+        RequestBody body = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "PostListing")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    if (postListingListener != null) {
+                        postListingListener.onPostListing();
+                    }
+                }
+                response.close();
+
             }
 
             @Override

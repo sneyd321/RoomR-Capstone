@@ -18,6 +18,7 @@ public class House {
     private int bedNumber;
     private int bathNumber;
     private int applicants;
+    private boolean isPosted;
 
     private String description;
     private String url = "";
@@ -43,7 +44,7 @@ public class House {
         this.utilities = utilities;
         this.applicants = 0;
         this.landlordEmail = landlordEmail;
-
+        this.isPosted = false;
     }
 
 
@@ -134,6 +135,14 @@ public class House {
 
     public String getLandlordEmail() {
         return landlordEmail;
+    }
+
+    public boolean getPosted(){
+        return this.isPosted;
+    }
+
+    public void setPosted(boolean posted) {
+        this.isPosted = posted;
     }
 }
 

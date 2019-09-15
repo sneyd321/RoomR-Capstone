@@ -30,8 +30,8 @@ public class TenantProfilesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tenant_profiles, container, false);
 
-        Tenant tenant = new Tenant("Ryan", "Sneyd", "a@s.com", "a");
-        tenantProfiles.add(tenant);
+        //Tenant tenant = new Tenant("Ryan", "Sneyd", "a@s.com", "a");
+        //tenantProfiles.add(tenant);
 
         rcyTenantProfile = view.findViewById(R.id.rcyTenantProfiles);
         rcyTenantProfile.setLayoutManager(new LinearLayoutManager(getActivity()));

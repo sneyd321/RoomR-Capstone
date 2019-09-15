@@ -15,8 +15,7 @@ import com.example.ryan.roomrep.R;
 
 public class ChooseAccountActivity extends AppCompatActivity {
 
-    ImageButton ibtnTenant;
-    ImageButton ibtnLandlord;
+
     Button btnTenant;
     Button btnLandlord;
     @Override
@@ -26,16 +25,13 @@ public class ChooseAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_account);
 
         btnTenant = findViewById(R.id.btnTenant);
-        ibtnTenant = findViewById(R.id.ibtnTenant);
         btnLandlord = findViewById(R.id.btnLandlord);
-        ibtnLandlord = findViewById(R.id.ibtnLandlord);
 
 
         btnTenant.setOnClickListener(onTenant);
-        ibtnTenant.setOnClickListener(onTenant);
 
         btnLandlord.setOnClickListener(onLandlord);
-        ibtnLandlord.setOnClickListener(onLandlord);
+
 
     }
 

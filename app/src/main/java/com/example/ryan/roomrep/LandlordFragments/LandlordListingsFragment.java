@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordListingsRecyclerviewAdapter;
@@ -16,12 +17,14 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class LandlordListingsFragment extends Fragment implements ItemClickListener {
+public class LandlordListingsFragment extends Fragment implements ItemClickListener, AddListingDialogActionListener {
 
 
     RecyclerView rcyLandlordListings;
+    Button btnPostListing;
 
     private LandlordRouterAction routerActionListener;
     private List<House> houses;
@@ -33,10 +36,19 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
         View view = inflater.inflate(R.layout.fragment_landlord_listings, container, false);
         rcyLandlordListings = view.findViewById(R.id.rcyLandlordListings);
         rcyLandlordListings.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), houses);
+
+        List<House> filteredHouses = new ArrayList<>();
+        for (House house : houses){
+            if (house.getPosted()){
+                filteredHouses.add(house);
+            }
+        }
+        adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), filteredHouses);
         adapter.setItemClickListener(this);
         rcyLandlordListings.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        btnPostListing = view.findViewById(R.id.btnLandlordListingsPostListing);
+        btnPostListing.setOnClickListener(onAddListing);
 
         return view;
     }
@@ -56,5 +68,24 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
         if (routerActionListener != null){
             routerActionListener.onNavigateToTenantProfile();
         }
+    }
+
+    View.OnClickListener onAddListing = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AddListingDialogFragment addListingDialogFragment = new AddListingDialogFragment();
+            addListingDialogFragment.setHouses(houses);
+            addListingDialogFragment.setAddListingDialogActionListener(LandlordListingsFragment.this);
+            addListingDialogFragment.show(getActivity().getFragmentManager(), null);
+
+        }
+    };
+
+
+    @Override
+    public void onAddLisitng(List<House> houses) {
+        LandlordListingsRecyclerviewAdapter adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), houses);
+        rcyLandlordListings.swapAdapter(adapter, true);
+        adapter.notifyDataSetChanged();
     }
 }

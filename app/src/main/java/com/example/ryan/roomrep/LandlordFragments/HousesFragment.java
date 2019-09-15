@@ -40,7 +40,7 @@ public class HousesFragment extends Fragment implements HouseMainListener {
 
     Button btnNavigateAddTenant;
 
-    private List<House> houses = new ArrayList<>();
+    private List<House> houses;
 
     Landlord landlord;
 
@@ -53,7 +53,7 @@ public class HousesFragment extends Fragment implements HouseMainListener {
         rcyHouses = view.findViewById(R.id.rcyHouses);
         btnViewListings = view.findViewById(R.id.btnHousesViewListings);
         btnNavigateAddTenant = view.findViewById(R.id.button6);
-
+        houses = new ArrayList<>();
 
         Network network = new Network();
         network.registerHouseListener(this);
@@ -118,7 +118,6 @@ public class HousesFragment extends Fragment implements HouseMainListener {
     @Override
     public void onGetHouses(JSONArray response) {
         Gson gson = new Gson();
-        final ArrayList<House> houses = new ArrayList<>();
         for (int i = 0; i < response.length(); i++) {
             try {
                 houses.add(gson.fromJson(response.get(i).toString(), House.class));
