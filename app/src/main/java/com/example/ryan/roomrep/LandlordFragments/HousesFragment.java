@@ -71,12 +71,17 @@ public class HousesFragment extends Fragment implements HouseMainListener {
 
         btnViewListings.setOnClickListener(onViewListings);
 
+        btnNavigateAddTenant.setOnClickListener(onNavigateToAddTenant);
+
         return view;
     }
 
     private View.OnClickListener onNavigateToAddTenant = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (routerActionListener != null){
+                routerActionListener.onNaviagateToAddTenant();
+            }
 
         }
     };

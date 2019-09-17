@@ -19,6 +19,8 @@ import com.example.ryan.roomrep.Adapters.MessagrRecycleViewAdapter;
 import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.ChatMessage;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.Router.TenantRouter;
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +63,7 @@ public class MessagRFragment extends Fragment
     ArrayList<ChatMessage> infMessages = new ArrayList<>();
     Button send;
     EditText editText;
+    TenantRouterAction tenantRouterActionListen;
     //String chatRoomName;
             //String chatRoomName = "TheTestOne";
     //TextView userName;
@@ -278,4 +281,7 @@ public class MessagRFragment extends Fragment
             }
 
 
-}
+            public void setActionListener(TenantRouter tenantRouter) {
+                this.tenantRouterActionListen = tenantRouter;
+            }
+        }
