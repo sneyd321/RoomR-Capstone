@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 
@@ -15,6 +16,8 @@ public class SearchFragment extends Fragment {
 
 
     Button search;
+
+    private TenantRouterAction actionListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,9 +33,15 @@ public class SearchFragment extends Fragment {
     private View.OnClickListener onSearchListings = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((MainActivityTenant)getActivity()).setViewPager(1);
+            if (actionListener != null) {
+                actionListener.onNavigateToListings();
+            }
+
         }
     };
 
 
+    public void setActionListener(TenantRouterAction actionListener) {
+        this.actionListener = actionListener;
+    }
 }

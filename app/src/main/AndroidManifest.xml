@@ -21,8 +21,12 @@
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".MainActivityLandlord"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".LoginActivities.LandlordSignUpActivity" />
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".LoginActivities.LandlordSignUpActivity" >
+        </activity>
         <activity android:name=".LoginActivities.ChooseAccountActivity" />
         <activity
             android:name=".MainActivityTenant"

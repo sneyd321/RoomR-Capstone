@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.TenantFragments.ListTargetChatUserFragment;
 import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
@@ -30,17 +31,16 @@ import java.util.ArrayList;
 public class MainActivityTenant extends AppCompatActivity{
 
 
-    String result = "";
     BottomNavigationView bottomMenu;
+    TenantRouter router;
 
 
-    private StatePagerAdapter statePagerAdapter;
-    private ViewPager viewPager;
-
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ArrayList<Repair> repairs;
     Toolbar toolbar;
+
+    public String chatRoomNameInMainActivityTenant = "TheRegularOne";
+    //This String is an example when login activity passed data to MainActivityTenant
+
 
 
     @Override
@@ -50,40 +50,20 @@ public class MainActivityTenant extends AppCompatActivity{
         toolbar = findViewById(R.id.tenantToolbar);
         setSupportActionBar(toolbar);
         bottomMenu = findViewById(R.id.navBar);
-        viewPager = findViewById(R.id.container);
-
-
-        statePagerAdapter = new StatePagerAdapter(getSupportFragmentManager());
-
-
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
         repairs = new ArrayList<>();
 
-        setupPageAdapter(viewPager);
+        router = new TenantRouter(getSupportFragmentManager());
+
+
+
+        if (savedInstanceState == null) {
+            router.onNavigateToListings();
+        }
 
     }
 
 
-    private void setupPageAdapter(ViewPager pager){
-        StatePagerAdapter adapter = new StatePagerAdapter(getSupportFragmentManager());
-
-        adapter.addFragment(new SearchFragment(), "Search");
-        adapter.addFragment(new ListingsFragment(), "Listings");
-        adapter.addFragment(new PayRentFragment(), "Pay Rent");
-        adapter.addFragment(new ConfirmRentFragment(), "Confirm Rent");
-        adapter.addFragment(new CompleteRentFragment(), "Complete Rent");
-        adapter.addFragment(new RepairPictureFragment(), "Repair Photo");
-        adapter.addFragment(new ExpertSystemFragment(), "Expert System");
-        adapter.addFragment(new TenantRepairFragment(), "Tenant Repair");
-        adapter.addFragment(new MessagRFragment(), "MessagR");
-        adapter.addFragment(new SendRepairFragment(), "Send Repair"); //9
-
-        viewPager.setAdapter(adapter);
-    }
-
-    public void setViewPager(int fragmentNumber){
-        viewPager.setCurrentItem(fragmentNumber);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,13 +76,13 @@ public class MainActivityTenant extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.lblRent:
-                setViewPager(2);
+                router.onNavigateToPayRent();
                 break;
             case R.id.lblRepair:
-                setViewPager(5);
+                router.onNavigateToRepairPicture();
                 break;
             case R.id.lblListing:
-                setViewPager(0);
+                router.onNavigateToListings();
                 break;
             case R.id.lblSettings:
                 break;
@@ -121,7 +101,8 @@ public class MainActivityTenant extends AppCompatActivity{
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navMessagR:
-                    setViewPager(8);
+                    //router.onNavigateToMessages();
+                    router.onNavigateToMessagesPeopleList();
                     break;
                 case R.id.navSplitR:
                     break;
@@ -140,6 +121,8 @@ public class MainActivityTenant extends AppCompatActivity{
     public ArrayList<Repair> getRepair(){
         return repairs;
     }
+
+    //public String GetChatRoomNameInMainActivityTenant(){return chatRoomNameInMainActivityTenant;}
 
 
 

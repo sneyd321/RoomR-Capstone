@@ -57,16 +57,16 @@ public class RepairHistoryLandlordFragment extends Fragment {
                         repair.setDescription(document.get("Description").toString());
                         repair.setProblemIdentification(document.get("Problem").toString());
                         repair.setStorageReference(document.get("StorageReference").toString());
-                        ((MainActivityLandlord)getActivity()).getRepair().add(repair);
+                        //((MainActivityLandlord)getActivity()).getRepair().add(repair);
                     }
 
-                    adapter = new RepairRecyclerViewAdapter(getActivity(), ((MainActivityLandlord)getActivity()).getRepair());
+                    //adapter = new RepairRecyclerViewAdapter(getActivity(), ((MainActivityLandlord)getActivity()).getRepair());
                     //adapter.setClickListener(this);
                     repairList.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    if (!((MainActivityLandlord)getActivity()).getRepair().isEmpty()){
-                        numberofRepairs.setText("Total Repairs: " +  ((MainActivityLandlord)getActivity()).getRepair().size());
-                    }
+                    //if (!((MainActivityLandlord)getActivity()).getRepair().isEmpty()){
+                        //numberofRepairs.setText("Total Repairs: " +  ((MainActivityLandlord)getActivity()).getRepair().size());
+                    //}
 
                 }
             }

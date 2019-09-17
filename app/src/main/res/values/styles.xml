@@ -5,7 +5,65 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/Green</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    
+    
+    <style name="button_layout">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/Green</item>
+        <item name="android:background">@drawable/button_border</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="general_text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/Black</item>
+    </style>
+
+    <style name="title_text">
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:background">@color/Green</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+    
+    <style name="spinner_layout">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/Green</item>
+        <item name="android:background">@drawable/spinner_border</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="remove_button_layout">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/Red</item>
+        <item name="android:background">@drawable/remove_button_border</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="close_dialog">
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:text">X</item>
+    </style>
+
+    <style name="sign_up_edittext">
+        <item name="android:background">@drawable/edittext_border</item>
+        <item name="android:ems">10</item>
+        <item name="android:textColor">@color/Green</item>
+        <item name="android:textColorHint">@color/LightGray</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+
 
 </resources>

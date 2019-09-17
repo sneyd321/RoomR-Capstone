@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 
@@ -15,6 +16,9 @@ public class ExpertSystemFragment extends Fragment {
 
 
     Button yes;
+
+
+    private TenantRouterAction actionListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,9 +37,15 @@ public class ExpertSystemFragment extends Fragment {
     View.OnClickListener onYes = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((MainActivityTenant)getActivity()).setViewPager(7);
+
+            if (actionListener != null){
+                actionListener.onNavigateToTenantRepair();
+            }
         }
     };
 
 
+    public void setActionListener(TenantRouterAction actionListener) {
+        this.actionListener = actionListener;
+    }
 }

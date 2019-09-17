@@ -25,8 +25,17 @@ public class Tenant {
 
 
 
+
+
     public Tenant(){
 
+    }
+
+    public Tenant(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.tenantEmail = email;
+        this.password = password;
     }
 
 

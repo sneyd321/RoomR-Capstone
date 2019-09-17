@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 
@@ -15,10 +16,11 @@ public class ConfirmRentFragment extends Fragment {
 
     Button Confirm;
 
+    private TenantRouterAction actionListener;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_confirm_rent, container, false);
 
         Confirm = view.findViewById(R.id.confirm);
@@ -26,7 +28,9 @@ public class ConfirmRentFragment extends Fragment {
         Confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivityTenant)getActivity()).setViewPager(4);
+                if (actionListener != null) {
+                    actionListener.onNavigateToCompleteRent();
+                }
 
             }
         });
@@ -40,4 +44,7 @@ public class ConfirmRentFragment extends Fragment {
 
     }
 
+    public void setActionListener(TenantRouterAction actionListener) {
+        this.actionListener = actionListener;
+    }
 }
