@@ -30,7 +30,7 @@ public class TestHouse  {
         amenities.put("Laundry", false);
         amenities.put("Snow Removal", false);
         amenities.put("Air Conditioning", false);
-        house = new House("", 0, 0, 0, 0, amenities, null);
+        house = new House("", 0, 0, 0, 0, amenities, null, "");
         builder = new HouseBuilder();
     }
 
@@ -72,7 +72,7 @@ public class TestHouse  {
 
     @Test
     public void EmptyAddressTest() {
-        house = new House("", 1234, 1234, 0, 0, null, null);
+        house = new House("", 1234, 1234, 0, 0, null, null, "");
         Map<Integer,String> validator = house.getValidator();
         String expected = validator.get(0);
 
@@ -82,7 +82,7 @@ public class TestHouse  {
 
     @Ignore
     public void ValidAddressTest() {
-        house = new House("123 AddressName", 1234, 1234, 0, 0, null, null);
+        house = new House("123 AddressName", 1234, 1234, 0, 0, null, null, "");
         Map<Integer,String> validator = house.getValidator();
         String expected = validator.get(1);
         Assert.assertEquals("Address regex validation failed", expected, "");
@@ -90,7 +90,7 @@ public class TestHouse  {
 
     @Ignore
     public void InvalidAddressTest() {
-        house = new House("vfadfdasfdasfads", 1234, 1234, 0, 0, null, null);
+        house = new House("vfadfdasfdasfads", 1234, 1234, 0, 0, null, null, "");
         Map<Integer,String> validator = house.getValidator();
         String expected = validator.get(1);
         Assert.assertEquals("Address regex validation failed", expected, "Please enter a valid address in the format '123 AddressName'.");
@@ -99,7 +99,7 @@ public class TestHouse  {
 
     @Test
     public void RentIsZeroTest() {
-        house = new House("123 AddressName", 0, 1234, 0, 0, null, null);
+        house = new House("123 AddressName", 0, 1234, 0, 0, null, null, "");
         Map<Integer,String> validator = house.getValidator();
         String expected = validator.get(2);
         Assert.assertEquals("Rent validation failed", expected, "Please enter a rent greater than 0.");
@@ -107,7 +107,7 @@ public class TestHouse  {
 
     @Test
     public void SizeIsZeroTest() {
-        house = new House("123 AddressName", 1324, 0, 0, 0, null, null);
+        house = new House("123 AddressName", 1324, 0, 0, 0, null, null, "");
         Map<Integer,String> validator = house.getValidator();
         String expected = validator.get(3);
         Assert.assertEquals("Size validation failed", expected, "Please enter a size greater than 0.");

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
+import com.example.ryan.roomrep.Classes.Tenant;
 
 public class MainActivityLandlord extends AppCompatActivity  {
 
@@ -25,6 +26,8 @@ public class MainActivityLandlord extends AppCompatActivity  {
     Toolbar myToolbar;
     LandlordRouter router;
     Landlord landlord;
+    public String chatRoomNameInMainActivityTenant = "TheRegularOne";
+    public Tenant peopleToAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -55,7 +55,7 @@ public class MessagrRecycleViewAdapter extends RecyclerView.Adapter<MessagrRecyc
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //View view = mInflater.inflate(R.layout.messagr_row, parent, false);
+        //View view = mInflater.inflate(R.layout.addtenant_row, parent, false);
         View view = mInflater.inflate(R.layout.message_structure, parent, false);
         return new ViewHolder(view);
     }

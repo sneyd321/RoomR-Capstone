@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".LoginActivities.TenantSignUpActivity"></activity>
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".LoginActivities.ProfileActivity" />
         <activity
             android:name=".MainActivityLandlord"
             android:windowSoftInputMode="adjustPan"

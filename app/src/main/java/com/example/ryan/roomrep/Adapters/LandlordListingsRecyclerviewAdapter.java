@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,9 +39,13 @@ public class LandlordListingsRecyclerviewAdapter extends RecyclerView.Adapter<La
     @Override
     public void onBindViewHolder(@NonNull LandlordListingsRecyclerviewAdapter.ViewHolder holder, int position) {
         House house = data.get(position);
+
         holder.txtAddress.setText(house.getAddress());
         holder.txtApplicants.setText(Integer.toString(house.getApplicants()));
+        Picasso.get().load(house.getUrl()).noFade().into(holder.imgHouse);
+
     }
+
 
 
 

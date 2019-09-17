@@ -17,18 +17,14 @@ import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Network.LoginListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
-import com.example.ryan.roomrep.ProfileActivity;
 import com.example.ryan.roomrep.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 
 /**
  * A login screen that offers login via email/password.
@@ -115,20 +111,19 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     View.OnClickListener onLogin = new OnClickListener() {
         @Override
         public void onClick(View v) {
+            final Network network = new Network();
+            network.registerLoginListener(LoginActivity.this);
             final Login login = new Login(edtUserName.getText().toString(), edtPassword.getText().toString());
             auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        Network network = new Network();
-                        network.registerLoginListener(LoginActivity.this);
                         network.getLandlord(login);
                         return;
                     }
-                    Toast.makeText(LoginActivity.this, "Invalid Account Credentials", Toast.LENGTH_SHORT).show();
-
                 }
             });
+            network.getTenant(login);
         }
     };
 
@@ -142,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     }
 
     @Override
-    public void onLoginTenant() {
+    public void onLoginTenant(Tenant tenant) {
         Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
         startActivity(intent);
     }

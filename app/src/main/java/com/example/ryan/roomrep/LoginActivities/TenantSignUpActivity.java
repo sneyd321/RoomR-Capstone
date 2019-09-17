@@ -57,34 +57,8 @@ public class TenantSignUpActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
-            tenant.setFirstName(firstName.getText().toString());
-            tenant.setLastName(firstName.getText().toString());
-            tenant.setEmail(tenantEmail.getText().toString());
-            tenant.setLandlordEmail(landlordEmail.getText().toString());
-            if (password1.getText().toString().equals(password2.getText().toString())){
-                tenant.setPassword(password2.getText().toString());
-            }
-            else {
-                Toast.makeText(TenantSignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                return;
-            }
+           
 
-
-
-            String error = tenant.validateTenant();
-            if (!error.isEmpty()){
-                Toast.makeText(TenantSignUpActivity.this, error, Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-
-            Task<Void> query = tenant.addValues();
-            query.addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    Toast.makeText(TenantSignUpActivity.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
-                }
-            });
 
 
 
