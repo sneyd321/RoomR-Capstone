@@ -72,5 +72,9 @@ public class LandlordAddListingAdapter extends RecyclerView.Adapter<LandlordAddL
         this.itemClickListener = itemClickListener;
     }
 
+    public House getHouseAtPosition(int position) {
+        return data.get(position);
+    }
+
 
 }

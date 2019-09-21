@@ -10,16 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.ryan.roomrep.Classes.Network.AddProfileListener;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.LoginActivities.ProfileActivity;
 import com.example.ryan.roomrep.R;
+import com.google.gson.Gson;
 
 import java.util.Map;
 
-public class AddProfileFragment extends Fragment implements AddProfileListener {
+public class AddProfileFragment extends Fragment implements FragmentEventListener {
 
     EditText edtFirstName;
     EditText edtLastName;
@@ -56,6 +57,7 @@ public class AddProfileFragment extends Fragment implements AddProfileListener {
             String bio = edtBio.getText().toString();
             Profile profile = new Profile(firstName, lastName, email, bio);
             boolean isValid = true;
+
             Map<Integer, String> map = profile.getValidator();
             for (Map.Entry<Integer, String> entry : map.entrySet()) {
                 if (!entry.getValue().isEmpty()){
@@ -87,10 +89,11 @@ public class AddProfileFragment extends Fragment implements AddProfileListener {
             if (isValid){
                 ((ProfileActivity)getActivity()).addToSharedPreferences(profile);
                 if (routerAction != null) {
-                    routerAction.onNavigateToSearchListings();
-                    Network network = new Network();
-                    network.registerAddProfileListener(AddProfileFragment.this);
+
+                    Network network = Network.getInstance();
+                    network.registerObserver(AddProfileFragment.this);
                     network.addProfile(profile);
+                    routerAction.onNavigateToProfileListings();
 
                 }
             }
@@ -103,8 +106,11 @@ public class AddProfileFragment extends Fragment implements AddProfileListener {
     }
 
 
-    @Override
-    public void onAddProfile(Profile profile) {
 
+
+    @Override
+    public void update(String response) {
+        Gson gson = new Gson();
+        Profile profile = gson.fromJson(response, Profile.class);
     }
 }

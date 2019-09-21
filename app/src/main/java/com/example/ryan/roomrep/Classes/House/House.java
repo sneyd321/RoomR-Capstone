@@ -47,6 +47,21 @@ public class House {
         this.isPosted = false;
     }
 
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, boolean isPosted){
+        this.address = address;
+        this.rent = rent;
+        this.size = size;
+        this.bedNumber = bedNumber;
+        this.bathNumber = bathNumber;
+        this.amenities = amenities;
+        this.utilities = utilities;
+        this.description = description;
+        this.applicants = 0;
+        this.landlordEmail = landlordEmail;
+        this.isPosted = isPosted;
+    }
+
+
 
 
     public String getAddress() {
@@ -86,6 +101,9 @@ public class House {
         this.applicants = applicants;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
 
     public void addAmenity(Amenity item){
         items.add(item);

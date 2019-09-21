@@ -12,11 +12,22 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.google.gson.Gson;
 
-public class MainActivityLandlord extends AppCompatActivity  {
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivityLandlord extends AppCompatActivity implements FragmentEventListener
+{
 
 
     BottomNavigationView bottomMenu;
@@ -26,8 +37,7 @@ public class MainActivityLandlord extends AppCompatActivity  {
     Toolbar myToolbar;
     LandlordRouter router;
     Landlord landlord;
-    public String chatRoomNameInMainActivityTenant = "TheRegularOne";
-    public Tenant peopleToAdd;
+    List<House> houses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,12 @@ public class MainActivityLandlord extends AppCompatActivity  {
             landlord = bundle.getParcelable("LANDLORD_DATA");
         }
 
+        houses = new ArrayList<>();
+
+        Network network = Network.getInstance();
+        network.registerObserver(this);
+        network.getLandlordHouses(landlord);
+
 
 
         navigationView.setNavigationItemSelectedListener(onNavigationMenu);
@@ -59,10 +75,10 @@ public class MainActivityLandlord extends AppCompatActivity  {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        router = new LandlordRouter(getSupportFragmentManager());
+
         if (savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_listings);
-            router.onNavigateToHouses(landlord);
+
         }
 
 
@@ -123,7 +139,25 @@ public class MainActivityLandlord extends AppCompatActivity  {
     };
 
 
-
-
-
+    @Override
+    public void update(String response) {
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+        Gson gson = new Gson();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                houses.add(gson.fromJson(jsonArray.get(i).toString(), House.class));
+                houses.get(i).setUrl(jsonArray.getJSONObject(i).getString("image"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        router = new LandlordRouter(getSupportFragmentManager(), this.houses);
+        router.onNavigateToHouses(landlord);
+    }
 }

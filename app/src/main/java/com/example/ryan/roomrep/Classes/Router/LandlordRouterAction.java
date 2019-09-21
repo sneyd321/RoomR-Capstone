@@ -9,11 +9,11 @@ public interface LandlordRouterAction {
 
     void onNavigateToHousesAdd(Landlord landlord);
 
-    void onAddHouseToHouses(House house);
+    void onAddHouse(House house);
 
     void onNavigateToHouses(Landlord landlord);
 
-    void onNavigateToLandlordListings(List<House> houses);
+    void onNavigateToLandlordListings();
 
     void onNavigateToTenantProfile();
 

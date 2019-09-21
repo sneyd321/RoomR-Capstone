@@ -28,6 +28,7 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
 
     private LandlordRouterAction routerActionListener;
     private List<House> houses;
+    private List<House> listedHouses;
     private LandlordListingsRecyclerviewAdapter adapter;
 
     @Nullable
@@ -37,13 +38,14 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
         rcyLandlordListings = view.findViewById(R.id.rcyLandlordListings);
         rcyLandlordListings.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<House> filteredHouses = new ArrayList<>();
+
+        listedHouses = new ArrayList<>();
         for (House house : houses){
             if (house.getPosted()){
-                filteredHouses.add(house);
+                listedHouses.add(house);
             }
         }
-        adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), filteredHouses);
+        adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), listedHouses);
         adapter.setItemClickListener(this);
         rcyLandlordListings.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -78,14 +80,18 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
             addListingDialogFragment.setAddListingDialogActionListener(LandlordListingsFragment.this);
             addListingDialogFragment.show(getActivity().getFragmentManager(), null);
 
+
         }
     };
 
 
     @Override
-    public void onAddLisitng(List<House> houses) {
-        LandlordListingsRecyclerviewAdapter adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), houses);
-        rcyLandlordListings.swapAdapter(adapter, true);
+    public void onAddListing(House house) {
+        this.listedHouses.add(house);
         adapter.notifyDataSetChanged();
     }
+
+
+
+
 }
