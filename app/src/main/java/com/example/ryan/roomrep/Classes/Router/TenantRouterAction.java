@@ -7,6 +7,8 @@ public interface TenantRouterAction {
 
     void onNavigateToListings();
 
+    void onNavigateToViewListings();
+
     void onNavigateToPayRent();
 
     void onNavigateToConfirmRent();

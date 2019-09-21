@@ -58,6 +58,225 @@
         <item>Phone Line</item>
     </string-array>
 
+    <string-array name="provinces">
+        <item>Alberta</item>
+        <item>British Columbia</item>
+        <item>Manitoba</item>
+        <item>New Brunswick</item>
+        <item>Newfoundland and Labrador</item>
+        <item>Nova Scotia</item>
+        <item>Ontario</item>
+        <item>Prince Edward Island</item>
+        <item>Saskatchewan</item>
+        <item>Yukon</item>
+        <item>Northwest Territories</item>
+        <item>Nunavut</item>
+        <item>Alberta</item>
+    </string-array>
+
+
+    <string-array name="AL_Cities">
+        <item>Airdrie</item>
+        <item>Beaumont</item>
+        <item>Brooks</item>
+        <item>Calgary</item>
+        <item>Camrose</item>
+        <item>Chestermere</item>
+        <item>Cold Lake</item>
+        <item>Edmonton</item>
+        <item>Fort Sasketchewan</item>
+        <item>Grande Prarie</item>
+        <item>Lacombe</item>
+        <item>Leduc</item>
+        <item>Lethbridge</item>
+        <item>Lloydminster</item>
+        <item>Medicine Hat</item>
+        <item>Red Deer</item>
+        <item>Spruce Grove</item>
+        <item>St Albert</item>
+        <item>Wetaskiwin</item>
+    </string-array>
+
+    <string-array name="BC_Cities">
+        <item>Abbotsford</item>
+        <item>Armstrong</item>
+        <item>Burnaby</item>
+        <item>Campbell River</item>
+        <item>Castlegar</item>
+        <item>Chilliwack</item>
+        <item>Colwood</item>
+        <item>Coquitlam</item>
+        <item>Courtenay</item>
+        <item>Cranbrook</item>
+        <item>Dawson Creek</item>
+        <item>Delta</item>
+        <item>Duncan</item>
+        <item>Enderby</item>
+        <item>Fernie</item>
+        <item>Fort St John</item>
+        <item>Grand Forks</item>
+        <item>Greenwood</item>
+        <item>Kamloops</item>
+        <item>Kelowna</item>
+        <item>Kimberley</item>
+        <item>Langford</item>
+        <item>Langley</item>
+        <item>Maple Ridge</item>
+        <item>Merritt</item>
+        <item>Nanaimo</item>
+        <item>Nelson</item>
+        <item>New Westminster</item>
+        <item>North Vancouver</item>
+        <item>Parksville</item>
+        <item>Penticton</item>
+        <item>Pitt Meadows</item>
+        <item>Port Alberni</item>
+        <item>Port Coquitlam</item>
+        <item>Port Moody</item>
+        <item>Powell River</item>
+        <item>Prince George</item>
+        <item>Prince Rupert</item>
+        <item>Quesnel</item>
+        <item>Revelstoke</item>
+        <item>Richmond</item>
+        <item>Rossland</item>
+        <item>Salmon Arm</item>
+        <item>Surrey</item>
+        <item>Terrace</item>
+        <item>Trail</item>
+        <item>Vancouver</item>
+        <item>Vernon</item>
+        <item>Victoria</item>
+        <item>West Kelowna</item>
+        <item>White Rock</item>
+        <item>Williams Lake</item>
+    </string-array>
+
+    <string-array name="MB_Cities">
+        <item>Brandon</item>
+        <item>Dauphin</item>
+        <item>Flin Flon</item>
+        <item>Morden</item>
+        <item>Portage la Prairie</item>
+        <item>Selkirk</item>
+        <item>Steinbach</item>
+        <item>Thompson</item>
+        <item>Winkler</item>
+        <item>Winnipeg</item>
+    </string-array>
+
+    <string-array name="NB_Cities">
+        <item>Bathurst</item>
+        <item>Campbellton</item>
+        <item>Dieppe</item>
+        <item>Edmundston</item>
+        <item>Fredericton</item>
+        <item>Miramichi</item>
+        <item>Moncton</item>
+        <item>Saint John</item>
+    </string-array>
+
+    <string-array name="NL_Cities">
+        <item>Corner Brook</item>
+        <item>Mount Pearl</item>
+        <item>St Johns</item>
+    </string-array>
+
+    <string-array name="NT">
+        <item>Yellowknife</item>
+    </string-array>
+
+    <string-array name="NS_Cities">
+        <item>Halifax</item>
+        <item>Sydney</item>
+        <item>Dartmouth</item>
+    </string-array>
+
+    <string-array name="NU_Cities">
+        <item>Iqaluit</item>
+    </string-array>
+
+    <string-array name="ON_cities">
+        <item>Ajax</item>
+        <item>Barrie</item>
+        <item>Belleville</item>
+        <item>Brampton</item>
+        <item>Brant</item>
+        <item>Brantford</item>
+        <item>Brockville</item>
+        <item>Burlington</item>
+        <item>Cambridge</item>
+        <item>Clarence-Rockland</item>
+        <item>Cornwall</item>
+        <item>Dryden</item>
+        <item>Elliot Lake</item>
+        <item>Greater Sudbury</item>
+        <item>Guelph</item>
+        <item>Hamilton</item>
+        <item>Kawartha Lakes</item>
+        <item>Kenora</item>
+        <item>Kingston</item>
+        <item>Kitchener</item>
+        <item>London</item>
+        <item>Markham</item>
+        <item>Mississauga</item>
+        <item>Niagara Falls</item>
+        <item>North Bay</item>
+        <item>Oakville</item>
+        <item>Orillia</item>
+        <item>Oshawa</item>
+        <item>Owen Sound</item>
+        <item>Pembroke</item>
+        <item>Peterborough</item>
+        <item>Pickering</item>
+        <item>Port Colborne</item>
+        <item>Quinte West</item>
+        <item>Richmond Hill</item>
+        <item>Sarnia</item>
+        <item>Sualt Ste Marie</item>
+        <item>St Catherines</item>
+        <item>St Thomas</item>
+        <item>Stratford</item>
+        <item>Temiskaming Shores</item>
+        <item>Thorold</item>
+        <item>Thunder Bay</item>
+        <item>Timmins</item>
+        <item>Toronto</item>
+        <item>Vaughn</item>
+        <item>Waterloo</item>
+        <item>Welland</item>
+        <item>Windsor</item>
+        <item>Woodstock</item>
+    </string-array>
+
+    <string-array name="PE_Cities">
+        <item>Charlottetown</item>
+        <item>Summerside</item>
+    </string-array>
+
+    <string-array name="SA_Cities">
+        <item>Estevan</item>
+        <item>Flin Flon</item>
+        <item>Humboldt</item>
+        <item>Lloydminster</item>
+        <item>Martensville</item>
+        <item>Meadow Lake</item>
+        <item>Melfort</item>
+        <item>Melville</item>
+        <item>Moose Jaw</item>
+        <item>North Battleford</item>
+        <item>Prince Albert</item>
+        <item>Regina</item>
+        <item>Saskatoon</item>
+        <item>Swift Current</item>
+        <item>Warman</item>
+        <item>Weyburn</item>
+        <item>Yorkton</item>
+    </string-array>
+
+    <string-array name="YU_Cities">
+        <item>Whitehorse</item>
+    </string-array>
     
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -26,7 +26,7 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.HouseBuilder;
 import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
-import com.example.ryan.roomrep.Classes.Network.AddHouseListener;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AddHouseFragment extends Fragment implements UtilityDialogActionListener, AddHouseListener {
+public class AddHouseFragment extends Fragment implements UtilityDialogActionListener, FragmentEventListener {
 
 
     private final static int MAX_RENT = 5000;
@@ -221,7 +221,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setMessage("Add House...");
             progressDialog.show();
-            network.registerAddHouseListener(AddHouseFragment.this);
+            network.registerObserver(AddHouseFragment.this);
             network.uploadHouse(house);
 
 
@@ -267,17 +267,13 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         this.landlord = landlord;
     }
 
-    @Override
-    public void onAddHouse(String response) {
 
+    @Override
+    public void update(String response) {
         if (routerActionListener != null) {
             house.setUrl(response);
             progressDialog.dismiss();
-            routerActionListener.onAddHouseToHouses(house);
+            routerActionListener.onAddHouse(house);
         }
-
-
     }
-
-
 }

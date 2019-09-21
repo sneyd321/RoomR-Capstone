@@ -5,59 +5,64 @@ import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Tenant;
-import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
-import com.example.ryan.roomrep.TenantFragments.AddProfileFragment;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Network {
+public class Network implements NetworkObservable {
 
-    private final String SERVER_URL = "http://10.16.26.209:8080/";
+    private final String SERVER_URL = "http://10.16.24.171:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    private AddHouseListener addHouseListener;
-    private HouseMainListener getHouseListener;
-    private LoginListener loginListener;
-    private AddProfileListener addProfileListener;
-    private PostListingListener postListingListener;
 
-    public void registerAddHouseListener(AddHouseListener addHouseListener){
-        this.addHouseListener = addHouseListener;
-    }
+    private static Network NETWORK_INSTANCE = null;
 
-    public void registerHouseListener(HouseMainListener getHouseListener) {
-        this.getHouseListener = getHouseListener;
-    }
-
-    public void registerLoginListener(LoginListener loginListener){
-        this.loginListener = loginListener;
-    }
-
-    public void registerAddProfileListener(AddProfileListener addProfileListener) {
-        this.addProfileListener = addProfileListener;
-    }
-
-    public void registerPostListingListener(PostListingListener postListingListener){
-        this.postListingListener = postListingListener;
+    public static Network getInstance() {
+        if (NETWORK_INSTANCE == null) {
+            NETWORK_INSTANCE = new Network();
+        }
+        return NETWORK_INSTANCE;
     }
 
 
+
+    private FragmentEventListener fragmentEventListener;
+
+    @Override
+    public void registerObserver(FragmentEventListener fragmentEventListener) {
+        this.fragmentEventListener = fragmentEventListener;
+    }
+
+    @Override
+    public void clearObserver() {
+       this.fragmentEventListener = null;
+    }
+
+    @Override
+    public void notifyObserver(String response) {
+        if (fragmentEventListener != null){
+            this.fragmentEventListener.update(response);
+            clearObserver();
+        }
+
+    }
 
     public void uploadHouse(final House house) {
 
@@ -76,9 +81,7 @@ public class Network {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    if (addHouseListener != null) {
-                        addHouseListener.onAddHouse(response.body().string());
-                    }
+                    fragmentEventListener.update(response.body().string());
                 }
                 response.close();
             }
@@ -107,16 +110,7 @@ public class Network {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    if (getHouseListener != null) {
-                        try {
-                            JSONArray jsonArray = new JSONArray(response.body().string());
-                            getHouseListener.onGetHouses(jsonArray);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
+                    fragmentEventListener.update(response.body().string());
                 }
                 response.close();
             }
@@ -172,10 +166,7 @@ public class Network {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    if (loginListener != null){
-                        Landlord landlord = gson.fromJson(response.body().string(), Landlord.class);
-                        loginListener.onLoginLandlord(landlord);
-                    }
+                    fragmentEventListener.update(response.body().string());
                 }
                 response.close();
 
@@ -204,10 +195,10 @@ public class Network {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    if (loginListener != null){
-                        Tenant tenant = gson.fromJson(response.body().string(), Tenant.class);
-                        loginListener.onLoginTenant(tenant);
-                    }
+                    fragmentEventListener.update(response.body().string());
+                        //Tenant tenant = gson.fromJson(response.body().string(), Tenant.class);
+
+
                 }
                 response.close();
 
@@ -236,10 +227,7 @@ public class Network {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    if (addProfileListener != null){
-                        Profile profile = gson.fromJson(response.body().string(), Profile.class);
-                        addProfileListener.onAddProfile(profile);
-                    }
+                    fragmentEventListener.update(response.body().string());
                 }
                 response.close();
 
@@ -269,9 +257,7 @@ public class Network {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    if (postListingListener != null) {
-                        postListingListener.onPostListing();
-                    }
+                   notifyObserver(response.body().string());
                 }
                 response.close();
 
@@ -279,6 +265,58 @@ public class Network {
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void getTenantListings() {
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "ProfileListings")
+                .get()
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                   notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void uploadRepair(File photo) {
+        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("FrontPhoto", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))
+                .build();
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "AddPhoto")
+                .post(requestBody)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
             }
         });

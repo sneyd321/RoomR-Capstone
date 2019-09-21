@@ -18,11 +18,14 @@ public class LandlordRouter implements LandlordRouterAction {
 
 
     FragmentManager fragmentManager;
-    HousesFragment housesFragment;
 
-    public LandlordRouter(FragmentManager fragmentManager){
+
+    List<House> houses;
+
+
+    public LandlordRouter(FragmentManager fragmentManager, List<House> houses){
         this.fragmentManager = fragmentManager;
-        housesFragment = new HousesFragment();
+        this.houses = houses;
     }
 
 
@@ -52,24 +55,28 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onAddHouseToHouses(House house) {
+    public void onAddHouse(House house) {
+        HousesFragment housesFragment = new HousesFragment();
         housesFragment.setRouterAction(this);
-        housesFragment.addHouse(house);
+        this.houses.add(house);
+        housesFragment.setHouses(this.houses);
         manageBackstack(housesFragment);
     }
 
     @Override
     public void onNavigateToHouses(Landlord landlord) {
+        HousesFragment housesFragment = new HousesFragment();
         housesFragment.setRouterAction(this);
         housesFragment.setLandlord(landlord);
+        housesFragment.setHouses(this.houses);
         manageBackstack(housesFragment);
     }
 
 
     @Override
-    public void onNavigateToLandlordListings(List<House> houses) {
+    public void onNavigateToLandlordListings() {
         LandlordListingsFragment landlordListingsFragment = new LandlordListingsFragment();
-        landlordListingsFragment.setHouseList(houses);
+        landlordListingsFragment.setHouseList(this.houses);
         landlordListingsFragment.setRouterAction(this);
         manageBackstack(landlordListingsFragment);
     }

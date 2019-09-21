@@ -15,20 +15,22 @@ import android.view.ViewGroup;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordAddListingAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Network.PostListingListener;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddListingDialogFragment extends DialogFragment implements ItemClickListener, PostListingListener {
+public class AddListingDialogFragment extends DialogFragment implements ItemClickListener, FragmentEventListener {
 
 
     private AddListingDialogActionListener addListingDialogActionListener;
 
     RecyclerView rcyAddresses;
     List<House> houses;
+    LandlordAddListingAdapter adapter;
+    House selectedHouse;
 
 
     @Override
@@ -51,11 +53,12 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
 
         List<House> filteredHouses = new ArrayList<>();
         for (House house : houses){
+            //if is posted is false
             if (!house.getPosted()){
                 filteredHouses.add(house);
             }
         }
-        LandlordAddListingAdapter adapter = new LandlordAddListingAdapter(getActivity(), filteredHouses);
+        adapter = new LandlordAddListingAdapter(getActivity(), filteredHouses);
         adapter.setOnClickListener(this);
         rcyAddresses.setAdapter(adapter);
 
@@ -72,23 +75,25 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
 
     @Override
     public void onItemClick(View view, int position) {
-        House house = houses.get(position);
-        house.setPosted(true);
-        Network network = new Network();
-        network.registerPostListingListener(AddListingDialogFragment.this);
-        network.postListing(house);
+        selectedHouse = adapter.getHouseAtPosition(position);
+        selectedHouse.setPosted(true);
+        Network network = Network.getInstance();
+        network.registerObserver(AddListingDialogFragment.this);
+        network.postListing(selectedHouse);
         if (addListingDialogActionListener != null) {
-            addListingDialogActionListener.onAddLisitng(houses);
+            addListingDialogActionListener.onAddListing(selectedHouse);
             getDialog().dismiss();
         }
     }
 
-    @Override
-    public void onPostListing() {
 
-    }
 
     public void setAddListingDialogActionListener(AddListingDialogActionListener addListingDialogActionListener) {
         this.addListingDialogActionListener = addListingDialogActionListener;
+    }
+
+    @Override
+    public void update(String response) {
+
     }
 }

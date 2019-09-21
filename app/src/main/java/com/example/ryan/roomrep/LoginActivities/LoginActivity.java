@@ -15,9 +15,8 @@ import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
-import com.example.ryan.roomrep.Classes.Network.LoginListener;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
@@ -25,11 +24,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoginListener {
+public class LoginActivity extends AppCompatActivity implements FragmentEventListener {
 
     Button login;
     Button listings;
@@ -112,33 +112,31 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
         @Override
         public void onClick(View v) {
             final Network network = new Network();
-            network.registerLoginListener(LoginActivity.this);
+            network.registerObserver(LoginActivity.this);
             final Login login = new Login(edtUserName.getText().toString(), edtPassword.getText().toString());
             auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
+                        network.registerObserver(LoginActivity.this);
                         network.getLandlord(login);
                         return;
                     }
                 }
             });
-            network.getTenant(login);
+            //network.getTenant(login);
         }
     };
 
 
 
-    @Override
-    public void onLoginLandlord(Landlord landlord) {
-        Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
-        intent.putExtra("LANDLORD_DATA", landlord);
-        startActivity(intent);
-    }
 
     @Override
-    public void onLoginTenant(Tenant tenant) {
+    public void update(String response) {
+        Gson gson = new Gson();
+        Landlord landlord = gson.fromJson(response, Landlord.class);
         Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
+        intent.putExtra("LANDLORD_DATA", landlord);
         startActivity(intent);
     }
 }

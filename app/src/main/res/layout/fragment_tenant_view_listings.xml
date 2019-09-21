@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtTenantViewListingAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="@color/Black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgTenantViewListingHouse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenantViewListingAddress"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/txtHouseDetailTitle"
+        style="@style/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="House Details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgTenantViewListingHouse" />
+
+    <TableLayout
+        android:id="@+id/tableLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHouseDetailTitle">
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rent:" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingRent"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Size:" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingSize"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of Beds:" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingBed"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number of Bath:" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingBath"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/txtTenantViewListingDescriptionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        style="@style/title_text"
+        android:text="Description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout4" />
+
+    <TextView
+        android:id="@+id/txtTenantViewListingDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:lines="5"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenantViewListingDescriptionTitle" />
+
+    <TextView
+        android:id="@+id/txtTenantViewListingUtilitiesTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        style="@style/title_text"
+        android:text="Utilities Included"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenantViewListingDescription" />
+
+    <TableLayout
+        android:id="@+id/tableLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTenantViewListingUtilitiesTitle">
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hydro" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingHydroIncluded"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Electrical" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingElectricalIncluded"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Internet" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingInternetIncluded"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone Line" />
+
+            <TextView
+                android:id="@+id/txtTenantViewListingPhoneLineIncluded"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnTenantViewListingsGoBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        style="@style/button_layout"
+        android:text="Go Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout5" />
+
+
+</android.support.constraint.ConstraintLayout>

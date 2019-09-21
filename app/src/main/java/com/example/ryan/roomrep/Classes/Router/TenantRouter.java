@@ -65,6 +65,11 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
+    public void onNavigateToViewListings() {
+
+    }
+
+    @Override
     public void onNavigateToPayRent() {
         PayRentFragment payRentFragment = new PayRentFragment();
         payRentFragment.setActionListener(this);

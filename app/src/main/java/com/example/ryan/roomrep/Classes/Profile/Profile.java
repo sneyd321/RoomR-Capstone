@@ -1,13 +1,5 @@
 package com.example.ryan.roomrep.Classes.Profile;
 
-import android.support.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class Profile {
@@ -25,7 +17,7 @@ public class Profile {
     }
 
     public Map<Integer, String> getValidator() {
-        Validator validator = new ProfileValidator();
+        ProfileValidator validator = new ProfileValidatorClass();
         return validator.validateProfile(this);
     }
 
