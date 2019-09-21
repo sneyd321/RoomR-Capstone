@@ -9,6 +9,8 @@ import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
+import com.example.ryan.roomrep.LandlordFragments.SearchTenantFragment;
+import com.example.ryan.roomrep.LandlordFragments.ShowTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.TenantProfilesFragment;
 import com.example.ryan.roomrep.R;
 
@@ -87,5 +89,17 @@ public class LandlordRouter implements LandlordRouterAction {
         manageBackstack(tenantProfilesFragment);
     }
 
+    @Override
+    public void onNaviagateToAddTenant() {
+        ShowTenantFragment showTenantFragment = new ShowTenantFragment();
+        showTenantFragment.setRouterAction(this);
+        manageBackstack(showTenantFragment);
+    }
 
+    @Override
+    public void onNaviagateToSearchTenant() {
+        SearchTenantFragment searchTenantFragment = new SearchTenantFragment();
+        searchTenantFragment.setRouterAction(this);
+       manageBackstack(searchTenantFragment);
+    }
 }

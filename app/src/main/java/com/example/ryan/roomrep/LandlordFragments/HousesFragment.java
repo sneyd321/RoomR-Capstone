@@ -77,12 +77,17 @@ public class HousesFragment extends Fragment {
 
         btnViewListings.setOnClickListener(onViewListings);
 
+        btnNavigateAddTenant.setOnClickListener(onNavigateToAddTenant);
+
         return view;
     }
 
     private View.OnClickListener onNavigateToAddTenant = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if (routerActionListener != null){
+                routerActionListener.onNaviagateToAddTenant();
+            }
 
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cameraIntent, BACK_CAMERA_REQUEST);

@@ -17,6 +17,8 @@ public interface LandlordRouterAction {
 
     void onNavigateToTenantProfile();
 
+    void onNaviagateToAddTenant();
 
+    void onNaviagateToSearchTenant();
 
 }
