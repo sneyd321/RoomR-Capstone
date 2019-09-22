@@ -76,7 +76,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
+//        router = new LandlordRouter(getSupportFragmentManager(), new ArrayList());
+//        router.onNavigateToHouses(landlord);
 
         if (savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_listings);

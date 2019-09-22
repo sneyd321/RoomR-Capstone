@@ -49,17 +49,17 @@ public class ShowTenantFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        //Tenant addTenant =  ((MainActivityLandlord)getActivity()).peopleToAdd;
+        Tenant addTenant =  ((MainActivityLandlord)getActivity()).peopleToAdd;
 
 //        Toast.makeText(getActivity(),"long click "+addTenant.getLastName(),Toast.LENGTH_SHORT).show();
 
 
-        //if (addTenant !=null) {
+        if (addTenant !=null) {
 
-            //infTeant.add(addTenant);
-            //adapter.notifyDataSetChanged();
+            infTeant.add(addTenant);
+            adapter.notifyDataSetChanged();
 
-        //}
+        }
 
     }
 
