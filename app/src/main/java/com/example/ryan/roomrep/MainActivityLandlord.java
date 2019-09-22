@@ -18,6 +18,7 @@ import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
+import com.example.ryan.roomrep.Classes.Tenant;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -38,6 +39,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
     LandlordRouter router;
     Landlord landlord;
     List<House> houses;
+    public Tenant peopleToAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
