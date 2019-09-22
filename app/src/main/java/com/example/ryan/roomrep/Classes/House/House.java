@@ -19,6 +19,8 @@ public class House {
     private int bathNumber;
     private int applicants;
     private boolean isPosted;
+    private String province;
+    private String city;
 
     private String description;
     private String url = "";
@@ -34,7 +36,7 @@ public class House {
 
 
 
-    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail){
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String province, String city){
         this.address = address;
         this.rent = rent;
         this.size = size;
@@ -45,6 +47,8 @@ public class House {
         this.applicants = 0;
         this.landlordEmail = landlordEmail;
         this.isPosted = false;
+        this.province = province;
+        this.city = city;
     }
 
     public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, boolean isPosted){
@@ -161,6 +165,14 @@ public class House {
 
     public void setPosted(boolean posted) {
         this.isPosted = posted;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public String getCity() {
+        return city;
     }
 }
 

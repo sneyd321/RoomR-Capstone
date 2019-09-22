@@ -59,6 +59,8 @@ public class ProfileRouter implements ProfileRouterAction{
     @Override
     public void onNavigateToSearchListings() {
         SearchFragment searchFragment = new SearchFragment();
+        searchFragment.setHouses(this.houses);
+        searchFragment.setActionListener(this);
         manageBackstack(searchFragment);
     }
 

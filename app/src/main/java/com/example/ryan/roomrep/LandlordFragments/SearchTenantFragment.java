@@ -22,12 +22,13 @@ import com.example.ryan.roomrep.R;
 import java.util.ArrayList;
 
 
-public class SearchTenantFragment extends Fragment
+public class SearchTenantFragment extends Fragment implements ItemClickListener
+
         //implements LandlordShowTeantListingAdapter.ItemClickListener
 {
     LandlordShowTeantListingAdapter adapter;
     RecyclerView searchList;
-    Tenant teant;
+    Tenant tenant;
     ArrayList<Tenant> infListTeant = new ArrayList<>();
     LandlordRouterAction routerActionListener;
     String receivedData;
@@ -45,18 +46,7 @@ public class SearchTenantFragment extends Fragment
         searchList = view.findViewById(R.id.rcySearchTenants);
         searchList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new LandlordShowTeantListingAdapter(getActivity(), infListTeant);
-        adapter.setOnItemClickListener(new LandlordShowTeantListingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                //Toast.makeText(getActivity(), "click " + infListTeant.get(position).getLastName(), Toast.LENGTH_SHORT).show();
-                if (routerActionListener != null) {
-                    ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infListTeant.get(position).getFirstName(),infListTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
-                            //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
-                    Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).peopleToAdd.getLastName(),Toast.LENGTH_SHORT).show();
-                    routerActionListener.onNaviagateToAddTenant();
-                }
-            }
-        });
+        adapter.setOnClickListener(this);
         adapter.setOnItemLongClickListener(new LandlordShowTeantListingAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
@@ -100,6 +90,15 @@ public class SearchTenantFragment extends Fragment
         //Tenant(String firstName, String lastName, String email, String password, String password2, String bio) {
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        if (routerActionListener != null) {
+            //((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infListTeant.get(position).getFirstName(),infListTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
+            //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
+            //Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).peopleToAdd.getLastName(),Toast.LENGTH_SHORT).show();
+            routerActionListener.onNaviagateToAddTenant();
+        }
+    }
 
 
 //    @Override

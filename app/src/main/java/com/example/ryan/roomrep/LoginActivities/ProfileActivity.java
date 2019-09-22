@@ -44,14 +44,6 @@ public class ProfileActivity extends AppCompatActivity implements FragmentEventL
 
 
     }
-    public void addToSharedPreferences(Profile profile) {
-        SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE).edit();
-        editor.putString("FirstName", profile.getFirstName());
-        editor.putString("LastName", profile.getLastName());
-        editor.putString("Email", profile.getEmail());
-        editor.putString("Bio", profile.getBio());
-        editor.apply();
-    }
 
 
     @Override
