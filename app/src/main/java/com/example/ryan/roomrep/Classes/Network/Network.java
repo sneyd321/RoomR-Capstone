@@ -298,6 +298,7 @@ public class Network implements NetworkObservable {
     public void uploadRepair(File photo) {
         final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
+        //Look at request body for .addFormDataPart to send Json
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("FrontPhoto", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))

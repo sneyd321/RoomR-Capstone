@@ -17,6 +17,7 @@ public class Repair {
     private String problemIdentification;
     private String dateReported;
     private byte[] image;
+    private String status;
     private String storageReference;
 
     private boolean isSuccessful;
@@ -25,6 +26,14 @@ public class Repair {
 
     public Repair(){
 
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDescription() {
