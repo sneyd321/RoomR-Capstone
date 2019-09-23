@@ -37,8 +37,9 @@ public class MainActivityTenant extends AppCompatActivity{
 
     private ArrayList<Repair> repairs;
     Toolbar toolbar;
-
+    public String chatPeopleName = "Ziheng He";
     public String chatRoomNameInMainActivityTenant = "TheRegularOne";
+    public String chatRoomType = "Test";
     //This String is an example when login activity passed data to MainActivityTenant
 
 

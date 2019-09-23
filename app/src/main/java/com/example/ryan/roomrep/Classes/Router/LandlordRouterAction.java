@@ -21,4 +21,6 @@ public interface LandlordRouterAction {
 
     void onNaviagateToSearchTenant();
 
+    void onNavigateToMessagePage();
+
 }

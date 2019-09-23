@@ -40,6 +40,9 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
     Landlord landlord;
     List<House> houses;
     public Tenant peopleToAdd;
+    public String chatPeopleName = "Ziheng He";
+    public String chatRoomNameInMainActivityLandlord = "TheRegularOne";
+    public String chatRoomType = "Test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +80,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-//        router = new LandlordRouter(getSupportFragmentManager(), new ArrayList());
-//        router.onNavigateToHouses(landlord);
+       // router = new LandlordRouter(getSupportFragmentManager(), new ArrayList());
+        //router.onNavigateToHouses(landlord);
 
         if (savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_listings);

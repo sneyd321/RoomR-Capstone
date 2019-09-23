@@ -105,7 +105,7 @@ public class ChatMessage {
                 });
     }
 
-    public Task<Void> addNewValues(){
+    public Task<Void> addNewValues(String chatRoomType){
         final Map<String, Object> message = new HashMap<>();
         message.put("messageText", this.messageText);
         message.put("messageTime", this.messageTime);
@@ -113,7 +113,7 @@ public class ChatMessage {
 
 
         final ChatMessage chatMessage = this;
-        return db.collection("Test2").document("ChatRoom").collection(chatRoomName).document(this.messageTime)
+        return db.collection("Messages").document(chatRoomType).collection(chatRoomName).document(this.messageTime)
                 .set(message)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

@@ -49,9 +49,9 @@ import javax.annotation.Nullable;
 import static android.support.constraint.Constraints.TAG;
 
 
-public class MessagRFragment extends Fragment
+public class MessagRFragment extends Fragment{
         //implements MessagrRecycleViewAdapter.ItemClickListener
-        {
+
    // public static final String MESSAGE_KEY = "message";
     //private DocumentReference mDocRef = FirebaseFirestore.getInstance().document("communication/message");
     //FirebaseFirestore mDocRef = FirebaseFirestore.getInstance();
@@ -75,8 +75,9 @@ public class MessagRFragment extends Fragment
             public void onStart() {
                 super.onStart();
                 String chatRoomName = ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant;
+                String roomType = ((MainActivityTenant)getActivity()).chatRoomType;
                         // ((MainActivityTenant)getActivity()).getRepair().add(repair);
-                db.collection("Test2").document("ChatRoom").collection(chatRoomName).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                db.collection("Messages").document(roomType).collection(chatRoomName).addSnapshotListener(new EventListener<QuerySnapshot>() {
                 //db.collection("Test").addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -111,7 +112,7 @@ public class MessagRFragment extends Fragment
         editText = view.findViewById(R.id.editText);
         //userName = view.findViewById(R.id.message_user);
         //time = view.findViewById(R.id.message_time);
-        messageList = view.findViewById(R.id.recyclerRepairsView);
+        messageList = view.findViewById(R.id.recyclerMessageView);
         messageList.setLayoutManager(new LinearLayoutManager(getActivity()));
         //adapter = new MessagrRecycleViewAdapter(getActivity(), messages);
         //adapter = new MessagrRecycleViewAdapter(getActivity(),infMessages);
@@ -141,12 +142,12 @@ public class MessagRFragment extends Fragment
             @Override
             public void onClick(View view) {
                 String chatRoomName = ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant;
-
+                String peopleName = ((MainActivityTenant)getActivity()).chatPeopleName;
                             if(!editText.getText().toString().equals("")){
                                 //Toast.makeText(getActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
                 messageSend= new ChatMessage();
 
-                messageSend.setMessageUser("FATHER");
+                messageSend.setMessageUser(peopleName);
                 messageSend.setMessageText(editText.getText().toString());
                 messageSend.setChatRoomName(chatRoomName);
 
@@ -230,7 +231,8 @@ public class MessagRFragment extends Fragment
 
     public void getMessageFromDataBase(){
         String chatRoomName = ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant;
-        Task<QuerySnapshot> result = db.collection("Test2").document("ChatRoom").collection(chatRoomName).get();
+        String roomType = ((MainActivityTenant)getActivity()).chatRoomType;
+        Task<QuerySnapshot> result = db.collection("Messages").document(roomType).collection(chatRoomName).get();
         //Task<QuerySnapshot> result =  db.collection("Test").get();
         //Task<QuerySnapshot> result =  db.collection("Repair").get();
         //Request all the documents in the data collection "communication"
@@ -264,8 +266,9 @@ public class MessagRFragment extends Fragment
     }
 
             private void sendDataTodataBase(){
+                String roomType = ((MainActivityTenant)getActivity()).chatRoomType;
                 //Task<Void> result = messageSend.addValues();
-                Task<Void> result = messageSend.addNewValues();
+                Task<Void> result = messageSend.addNewValues(roomType);
                 result.addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

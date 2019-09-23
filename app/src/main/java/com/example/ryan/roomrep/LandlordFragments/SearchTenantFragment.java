@@ -31,8 +31,8 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
     Tenant tenant;
     ArrayList<Tenant> infListTeant = new ArrayList<>();
     LandlordRouterAction routerActionListener;
-    String receivedData;
-    String receivedData2;
+    //String receivedData;
+    //String receivedData2;
 
 
 
@@ -47,18 +47,18 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
         searchList.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new LandlordShowTeantListingAdapter(getActivity(), infListTeant);
         adapter.setOnItemClickListener(this);
-        adapter.setOnItemLongClickListener(new LandlordShowTeantListingAdapter.OnItemLongClickListener() {
-            @Override
-            public void onItemLongClick(View view, int position) {
-                //Toast.makeText(getActivity(),"long click "+infListTeant.get(position).getLastName(),Toast.LENGTH_SHORT).show();
-                //Toast.makeText(,((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        adapter.setOnItemLongClickListener(new LandlordShowTeantListingAdapter.OnItemLongClickListener() {
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//                //Toast.makeText(getActivity(),"long click "+infListTeant.get(position).getLastName(),Toast.LENGTH_SHORT).show();
+//                //Toast.makeText(,((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant, Toast.LENGTH_SHORT).show();
+//            }
+//        });
         searchList.setAdapter(adapter);
 
 
-        receivedData = adapter.passData;
-        receivedData2 = adapter.passData2;
+        //receivedData = adapter.passData;
+        //receivedData2 = adapter.passData2;
         //Toast.makeText(getActivity(),receivedData+"GGGGGG", Toast.LENGTH_SHORT).show();
 
 
@@ -99,11 +99,5 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
             routerActionListener.onNaviagateToAddTenant();
         }
     }
-
-
-//    @Override
-//    public void onItemClick(View view, int position) {
-//        //Toast.makeText(getActivity(), position, Toast.LENGTH_SHORT).show();
-//    }
 }
 
