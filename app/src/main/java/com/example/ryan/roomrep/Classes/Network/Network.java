@@ -6,7 +6,9 @@ import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Tenant;
 import com.google.gson.Gson;
+import com.squareup.okhttp.MultipartBuilder;
 
+import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -295,30 +297,33 @@ public class Network implements NetworkObservable {
         });
     }
 
-    public void uploadRepair(File photo) {
+    public void uploadRepairImage(File photo, String language) {
         final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-
+        String lang = language;
         //Look at request body for .addFormDataPart to send Json
+        //value is not getting passed.
+
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("FrontPhoto", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))
+                .addFormDataPart("Language", lang)
+                .addFormDataPart("Photo", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))
                 .build();
 
         Request request = new Request.Builder()
-                .url(SERVER_URL + "AddPhoto")
+                .url("http://192.168.2.29:80/" + "AddPhoto")
                 .post(requestBody)
                 .build();
 
         OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
+        client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
 
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
+            public void onResponse(@NotNull okhttp3.Call call, @NotNull okhttp3. Response response) throws IOException {
+                fragmentEventListener.update(response.body().string());
             }
         });
     }
