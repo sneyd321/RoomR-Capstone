@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +46,14 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
         edtBio = view.findViewById(R.id.edtProfileBio);
         btnAddProfile = view.findViewById(R.id.btnCreateProfile);
         btnAddProfile.setOnClickListener(onCreateProfile);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        edtFirstName.setText(sharedPref.getString("ProfileFirstName", ""));
+        edtLastName.setText(sharedPref.getString("ProfileLastName", ""));
+        edtEmail.setText(sharedPref.getString("ProfileEmail", ""));
+        edtBio.setText(sharedPref.getString("ProfileBio", ""));
+
+
+
         return view;
     }
 
@@ -87,7 +97,7 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
             }
 
             if (isValid){
-                ((ProfileActivity)getActivity()).addToSharedPreferences(profile);
+                addToSharedPreferences(profile);
                 if (routerAction != null) {
 
                     Network network = Network.getInstance();
@@ -106,7 +116,15 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
     }
 
 
-
+    public void addToSharedPreferences(Profile profile) {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("ProfileFirstName", profile.getFirstName());
+        editor.putString("ProfileLastName", profile.getLastName());
+        editor.putString("ProfileEmail", profile.getEmail());
+        editor.putString("ProfileBio", profile.getBio());
+        editor.apply();
+    }
 
     @Override
     public void update(String response) {

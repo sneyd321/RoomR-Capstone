@@ -24,7 +24,7 @@ public class LandlordShowTeantListingAdapter extends RecyclerView.Adapter<Landlo
     private Context context;
     private List<Tenant> data;
     private LayoutInflater inflater;
-    //private ItemClickListener itemClickListener;
+    private ItemClickListener itemClickListener;
     public String passData;
     public String passData2;
     private OnItemClickListener mOnItemClickListener;
@@ -111,7 +111,9 @@ public class LandlordShowTeantListingAdapter extends RecyclerView.Adapter<Landlo
     public void setOnItemLongClickListener(OnItemLongClickListener mOnItemLongClickListener) {
         this.mOnItemLongClickListener = mOnItemLongClickListener;
     }
-
+    public void setOnClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder
             //implements View.OnClickListener
@@ -128,6 +130,8 @@ public class LandlordShowTeantListingAdapter extends RecyclerView.Adapter<Landlo
         }
 
 
+
+
 //        @Override
 //        public void onClick(View v) {
 //            if (itemClickListener != null) {
@@ -137,9 +141,7 @@ public class LandlordShowTeantListingAdapter extends RecyclerView.Adapter<Landlo
 //        }
 //    }
 //
-//    public void setOnClickListener(ItemClickListener itemClickListener) {
-//        this.itemClickListener = itemClickListener;
-//    }
+//
 //
 //    public interface ItemClickListener {
 //

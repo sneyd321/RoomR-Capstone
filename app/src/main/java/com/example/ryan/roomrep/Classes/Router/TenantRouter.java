@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
@@ -19,6 +20,7 @@ import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TenantRouter implements TenantRouterAction {
@@ -53,13 +55,14 @@ public class TenantRouter implements TenantRouterAction {
     @Override
     public void onNavigateToSearch() {
         SearchFragment searchFragment = new SearchFragment();
-        searchFragment.setActionListener(this);
+        //searchFragment.setActionListener(this);
         manageBackstack(searchFragment);
     }
 
     @Override
     public void onNavigateToListings() {
         ListingsFragment listingsFragment = new ListingsFragment();
+        listingsFragment.setHouses(new ArrayList<House>());
         //listingsFragment.setActionListener(this);
         manageBackstack(listingsFragment);
     }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.R;
-import com.mysql.jdbc.Util;
+
 import com.squareup.picasso.Picasso;
 
 public class TenantViewListingFragment extends Fragment {
@@ -63,6 +63,7 @@ public class TenantViewListingFragment extends Fragment {
         txtElectrical.setText("Not Included");
         txtInternet.setText("Not Included");
         txtPhoneLine.setText("Not Included");
+
         for (Utility utility : house.getUtilities()){
             switch (utility.getName()){
                 case "Hydro":
