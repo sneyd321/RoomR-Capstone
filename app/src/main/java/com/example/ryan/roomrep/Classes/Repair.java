@@ -14,15 +14,13 @@ import java.util.Map;
 
 public class Repair {
     private String description;
-    private String problemIdentification;
+    private String name;
     private String dateReported;
     private byte[] image;
     private String status;
-    private String storageReference;
+    private String photoRef;
 
     private boolean isSuccessful;
-
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public Repair(){
 
@@ -44,12 +42,12 @@ public class Repair {
         this.description = description;
     }
 
-    public String getProblemIdentification() {
-        return problemIdentification;
+    public String getName() {
+        return name;
     }
 
-    public void setProblemIdentification(String problemIdentification) {
-        this.problemIdentification = problemIdentification;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDateReported() {
@@ -68,12 +66,12 @@ public class Repair {
         this.image = image;
     }
 
-    public String getStorageReference() {
-        return storageReference;
+    public String getPhotoRef() {
+        return photoRef;
     }
 
-    public void setStorageReference(String storageReference) {
-        this.storageReference = storageReference;
+    public void setPhotoRef(String photoRef) {
+        this.photoRef = photoRef;
     }
 
     public boolean isSuccessful() {
@@ -84,31 +82,4 @@ public class Repair {
         isSuccessful = successful;
     }
 
-    public Task<Void> addValues(){
-        final Map<String, Object> repair = new HashMap<>();
-        repair.put("Problem", this.problemIdentification);
-        repair.put("Description", this.description);
-        repair.put("Date", this.dateReported);
-        repair.put("StorageReference", this.storageReference);
-
-        final Repair repairRef = this;
-        return db.collection("Repair").document(this.dateReported)
-                .set(repair)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        repairRef.setSuccessful(true);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        repairRef.setSuccessful(false);
-                    }
-                });
-    }
-
-    public Task<QuerySnapshot> getRepairsFirebase(){
-        return db.collection("Repair").get();
-    }
 }

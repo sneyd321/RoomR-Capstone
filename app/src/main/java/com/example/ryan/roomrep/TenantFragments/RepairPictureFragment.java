@@ -2,6 +2,7 @@ package com.example.ryan.roomrep.TenantFragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.PhotoManager;
 
 import com.example.ryan.roomrep.Classes.Repair;
@@ -29,7 +33,9 @@ import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.R;
 
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -46,8 +52,8 @@ public class RepairPictureFragment extends Fragment {
     ImageView imgView;
     String language;
     String languageSelected;
+    File file;
 
-    String imageString;
     ArrayAdapter<String> spinnerArrayAdapter;
     Repair repair;
     PhotoManager photoManager;
@@ -61,12 +67,11 @@ public class RepairPictureFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_repair_picture, container, false);
         btnTakePhoto = view.findViewById(R.id.btn_takePicture);
-        btnSendPhoto = view.findViewById(R.id.btn_sendProblem);
+        btnSendPhoto = view.findViewById(R.id.btn_sendPhoto);
         btnPickPhoto = view.findViewById(R.id.btn_pickImage);
         languages = view.findViewById(R.id.spn_languages);
         txtError = view.findViewById(R.id.txt_error);
@@ -74,18 +79,21 @@ public class RepairPictureFragment extends Fragment {
         repair = new Repair();
         photoManager = new PhotoManager();
 
-        btnSendPhoto.setEnabled(false);
+        btnSendPhoto.setVisibility(View.INVISIBLE);
         txtError.setVisibility(View.INVISIBLE);
 
         //initializing onclick listeners for the buttons
         btnSendPhoto.setOnClickListener(onSendPhoto);
         btnTakePhoto.setOnClickListener(onTakePhoto);
         btnPickPhoto.setOnClickListener(onPickPhoto);
+        language = "none";
 
         languages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                language = adapterView.getItemAtPosition(pos).toString();
+                String shortFormLanguages[] = getResources().getStringArray(R.array.languagesShortForm);
+                languageSelected = shortFormLanguages[pos];
+
             }
 
             @Override
@@ -106,11 +114,11 @@ public class RepairPictureFragment extends Fragment {
     View.OnClickListener onSendPhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Send Repair Object as a parameter
-            //Bitmap bmp = ((BitmapDrawable)imgView.getDrawable()).getBitmap();
-            //                if (actionListener != null) {
-            //                    actionListener.onNavigateToSendRepair();
-            //                }
+            if (actionListener != null) {
+                //send json back
+                uploadPicture(file);
+                actionListener.onNavigateToSendRepair();
+            }
         }
     };
 
@@ -118,23 +126,7 @@ public class RepairPictureFragment extends Fragment {
         @Override
         public void onClick(View view) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-            startActivityForResult(takePictureIntent, PICTURE_TAKER);
-        }
-    };
-
-    public void setView(){
-    }
-    View.OnClickListener onPredictPhoto = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            btnSendPhoto.setEnabled(true);
-            if ((spinnerArrayAdapter == null) || spinnerArrayAdapter.isEmpty()) {
-                //requestPrediction();
-            }else{
-                //requestPrediction();
-            }
-            //requestPrediction();
+                startActivityForResult(takePictureIntent, PICTURE_TAKER);
         }
     };
 
@@ -142,25 +134,21 @@ public class RepairPictureFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICTURE_TAKER){
-            imageString = "";
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageString = photoManager.convertBitmapToString(imageBitmap);
+            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
             imgView.setImageBitmap(imageBitmap);
             btnTakePhoto.setText("Retake Photo");
+            file = saveImageToInternalStorage(imageBitmap, "Photo", "TestNetworkRepair.png");
+            btnSendPhoto.setVisibility(View.VISIBLE);
         }
         if (requestCode == PICK_PICTURE){
             if (resultCode == RESULT_OK){
                 Bitmap imageBitmap;
-                //reset image string
-                imageString = "";
                 //get image from intent
                 Uri image = data.getData();
                 //convert uri into bitmap
                 try (InputStream is = getContext().getContentResolver().openInputStream(image)) {
                     imageBitmap = BitmapFactory.decodeStream(is);
                     imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 200, 200, true);
-                    is.close();
                 } catch (FileNotFoundException e) {
                     imageBitmap = null;
                     e.printStackTrace();
@@ -173,9 +161,9 @@ public class RepairPictureFragment extends Fragment {
                     //convert bitmap to string
                     photoManager = new PhotoManager();
                     imageBitmap = photoManager.rotateImage(imageBitmap);
-                    imageString = photoManager.convertBitmapToString(imageBitmap);
-
                     imgView.setImageBitmap(imageBitmap);
+                    file = saveImageToInternalStorage(imageBitmap, "Photo", "TestNetworkRepair.png");
+                    btnSendPhoto.setVisibility(View.VISIBLE);
                 }
                 //if no image is found return an error
                 else{
@@ -184,6 +172,43 @@ public class RepairPictureFragment extends Fragment {
             }
         }
     }
+
+    public void uploadPicture(File photo){
+        Network network = Network.getInstance();
+        network.uploadRepairImage(photo, languageSelected);
+        Toast.makeText(getContext(), "photo sent Sqkirrt", Toast.LENGTH_SHORT).show();
+    }
+
+
+    public File saveImageToInternalStorage(Bitmap bitmap, String directoryName, String filename) {
+        ContextWrapper contextWrapper = new ContextWrapper(getActivity());
+
+        File directory = contextWrapper.getDir(directoryName, Context.MODE_PRIVATE);
+
+        File path = new File(directory, filename);
+
+        FileOutputStream fos = null;
+
+        try {
+            fos = new FileOutputStream(path);
+
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                fos.close();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        return path;
+
+    }
+
 
     //showSimpleProgressDialog(getContext(), "Loading...","Predicting Image",false);
     public static void removeSimpleProgressDialog() {

@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +47,9 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
         Repair repair = mData.get(position);
         holder.txt_descriptionRow.setText(repair.getDescription());
         holder.txt_dateRow.setText(repair.getDateReported());
-        holder.txt_problemIdRow.setText(repair.getProblemIdentification());
+        holder.txt_problemIdRow.setText(repair.getName());
         StorageReference storageRef = storage.getReference();
-        StorageReference pathReference = storageRef.child(repair.getStorageReference());
+        StorageReference pathReference = storageRef.child(repair.getPhotoRef());
         try{
             pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override

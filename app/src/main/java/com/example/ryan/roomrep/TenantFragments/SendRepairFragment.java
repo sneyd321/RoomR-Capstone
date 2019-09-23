@@ -10,12 +10,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.R;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.gson.Gson;
 
-public class SendRepairFragment extends Fragment {
+import org.json.JSONArray;
+import org.json.JSONException;
+
+public class SendRepairFragment extends Fragment implements FragmentEventListener {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     Button btn_send;
@@ -93,4 +100,40 @@ public class SendRepairFragment extends Fragment {
         this.actionListener = actionListener;
         //Use this actionListener to later manage the back stack and pop off this view and the other view and re-direct to viewRepairList.
     }
+
+    @Override
+    public void update(String response) {
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+        Gson gson = new Gson();
+    }
+
+
+    //This code below is an example to get a single Repair.
+    /*@Override
+    public void update(String response) {
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+        Gson gson = new Gson();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                houses.add(gson.fromJson(jsonArray.get(i).toString(), House.class));
+                houses.get(i).setUrl(jsonArray.getJSONObject(i).getString("image"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        router = new LandlordRouter(getSupportFragmentManager(), this.houses);
+        router.onNavigateToHouses(landlord);
+    }*/
 }

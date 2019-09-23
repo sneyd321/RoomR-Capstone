@@ -55,8 +55,8 @@ public class RepairHistoryLandlordFragment extends Fragment {
                         Repair repair = new Repair();
                         repair.setDateReported(document.get("Date").toString());
                         repair.setDescription(document.get("Description").toString());
-                        repair.setProblemIdentification(document.get("Problem").toString());
-                        repair.setStorageReference(document.get("StorageReference").toString());
+                        repair.setName(document.get("Problem").toString());
+                        repair.setPhotoRef(document.get("StorageReference").toString());
                         //((MainActivityLandlord)getActivity()).getRepair().add(repair);
                     }
 

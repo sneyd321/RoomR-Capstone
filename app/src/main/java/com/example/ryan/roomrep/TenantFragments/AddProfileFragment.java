@@ -104,7 +104,6 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
                     network.registerObserver(AddProfileFragment.this);
                     network.addProfile(profile);
                     routerAction.onNavigateToProfileListings();
-
                 }
             }
 
