@@ -369,6 +369,32 @@ public class Network implements NetworkObservable {
 
     }
 
+    public void getRepairs(){
+        Gson gson = new Gson();
+
+        Request request = new Request.Builder()
+                .url("http://192.168.2.29:8080/" + "GetRepairs")
+                .get()
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    fragmentEventListener.update(response.body().string());
+                }
+                response.close();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
 
 
 }

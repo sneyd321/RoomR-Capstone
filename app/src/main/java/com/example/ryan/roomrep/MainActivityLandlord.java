@@ -64,8 +64,6 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
         houses = new ArrayList<>();
 
-        //Do repair like houses!!!
-
         Network network = Network.getInstance();
         network.registerObserver(this);
         network.getLandlordHouses(landlord);
