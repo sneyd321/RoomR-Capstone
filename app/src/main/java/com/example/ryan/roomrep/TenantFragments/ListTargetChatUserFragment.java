@@ -37,7 +37,7 @@ public class ListTargetChatUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Toast.makeText(getActivity(),((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant, Toast.LENGTH_SHORT).show();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_target_chat_user, container, false);
         //return inflater.inflate(R.layout.fragment_list_target_chat_user, container, false);
@@ -48,7 +48,8 @@ public class ListTargetChatUserFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
                     if (actionListener != null) {
-                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "TheOneForChatRoom";
+                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "136 tower drive";
+                        ((MainActivityTenant)getActivity()).chatRoomType ="PublicChatRoom";
                         //Toast.makeText(getActivity(),((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant, Toast.LENGTH_SHORT).show();
                         actionListener.onNavigateToMessages();
                     }
@@ -58,7 +59,8 @@ public class ListTargetChatUserFragment extends Fragment {
                 }
                 if(position==1){
                     if (actionListener != null) {
-                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "TheOneForTheLandlord";
+                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "Mexi Liang";
+                        ((MainActivityTenant)getActivity()).chatRoomType ="OneToOne";
                         actionListener.onNavigateToMessages();
                     }
                     //router.onNavigateToMessages();
