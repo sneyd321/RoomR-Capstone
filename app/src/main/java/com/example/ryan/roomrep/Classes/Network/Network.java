@@ -318,7 +318,7 @@ public class Network implements NetworkObservable {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://10.16.24.83:8080/" + "AddPhoto")
+                .url("http://192.168.2.29:8080/" + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -344,7 +344,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url(SERVER_URL + "AddRepair")
+                .url("http://192.168.2.29:8080/" + "AddRepair")
                 .post(body)
                 .build();
 

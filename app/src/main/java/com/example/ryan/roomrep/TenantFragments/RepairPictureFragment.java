@@ -37,6 +37,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,7 +63,7 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
     ImageView imgView;
     String language;
     File file;
-    LanguageTranslation languageTranslation;
+    //LanguageTranslation languageTranslation;
 
     PhotoManager photoManager;
 
@@ -266,29 +267,27 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
         //languageTranslation = gson.fromJson(response, LanguageTranslation.class);
         //if it doesn't
         try {
-            JSONObject jsonObj = new JSONObject(response);
-            languageTranslation.setCategory(jsonObj.get("category").toString());
-            languageTranslation.setImgUrl(jsonObj.get("imgUrl").toString());
-            JsonArray words = (JsonArray)jsonObj.get("wordsInEnglish");
+            JSONArray jsonArray = new JSONArray(response);
+            JSONObject jsonWordsInOtherLanguage = jsonArray.getJSONObject(0);
+            JSONObject jsonImgUrl = jsonArray.getJSONObject(1);
+            JSONObject jsonWordsInEnglish = jsonArray.getJSONObject(2);
+            JSONObject jsonCategory = jsonArray.getJSONObject(3);
+
+            String category = (jsonCategory.getString("category"));
+            String imgUrl = (jsonImgUrl.getString("imgUrl"));
             List<String> wordsInEnglish = new ArrayList<>();
-            if (words != null){
-                for (int i=0; i< words.size(); i++){
-                    wordsInEnglish.add(words.get(i).toString());
-                }
+            for(int i = 0 ; i < jsonWordsInEnglish.getJSONArray("wordsInEnglish").length(); i++){
+                wordsInEnglish.add(jsonWordsInEnglish.getJSONArray("wordsInEnglish").getString(i));
             }
-            words = (JsonArray)jsonObj.get("wordsInOtherLanguage");
             List<String> wordsInOtherLanguage = new ArrayList<>();
-            if (words != null){
-                for (int i=0; i< words.size(); i++){
-                    wordsInOtherLanguage.add(words.get(i).toString());
-                }
+            for(int i = 0 ; i < jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").length(); i++){
+                wordsInOtherLanguage.add(jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").getString(i));
             }
-            languageTranslation.setWordsInEnglish(wordsInEnglish);
-            languageTranslation.setWordsInOtherLanguage(wordsInOtherLanguage);
+            LanguageTranslation languageTranslation = new LanguageTranslation(wordsInOtherLanguage, wordsInEnglish, imgUrl, category);
             Log.d(TAG, "update: " + languageTranslation);
+            actionListener.onNavigateToSendRepair(languageTranslation);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        actionListener.onNavigateToSendRepair(languageTranslation);
     }
 }

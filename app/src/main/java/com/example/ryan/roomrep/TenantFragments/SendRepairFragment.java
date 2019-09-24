@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class SendRepairFragment extends Fragment implements FragmentEventListener {
@@ -93,6 +95,8 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         txt_otherLanguage3.setText(otherLanguageWords.get(2));
         txt_otherLanguage4.setText(otherLanguageWords.get(3));
         txt_otherLanguage5.setText(otherLanguageWords.get(4));
+
+        txt_category.setText(languageTranslation.getCategory() + " is the Category of Repair");
     }
 
     View.OnClickListener onSendProblemToDB = new View.OnClickListener(){
@@ -100,10 +104,14 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         public void onClick(View view) {
             //Here the method sends the problem detected to the next page. and launches sendProblem.
             if(!edt_description.getText().toString().equals("")){
-                repair.setDescription(edt_description.getText().toString());
-                repair.setStatus("Unseen");
-                repair.setPhotoRef(languageTranslation.getImgUrl());
-                repair.setName(languageTranslation.getCategory());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Calendar calendar = Calendar.getInstance();
+                String description = edt_description.getText().toString();
+                String status = "Unseen";
+                String photoRef = languageTranslation.getImgUrl();
+                String name = languageTranslation.getCategory();
+                String date = dateFormat.format(calendar.getTime());
+                repair = new Repair(description,name,date,status,photoRef);
                 saveRepair();
             }else{
                 Toast.makeText(getActivity(), "Please write a description", Toast.LENGTH_SHORT).show();
@@ -114,7 +122,7 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
 
     private void saveRepair(){
         Network network = Network.getInstance();
-        //network.registerObserver(this);
+        network.registerObserver(this);
         network.addRepair(repair);
         Toast.makeText(getContext(), "Repair Sent", Toast.LENGTH_SHORT).show();
 
@@ -131,16 +139,7 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
 
     @Override
     public void update(String response) {
-        //2list and 2 strings.
-        String json = response;
-        JSONArray jsonArray;
-        try {
-            jsonArray = new JSONArray(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
-        Gson gson = new Gson();
+
     }
 
 

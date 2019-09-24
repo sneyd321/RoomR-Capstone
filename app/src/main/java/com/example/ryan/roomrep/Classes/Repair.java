@@ -16,7 +16,7 @@ import java.util.Map;
 public class Repair {
     private String description;
     private String name;
-    private String dateReported;
+    private String date;
     private String status;
     private String photoRef;
 
@@ -24,10 +24,10 @@ public class Repair {
 
     private boolean isSuccessful;
 
-    public Repair(String description, String name, String dateReported, String status, String photoRef){
+    public Repair(String description, String name, String date, String status, String photoRef){
         this.description = description;
         this.name = name;
-        this.dateReported = dateReported;
+        this.date = date;
         this.status = status;
         this.photoRef = photoRef;
 
@@ -66,12 +66,12 @@ public class Repair {
         this.name = name;
     }
 
-    public String getDateReported() {
-        return dateReported;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateReported(String dateReported) {
-        this.dateReported = dateReported;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getPhotoRef() {

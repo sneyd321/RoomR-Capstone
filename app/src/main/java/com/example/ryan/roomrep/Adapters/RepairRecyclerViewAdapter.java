@@ -44,7 +44,7 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
         //This allows the method to bind the values to the views.
         Repair repair = mData.get(position);
         holder.txt_descriptionRow.setText(repair.getDescription());
-        holder.txt_dateRow.setText(repair.getDateReported());
+        holder.txt_dateRow.setText(repair.getDate());
         holder.txt_problemIdRow.setText(repair.getName());
     }
 
