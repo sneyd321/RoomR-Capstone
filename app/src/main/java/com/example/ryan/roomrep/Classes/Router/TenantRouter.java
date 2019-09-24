@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.Classes.LanguageTranslation;
 import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
@@ -21,7 +21,6 @@ import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TenantRouter implements TenantRouterAction {
 
@@ -133,8 +132,9 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onNavigateToSendRepair() {
+    public void onNavigateToSendRepair(LanguageTranslation languageTranslation) {
         SendRepairFragment sendRepairFragment = new SendRepairFragment();
+        sendRepairFragment.setLanguageTranslation(languageTranslation);
         sendRepairFragment.setActionListener(this);
         manageBackstack(sendRepairFragment);
     }

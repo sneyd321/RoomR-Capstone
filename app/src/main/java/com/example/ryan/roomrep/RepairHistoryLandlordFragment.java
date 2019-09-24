@@ -38,39 +38,11 @@ public class RepairHistoryLandlordFragment extends Fragment {
 
         repairList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        setUpRepairs();
 
         return view;
     }
 
     public void setUpRepairs(){
-        Task<QuerySnapshot> result =  db.collection("Repair").get();
-        //Request all the documents in the data collection "repair"
-        result.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        //populates repair from the firebase storage.
-                        Repair repair = new Repair();
-                        repair.setDateReported(document.get("Date").toString());
-                        repair.setDescription(document.get("Description").toString());
-                        repair.setName(document.get("Problem").toString());
-                        repair.setPhotoRef(document.get("StorageReference").toString());
-                        //((MainActivityLandlord)getActivity()).getRepair().add(repair);
-                    }
-
-                    //adapter = new RepairRecyclerViewAdapter(getActivity(), ((MainActivityLandlord)getActivity()).getRepair());
-                    //adapter.setClickListener(this);
-                    repairList.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    //if (!((MainActivityLandlord)getActivity()).getRepair().isEmpty()){
-                        //numberofRepairs.setText("Total Repairs: " +  ((MainActivityLandlord)getActivity()).getRepair().size());
-                    //}
-
-                }
-            }
-        });
     }
 
 }

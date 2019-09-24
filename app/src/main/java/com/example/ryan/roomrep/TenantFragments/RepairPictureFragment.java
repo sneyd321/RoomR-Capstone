@@ -13,37 +13,47 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.LanguageTranslation;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.PhotoManager;
 
-import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 
 import com.example.ryan.roomrep.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 import static android.app.Activity.RESULT_OK;
+import static com.android.volley.VolleyLog.TAG;
 
 
-public class RepairPictureFragment extends Fragment {
+public class RepairPictureFragment extends Fragment implements FragmentEventListener {
     Button btnTakePhoto;
     Button btnSendPhoto;
     Button btnPickPhoto;
@@ -51,11 +61,9 @@ public class RepairPictureFragment extends Fragment {
     TextView txtError;
     ImageView imgView;
     String language;
-    String languageSelected;
     File file;
+    LanguageTranslation languageTranslation;
 
-    ArrayAdapter<String> spinnerArrayAdapter;
-    Repair repair;
     PhotoManager photoManager;
 
     private static ProgressDialog mProgressDialog;
@@ -76,7 +84,6 @@ public class RepairPictureFragment extends Fragment {
         languages = view.findViewById(R.id.spn_languages);
         txtError = view.findViewById(R.id.txt_error);
         imgView = view.findViewById(R.id.imgView);
-        repair = new Repair();
         photoManager = new PhotoManager();
 
         btnSendPhoto.setVisibility(View.INVISIBLE);
@@ -92,7 +99,7 @@ public class RepairPictureFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
                 String shortFormLanguages[] = getResources().getStringArray(R.array.languagesShortForm);
-                languageSelected = shortFormLanguages[pos];
+                language = shortFormLanguages[pos];
 
             }
 
@@ -115,9 +122,7 @@ public class RepairPictureFragment extends Fragment {
         @Override
         public void onClick(View v) {
             if (actionListener != null) {
-                //send json back
-                uploadPicture(file);
-                actionListener.onNavigateToSendRepair();
+                uploadPicture();
             }
         }
     };
@@ -173,13 +178,6 @@ public class RepairPictureFragment extends Fragment {
         }
     }
 
-    public void uploadPicture(File photo){
-        Network network = Network.getInstance();
-        network.uploadRepairImage(photo, languageSelected);
-        Toast.makeText(getContext(), "photo sent Sqkirrt", Toast.LENGTH_SHORT).show();
-    }
-
-
     public File saveImageToInternalStorage(Bitmap bitmap, String directoryName, String filename) {
         ContextWrapper contextWrapper = new ContextWrapper(getActivity());
 
@@ -207,6 +205,13 @@ public class RepairPictureFragment extends Fragment {
 
         return path;
 
+    }
+
+    public void uploadPicture(){
+        Network network = Network.getInstance();
+        network.registerObserver(this);
+        network.uploadRepairImage(file, language);
+        Toast.makeText(getContext(), "photo sent Sqkirrt", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -253,5 +258,37 @@ public class RepairPictureFragment extends Fragment {
 
     public void setActionListener(TenantRouterAction actionListener) {
         this.actionListener = actionListener;
+    }
+
+    @Override
+    public void update(String response) {
+        Gson gson = new Gson();
+        //languageTranslation = gson.fromJson(response, LanguageTranslation.class);
+        //if it doesn't
+        try {
+            JSONObject jsonObj = new JSONObject(response);
+            languageTranslation.setCategory(jsonObj.get("category").toString());
+            languageTranslation.setImgUrl(jsonObj.get("imgUrl").toString());
+            JsonArray words = (JsonArray)jsonObj.get("wordsInEnglish");
+            List<String> wordsInEnglish = new ArrayList<>();
+            if (words != null){
+                for (int i=0; i< words.size(); i++){
+                    wordsInEnglish.add(words.get(i).toString());
+                }
+            }
+            words = (JsonArray)jsonObj.get("wordsInOtherLanguage");
+            List<String> wordsInOtherLanguage = new ArrayList<>();
+            if (words != null){
+                for (int i=0; i< words.size(); i++){
+                    wordsInOtherLanguage.add(words.get(i).toString());
+                }
+            }
+            languageTranslation.setWordsInEnglish(wordsInEnglish);
+            languageTranslation.setWordsInOtherLanguage(wordsInOtherLanguage);
+            Log.d(TAG, "update: " + languageTranslation);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        actionListener.onNavigateToSendRepair(languageTranslation);
     }
 }

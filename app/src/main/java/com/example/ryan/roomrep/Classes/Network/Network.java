@@ -1,17 +1,19 @@
 package com.example.ryan.roomrep.Classes.Network;
 
+import android.widget.Toast;
+
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Tenant;
 import com.google.gson.Gson;
-import com.squareup.okhttp.MultipartBuilder;
 
-import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -299,35 +301,73 @@ public class Network implements NetworkObservable {
 
     public void uploadRepairImage(File photo, String language) {
         final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-        String lang = language;
-        //Look at request body for .addFormDataPart to send Json
-        //value is not getting passed.
+        JSONObject jsonObject = null;
 
-        RequestBody requestBody = new MultipartBody.Builder()
+        String formatJson = "{'Language': '" + language +"'}";
+        try {
+            jsonObject = new JSONObject(formatJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Look at request body for .addFormDataPart to send Json
+        MultipartBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("Language", lang)
                 .addFormDataPart("Photo", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))
+                .addFormDataPart("Language", jsonObject.toString())
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://192.168.2.29:80/" + "AddPhoto")
+                .url("http://10.16.24.83:8080/" + "AddPhoto")
                 .post(requestBody)
                 .build();
 
         OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new okhttp3.Callback() {
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
             }
 
             @Override
-            public void onResponse(@NotNull okhttp3.Call call, @NotNull okhttp3. Response response) throws IOException {
-                fragmentEventListener.update(response.body().string());
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    notifyObserver(response.body().string());
+                }
             }
         });
     }
 
+    public void addRepair(Repair repair){
+        final Gson gson = new Gson();
+        String json = gson.toJson(repair);
+        RequestBody body = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "AddRepair")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    //I want the response to navigate back to the Tenant Listings which sees all the repairs view!!!
+                    fragmentEventListener.update(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+
+    }
 
 
 

@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep.Classes.Router;
 
+import com.example.ryan.roomrep.Classes.LanguageTranslation;
+
 public interface TenantRouterAction {
 
 
@@ -25,6 +27,6 @@ public interface TenantRouterAction {
 
     void onNavigateToMessagesPeopleList();
 
-    void onNavigateToSendRepair();
+    void onNavigateToSendRepair(LanguageTranslation languageTranslation);
 
 }

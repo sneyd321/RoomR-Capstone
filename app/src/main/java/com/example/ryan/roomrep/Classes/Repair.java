@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,15 +17,30 @@ public class Repair {
     private String description;
     private String name;
     private String dateReported;
-    private byte[] image;
     private String status;
     private String photoRef;
 
+    private File file;
+
     private boolean isSuccessful;
 
-    public Repair(){
+    public Repair(String description, String name, String dateReported, String status, String photoRef){
+        this.description = description;
+        this.name = name;
+        this.dateReported = dateReported;
+        this.status = status;
+        this.photoRef = photoRef;
 
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
 
     public String getStatus() {
         return status;
@@ -56,14 +72,6 @@ public class Repair {
 
     public void setDateReported(String dateReported) {
         this.dateReported = dateReported;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public String getPhotoRef() {

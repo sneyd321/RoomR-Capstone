@@ -16,6 +16,7 @@
             android:id="@+id/txt_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Category"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,127 +38,123 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp">
+
                 <TextView
-                    android:textSize="17sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/txt_english1"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="RepairName"
-                    />
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:layout_weight="1"
+                    android:text="RepairName"
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
+
+                <TextView
                     android:id="@+id/txt_otherLanguage1"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="RepairName"
-                    />
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
 
             </TableRow>
 
             <TableRow
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/txt_english2"
-                    android:textSize="17sp"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="RepairName"
-                    />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:layout_weight="1"
+                    android:text="RepairName"
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
+
+                <TextView
                     android:id="@+id/txt_otherLanguage2"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="RepairName"
-                    />
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
 
             </TableRow>
 
 
             <TableRow
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="17sp"
                     android:id="@+id/txt_english3"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="RepairName"
-                    />
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:layout_weight="1"
+                    android:text="RepairName"
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
+
+                <TextView
                     android:id="@+id/txt_otherLanguage3"
-                    android:textAlignment="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="RepairName"
-                    />
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
             </TableRow>
 
             <TableRow
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="17sp"
                     android:id="@+id/txt_english4"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="RepairName"
-                    />
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:id="@+id/txt_otherLanguage4"
-                    android:textAlignment="center"
                     android:layout_weight="1"
                     android:text="RepairName"
-                    />
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/txt_otherLanguage4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RepairName"
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
             </TableRow>
 
             <TableRow
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="17sp"
                     android:id="@+id/txt_english5"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:text="RepairName"
-                    />
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
-                    android:id="@+id/txt_otherLanguage5"
-                    android:textAlignment="center"
                     android:layout_weight="1"
                     android:text="RepairName"
-                    />
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/txt_otherLanguage5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="RepairName"
+                    android:textAlignment="center"
+                    android:textSize="17sp" />
             </TableRow>
         </TableLayout>
 
@@ -180,7 +177,8 @@
             android:layout_marginTop="32dp"
             android:ems="8"
             android:textSize="20sp"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine"
+            android:lines="5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/txt_descriptionLabel"

@@ -26,8 +26,6 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
     private List<Repair> mData;
     private Context context;
     private LayoutInflater mInflater;
-    final long ONE_MEGABYTE = 1024 * 1024;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public RepairRecyclerViewAdapter(Context context, List<Repair> data){
         this.mData = data;
@@ -48,24 +46,6 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
         holder.txt_descriptionRow.setText(repair.getDescription());
         holder.txt_dateRow.setText(repair.getDateReported());
         holder.txt_problemIdRow.setText(repair.getName());
-        StorageReference storageRef = storage.getReference();
-        StorageReference pathReference = storageRef.child(repair.getPhotoRef());
-        try{
-            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    holder.imgViewRow.setImageBitmap(bitmap);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });
-        }catch (NullPointerException ex){
-
-        }
     }
 
     @Override
@@ -78,6 +58,7 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
         TextView txt_descriptionRow;
         TextView txt_problemIdRow;
         TextView txt_dateRow;
+        TextView txt_status;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +66,7 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
             txt_dateRow = itemView.findViewById(R.id.txt_dateRow);
             txt_descriptionRow = itemView.findViewById(R.id.txt_descriptionRow);
             txt_problemIdRow = itemView.findViewById(R.id.txt_problemRow);
+            txt_status = itemView.findViewById(R.id.txt_status);
         }
     }
 }
