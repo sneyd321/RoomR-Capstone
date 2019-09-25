@@ -37,10 +37,10 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
     public void onBindViewHolder(@NonNull RepairRecyclerViewAdapter.ViewHolder holder, int position) {
         //This allows the method to bind the values to the views.
         Repair repair = data.get(position);
-        holder.txt_descriptionRow.setText(repair.getDescription());
-        holder.txt_dateRow.setText(repair.getDate());
-        holder.txt_problemIdRow.setText(repair.getName());
-        holder.txt_status.setText(repair.getStatus());
+        holder.txt_descriptionRow.setText("Description: " + repair.getDescription());
+        holder.txt_dateRow.setText("Date: " + repair.getDate());
+        holder.txt_problemIdRow.setText("Repair Category" + repair.getName());
+        holder.txt_status.setText("Status: " + repair.getStatus());
         Picasso.get().load(repair.getPhotoRef()).placeholder(R.drawable.house).noFade().into(holder.imgViewRow);
     }
 

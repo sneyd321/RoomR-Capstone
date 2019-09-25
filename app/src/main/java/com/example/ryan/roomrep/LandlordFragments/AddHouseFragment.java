@@ -180,12 +180,6 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
         }
         return "";
     }
-
-
-
-
-
-
     private View.OnClickListener onAddHouse = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

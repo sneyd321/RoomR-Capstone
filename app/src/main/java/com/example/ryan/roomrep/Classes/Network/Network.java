@@ -1,24 +1,18 @@
 package com.example.ryan.roomrep.Classes.Network;
 
-import android.widget.Toast;
-
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Repair;
-import com.example.ryan.roomrep.Classes.Tenant;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -214,7 +208,6 @@ public class Network implements NetworkObservable {
             }
         });
     }
-
     public void addProfile(Profile profile) {
         final Gson gson = new Gson();
         String json = gson.toJson(profile);
@@ -318,7 +311,7 @@ public class Network implements NetworkObservable {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://10.16.30.167:8080/" + "AddPhoto")
+                .url("http://192.168.2.29:8080/" + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -344,7 +337,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url("http://10.16.30.167:8080/" + "AddRepair")
+                .url("http://192.168.2.29:8080/" + "AddRepair")
                 .post(body)
                 .build();
 
@@ -371,7 +364,7 @@ public class Network implements NetworkObservable {
 
     public void getRepairs(){
         Request request = new Request.Builder()
-                .url("http://10.16.30.167:8080/" + "GetRepairs")
+                .url("http://192.168.2.29:8080/" + "GetRepairs")
                 .get()
                 .build();
 
@@ -392,7 +385,4 @@ public class Network implements NetworkObservable {
             }
         });
     }
-
-
-
 }

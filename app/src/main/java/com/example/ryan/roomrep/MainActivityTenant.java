@@ -1,8 +1,8 @@
 package com.example.ryan.roomrep;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,25 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 
-import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
-import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
-import com.example.ryan.roomrep.Classes.Tenant;
-import com.example.ryan.roomrep.TenantFragments.ListTargetChatUserFragment;
-import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
-import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
-import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
-import com.example.ryan.roomrep.TenantFragments.ExpertSystemFragment;
-import com.example.ryan.roomrep.TenantFragments.ListingsFragment;
-import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
-import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
-import com.example.ryan.roomrep.TenantFragments.SearchFragment;
-import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
-import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -43,6 +28,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
 
     BottomNavigationView bottomMenu;
     TenantRouter router;
+    ProgressDialog progressDialog;
 
 
     private List<Repair> repairs;
@@ -62,9 +48,8 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         setSupportActionBar(toolbar);
         bottomMenu = findViewById(R.id.navBar);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
+
         router = new TenantRouter(getSupportFragmentManager(), repairs);
-
-
 
         if (savedInstanceState == null) {
             router.onNavigateToListings();
@@ -157,14 +142,17 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         else{
 
         }
-        //Dismiss Dialogue Loading bar!
+        router = new TenantRouter(getSupportFragmentManager(), repairs);
+        progressDialog.dismiss();
         router.onNavigateToTenantRepairsList(repairs);
     }
 
 
     public void getRepairs(){
         Network network = new Network();
-        //Show network
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Uploading Picture...");
+        progressDialog.show();
         network.registerObserver(this);
         network.getRepairs();
     }

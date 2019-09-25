@@ -1,5 +1,6 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,18 +17,12 @@ import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.R;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 public class SendRepairFragment extends Fragment implements FragmentEventListener {
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
 
     LanguageTranslation languageTranslation;
     Button btn_send;
@@ -35,6 +30,7 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
     TextView txt_description;
     EditText edt_description;
     Repair repair;
+    ProgressDialog progressDialog;
 
     //texviews for the english words and other language words
     TextView txt_english1;
@@ -90,11 +86,20 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         txt_english4.setText(englishWords.get(3));
         txt_english5.setText(englishWords.get(4));
 
-        txt_otherLanguage1.setText(otherLanguageWords.get(0));
-        txt_otherLanguage2.setText(otherLanguageWords.get(1));
-        txt_otherLanguage3.setText(otherLanguageWords.get(2));
-        txt_otherLanguage4.setText(otherLanguageWords.get(3));
-        txt_otherLanguage5.setText(otherLanguageWords.get(4));
+        if(!otherLanguageWords.get(0).equals("none")){
+            txt_otherLanguage1.setText(otherLanguageWords.get(0));
+            txt_otherLanguage2.setText(otherLanguageWords.get(1));
+            txt_otherLanguage3.setText(otherLanguageWords.get(2));
+            txt_otherLanguage4.setText(otherLanguageWords.get(3));
+            txt_otherLanguage5.setText(otherLanguageWords.get(4));
+        }
+        else {
+            txt_otherLanguage1.setText("");
+            txt_otherLanguage2.setText("");
+            txt_otherLanguage3.setText("");
+            txt_otherLanguage4.setText("");
+            txt_otherLanguage5.setText("");
+        }
 
         txt_category.setText(languageTranslation.getCategory() + " is the Category of Repair");
     }
@@ -122,6 +127,9 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
 
     private void saveRepair(){
         Network network = Network.getInstance();
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Sending Repair...");
+        progressDialog.show();
         network.registerObserver(this);
         network.addRepair(repair);
         Toast.makeText(getContext(), "Repair Sent", Toast.LENGTH_SHORT).show();
@@ -140,31 +148,7 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
 
     @Override
     public void update(String response) {
-
+        progressDialog.dismiss();
     }
 
-
-
-    //This code below is an example to get a single Repair.
-    /*@Override
-    public void update(String response) {
-        JSONArray jsonArray;
-        try {
-            jsonArray = new JSONArray(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
-        Gson gson = new Gson();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                houses.add(gson.fromJson(jsonArray.get(i).toString(), House.class));
-                houses.get(i).setUrl(jsonArray.getJSONObject(i).getString("image"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        router = new LandlordRouter(getSupportFragmentManager(), this.houses);
-        router.onNavigateToHouses(landlord);
-    }*/
 }

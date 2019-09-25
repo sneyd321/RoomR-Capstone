@@ -24,7 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Classes.House.House;
+
 import com.example.ryan.roomrep.Classes.LanguageTranslation;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
@@ -34,7 +34,7 @@ import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+
 
 
 import org.json.JSONArray;
@@ -63,6 +63,7 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
     ImageView imgView;
     String language;
     File file;
+    ProgressDialog progressDialog;
     //LanguageTranslation languageTranslation;
 
     PhotoManager photoManager;
@@ -210,6 +211,9 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
 
     public void uploadPicture(){
         Network network = Network.getInstance();
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Uploading Picture...");
+        progressDialog.show();
         network.registerObserver(this);
         network.uploadRepairImage(file, language);
         Toast.makeText(getContext(), "photo sent", Toast.LENGTH_SHORT).show();
@@ -278,11 +282,18 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
                 wordsInEnglish.add(jsonWordsInEnglish.getJSONArray("wordsInEnglish").getString(i));
             }
             List<String> wordsInOtherLanguage = new ArrayList<>();
-            for(int i = 0 ; i < jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").length(); i++){
-                wordsInOtherLanguage.add(jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").getString(i));
+            if(!jsonWordsInOtherLanguage.getString("wordsInOtherLanguage").equals("none")){
+                for(int i = 0 ; i < jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").length(); i++){
+                    wordsInOtherLanguage.add(jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").getString(i));
+                }
+            }
+            else{
+                wordsInOtherLanguage.add("none");
             }
             LanguageTranslation languageTranslation = new LanguageTranslation(wordsInOtherLanguage, wordsInEnglish, imgUrl, category);
             Log.d(TAG, "update: " + languageTranslation);
+            languageTranslation.setLanguage(language);
+            progressDialog.dismiss();
             actionListener.onNavigateToSendRepair(languageTranslation);
         } catch (JSONException e) {
             e.printStackTrace();

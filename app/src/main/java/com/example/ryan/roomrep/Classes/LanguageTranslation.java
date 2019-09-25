@@ -7,6 +7,7 @@ public class LanguageTranslation {
     List<String> wordsInEnglish;
     String imgUrl;
     String category;
+    String language;
 
     public LanguageTranslation(List<String> wordsInOtherLanguage, List<String> wordsInEnglish, String imgUrl, String category){
         this.wordsInEnglish = wordsInEnglish;
@@ -45,5 +46,13 @@ public class LanguageTranslation {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

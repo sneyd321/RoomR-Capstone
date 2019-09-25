@@ -51,10 +51,6 @@ public class TenantRouter implements TenantRouterAction {
         }
 
     }
-
-
-
-
     @Override
     public void onNavigateToSearch() {
         SearchFragment searchFragment = new SearchFragment();

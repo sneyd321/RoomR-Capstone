@@ -13,16 +13,10 @@ import android.widget.TextView;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
-import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.R;
-import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,6 +44,10 @@ public class TenantRepairFragment extends Fragment implements FragmentEventListe
         txtIsThereRepairs = view.findViewById(R.id.txtIsThereRepairs);
 
         rcyRepairsTenant.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if(!(repairs == null)){
+            txtIsThereRepairs.setText("Repairs");
+        }
 
         RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
 
