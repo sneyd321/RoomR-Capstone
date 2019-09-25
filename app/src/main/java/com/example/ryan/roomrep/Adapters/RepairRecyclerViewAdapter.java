@@ -63,6 +63,7 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
             txt_descriptionRow = itemView.findViewById(R.id.txt_descriptionRow);
             txt_problemIdRow = itemView.findViewById(R.id.txt_problemRow);
             txt_status = itemView.findViewById(R.id.txt_status);
+            itemView.setOnClickListener(this);
         }
 
         @Override
@@ -75,5 +76,6 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
 
     public void setOnItemClickListener(ItemClickListener itemClickListener){
         this.itemClickListener = itemClickListener;
+
     }
 }

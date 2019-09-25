@@ -20,10 +20,6 @@ public class Repair {
     private String status;
     private String photoRef;
 
-    private File file;
-
-    private boolean isSuccessful;
-
     public Repair(String description, String name, String date, String status, String photoRef){
         this.description = description;
         this.name = name;
@@ -33,13 +29,6 @@ public class Repair {
 
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
 
 
     public String getStatus() {
@@ -82,12 +71,5 @@ public class Repair {
         this.photoRef = photoRef;
     }
 
-    public boolean isSuccessful() {
-        return isSuccessful;
-    }
-
-    public void setSuccessful(boolean successful) {
-        isSuccessful = successful;
-    }
 
 }

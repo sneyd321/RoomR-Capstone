@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TenantRepairFragment extends Fragment implements FragmentEventListener {
+public class TenantRepairFragment extends Fragment implements FragmentEventListener, ItemClickListener {
     Button btnAddRepair;
 
     RecyclerView rcyRepairsTenant;
@@ -50,16 +51,12 @@ public class TenantRepairFragment extends Fragment implements FragmentEventListe
 
         rcyRepairsTenant.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        getRepairs();
-
         RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
 
         rcyRepairsTenant.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         btnAddRepair.setOnClickListener(onAddRepair);
-
-
 
         return view;
     }
@@ -74,39 +71,24 @@ public class TenantRepairFragment extends Fragment implements FragmentEventListe
         }
     };
 
-    public void setRouterAction(TenantRouterAction routerActionListener){
+    public void setActionListener(TenantRouterAction routerActionListener){
         this.routerActionListener = routerActionListener;
-    }
-
-    public void getRepairs(){
-        Network network = new Network();
-        network.registerObserver(this);
-        network.getRepairs();
     }
 
     @Override
     public void update(String response) {
-        repairs = new ArrayList<>();
-        JSONArray jsonArray;
-        if (!response.equals("{'error':'Not such repairs for this house.'}")){
-            try {
-                jsonArray = new JSONArray(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-            Gson gson = new Gson();
-            for (int i = 0; i < jsonArray.length(); i++) {
-                try {
-                    repairs.add(gson.fromJson(jsonArray.get(i).toString(), Repair.class));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            txtIsThereRepairs.setText("Repairs");
-        }
-        else{
-            txtIsThereRepairs.setText("No Repairs, You can Add one with Add Repair");
-        }
+
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        //i will se the repair in the other view with the routercall.
+        //Repair.
+        Repair repair = repairs.get(position);
+        //here i will pass to the router the repair and router will set the view on the router call!!!
+    }
+
+    public void setRepairs(List<Repair> repairs){
+        this.repairs = repairs;
     }
 }

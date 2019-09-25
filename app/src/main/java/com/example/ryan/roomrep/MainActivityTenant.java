@@ -10,9 +10,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 
+import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
+import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.TenantFragments.ListTargetChatUserFragment;
 import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
@@ -25,17 +29,23 @@ import com.example.ryan.roomrep.TenantFragments.SearchFragment;
 import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivityTenant extends AppCompatActivity{
+public class MainActivityTenant extends AppCompatActivity implements FragmentEventListener {
 
 
     BottomNavigationView bottomMenu;
     TenantRouter router;
 
 
-    private ArrayList<Repair> repairs;
+    private List<Repair> repairs;
     Toolbar toolbar;
     public String chatPeopleName = "Ziheng He";
     public String chatRoomNameInMainActivityTenant = "TheRegularOne";
@@ -52,9 +62,7 @@ public class MainActivityTenant extends AppCompatActivity{
         setSupportActionBar(toolbar);
         bottomMenu = findViewById(R.id.navBar);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
-        repairs = new ArrayList<>();
-
-        router = new TenantRouter(getSupportFragmentManager());
+        router = new TenantRouter(getSupportFragmentManager(), repairs);
 
 
 
@@ -80,7 +88,7 @@ public class MainActivityTenant extends AppCompatActivity{
                 router.onNavigateToPayRent();
                 break;
             case R.id.lblRepair:
-                router.onNavigateToRepairPicture();
+                setViewRepairsList();
                 break;
             case R.id.lblListing:
                 router.onNavigateToListings();
@@ -117,10 +125,52 @@ public class MainActivityTenant extends AppCompatActivity{
         }
     };
 
-    //public Task<QuerySnapshot> getRepairs(){ return db.collection("Repair").get();}
 
-    public ArrayList<Repair> getRepair(){
-        return repairs;
+    @Override
+    public void update(String response) {
+        repairs = new ArrayList<>();
+        JSONArray jsonArray;
+        if (!response.equals("{'error':'Not such repairs for this house.'}")){
+            try {
+                jsonArray = new JSONArray(response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+            Gson gson = new Gson();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Repair repair = new Repair(
+                            jsonObject.getString("Description"),
+                            jsonObject.getString("Name"),
+                            jsonObject.getString("Date"),
+                            jsonObject.getString("Status"),
+                            jsonObject.getString("PhotoRef"));
+                    repairs.add(repair);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else{
+
+        }
+        //Dismiss Dialogue Loading bar!
+        router.onNavigateToTenantRepairsList(repairs);
+    }
+
+
+    public void getRepairs(){
+        Network network = new Network();
+        //Show network
+        network.registerObserver(this);
+        network.getRepairs();
+    }
+
+    public void setViewRepairsList(){
+        getRepairs();
     }
 
     //public String GetChatRoomNameInMainActivityTenant(){return chatRoomNameInMainActivityTenant;}

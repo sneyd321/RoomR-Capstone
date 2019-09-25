@@ -125,6 +125,7 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         network.registerObserver(this);
         network.addRepair(repair);
         Toast.makeText(getContext(), "Repair Sent", Toast.LENGTH_SHORT).show();
+        actionListener.onAddRepair(repair);
 
     }
 

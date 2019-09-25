@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.LanguageTranslation;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
@@ -21,12 +22,15 @@ import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TenantRouter implements TenantRouterAction {
 
     FragmentManager fragmentManager;
+    List<Repair> repairs;
 
-    public TenantRouter(FragmentManager fragmentManager) {
+    public TenantRouter(FragmentManager fragmentManager, List<Repair> repairs) {
+        this.repairs = repairs;
         this.fragmentManager = fragmentManager;
 
     }
@@ -137,5 +141,22 @@ public class TenantRouter implements TenantRouterAction {
         sendRepairFragment.setLanguageTranslation(languageTranslation);
         sendRepairFragment.setActionListener(this);
         manageBackstack(sendRepairFragment);
+    }
+
+    @Override
+    public void onAddRepair(Repair repair){
+        TenantRepairFragment tenantRepairFragment = new TenantRepairFragment();
+        this.repairs.add(repair);
+        tenantRepairFragment.setActionListener(this);
+        tenantRepairFragment.setRepairs(repairs);
+        manageBackstack(tenantRepairFragment);
+    }
+
+    @Override
+    public void onNavigateToTenantRepairsList(List<Repair> repairs){
+        TenantRepairFragment tenantRepairFragment = new TenantRepairFragment();
+        tenantRepairFragment.setActionListener(this);
+        tenantRepairFragment.setRepairs(repairs);
+        manageBackstack(tenantRepairFragment);
     }
 }

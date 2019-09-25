@@ -212,7 +212,7 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
         Network network = Network.getInstance();
         network.registerObserver(this);
         network.uploadRepairImage(file, language);
-        Toast.makeText(getContext(), "photo sent Sqkirrt", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "photo sent", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -264,8 +264,6 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
     @Override
     public void update(String response) {
         Gson gson = new Gson();
-        //languageTranslation = gson.fromJson(response, LanguageTranslation.class);
-        //if it doesn't
         try {
             JSONArray jsonArray = new JSONArray(response);
             JSONObject jsonWordsInOtherLanguage = jsonArray.getJSONObject(0);

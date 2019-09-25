@@ -1,6 +1,9 @@
 package com.example.ryan.roomrep.Classes.Router;
 
 import com.example.ryan.roomrep.Classes.LanguageTranslation;
+import com.example.ryan.roomrep.Classes.Repair;
+
+import java.util.List;
 
 public interface TenantRouterAction {
 
@@ -28,5 +31,9 @@ public interface TenantRouterAction {
     void onNavigateToMessagesPeopleList();
 
     void onNavigateToSendRepair(LanguageTranslation languageTranslation);
+
+    void onAddRepair(Repair repair);
+
+    void onNavigateToTenantRepairsList(List<Repair> repairs);
 
 }

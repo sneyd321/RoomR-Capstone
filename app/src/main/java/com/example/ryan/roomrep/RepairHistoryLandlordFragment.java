@@ -38,6 +38,7 @@ public class RepairHistoryLandlordFragment extends Fragment {
 
         repairList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        setUpRepairs();
 
         return view;
     }
