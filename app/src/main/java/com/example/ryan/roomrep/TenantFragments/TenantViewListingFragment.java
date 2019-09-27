@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,16 +9,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.Utility;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.R;
 
 import com.squareup.picasso.Picasso;
 
-public class TenantViewListingFragment extends Fragment {
+public class TenantViewListingFragment extends Fragment implements FragmentEventListener {
 
 
     TextView txtAddress;
@@ -30,6 +36,8 @@ public class TenantViewListingFragment extends Fragment {
     TextView txtElectrical;
     TextView txtInternet;
     TextView txtPhoneLine;
+
+    Button btnContactLandlord;
 
     House house;
 
@@ -50,8 +58,8 @@ public class TenantViewListingFragment extends Fragment {
         txtElectrical = view.findViewById(R.id.txtTenantViewListingElectricalIncluded);
         txtInternet = view.findViewById(R.id.txtTenantViewListingInternetIncluded);
         txtPhoneLine = view.findViewById(R.id.txtTenantViewListingPhoneLineIncluded);
-
-
+        btnContactLandlord = view.findViewById(R.id.btnTenantViewListingsContactLandlord);
+        btnContactLandlord.setOnClickListener(onContactLandlord);
         txtAddress.setText(house.getAddress());
         Picasso.get().load(house.getUrl()).into(imgHouseImage);
         txtRent.setText(Integer.toString(house.getRent()));
@@ -86,8 +94,30 @@ public class TenantViewListingFragment extends Fragment {
         return view;
     }
 
+    View.OnClickListener onContactLandlord = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Network network = Network.getInstance();
+            network.registerObserver(TenantViewListingFragment.this);
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            String firstName = (sharedPref.getString("ProfileFirstName", ""));
+            String lastName = (sharedPref.getString("ProfileLastName", ""));
+            String email = (sharedPref.getString("ProfileEmail", ""));
+            String bio = (sharedPref.getString("ProfileBio", ""));
+            Profile profile = new Profile(firstName, lastName, email, bio);
+            profile.setHouseAddress(house.getAddress());
+            network.contactLandlord(profile);
+
+        }
+    };
+
 
     public void setHouse(House house) {
         this.house = house;
+    }
+
+    @Override
+    public void update(String response) {
+
     }
 }

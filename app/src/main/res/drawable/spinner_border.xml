@@ -10,7 +10,7 @@
                     <corners android:radius="3dp" />
                 </shape>
             </item>
-            <item android:drawable="@drawable/ic_arrow_drop_down_black_24dp" android:gravity="end|center_vertical" >
+            <item android:drawable="@drawable/ic_arrow_drop_down_black_24dp" android:right="8dp" android:gravity="end|center_vertical" >
 
 
             </item>

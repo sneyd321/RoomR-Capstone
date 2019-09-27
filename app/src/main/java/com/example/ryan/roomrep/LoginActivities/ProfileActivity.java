@@ -48,22 +48,6 @@ public class ProfileActivity extends AppCompatActivity implements FragmentEventL
 
     @Override
     public void update(String response) {
-        JSONArray jsonArray;
-        try {
-            jsonArray = new JSONArray(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
-        Gson gson = new Gson();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                houses.add(gson.fromJson(jsonArray.get(i).toString(), House.class));
-                houses.get(i).setUrl(jsonArray.getJSONObject(i).getString("image"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
 
         ProfileRouter profileRouter = new ProfileRouter(getSupportFragmentManager(), houses);
         profileRouter.onNavigateToAddProfile();

@@ -1,5 +1,9 @@
 package com.example.ryan.roomrep.Classes;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import java.util.Map;
 
 public class Search {
@@ -33,4 +37,14 @@ public class Search {
     public Map<String, Boolean> getAmenities() {
         return amenities;
     }
+
+    public String convertToJSON() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+
+
+
+
 }

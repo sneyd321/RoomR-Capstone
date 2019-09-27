@@ -68,7 +68,8 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
     @Override
     public void onItemClick(View view, int position) {
         if (routerActionListener != null){
-            routerActionListener.onNavigateToTenantProfile();
+            House house = listedHouses.get(position);
+            routerActionListener.onNavigateToTenantProfile(house);
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.ryan.roomrep.Classes.House;
 
 import com.example.ryan.roomrep.Classes.House.Amenities.Amenity;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.Profile.Profile;
 
 
 import java.util.ArrayList;
@@ -19,8 +20,6 @@ public class House {
     private int bathNumber;
     private int applicants;
     private boolean isPosted;
-    private String province;
-    private String city;
 
     private String description;
     private String url = "";
@@ -31,12 +30,14 @@ public class House {
 
     private Map<String, Boolean> amenities;
 
+    private List<Profile> profiles;
+
     private String landlordEmail;
 
 
 
 
-    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String province, String city){
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail){
         this.address = address;
         this.rent = rent;
         this.size = size;
@@ -46,12 +47,11 @@ public class House {
         this.utilities = utilities;
         this.applicants = 0;
         this.landlordEmail = landlordEmail;
+        this.description = "";
         this.isPosted = false;
-        this.province = province;
-        this.city = city;
     }
 
-    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, boolean isPosted){
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, boolean isPosted, List<Profile> profiles){
         this.address = address;
         this.rent = rent;
         this.size = size;
@@ -63,6 +63,7 @@ public class House {
         this.applicants = 0;
         this.landlordEmail = landlordEmail;
         this.isPosted = isPosted;
+        this.profiles = profiles;
     }
 
 
@@ -167,12 +168,9 @@ public class House {
         this.isPosted = posted;
     }
 
-    public String getProvince() {
-        return province;
-    }
 
-    public String getCity() {
-        return city;
+    public List<Profile> getProfiles() {
+        return profiles;
     }
 }
 

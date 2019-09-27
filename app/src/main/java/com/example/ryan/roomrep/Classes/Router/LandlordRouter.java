@@ -84,8 +84,9 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onNavigateToTenantProfile() {
+    public void onNavigateToTenantProfile(House house) {
         TenantProfilesFragment tenantProfilesFragment = new TenantProfilesFragment();
+        tenantProfilesFragment.setHouse(house);
         manageBackstack(tenantProfilesFragment);
     }
 

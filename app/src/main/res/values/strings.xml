@@ -59,6 +59,7 @@
     </string-array>
 
     <string-array name="provinces">
+        <item>- Select A Province -</item>
         <item>Alberta</item>
         <item>British Columbia</item>
         <item>Manitoba</item>
@@ -71,11 +72,11 @@
         <item>Yukon</item>
         <item>Northwest Territories</item>
         <item>Nunavut</item>
-        <item>Alberta</item>
     </string-array>
 
 
     <string-array name="AL_Cities">
+        <item>- Select A City -</item>
         <item>Airdrie</item>
         <item>Beaumont</item>
         <item>Brooks</item>
@@ -98,6 +99,7 @@
     </string-array>
 
     <string-array name="BC_Cities">
+        <item>- Select A City -</item>
         <item>Abbotsford</item>
         <item>Armstrong</item>
         <item>Burnaby</item>
@@ -153,6 +155,7 @@
     </string-array>
 
     <string-array name="MB_Cities">
+        <item>- Select A City -</item>
         <item>Brandon</item>
         <item>Dauphin</item>
         <item>Flin Flon</item>
@@ -166,6 +169,7 @@
     </string-array>
 
     <string-array name="NB_Cities">
+        <item>- Select A City -</item>
         <item>Bathurst</item>
         <item>Campbellton</item>
         <item>Dieppe</item>
@@ -177,26 +181,31 @@
     </string-array>
 
     <string-array name="NL_Cities">
+        <item>- Select A City -</item>
         <item>Corner Brook</item>
         <item>Mount Pearl</item>
         <item>St Johns</item>
     </string-array>
 
-    <string-array name="NT">
+    <string-array name="NT_cities">
+        <item>- Select A City -</item>
         <item>Yellowknife</item>
     </string-array>
 
     <string-array name="NS_Cities">
+        <item>- Select A City -</item>
         <item>Halifax</item>
         <item>Sydney</item>
         <item>Dartmouth</item>
     </string-array>
 
     <string-array name="NU_Cities">
+        <item>- Select A City -</item>
         <item>Iqaluit</item>
     </string-array>
 
     <string-array name="ON_cities">
+        <item>- Select A City -</item>
         <item>Ajax</item>
         <item>Barrie</item>
         <item>Belleville</item>
@@ -250,11 +259,13 @@
     </string-array>
 
     <string-array name="PE_Cities">
+        <item>- Select A City -</item>
         <item>Charlottetown</item>
         <item>Summerside</item>
     </string-array>
 
     <string-array name="SA_Cities">
+        <item>- Select A City -</item>
         <item>Estevan</item>
         <item>Flin Flon</item>
         <item>Humboldt</item>
@@ -275,7 +286,12 @@
     </string-array>
 
     <string-array name="YU_Cities">
+        <item>- Select A City -</item>
         <item>Whitehorse</item>
+    </string-array>
+
+    <string-array name="empty_cities">
+        <item>- Select A Province -</item>
     </string-array>
     
     <string name="navigation_drawer_open">Open navigation drawer</string>

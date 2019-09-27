@@ -3,28 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/button_border"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/txtTenantProfileFirstName"
-        style="@style/general_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtTenantProfileLastName"
-        style="@style/general_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/txtTenantProfileFirstName"
+        android:textColor="@color/Black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBioTitle"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -34,60 +30,57 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBioTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtTenantProfileBioTitle"
-        style="@style/general_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/title_text"
+        android:layout_width="0dp"
+        android:layout_height="31dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Bio:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTenantProfileFirstName" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txtTenantProfileBio"
-        style="@style/general_text"
+        style="@style/button_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:lines="5"
         android:text="TextView"
+        android:textColor="@color/Green"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTenantProfileBioTitle" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/txtTenantProfilePriceRangeTitle"
-        style="@style/general_text"
+    <RatingBar
+        android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:text="Price Range:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTenantProfileBio" />
+        android:layout_marginEnd="8dp"
+        android:numStars="1"
+        android:rating="1"
 
-    <TextView
-        android:id="@+id/txtTenantProfilePriceRange"
-        style="@style/general_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTenantProfilePriceRangeTitle" />
-
+        android:theme="@style/RatingBar"
+        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBioTitle"
+        app:layout_constraintEnd_toStartOf="@+id/txtTenantProfileRating"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

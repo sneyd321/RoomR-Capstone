@@ -8,6 +8,7 @@ public class Profile {
     private String lastName;
     private String email;
     private String bio;
+    private String houseAddress;
 
     public Profile(String firstName, String lastName, String email, String bio) {
         this.firstName = firstName;
@@ -35,5 +36,13 @@ public class Profile {
 
     public String getBio() {
         return bio;
+    }
+
+    public String getHouseAddress() {
+        return houseAddress;
+    }
+
+    public void setHouseAddress(String houseAddress) {
+        this.houseAddress = houseAddress;
     }
 }

@@ -40,7 +40,7 @@ import java.util.Map;
 public class AddHouseFragment extends Fragment implements UtilityDialogActionListener, FragmentEventListener {
 
 
-    private final static int MAX_RENT = 5000;
+    public final static int MAX_RENT = 5000;
 
     EditText edtAddress;
     SeekBar skbRent;
@@ -203,7 +203,7 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
             int rent = parseInt(skbOutput.getText().toString());
             int size = parseInt(edtSize.getText().toString());
 
-            house = new House(address, rent, size, bedNumber, bathNumber, setAmenities(), utilities, landlord.getEmail(), "", "");
+            house = new House(address, rent, size, bedNumber, bathNumber, setAmenities(), utilities, landlord.getEmail());
             Map<Integer, String> validator = house.getValidator();
             for (Map.Entry<Integer, String> entry : validator.entrySet()){
                 if (!entry.getValue().isEmpty()){

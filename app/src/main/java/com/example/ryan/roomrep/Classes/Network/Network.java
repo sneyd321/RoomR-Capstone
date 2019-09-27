@@ -4,6 +4,7 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
+import com.example.ryan.roomrep.Classes.Search;
 import com.example.ryan.roomrep.Classes.Tenant;
 import com.google.gson.Gson;
 
@@ -27,7 +28,8 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    private final String SERVER_URL = "http://10.16.24.171:8080/";
+    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+    private final String SERVER_URL = "http://10.16.24.48:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -317,6 +319,67 @@ public class Network implements NetworkObservable {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        });
+    }
+
+    public void contactLandlord(Profile profile) {
+
+        final Gson gson = new Gson();
+        String json = gson.toJson(profile);
+        RequestBody body = RequestBody.create(JSON, json);
+
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "ContactLandlord")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void searchListing(Search search) {
+
+        String json = search.convertToJSON();
+        RequestBody body = RequestBody.create(JSON, json);
+
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "SearchListings")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
             }
         });
