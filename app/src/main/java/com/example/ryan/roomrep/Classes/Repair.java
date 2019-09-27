@@ -9,22 +9,34 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Repair {
     private String description;
-    private String problemIdentification;
-    private String dateReported;
-    private byte[] image;
-    private String storageReference;
+    private String name;
+    private String date;
+    private String status;
+    private String photoRef;
 
-    private boolean isSuccessful;
+    public Repair(String description, String name, String date, String status, String photoRef){
+        this.description = description;
+        this.name = name;
+        this.date = date;
+        this.status = status;
+        this.photoRef = photoRef;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    }
 
-    public Repair(){
 
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDescription() {
@@ -35,71 +47,29 @@ public class Repair {
         this.description = description;
     }
 
-    public String getProblemIdentification() {
-        return problemIdentification;
+    public String getName() {
+        return name;
     }
 
-    public void setProblemIdentification(String problemIdentification) {
-        this.problemIdentification = problemIdentification;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDateReported() {
-        return dateReported;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateReported(String dateReported) {
-        this.dateReported = dateReported;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getPhotoRef() {
+        return photoRef;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setPhotoRef(String photoRef) {
+        this.photoRef = photoRef;
     }
 
-    public String getStorageReference() {
-        return storageReference;
-    }
 
-    public void setStorageReference(String storageReference) {
-        this.storageReference = storageReference;
-    }
-
-    public boolean isSuccessful() {
-        return isSuccessful;
-    }
-
-    public void setSuccessful(boolean successful) {
-        isSuccessful = successful;
-    }
-
-    public Task<Void> addValues(){
-        final Map<String, Object> repair = new HashMap<>();
-        repair.put("Problem", this.problemIdentification);
-        repair.put("Description", this.description);
-        repair.put("Date", this.dateReported);
-        repair.put("StorageReference", this.storageReference);
-
-        final Repair repairRef = this;
-        return db.collection("Repair").document(this.dateReported)
-                .set(repair)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        repairRef.setSuccessful(true);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        repairRef.setSuccessful(false);
-                    }
-                });
-    }
-
-    public Task<QuerySnapshot> getRepairsFirebase(){
-        return db.collection("Repair").get();
-    }
 }

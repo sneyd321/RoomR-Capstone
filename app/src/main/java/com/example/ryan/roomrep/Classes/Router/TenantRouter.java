@@ -5,7 +5,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.Classes.LanguageTranslation;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
@@ -26,8 +27,10 @@ import java.util.List;
 public class TenantRouter implements TenantRouterAction {
 
     FragmentManager fragmentManager;
+    List<Repair> repairs;
 
-    public TenantRouter(FragmentManager fragmentManager) {
+    public TenantRouter(FragmentManager fragmentManager, List<Repair> repairs) {
+        this.repairs = repairs;
         this.fragmentManager = fragmentManager;
 
     }
@@ -48,10 +51,6 @@ public class TenantRouter implements TenantRouterAction {
         }
 
     }
-
-
-
-
     @Override
     public void onNavigateToSearch() {
         SearchFragment searchFragment = new SearchFragment();
@@ -133,9 +132,27 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onNavigateToSendRepair() {
+    public void onNavigateToSendRepair(LanguageTranslation languageTranslation) {
         SendRepairFragment sendRepairFragment = new SendRepairFragment();
+        sendRepairFragment.setLanguageTranslation(languageTranslation);
         sendRepairFragment.setActionListener(this);
         manageBackstack(sendRepairFragment);
+    }
+
+    @Override
+    public void onAddRepair(Repair repair){
+        TenantRepairFragment tenantRepairFragment = new TenantRepairFragment();
+        this.repairs.add(repair);
+        tenantRepairFragment.setActionListener(this);
+        tenantRepairFragment.setRepairs(repairs);
+        manageBackstack(tenantRepairFragment);
+    }
+
+    @Override
+    public void onNavigateToTenantRepairsList(List<Repair> repairs){
+        TenantRepairFragment tenantRepairFragment = new TenantRepairFragment();
+        tenantRepairFragment.setActionListener(this);
+        tenantRepairFragment.setRepairs(repairs);
+        manageBackstack(tenantRepairFragment);
     }
 }

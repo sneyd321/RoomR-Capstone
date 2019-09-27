@@ -15,11 +15,12 @@ public interface LandlordRouterAction {
 
     void onNavigateToLandlordListings();
 
-    void onNavigateToTenantProfile(House house);
+    void onNavigateToTenantProfile();
 
     void onNaviagateToAddTenant();
 
     void onNaviagateToSearchTenant();
 
+    void onNavigateToMessagePage();
 
 }

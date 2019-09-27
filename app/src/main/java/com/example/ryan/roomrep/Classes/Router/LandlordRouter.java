@@ -9,6 +9,7 @@ import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
+import com.example.ryan.roomrep.LandlordFragments.MessageLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.SearchTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.ShowTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.TenantProfilesFragment;
@@ -102,5 +103,12 @@ public class LandlordRouter implements LandlordRouterAction {
         SearchTenantFragment searchTenantFragment = new SearchTenantFragment();
         searchTenantFragment.setRouterAction(this);
        manageBackstack(searchTenantFragment);
+    }
+
+    @Override
+    public void onNavigateToMessagePage() {
+        MessageLandlordFragment messageLandlordFragment = new MessageLandlordFragment();
+        messageLandlordFragment.setRouterAction(this);
+        manageBackstack(messageLandlordFragment);
     }
 }

@@ -2,114 +2,107 @@ package com.example.ryan.roomrep.TenantFragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
+
+import com.example.ryan.roomrep.Classes.LanguageTranslation;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.PhotoManager;
-import com.example.ryan.roomrep.Classes.Prediction;
-import com.example.ryan.roomrep.Classes.Repair;
+
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
-import com.example.ryan.roomrep.MainActivityTenant;
+
 import com.example.ryan.roomrep.R;
+import com.google.gson.Gson;
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import static android.R.layout.simple_spinner_item;
+import java.util.List;
+
 
 import static android.app.Activity.RESULT_OK;
+import static com.android.volley.VolleyLog.TAG;
 
 
-public class RepairPictureFragment extends Fragment {
+public class RepairPictureFragment extends Fragment implements FragmentEventListener {
     Button btnTakePhoto;
     Button btnSendPhoto;
-    Button btnPredictPhoto;
     Button btnPickPhoto;
-    Spinner predictionResults;
+    Spinner languages;
     TextView txtError;
     ImageView imgView;
+    String language;
+    File file;
+    ProgressDialog progressDialog;
+    //LanguageTranslation languageTranslation;
 
-    String imageString;
-    ArrayList<Prediction> predictionArray;
-    String predictionPicked;
-    ArrayAdapter<String> spinnerArrayAdapter;
-    Repair repair;
     PhotoManager photoManager;
 
     private static ProgressDialog mProgressDialog;
-
-    private ArrayList<String> predictionLabels = new ArrayList<>();
-
     private TenantRouterAction actionListener;
 
     public static final int PICTURE_TAKER = 1;
     public static final int PICK_PICTURE = 2;
 
-    //192.168.2.28
-    String urlString = "http://35.203.55.41:8000/photo";
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_repair_picture, container, false);
         btnTakePhoto = view.findViewById(R.id.btn_takePicture);
-        btnSendPhoto = view.findViewById(R.id.btn_sendProblem);
+        btnSendPhoto = view.findViewById(R.id.btn_sendPhoto);
         btnPickPhoto = view.findViewById(R.id.btn_pickImage);
-        btnPredictPhoto = view.findViewById(R.id.btn_predict);
-        predictionResults = view.findViewById(R.id.spn_predictions);
+        languages = view.findViewById(R.id.spn_languages);
         txtError = view.findViewById(R.id.txt_error);
         imgView = view.findViewById(R.id.imgView);
-        repair = new Repair();
         photoManager = new PhotoManager();
 
-        ArrayAdapter<String> spinnerArrayAdapter;
-
-        //Setting visibility to invisible until prediction is done.
-        btnPredictPhoto.setVisibility(View.INVISIBLE);
-        predictionResults.setVisibility(View.INVISIBLE);
         btnSendPhoto.setVisibility(View.INVISIBLE);
         txtError.setVisibility(View.INVISIBLE);
 
         //initializing onclick listeners for the buttons
         btnSendPhoto.setOnClickListener(onSendPhoto);
         btnTakePhoto.setOnClickListener(onTakePhoto);
-        btnPredictPhoto.setOnClickListener(onPredictPhoto);
         btnPickPhoto.setOnClickListener(onPickPhoto);
+        language = "none";
 
-        predictionResults.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        languages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                predictionPicked = adapterView.getItemAtPosition(pos).toString();
+                String shortFormLanguages[] = getResources().getStringArray(R.array.languagesShortForm);
+                language = shortFormLanguages[pos];
+
             }
 
             @Override
@@ -130,19 +123,8 @@ public class RepairPictureFragment extends Fragment {
     View.OnClickListener onSendPhoto = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            repair.setProblemIdentification(predictionPicked);
-            if(imgView.getDrawable() != null){
-                Bitmap bmp = ((BitmapDrawable)imgView.getDrawable()).getBitmap();
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                repair.setImage(byteArray);
-                ((MainActivityTenant)getActivity()).getRepair().add(repair);
-                if (actionListener != null) {
-                    actionListener.onNavigateToSendRepair();
-                }
-            }else{
-                Toast.makeText(getActivity(), "Please take a photo", Toast.LENGTH_SHORT).show();
+            if (actionListener != null) {
+                uploadPicture();
             }
         }
     };
@@ -151,71 +133,29 @@ public class RepairPictureFragment extends Fragment {
         @Override
         public void onClick(View view) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-            startActivityForResult(takePictureIntent, PICTURE_TAKER);
+                startActivityForResult(takePictureIntent, PICTURE_TAKER);
         }
     };
-
-    View.OnClickListener onPredictPhoto = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            predictionArray = new ArrayList<>();
-            btnSendPhoto.setVisibility(View.VISIBLE);
-            if ((spinnerArrayAdapter == null) || spinnerArrayAdapter.isEmpty()) {
-                requestPrediction();
-            }else{
-                clearSpinner();
-                requestPrediction();
-            }
-            //requestPrediction();
-        }
-    };
-
-    public void clearSpinner(){
-        spinnerArrayAdapter.clear();
-        predictionPicked = "";
-        spinnerArrayAdapter.notifyDataSetChanged();
-    }
-
-    //creates the JSON request This is for the post request.
-    /*private JSONObject createJsonObject(String imgString){
-        //initalize json object
-        JSONObject photo = new JSONObject();
-        String imageString = imgString;
-        try {
-            //put photo string in json object
-            photo.put("photo", imageString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        //return json object
-        return photo;
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        btnPredictPhoto.setVisibility(View.VISIBLE);
         if (requestCode == PICTURE_TAKER){
-            imageString = "";
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageString = photoManager.convertBitmapToString(imageBitmap);
+            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
             imgView.setImageBitmap(imageBitmap);
             btnTakePhoto.setText("Retake Photo");
+            file = saveImageToInternalStorage(imageBitmap, "Photo", "TestNetworkRepair.png");
+            btnSendPhoto.setVisibility(View.VISIBLE);
         }
         if (requestCode == PICK_PICTURE){
             if (resultCode == RESULT_OK){
                 Bitmap imageBitmap;
-                //reset image string
-                imageString = "";
                 //get image from intent
                 Uri image = data.getData();
                 //convert uri into bitmap
                 try (InputStream is = getContext().getContentResolver().openInputStream(image)) {
                     imageBitmap = BitmapFactory.decodeStream(is);
                     imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 200, 200, true);
-                    is.close();
                 } catch (FileNotFoundException e) {
                     imageBitmap = null;
                     e.printStackTrace();
@@ -228,9 +168,9 @@ public class RepairPictureFragment extends Fragment {
                     //convert bitmap to string
                     photoManager = new PhotoManager();
                     imageBitmap = photoManager.rotateImage(imageBitmap);
-                    imageString = photoManager.convertBitmapToString(imageBitmap);
-
                     imgView.setImageBitmap(imageBitmap);
+                    file = saveImageToInternalStorage(imageBitmap, "Photo", "TestNetworkRepair.png");
+                    btnSendPhoto.setVisibility(View.VISIBLE);
                 }
                 //if no image is found return an error
                 else{
@@ -240,103 +180,81 @@ public class RepairPictureFragment extends Fragment {
         }
     }
 
-    public void requestPrediction(){
-        showSimpleProgressDialog(getContext(), "Loading...","Predicting Image",false);
-        RequestQueue MyRequestQueue = Volley.newRequestQueue(getContext());
-        final String json = photoManager.createJsonObject(imageString).toString();
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, urlString, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                //Toast.makeText(getContext(), response.toString(), Toast.LENGTH_LONG).show();
-                predictionArray = new ArrayList<>();
-                try{
-                    for(int i = 0; i < response.length(); i++){
-                        JSONObject predictionRow = response.getJSONObject(i);
-                        Prediction prediction = new Prediction();
-                        prediction.setLabel(predictionRow.getString("label"));
-                        prediction.setScore(predictionRow.getString("scored"));
-                        predictionArray.add(prediction);
-                    }
-                    for(int i = 0; i < predictionArray.size(); i++){
-                        predictionLabels.add(predictionArray.get(i).getLabel());
-                    }
-                    spinnerArrayAdapter = new ArrayAdapter<>(getContext(), simple_spinner_item , predictionLabels);
-                    spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    predictionResults.setAdapter(spinnerArrayAdapter);
-                    removeSimpleProgressDialog();
-                    predictionResults.setVisibility(View.VISIBLE);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                    removeSimpleProgressDialog();
-                }
+    public File saveImageToInternalStorage(Bitmap bitmap, String directoryName, String filename) {
+        ContextWrapper contextWrapper = new ContextWrapper(getActivity());
 
+        File directory = contextWrapper.getDir(directoryName, Context.MODE_PRIVATE);
 
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error Connecting to Predictions, Please try again later", Toast.LENGTH_LONG).show();
-                btnSendPhoto.setVisibility(View.INVISIBLE);
-                removeSimpleProgressDialog();
-            }
-        }){
-            @Override
-            public byte[] getBody() {
-                //specifies the body of the request in JSON format
-                return json.getBytes();
-            }
+        File path = new File(directory, filename);
 
-            @Override
-            public String getBodyContentType() {
-                //specifies the type of the request
-                return "application/json";
-            }
-        };
+        FileOutputStream fos = null;
 
-        MyRequestQueue.add(jsonArrayRequest);
-    }
-
-    public static void removeSimpleProgressDialog() {
         try {
-            if (mProgressDialog != null) {
-                if (mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                    mProgressDialog = null;
-                }
-            }
-        } catch (IllegalArgumentException ie) {
-            ie.printStackTrace();
+            fos = new FileOutputStream(path);
 
-        } catch (RuntimeException re) {
-            re.printStackTrace();
-        } catch (Exception e) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        finally {
+            try {
+                fos.close();
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        return path;
 
     }
 
-    public static void showSimpleProgressDialog(Context context, String title,
-                                                String msg, boolean isCancelable) {
-        try {
-            if (mProgressDialog == null) {
-                mProgressDialog = ProgressDialog.show(context, title, msg);
-                mProgressDialog.setCancelable(isCancelable);
-            }
-
-            if (!mProgressDialog.isShowing()) {
-                mProgressDialog.show();
-            }
-
-        } catch (IllegalArgumentException ie) {
-            ie.printStackTrace();
-        } catch (RuntimeException re) {
-            re.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void uploadPicture(){
+        Network network = Network.getInstance();
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Uploading Picture...");
+        progressDialog.show();
+        network.registerObserver(this);
+        network.uploadRepairImage(file, language);
+        Toast.makeText(getContext(), "photo sent", Toast.LENGTH_SHORT).show();
     }
 
     public void setActionListener(TenantRouterAction actionListener) {
         this.actionListener = actionListener;
+    }
+
+    @Override
+    public void update(String response) {
+        Gson gson = new Gson();
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            JSONObject jsonWordsInOtherLanguage = jsonArray.getJSONObject(0);
+            JSONObject jsonImgUrl = jsonArray.getJSONObject(1);
+            JSONObject jsonWordsInEnglish = jsonArray.getJSONObject(2);
+            JSONObject jsonCategory = jsonArray.getJSONObject(3);
+
+            String category = (jsonCategory.getString("category"));
+            String imgUrl = (jsonImgUrl.getString("imgUrl"));
+            List<String> wordsInEnglish = new ArrayList<>();
+            for(int i = 0 ; i < jsonWordsInEnglish.getJSONArray("wordsInEnglish").length(); i++){
+                wordsInEnglish.add(jsonWordsInEnglish.getJSONArray("wordsInEnglish").getString(i));
+            }
+            List<String> wordsInOtherLanguage = new ArrayList<>();
+            if(!jsonWordsInOtherLanguage.getString("wordsInOtherLanguage").equals("none")){
+                for(int i = 0 ; i < jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").length(); i++){
+                    wordsInOtherLanguage.add(jsonWordsInOtherLanguage.getJSONArray("wordsInOtherLanguage").getString(i));
+                }
+            }
+            else{
+                wordsInOtherLanguage.add("none");
+            }
+            LanguageTranslation languageTranslation = new LanguageTranslation(wordsInOtherLanguage, wordsInEnglish, imgUrl, category);
+            Log.d(TAG, "update: " + languageTranslation);
+            languageTranslation.setLanguage(language);
+            progressDialog.dismiss();
+            actionListener.onNavigateToSendRepair(languageTranslation);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

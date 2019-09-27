@@ -1,11 +1,8 @@
 package com.example.ryan.roomrep.Adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,71 +11,50 @@ import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "RepairRecyclerView";
-    private List<Repair> mData;
-    private Context context;
-    private LayoutInflater mInflater;
-    final long ONE_MEGABYTE = 1024 * 1024;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    private List<Repair> data;
+    private ItemClickListener itemClickListener;
+    private LayoutInflater inflater;
 
     public RepairRecyclerViewAdapter(Context context, List<Repair> data){
-        this.mData = data;
-        this.context = context;
-        this.mInflater = LayoutInflater.from(context);
+        this.data = data;
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.repair_row, parent, false);
+    public RepairRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.repair_row, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RepairRecyclerViewAdapter.ViewHolder holder, int position) {
         //This allows the method to bind the values to the views.
-        Repair repair = mData.get(position);
-        holder.txt_descriptionRow.setText(repair.getDescription());
-        holder.txt_dateRow.setText(repair.getDateReported());
-        holder.txt_problemIdRow.setText(repair.getProblemIdentification());
-        StorageReference storageRef = storage.getReference();
-        StorageReference pathReference = storageRef.child(repair.getStorageReference());
-        try{
-            pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    holder.imgViewRow.setImageBitmap(bitmap);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });
-        }catch (NullPointerException ex){
-
-        }
+        Repair repair = data.get(position);
+        holder.txt_descriptionRow.setText("Description: " + repair.getDescription());
+        holder.txt_dateRow.setText("Date: " + repair.getDate());
+        holder.txt_problemIdRow.setText("Repair Category" + repair.getName());
+        holder.txt_status.setText("Status: " + repair.getStatus());
+        Picasso.get().load(repair.getPhotoRef()).placeholder(R.drawable.house).noFade().into(holder.imgViewRow);
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView imgViewRow;
         TextView txt_descriptionRow;
         TextView txt_problemIdRow;
         TextView txt_dateRow;
+        TextView txt_status;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -86,6 +62,20 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
             txt_dateRow = itemView.findViewById(R.id.txt_dateRow);
             txt_descriptionRow = itemView.findViewById(R.id.txt_descriptionRow);
             txt_problemIdRow = itemView.findViewById(R.id.txt_problemRow);
+            txt_status = itemView.findViewById(R.id.txt_status);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if(itemClickListener != null){
+                itemClickListener.onItemClick(view, getAdapterPosition());
+            }
+        }
+    }
+
+    public void setOnItemClickListener(ItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+
     }
 }

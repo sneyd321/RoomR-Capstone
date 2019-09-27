@@ -101,7 +101,7 @@ public class HousesFragment extends Fragment {
         Bitmap frontPhoto = (Bitmap) data.getExtras().get("data");
         File file = saveImageToInternalStorage(frontPhoto, "Photo", "TestNetworkRepair.png");
         Network network = Network.getInstance();
-        network.uploadRepair(file);
+        //network.uploadRepair(file);
 
     }
 
