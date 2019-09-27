@@ -24,11 +24,13 @@ public class LandlordRouter implements LandlordRouterAction {
 
 
     List<House> houses;
+    Landlord landlord;
 
 
-    public LandlordRouter(FragmentManager fragmentManager, List<House> houses){
+    public LandlordRouter(FragmentManager fragmentManager, List<House> houses, Landlord landlord){
         this.fragmentManager = fragmentManager;
         this.houses = houses;
+        this.landlord = landlord;
     }
 
 
@@ -110,5 +112,13 @@ public class LandlordRouter implements LandlordRouterAction {
         MessageLandlordFragment messageLandlordFragment = new MessageLandlordFragment();
         messageLandlordFragment.setRouterAction(this);
         manageBackstack(messageLandlordFragment);
+    }
+
+    @Override
+    public void onNavigateToShowTenant(House house) {
+        ShowTenantFragment showTenantFragment = new ShowTenantFragment();
+        showTenantFragment.setHouse(house);
+        showTenantFragment.setLandlord(this.landlord);
+        manageBackstack(showTenantFragment);
     }
 }

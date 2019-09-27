@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
+import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
@@ -35,7 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HousesFragment extends Fragment {
+public class HousesFragment extends Fragment implements ItemClickListener {
 
 
     Button btnAddHouse;
@@ -69,8 +70,9 @@ public class HousesFragment extends Fragment {
         rcyHouses.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
-
+        adapter.setOnItemClickListener(this);
         rcyHouses.setAdapter(adapter);
+
         adapter.notifyDataSetChanged();
 
         btnAddHouse.setOnClickListener(onAddHouse);
@@ -168,4 +170,11 @@ public class HousesFragment extends Fragment {
     }
 
 
+    @Override
+    public void onItemClick(View view, int position) {
+        House house = houses.get(position);
+        if (routerActionListener != null){
+            routerActionListener.onNavigateToShowTenant(house);
+        }
+    }
 }

@@ -23,4 +23,6 @@ public interface LandlordRouterAction {
 
     void onNavigateToMessagePage();
 
+    void onNavigateToShowTenant(House house);
+
 }

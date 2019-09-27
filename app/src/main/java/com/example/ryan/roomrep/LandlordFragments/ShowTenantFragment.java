@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordShowTeantListingAdapter;
 import com.example.ryan.roomrep.Classes.ChatMessage;
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
@@ -45,6 +46,8 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
     Button btnGroupChat;
 
 
+    House house;
+    Landlord landlord;
 
     @Override
     public void onStart() {
@@ -151,4 +154,13 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
 
         }
     }
+
+    public void setHouse(House house) {
+        this.house = house;
+    }
+
+    public void setLandlord(Landlord landlord) {
+        this.landlord = landlord;
+    }
+
 }

@@ -162,7 +162,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
                 e.printStackTrace();
             }
         }
-        router = new LandlordRouter(getSupportFragmentManager(), this.houses);
+        router = new LandlordRouter(getSupportFragmentManager(), this.houses, this.landlord);
         router.onNavigateToHouses(landlord);
     }
 }
