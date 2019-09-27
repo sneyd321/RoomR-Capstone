@@ -27,6 +27,8 @@ import okhttp3.Response;
 public class Network implements NetworkObservable {
 
     private final String SERVER_URL = "http://10.16.25.74:8080/";
+    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -39,8 +41,6 @@ public class Network implements NetworkObservable {
         }
         return NETWORK_INSTANCE;
     }
-
-
 
     private FragmentEventListener fragmentEventListener;
 
@@ -447,5 +447,34 @@ public class Network implements NetworkObservable {
         });
     }
 
+    public void contactProfile(Profile profile) {
+
+        String json = profile.convertToJSON();
+        RequestBody body = RequestBody.create(JSON, json);
+
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "ContactProfile")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
 
 }

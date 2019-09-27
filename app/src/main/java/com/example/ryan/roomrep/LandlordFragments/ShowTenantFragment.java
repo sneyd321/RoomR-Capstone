@@ -89,6 +89,7 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
         adapter.setOnItemClickListener(this);
         tenantList.setAdapter(adapter);
 
+
         adapter.notifyDataSetChanged();
 
         btnAddTeant.setOnClickListener(onNavigateToSearchTenant);

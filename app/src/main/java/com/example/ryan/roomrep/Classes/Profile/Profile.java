@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep.Classes.Profile;
 
+import com.google.gson.Gson;
+
 import java.util.Map;
 
 public class Profile {
@@ -44,5 +46,10 @@ public class Profile {
 
     public void setHouseAddress(String houseAddress) {
         this.houseAddress = houseAddress;
+    }
+
+    public String convertToJSON() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
