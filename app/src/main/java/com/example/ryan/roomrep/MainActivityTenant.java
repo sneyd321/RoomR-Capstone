@@ -151,7 +151,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
     public void getRepairs(){
         Network network = new Network();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Uploading Picture...");
+        progressDialog.setMessage("Loading Repairs...");
         progressDialog.show();
         network.registerObserver(this);
         network.getRepairs();

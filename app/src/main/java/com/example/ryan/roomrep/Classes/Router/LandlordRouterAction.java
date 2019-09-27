@@ -15,7 +15,7 @@ public interface LandlordRouterAction {
 
     void onNavigateToLandlordListings();
 
-    void onNavigateToTenantProfile();
+    void onNavigateToTenantProfile(House house);
 
     void onNaviagateToAddTenant();
 

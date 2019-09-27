@@ -4,18 +4,15 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Search;
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,8 +25,7 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    private final String SERVER_URL = "http://10.16.24.48:8080/";
+    private final String SERVER_URL = "http://10.16.24.171:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -212,7 +208,6 @@ public class Network implements NetworkObservable {
             }
         });
     }
-
     public void addProfile(Profile profile) {
         final Gson gson = new Gson();
         String json = gson.toJson(profile);
@@ -297,16 +292,26 @@ public class Network implements NetworkObservable {
         });
     }
 
-    public void uploadRepair(File photo) {
+    public void uploadRepairImage(File photo, String language) {
         final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+        JSONObject jsonObject = null;
 
-        RequestBody requestBody = new MultipartBody.Builder()
+        String formatJson = "{'Language': '" + language +"'}";
+        try {
+            jsonObject = new JSONObject(formatJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Look at request body for .addFormDataPart to send Json
+        MultipartBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("FrontPhoto", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))
+                .addFormDataPart("Photo", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))
+                .addFormDataPart("Language", jsonObject.toString())
                 .build();
 
         Request request = new Request.Builder()
-                .url(SERVER_URL + "AddPhoto")
+                .url("http://10.16.26.172:8080/" + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -319,20 +324,20 @@ public class Network implements NetworkObservable {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
+                if (response.isSuccessful()) {
+                    notifyObserver(response.body().string());
+                }
             }
         });
     }
 
-    public void contactLandlord(Profile profile) {
-
+    public void addRepair(Repair repair){
         final Gson gson = new Gson();
-        String json = gson.toJson(profile);
+        String json = gson.toJson(repair);
         RequestBody body = RequestBody.create(JSON, json);
 
-
         Request request = new Request.Builder()
-                .url(SERVER_URL + "ContactLandlord")
+                .url("http://10.16.26.172:8080/" + "AddRepair")
                 .post(body)
                 .build();
 
@@ -342,7 +347,8 @@ public class Network implements NetworkObservable {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    notifyObserver(response.body().string());
+                    //I want the response to navigate back to the Tenant Listings which sees all the repairs view!!!
+                    fragmentEventListener.update(response.body().string());
                 }
                 response.close();
 
@@ -353,17 +359,13 @@ public class Network implements NetworkObservable {
 
             }
         });
+
     }
 
-    public void searchListing(Search search) {
-
-        String json = search.convertToJSON();
-        RequestBody body = RequestBody.create(JSON, json);
-
-
+    public void getRepairs(){
         Request request = new Request.Builder()
-                .url(SERVER_URL + "SearchListings")
-                .post(body)
+                .url("http://10.16.26.172:8080/" + "GetRepairs")
+                .get()
                 .build();
 
         OkHttpClient client = new OkHttpClient();
@@ -372,10 +374,9 @@ public class Network implements NetworkObservable {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
-                    notifyObserver(response.body().string());
+                    fragmentEventListener.update(response.body().string());
                 }
                 response.close();
-
             }
 
             @Override
@@ -384,8 +385,4 @@ public class Network implements NetworkObservable {
             }
         });
     }
-
-
-
-
 }
