@@ -312,7 +312,7 @@ public class Network implements NetworkObservable {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://10.16.26.172:8080/" + "AddPhoto")
+                .url("http://192.168.0.23:8080/" + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -338,7 +338,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url("http://10.16.26.172:8080/" + "AddRepair")
+                .url("http://192.168.0.23:8080/" + "AddRepair")
                 .post(body)
                 .build();
 
@@ -365,7 +365,7 @@ public class Network implements NetworkObservable {
 
     public void getRepairs(){
         Request request = new Request.Builder()
-                .url("http://10.16.26.172:8080/" + "GetRepairs")
+                .url("http://192.168.0.23:8080/" + "GetRepairs")
                 .get()
                 .build();
 
@@ -448,4 +448,30 @@ public class Network implements NetworkObservable {
     }
 
 
+    public void updateRepair(Repair repair) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(repair);
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url("http://192.168.0.23:8080/" + "UpdateRepairs")
+                .post(body)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
 }
