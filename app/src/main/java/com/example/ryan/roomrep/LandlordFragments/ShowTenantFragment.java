@@ -116,7 +116,11 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
         public void onClick(View view) {
             infTeant.clear();
             if (routerActionListener != null) {
-                ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = "136 tower drive";
+                String testAddress = "136 tower drive";
+                ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = house.getAddress();
+                if(((MainActivityLandlord) getActivity()).chatRoomNameInMainActivityLandlord == null){
+                    Toast.makeText(getActivity(),"House address is empty",Toast.LENGTH_SHORT).show();
+                ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = testAddress;}
                 ((MainActivityLandlord)getActivity()).chatRoomType ="PublicChatRoom";
                 routerActionListener.onNavigateToMessagePage();
             }

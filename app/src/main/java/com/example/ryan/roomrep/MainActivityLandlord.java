@@ -54,15 +54,18 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         navigationView = findViewById(R.id.nav_view);
 
 
+
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
             landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
         }
         else {
             landlord = bundle.getParcelable("LANDLORD_DATA");
+            chatPeopleName = landlord.getFirstName()+ " "+landlord.getLastName();
         }
 
         houses = new ArrayList<>();
+
 
         Network network = Network.getInstance();
         network.registerObserver(this);
