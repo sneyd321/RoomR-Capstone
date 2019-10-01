@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,7 +22,7 @@ import com.squareup.picasso.Picasso;
 
 public class RepairViewLandlordFragment extends Fragment implements FragmentEventListener {
     Repair repair;
-
+    String status;
     int position;
 
     ProgressDialog progressDialog;
@@ -58,6 +59,16 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
         btn_updateRepair.setOnClickListener(onUpdateRepairView);
         btn_contactRepair.setOnClickListener(onContactRepair);
 
+        status = "pending";
+
+        spn_status.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String statusArr[] = getResources().getStringArray(R.array.status);
+                status = statusArr[i];
+            }
+        });
+
         setView();
 
         return view;
@@ -87,6 +98,7 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
 
         @Override
         public void onClick(View view) {
+            repair.setStatus(status);
             updateRepair();
             routerActionListener.onNavigateToLandlordRepairView(repair,position);
 
