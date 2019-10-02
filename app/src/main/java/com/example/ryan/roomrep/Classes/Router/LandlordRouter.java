@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
@@ -18,6 +19,7 @@ import com.example.ryan.roomrep.LandlordFragments.ShowTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.TenantProfilesFragment;
 import com.example.ryan.roomrep.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LandlordRouter implements LandlordRouterAction {
@@ -26,15 +28,13 @@ public class LandlordRouter implements LandlordRouterAction {
     FragmentManager fragmentManager;
 
 
-    List<House> houses;
+    List<House> houses = new ArrayList<>();
     Landlord landlord;
     List<Repair> repairs;
 
 
-    public LandlordRouter(FragmentManager fragmentManager, List<House> houses, Landlord landlord){
+    public LandlordRouter(FragmentManager fragmentManager){
         this.fragmentManager = fragmentManager;
-        this.houses = houses;
-        this.landlord = landlord;
     }
 
 
@@ -75,9 +75,11 @@ public class LandlordRouter implements LandlordRouterAction {
     @Override
     public void onNavigateToHouses(Landlord landlord) {
         HousesFragment housesFragment = new HousesFragment();
+        this.landlord = landlord;
         housesFragment.setRouterAction(this);
         housesFragment.setLandlord(landlord);
         housesFragment.setHouses(this.houses);
+        housesFragment.getHousesFromServer();
         manageBackstack(housesFragment);
     }
 

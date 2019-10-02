@@ -19,9 +19,11 @@ import android.widget.Button;
 import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
@@ -34,9 +36,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class HousesFragment extends Fragment implements ItemClickListener {
+public class HousesFragment extends Fragment implements ItemClickListener, FragmentEventListener {
 
 
     Button btnAddHouse;
@@ -53,27 +56,28 @@ public class HousesFragment extends Fragment implements ItemClickListener {
 
     Landlord landlord;
 
-    private static final int BACK_CAMERA_REQUEST = 1889;
-
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_house, container, false);
 
+
+
         btnAddHouse = view.findViewById(R.id.btnHousesAddHouse);
         rcyHouses = view.findViewById(R.id.rcyHouses);
         btnViewListings = view.findViewById(R.id.btnHousesViewListings);
         btnNavigateAddTenant = view.findViewById(R.id.button6);
         btnNavigateAddTenant.setOnClickListener(onNavigateToAddTenant);
-
         rcyHouses.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
-        adapter.setOnItemClickListener(this);
-        rcyHouses.setAdapter(adapter);
 
-        adapter.notifyDataSetChanged();
+        if (houses != null) {
+            HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
+            adapter.setOnItemClickListener(HousesFragment.this);
+            rcyHouses.swapAdapter(adapter, true);
+            adapter.notifyDataSetChanged();
+        }
 
         btnAddHouse.setOnClickListener(onAddHouse);
 
@@ -91,51 +95,9 @@ public class HousesFragment extends Fragment implements ItemClickListener {
                 routerActionListener.onNaviagateToAddTenant();
             }
 
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(cameraIntent, BACK_CAMERA_REQUEST);
+
         }
     };
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Bitmap frontPhoto = (Bitmap) data.getExtras().get("data");
-        File file = saveImageToInternalStorage(frontPhoto, "Photo", "TestNetworkRepair.png");
-        Network network = Network.getInstance();
-        //network.uploadRepair(file);
-
-    }
-
-    public File saveImageToInternalStorage(Bitmap bitmap, String directoryName, String filename) {
-        ContextWrapper contextWrapper = new ContextWrapper(getActivity());
-
-        File directory = contextWrapper.getDir(directoryName, Context.MODE_PRIVATE);
-
-        File path = new File(directory, filename);
-
-        FileOutputStream fos = null;
-
-        try {
-            fos = new FileOutputStream(path);
-
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                fos.close();
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-
-        return path;
-
-    }
-
 
     private View.OnClickListener onAddHouse = new View.OnClickListener() {
         @Override
@@ -169,12 +131,50 @@ public class HousesFragment extends Fragment implements ItemClickListener {
         this.houses = houses;
     }
 
+    public void getHousesFromServer() {
+        Network network = Network.getInstance();
+        network.registerObserver(this);
+        network.getLandlordHouses(landlord);
+    }
+
 
     @Override
     public void onItemClick(View view, int position) {
         House house = houses.get(position);
         if (routerActionListener != null){
             routerActionListener.onNavigateToShowTenant(house);
+        }
+    }
+
+    @Override
+    public void update(String response) {
+        JSONArray jsonArray = convertStringToJSONArray(response);
+        Gson gson = new Gson();
+        Iterator iterator = new JSONArrayIterator(jsonArray);
+        while (iterator.hasNext()){
+            House house = gson.fromJson(iterator.next().toString(), House.class);
+            houses.add(house);
+        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
+                adapter.setOnItemClickListener(HousesFragment.this);
+                rcyHouses.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+
+    private JSONArray convertStringToJSONArray(String response) {
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(response);
+            return jsonArray;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

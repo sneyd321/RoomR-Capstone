@@ -43,7 +43,7 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
            return;
         }
 
-        Picasso.get().load(house.getUrl()).placeholder(R.drawable.house).noFade().into(holder.imgHouse);
+        Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).noFade().into(holder.imgHouse);
         holder.txtAddress.setText(house.getAddress());
     }
 

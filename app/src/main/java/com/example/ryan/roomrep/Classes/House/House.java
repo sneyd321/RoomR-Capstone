@@ -51,7 +51,7 @@ public class House {
         this.isPosted = false;
     }
 
-    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, boolean isPosted, List<Profile> profiles){
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, String url, boolean isPosted, List<Profile> profiles){
         this.address = address;
         this.rent = rent;
         this.size = size;
@@ -61,6 +61,7 @@ public class House {
         this.utilities = utilities;
         this.description = description;
         this.applicants = 0;
+        this.url = url;
         this.landlordEmail = landlordEmail;
         this.isPosted = isPosted;
         this.profiles = profiles;
