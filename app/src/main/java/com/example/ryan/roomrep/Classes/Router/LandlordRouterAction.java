@@ -2,6 +2,7 @@ package com.example.ryan.roomrep.Classes.Router;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.Repair;
 
 import java.util.List;
 
@@ -25,4 +26,11 @@ public interface LandlordRouterAction {
 
     void onNavigateToShowTenant(House house);
 
+    void onNavigateToLandlordRepairView(Repair repair, int positon);
+
+    void onNavigateToLandlordRepairs(List<Repair> repairs);
+
+    void onNavigateToLandlordRepairsWithNoUpdate();
+
+    void onNavigateToLandlordRepairsWithUpdate(Repair repair, int position);
 }

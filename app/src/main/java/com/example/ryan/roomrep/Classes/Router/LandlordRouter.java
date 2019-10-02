@@ -6,10 +6,13 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
 import com.example.ryan.roomrep.LandlordFragments.MessageLandlordFragment;
+import com.example.ryan.roomrep.LandlordFragments.RepairHistoryLandlordFragment;
+import com.example.ryan.roomrep.LandlordFragments.RepairViewLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.SearchTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.ShowTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.TenantProfilesFragment;
@@ -25,6 +28,7 @@ public class LandlordRouter implements LandlordRouterAction {
 
     List<House> houses;
     Landlord landlord;
+    List<Repair> repairs;
 
 
     public LandlordRouter(FragmentManager fragmentManager, List<House> houses, Landlord landlord){
@@ -120,5 +124,41 @@ public class LandlordRouter implements LandlordRouterAction {
         showTenantFragment.setHouse(house);
         showTenantFragment.setLandlord(this.landlord);
         manageBackstack(showTenantFragment);
+    }
+
+
+
+    @Override
+    public void onNavigateToLandlordRepairView(Repair repair, int position){
+        RepairViewLandlordFragment repairViewLandlordFragment = new RepairViewLandlordFragment();
+        repairViewLandlordFragment.setActionListener(this);
+        repairViewLandlordFragment.setRepair(repair, position);
+        manageBackstack(repairViewLandlordFragment);
+    }
+
+    @Override
+    public void onNavigateToLandlordRepairs(List<Repair> repairs){
+        RepairHistoryLandlordFragment repairHistoryLandlordFragment = new RepairHistoryLandlordFragment();
+        this.repairs = repairs;
+        repairHistoryLandlordFragment.setActionListener(this);
+        repairHistoryLandlordFragment.setRepairs(repairs);
+        manageBackstack(repairHistoryLandlordFragment);
+    }
+
+    @Override
+    public void onNavigateToLandlordRepairsWithNoUpdate(){
+        RepairHistoryLandlordFragment repairHistoryLandlordFragment = new RepairHistoryLandlordFragment();
+        repairHistoryLandlordFragment.setActionListener(this);
+        repairHistoryLandlordFragment.setRepairs(repairs);
+        manageBackstack(repairHistoryLandlordFragment);
+    }
+
+    @Override
+    public void onNavigateToLandlordRepairsWithUpdate(Repair repair, int position){
+        repairs.set(position, repair);
+        RepairHistoryLandlordFragment repairHistoryLandlordFragment = new RepairHistoryLandlordFragment();
+        repairHistoryLandlordFragment.setActionListener(this);
+        repairHistoryLandlordFragment.setRepairs(repairs);
+        manageBackstack(repairHistoryLandlordFragment);
     }
 }

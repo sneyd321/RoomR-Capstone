@@ -18,7 +18,8 @@ import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
 import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
 import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
-import com.example.ryan.roomrep.TenantFragments.TenantRepairFragment;
+import com.example.ryan.roomrep.TenantFragments.TenantRepairListFragment;
+import com.example.ryan.roomrep.TenantFragments.TenantRepairUpdateFragment;
 
 
 import java.util.ArrayList;
@@ -108,9 +109,9 @@ public class TenantRouter implements TenantRouterAction {
 
     @Override
     public void onNavigateToTenantRepair() {
-        TenantRepairFragment tenantRepairFragment = new TenantRepairFragment();
+        TenantRepairListFragment tenantRepairListFragment = new TenantRepairListFragment();
         //tenantRepairFragment.setActionListener(this);
-        manageBackstack(tenantRepairFragment);
+        manageBackstack(tenantRepairListFragment);
     }
 
     @Override
@@ -141,7 +142,7 @@ public class TenantRouter implements TenantRouterAction {
 
     @Override
     public void onAddRepair(Repair repair){
-        TenantRepairFragment tenantRepairFragment = new TenantRepairFragment();
+        TenantRepairListFragment tenantRepairFragment = new TenantRepairListFragment();
         this.repairs.add(repair);
         tenantRepairFragment.setActionListener(this);
         tenantRepairFragment.setRepairs(repairs);
@@ -150,9 +151,35 @@ public class TenantRouter implements TenantRouterAction {
 
     @Override
     public void onNavigateToTenantRepairsList(List<Repair> repairs){
-        TenantRepairFragment tenantRepairFragment = new TenantRepairFragment();
-        tenantRepairFragment.setActionListener(this);
-        tenantRepairFragment.setRepairs(repairs);
-        manageBackstack(tenantRepairFragment);
+        TenantRepairListFragment tenantRepairListFragment = new TenantRepairListFragment();
+        tenantRepairListFragment.setActionListener(this);
+        tenantRepairListFragment.setRepairs(repairs);
+        manageBackstack(tenantRepairListFragment);
     }
+
+    @Override
+    public void onNavigateToTenantRepairsListWithNoRepair(){
+        TenantRepairListFragment tenantRepairListFragment = new TenantRepairListFragment();
+        tenantRepairListFragment.setActionListener(this);
+        tenantRepairListFragment.setRepairs(repairs);
+        manageBackstack(tenantRepairListFragment);
+    }
+
+    @Override
+    public void onNavigateToTenantRepairListWithUpdatedRepair(Repair repair, int position){
+        repairs.set(position, repair);
+        TenantRepairListFragment tenantRepairListFragment = new TenantRepairListFragment();
+        tenantRepairListFragment.setActionListener(this);
+        tenantRepairListFragment.setRepairs(repairs);
+        manageBackstack(tenantRepairListFragment);
+    }
+
+    @Override
+    public void onNavigateToTenantRepairUpdate(Repair repair, int position){
+        TenantRepairUpdateFragment tenantRepairUpdateFragment = new TenantRepairUpdateFragment();
+        tenantRepairUpdateFragment.setActionListener(this);
+        tenantRepairUpdateFragment.setRepair(repair, position);
+        manageBackstack(tenantRepairUpdateFragment);
+    }
+
 }
