@@ -125,6 +125,7 @@ public class LandlordRouter implements LandlordRouterAction {
         ShowTenantFragment showTenantFragment = new ShowTenantFragment();
         showTenantFragment.setHouse(house);
         showTenantFragment.setLandlord(this.landlord);
+        showTenantFragment.setRouterAction(this);
         manageBackstack(showTenantFragment);
     }
 

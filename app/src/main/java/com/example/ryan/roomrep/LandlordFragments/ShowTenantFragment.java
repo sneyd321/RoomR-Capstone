@@ -109,7 +109,7 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
             if (routerActionListener != null) {
                 routerActionListener.onNaviagateToSearchTenant();
             }
-            
+
         }
     };
 
