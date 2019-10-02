@@ -104,25 +104,28 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
     private View.OnClickListener onNavigateToSearchTenant = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //Toast.makeText(getActivity(), "POSTION 1", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Search button", Toast.LENGTH_SHORT).show();
             infTeant.clear();
             if (routerActionListener != null) {
                 routerActionListener.onNaviagateToSearchTenant();
             }
+            
         }
     };
 
     public  View.OnClickListener onNavigateToGroupChat = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Toast.makeText(getActivity(), "group chat button", Toast.LENGTH_SHORT).show();
             infTeant.clear();
-            if (routerActionListener != null) {
-                String testAddress = "136 tower drive";
-                ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = house.getAddress();
-                if(((MainActivityLandlord) getActivity()).chatRoomNameInMainActivityLandlord == null){
-                    Toast.makeText(getActivity(),"House address is empty",Toast.LENGTH_SHORT).show();
+            String testAddress = "136 tower drive";
+            ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = house.getAddress();
+            if(((MainActivityLandlord) getActivity()).chatRoomNameInMainActivityLandlord == null){
+                Toast.makeText(getActivity(),"House address is empty",Toast.LENGTH_SHORT).show();
                 ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = testAddress;}
-                ((MainActivityLandlord)getActivity()).chatRoomType ="PublicChatRoom";
+            ((MainActivityLandlord)getActivity()).chatRoomType ="PublicChatRoom";
+            if (routerActionListener != null) {
+
                 routerActionListener.onNavigateToMessagePage();
             }
 
@@ -146,15 +149,17 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
     public void onItemClick(View view, int position) {
         //((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infTeant.get(position).getFirstName(),infTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
         //Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).peopleToAdd.getLastName(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),infTeant.get(position).getFirstName(),Toast.LENGTH_SHORT).show();
 
+        ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = infTeant.get(position).getFirstName()+" "+infTeant.get(position).getLastName();
+        ((MainActivityLandlord)getActivity()).chatRoomType ="OneToOne";
+
+        //((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infListTeant.get(position).getFirstName(),infListTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
+        //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
+        //Toast.makeText(getActivity(),infTeant.get(position).getFirstName(),Toast.LENGTH_SHORT).show();
+        infTeant.clear();
         if (routerActionListener != null) {
-            ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = infTeant.get(position).getFirstName()+" "+infTeant.get(position).getLastName();
-            ((MainActivityLandlord)getActivity()).chatRoomType ="OneToOne";
 
-            //((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infListTeant.get(position).getFirstName(),infListTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
-            //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
-            //Toast.makeText(getActivity(),infTeant.get(position).getFirstName(),Toast.LENGTH_SHORT).show();
-            infTeant.clear();
             routerActionListener.onNavigateToMessagePage();
 
         }
