@@ -122,7 +122,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                 e.printStackTrace();
                 return;
             }
-            Gson gson = new Gson();
+
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);

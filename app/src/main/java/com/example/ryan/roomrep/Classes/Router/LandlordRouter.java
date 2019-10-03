@@ -30,7 +30,7 @@ public class LandlordRouter implements LandlordRouterAction {
 
     List<House> houses = new ArrayList<>();
     Landlord landlord;
-    List<Repair> repairs;
+    List<Repair> repairs = new ArrayList<>();
 
 
     public LandlordRouter(FragmentManager fragmentManager){

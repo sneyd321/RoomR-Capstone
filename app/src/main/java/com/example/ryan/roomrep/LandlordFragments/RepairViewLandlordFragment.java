@@ -61,11 +61,14 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
 
         status = "pending";
 
-        spn_status.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spn_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String statusArr[] = getResources().getStringArray(R.array.status);
                 status = statusArr[i];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
 
