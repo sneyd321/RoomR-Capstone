@@ -30,7 +30,7 @@
         android:layout_marginBottom="16dp"
         style="@style/sign_up_edittext"
         android:inputType="textPersonName"
-        android:text="Ryan"
+        android:hint="First Name"
         app:layout_constraintBottom_toTopOf="@+id/edtTSULastName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -44,14 +44,13 @@
         android:layout_marginBottom="16dp"
         style="@style/sign_up_edittext"
         android:inputType="textPersonName"
-        android:text="Sneyd"
+        android:hint="Last Name"
         app:layout_constraintBottom_toTopOf="@+id/edtTSULandlordEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <EditText
-        android:id="@+id/edtTSUEmail"
+        android:id="@+id/edtTSULandlordEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,10 +58,27 @@
         android:layout_marginBottom="16dp"
         style="@style/sign_up_edittext"
         android:inputType="textEmailAddress"
-        android:text="tenant@roomr.com"
+        android:hint="Landlord Email"
+        app:layout_constraintBottom_toTopOf="@+id/edtTSUTenantEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <EditText
+        android:id="@+id/edtTSUTenantEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        style="@style/sign_up_edittext"
+        android:inputType="textEmailAddress"
+        android:hint="Tenant Email"
         app:layout_constraintBottom_toTopOf="@+id/edtTSUPassword1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
     <EditText
         android:id="@+id/edtTSUPassword1"
@@ -73,6 +89,7 @@
         android:layout_marginBottom="16dp"
         style="@style/sign_up_edittext"
         android:inputType="textPassword"
+        android:hint="Password"
         app:layout_constraintBottom_toTopOf="@+id/edtTSUPassword2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -80,13 +97,14 @@
 
     <EditText
         android:id="@+id/edtTSUPassword2"
+        style="@style/sign_up_edittext"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
-        style="@style/sign_up_edittext"
         android:inputType="textPassword"
+        android:hint="Re-Type Password"
         app:layout_constraintBottom_toTopOf="@+id/btnTSUSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -105,19 +123,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/edtTSULandlordEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        style="@style/sign_up_edittext"
-        android:inputType="textEmailAddress"
-        android:text="ryan@roomr.com"
-        app:layout_constraintBottom_toTopOf="@+id/edtTSUEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/textView16"
@@ -133,4 +139,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 </android.support.constraint.ConstraintLayout>

@@ -1,13 +1,15 @@
 package com.example.ryan.roomrep.Classes.House;
 
+import com.example.ryan.roomrep.Classes.Tenant.Validator;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class HouseValidator implements Validator {
 
-
     @Override
-    public Map<Integer, String> validateHouse(House house) {
+    public <T> Map<Integer, String> validator(T object) {
+        House house = (House) object;
         Map<Integer, String> validator = new LinkedHashMap<>();
         validator.put(0, isAddressEmpty(house.getAddress()));
         //validator.put(1, isAddressValid(house.getAddress()));
@@ -44,10 +46,6 @@ public class HouseValidator implements Validator {
         }
         return "";
     }
-
-
-
-
 
 
 

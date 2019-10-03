@@ -3,17 +3,12 @@ package com.example.ryan.roomrep.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
-import com.example.ryan.roomrep.Classes.Tenant;
-import com.example.ryan.roomrep.MainActivityTenant;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
 
 

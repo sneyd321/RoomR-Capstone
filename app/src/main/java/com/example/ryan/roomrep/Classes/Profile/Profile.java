@@ -1,5 +1,6 @@
 package com.example.ryan.roomrep.Classes.Profile;
 
+import com.example.ryan.roomrep.Classes.Tenant.Validator;
 import com.google.gson.Gson;
 
 import java.util.Map;
@@ -20,8 +21,8 @@ public class Profile {
     }
 
     public Map<Integer, String> getValidator() {
-        ProfileValidator validator = new ProfileValidatorClass();
-        return validator.validateProfile(this);
+        Validator validator = new ProfileValidator();
+        return validator.validator(this);
     }
 
     public String getLastName() {

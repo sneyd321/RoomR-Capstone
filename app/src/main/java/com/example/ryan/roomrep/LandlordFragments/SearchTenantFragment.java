@@ -1,7 +1,5 @@
 package com.example.ryan.roomrep.LandlordFragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,13 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 
 import com.example.ryan.roomrep.Adapters.LandlordShowTeantListingAdapter;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.R;
 

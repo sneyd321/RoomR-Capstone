@@ -2,8 +2,9 @@ package com.example.ryan.roomrep.Classes.House;
 
 
 import com.example.ryan.roomrep.Classes.House.Amenities.Amenity;
-import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.Classes.Tenant.Validator;
 
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class House {
 
     private List<Profile> profiles;
 
+    private List<Tenant> tenants;
+
     private String landlordEmail;
 
 
@@ -51,7 +54,7 @@ public class House {
         this.isPosted = false;
     }
 
-    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, String url, boolean isPosted, List<Profile> profiles){
+    public House(String address, int rent, int size, int bedNumber, int bathNumber, Map<String, Boolean> amenities, List<Utility> utilities, String landlordEmail, String description, String url, boolean isPosted, List<Profile> profiles, List<Tenant> tenants){
         this.address = address;
         this.rent = rent;
         this.size = size;
@@ -65,6 +68,7 @@ public class House {
         this.landlordEmail = landlordEmail;
         this.isPosted = isPosted;
         this.profiles = profiles;
+        this.tenants = tenants;
     }
 
 
@@ -145,7 +149,7 @@ public class House {
 
     public Map<Integer, String> getValidator() {
         Validator validator = new HouseValidator();
-        return validator.validateHouse(this);
+        return validator.validator(this);
     }
 
     public void setUrl(String url){
@@ -172,6 +176,14 @@ public class House {
 
     public List<Profile> getProfiles() {
         return profiles;
+    }
+
+    public List<Tenant> getTenants() {
+        return tenants;
+    }
+
+    public void addTenant(Tenant tenant) {
+        this.tenants.add(tenant);
     }
 }
 

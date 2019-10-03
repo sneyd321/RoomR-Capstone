@@ -503,4 +503,33 @@ public class Network implements NetworkObservable {
             }
         });
     }
+
+    public void convertProfileToTenant(Profile profile) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(profile);
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "ConvertProfileToTenant")
+                .post(body)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+
 }

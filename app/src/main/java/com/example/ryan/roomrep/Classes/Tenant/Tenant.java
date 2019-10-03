@@ -1,4 +1,4 @@
-package com.example.ryan.roomrep.Classes;
+package com.example.ryan.roomrep.Classes.Tenant;
 
 import android.support.annotation.NonNull;
 
@@ -14,34 +14,28 @@ import java.util.Map;
 public class Tenant {
 
 
-
-
     private String firstName;
     private String lastName;
     private String password;
     private String password2;
     private String tenantEmail;
-    private String bio;
     private String landlordEmail;
 
 
-
-
-
-    public Tenant(){
-
-    }
-
-    public Tenant(String firstName, String lastName, String email, String password, String password2, String bio) {
+    public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.tenantEmail = email;
         this.password = password;
         this.password2 = password2;
-        this.bio = bio;
+        this.landlordEmail = landlordEmail;
     }
 
 
+    public Map<Integer, String> getValidator() {
+        Validator validator = new TenantValidator();
+        return validator.validator(this);
+    }
 
     public String getFirstName() {
         return firstName;
@@ -53,8 +47,6 @@ public class Tenant {
     }
 
 
-
-
     public String getPassword() {
         return password;
     }
@@ -63,9 +55,6 @@ public class Tenant {
     public String getEmail() {
         return tenantEmail;
     }
-
-
-
 
     public String validateTenant(){
         if (this.firstName.isEmpty()){
@@ -92,9 +81,6 @@ public class Tenant {
         return landlordEmail;
     }
 
-    public String getBio() {
-        return bio;
-    }
 
     public String getPassword2() {
         return password2;

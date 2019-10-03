@@ -1,12 +1,9 @@
 package com.example.ryan.roomrep.LandlordFragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +12,14 @@ import android.widget.Toast;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordShowTeantListingAdapter;
-import com.example.ryan.roomrep.Classes.ChatMessage;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
-import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.MainActivityLandlord;
-import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
-import javax.annotation.Nullable;
-
-import static android.support.constraint.Constraints.TAG;
 
 
 public class ShowTenantFragment extends Fragment implements ItemClickListener, LandlordShowTeantListingAdapter.OnItemClickListener{
@@ -101,11 +88,17 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
 
     }
 
+
+
+
     private View.OnClickListener onNavigateToSearchTenant = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Toast.makeText(getActivity(), "Search button", Toast.LENGTH_SHORT).show();
             infTeant.clear();
+
+
+
             if (routerActionListener != null) {
                 routerActionListener.onNaviagateToSearchTenant();
             }

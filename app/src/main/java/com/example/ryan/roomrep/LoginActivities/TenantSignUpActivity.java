@@ -1,53 +1,47 @@
 package com.example.ryan.roomrep.LoginActivities;
 
-import android.support.annotation.NonNull;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.ryan.roomrep.Classes.Tenant;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Document;
+import java.util.Map;
 
 public class TenantSignUpActivity extends AppCompatActivity {
 
 
-    EditText firstName;
-    EditText lastName;
-    EditText address;
-    EditText tenantEmail;
-    EditText landlordEmail;
-    EditText password1;
-    EditText password2;
-    Button signup;
-
-    Tenant tenant;
+    EditText edtFirstName;
+    EditText edtLastName;
+    EditText edtTenantEmail;
+    EditText edtLandlordEmail;
+    EditText edtPassword;
+    EditText edtPassword2;
+    Button btnSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tenant_sign_up);
 
-        firstName = findViewById(R.id.edtTSUFirstName);
-        lastName = findViewById(R.id.edtTSULastName);
-        tenantEmail = findViewById(R.id.edtTSUEmail);
-        landlordEmail = findViewById(R.id.edtTSULandlordEmail);
-        password1 = findViewById(R.id.edtTSUPassword1);
-        password2 = findViewById(R.id.edtTSUPassword2);
-        signup = findViewById(R.id.btnTSUSignUp);
-        signup.setOnClickListener(onSignUp);
+        edtFirstName = findViewById(R.id.edtTSUFirstName);
+        edtLastName = findViewById(R.id.edtTSULastName);
+        edtLandlordEmail = findViewById(R.id.edtTSULandlordEmail);
+        edtTenantEmail = findViewById(R.id.edtTSUTenantEmail);
+        edtPassword = findViewById(R.id.edtTSUPassword1);
+        edtPassword2 = findViewById(R.id.edtTSUPassword2);
+        btnSignUp = findViewById(R.id.btnTSUSignUp);
+        btnSignUp.setOnClickListener(onSignUp);
 
-        tenant = new Tenant();
-
-
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        edtFirstName.setText(sharedPref.getString("ProfileFirstName", ""));
+        edtFirstName.setText(sharedPref.getString("ProfileLastName", ""));
+        edtFirstName.setText(sharedPref.getString("ProfileEmail", ""));
 
 
 
@@ -56,8 +50,19 @@ public class TenantSignUpActivity extends AppCompatActivity {
     View.OnClickListener onSignUp = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            String firstName = edtFirstName.getText().toString();
+            String lastName = edtLastName.getText().toString();
+            String landlordEmail = edtLandlordEmail.getText().toString();
+            String tenantEmail = edtTenantEmail.getText().toString();
+            String password = edtPassword.getText().toString();
+            String password2 = edtPassword2.getText().toString();
 
-           
+            Tenant tenant = new Tenant(firstName, lastName, tenantEmail, password, password2, landlordEmail);
+
+
+            Map<Integer, String> validator = tenant.getValidator();
+
+            validator.get("FirstName");
 
 
 

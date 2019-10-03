@@ -17,10 +17,8 @@ import com.example.ryan.roomrep.Adapters.TenantProfileRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Tenant;
 import com.example.ryan.roomrep.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TenantProfilesFragment extends Fragment implements ItemClickListener {

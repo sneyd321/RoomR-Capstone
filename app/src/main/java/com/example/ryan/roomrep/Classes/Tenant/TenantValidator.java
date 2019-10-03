@@ -1,29 +1,32 @@
-package com.example.ryan.roomrep.Classes.Landlord;
+package com.example.ryan.roomrep.Classes.Tenant;
+
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LandlordValidatorClass implements LandlordValidator {
-
+public class TenantValidator implements Validator {
 
 
     @Override
-    public Map<Integer, String> validateLandlord(Landlord landlord) {
+    public <T> Map<Integer, String> validator(T object) {
+        Tenant tenant = (Tenant) object;
         Map <Integer,String> map = new LinkedHashMap<>();
-        map.put(0, isFirstNameEmpty(landlord.getFirstName()));
+        map.put(0, isFirstNameEmpty(tenant.getFirstName()));
         //map.put(1, isFirstNameValid(landlord.getFirstName()));
-        map.put(2, isLastNameEmpty(landlord.getLastName()));
+        map.put(2, isLastNameEmpty(tenant.getLastName()));
         //map.put(3, isLastNameValid(landlord.getLastName()));
-        map.put(4, isPasswordEmpty(landlord.getPassword()));
-        map.put(5, isPasswordLongEnough(landlord.getPassword()));
-        map.put(6, isPassword2Empty(landlord.getPassword2()));
-        map.put(7, doPasswordsMatch(landlord.getPassword(), landlord.getPassword2()));
-        map.put(8, isEmailEmpty(landlord.getEmail()));
+        map.put(4, isPasswordEmpty(tenant.getPassword()));
+        map.put(5, isPasswordLongEnough(tenant.getPassword()));
+        map.put(6, isPassword2Empty(tenant.getPassword2()));
+        map.put(7, doPasswordsMatch(tenant.getPassword(), tenant.getPassword2()));
+        map.put(8, isLandlordEmailEmpty(tenant.getEmail()));
         //map.put(9, isEmailValid(landlord.getEmail()));
-
+        map.put(10, isTenantEmailEmpty(tenant.getEmail()));
 
         return map;
     }
+
 
 
 
@@ -83,14 +86,14 @@ public class LandlordValidatorClass implements LandlordValidator {
         return "Passwords do not match.";
     }
 
-    private String isEmailEmpty(String email) {
+    private String isTenantEmailEmpty(String email) {
         if (email.isEmpty()){
             return "Please enter an email address.";
         }
         return "";
     }
 
-    private String isEmailValid(String email) {
+    private String isTenantEmailValid(String email) {
         if (email.matches(
                 "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")){
             return "";
@@ -98,6 +101,20 @@ public class LandlordValidatorClass implements LandlordValidator {
         return "Please enter a valid email.";
     }
 
+    private String isLandlordEmailEmpty(String email) {
+        if (email.isEmpty()){
+            return "Please enter an email address.";
+        }
+        return "";
+    }
+
+    private String isLandlordEmailValid(String email) {
+        if (email.matches(
+                "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")){
+            return "";
+        }
+        return "Please enter a valid email.";
+    }
 
 
 }

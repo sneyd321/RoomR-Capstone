@@ -12,23 +12,9 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
-import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
-import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
-import com.example.ryan.roomrep.Classes.Tenant;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 
 public class MainActivityLandlord extends AppCompatActivity
 {

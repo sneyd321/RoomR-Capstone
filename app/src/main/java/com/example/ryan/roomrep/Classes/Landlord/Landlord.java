@@ -3,6 +3,8 @@ package com.example.ryan.roomrep.Classes.Landlord;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.ryan.roomrep.Classes.Tenant.Validator;
+
 import java.util.Map;
 
 public class Landlord implements Parcelable {
@@ -59,8 +61,8 @@ public class Landlord implements Parcelable {
 
 
     public Map<Integer, String> getLandlordValidator() {
-        LandlordValidator validator = new LandlordValidatorClass();
-        return validator.validateLandlord(this);
+        Validator validator = new LandlordValidator();
+        return validator.validator(this);
     }
 
     public String getPassword() {
