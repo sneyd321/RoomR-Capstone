@@ -6,6 +6,7 @@ import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Search;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,8 +27,8 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    //private final String SERVER_URL = "http://192.168.0.107:8080/";
-    private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+    private final String SERVER_URL = "http://10.16.27.64:8080/";
+    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
 
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -195,9 +196,6 @@ public class Network implements NetworkObservable {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()){
                     fragmentEventListener.update(response.body().string());
-                        //Tenant tenant = gson.fromJson(response.body().string(), Tenant.class);
-
-
                 }
                 response.close();
 
@@ -209,6 +207,7 @@ public class Network implements NetworkObservable {
             }
         });
     }
+
     public void addProfile(Profile profile) {
         final Gson gson = new Gson();
         String json = gson.toJson(profile);
@@ -510,6 +509,33 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(SERVER_URL + "ConvertProfileToTenant")
+                .post(body)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void signupTenant(Tenant tenant) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(tenant);
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "SignUpTenant")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();

@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep.Classes.Tenant;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -11,7 +13,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Tenant {
+public class Tenant implements Parcelable {
 
 
     private String firstName;
@@ -31,6 +33,27 @@ public class Tenant {
         this.landlordEmail = landlordEmail;
     }
 
+
+    protected Tenant(Parcel in) {
+        firstName = in.readString();
+        lastName = in.readString();
+        password = in.readString();
+        password2 = in.readString();
+        tenantEmail = in.readString();
+        landlordEmail = in.readString();
+    }
+
+    public static final Creator<Tenant> CREATOR = new Creator<Tenant>() {
+        @Override
+        public Tenant createFromParcel(Parcel in) {
+            return new Tenant(in);
+        }
+
+        @Override
+        public Tenant[] newArray(int size) {
+            return new Tenant[size];
+        }
+    };
 
     public Map<Integer, String> getValidator() {
         Validator validator = new TenantValidator();
@@ -56,26 +79,6 @@ public class Tenant {
         return tenantEmail;
     }
 
-    public String validateTenant(){
-        if (this.firstName.isEmpty()){
-            return "Please enter a first name.";
-        }
-        if (this.lastName.isEmpty()){
-            return "Please enter a first name.";
-        }
-
-        if (this.tenantEmail.isEmpty()){
-            return "Please enter your email address.";
-        }
-        if (this.landlordEmail.isEmpty()){
-            return "Please enter your landlord's email address.";
-        }
-        if (this.password.isEmpty()){
-            return "Please enter a password.";
-        }
-        return "";
-    }
-
 
     public String getLandlordEmail() {
         return landlordEmail;
@@ -84,5 +87,20 @@ public class Tenant {
 
     public String getPassword2() {
         return password2;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(password);
+        dest.writeString(password2);
+        dest.writeString(tenantEmail);
+        dest.writeString(landlordEmail);
     }
 }
