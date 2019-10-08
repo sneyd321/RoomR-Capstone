@@ -1,7 +1,5 @@
 package com.example.ryan.roomrep.Classes.Tenant;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -22,6 +20,7 @@ public class Tenant implements Parcelable {
     private String password2;
     private String tenantEmail;
     private String landlordEmail;
+    private String houseAddress;
 
 
     public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail) {
@@ -31,6 +30,16 @@ public class Tenant implements Parcelable {
         this.password = password;
         this.password2 = password2;
         this.landlordEmail = landlordEmail;
+    }
+
+    public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail, String houseAddress ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.tenantEmail = email;
+        this.password = password;
+        this.password2 = password2;
+        this.landlordEmail = landlordEmail;
+        this.houseAddress = houseAddress;
     }
 
 
@@ -79,6 +88,26 @@ public class Tenant implements Parcelable {
         return tenantEmail;
     }
 
+    public String validateTenant(){
+        if (this.firstName.isEmpty()){
+            return "Please enter a first name.";
+        }
+        if (this.lastName.isEmpty()){
+            return "Please enter a first name.";
+        }
+
+        if (this.tenantEmail.isEmpty()){
+            return "Please enter your email address.";
+        }
+        if (this.landlordEmail.isEmpty()){
+            return "Please enter your landlord's email address.";
+        }
+        if (this.password.isEmpty()){
+            return "Please enter a password.";
+        }
+        return "";
+    }
+
 
     public String getLandlordEmail() {
         return landlordEmail;
@@ -88,6 +117,8 @@ public class Tenant implements Parcelable {
     public String getPassword2() {
         return password2;
     }
+
+    public String getHouseAddress(){return houseAddress;}
 
     @Override
     public int describeContents() {
