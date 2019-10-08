@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
@@ -45,6 +46,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
     public String chatPeopleName = "Ziheng He";
     public String chatRoomNameInMainActivityLandlord = "TheRegularOne";
     public String chatRoomType = "Test";
+    public List<Profile> Mainprofiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,23 +11,31 @@ import android.view.ViewGroup;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 
 import com.example.ryan.roomrep.Adapters.LandlordShowTeantListingAdapter;
+import com.example.ryan.roomrep.Adapters.TenantProfileRecyclerviewAdapter;
+import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SearchTenantFragment extends Fragment implements ItemClickListener, LandlordShowTeantListingAdapter.OnItemClickListener
 
         //implements LandlordShowTeantListingAdapter.ItemClickListener
 {
-    LandlordShowTeantListingAdapter adapter;
+    //LandlordShowTeantListingAdapter adapter;
     RecyclerView searchList;
     Tenant tenant;
     ArrayList<Tenant> infListTeant = new ArrayList<>();
     LandlordRouterAction routerActionListener;
+    TenantProfileRecyclerviewAdapter adapter;
+
+    private House house;
+    List<Profile> profiles;
     //String receivedData;
     //String receivedData2;
 
@@ -38,12 +46,12 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search_tenant, container, false);
-        initMsg();
-
-        searchList = view.findViewById(R.id.rcySearchTenants);
-        searchList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new LandlordShowTeantListingAdapter(getActivity(), infListTeant);
-        adapter.setOnItemClickListener(this);
+//        initMsg();
+//
+//        searchList = view.findViewById(R.id.rcySearchTenants);
+//        searchList.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        adapter = new LandlordShowTeantListingAdapter(getActivity(), infListTeant);
+//        adapter.setOnItemClickListener(this);
 //        adapter.setOnItemLongClickListener(new LandlordShowTeantListingAdapter.OnItemLongClickListener() {
 //            @Override
 //            public void onItemLongClick(View view, int position) {
@@ -51,6 +59,14 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
 //                //Toast.makeText(,((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant, Toast.LENGTH_SHORT).show();
 //            }
 //        });
+        //searchList.setAdapter(adapter);
+
+        profiles = house.getProfiles();
+
+        searchList = view.findViewById(R.id.rcySearchTenants);
+        searchList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new TenantProfileRecyclerviewAdapter(getActivity(), profiles);
+        adapter.setItemClickListener(this);
         searchList.setAdapter(adapter);
 
 
@@ -72,7 +88,9 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
 
 
 
-
+    public void setHouse(House house) {
+        this.house = house;
+    }
 
     public void setRouterAction(LandlordRouterAction routerActionListener) {
         this.routerActionListener = routerActionListener;
@@ -90,11 +108,13 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
     @Override
     public void onItemClick(View view, int position) {
         if (routerActionListener != null) {
-            ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infListTeant.get(position).getFirstName(),infListTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
+            ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(profiles.get(position).getFirstName(),profiles.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
             //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
             //Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).peopleToAdd.getLastName(),Toast.LENGTH_SHORT).show();
             routerActionListener.onNaviagateToAddTenant();
         }
     }
+
+
 }
 
