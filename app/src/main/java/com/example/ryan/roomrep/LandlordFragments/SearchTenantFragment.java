@@ -109,9 +109,12 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
     public void onItemClick(View view, int position) {
         if (routerActionListener != null) {
             ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(profiles.get(position).getFirstName(),profiles.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
+            ((MainActivityLandlord)getActivity()).mainTenants.add(((MainActivityLandlord)getActivity()).peopleToAdd);
+            profiles.remove(profiles.get(position));
             //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
             //Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).peopleToAdd.getLastName(),Toast.LENGTH_SHORT).show();
-            routerActionListener.onNaviagateToAddTenant();
+            //routerActionListener.onNaviagateToAddTenant();
+            routerActionListener.onNavigateToShowTenant(house);
         }
     }
 

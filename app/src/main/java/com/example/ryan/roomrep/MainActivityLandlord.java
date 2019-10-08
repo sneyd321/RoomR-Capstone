@@ -46,7 +46,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
     public String chatPeopleName = "Ziheng He";
     public String chatRoomNameInMainActivityLandlord = "TheRegularOne";
     public String chatRoomType = "Test";
-    public List<Profile> Mainprofiles;
+    public List<Profile> mainProfiles;
+    public List<Tenant>mainTenants = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
