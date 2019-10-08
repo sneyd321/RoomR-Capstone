@@ -321,7 +321,7 @@
     <string-array name="empty_cities">
         <item>- Select A Province -</item>
     </string-array>
-    
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- String for Houses Fragment -->
