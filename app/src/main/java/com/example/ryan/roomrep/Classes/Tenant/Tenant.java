@@ -20,6 +20,7 @@ public class Tenant {
     private String password2;
     private String tenantEmail;
     private String landlordEmail;
+    private String houseAddress;
 
 
     public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail) {
@@ -29,6 +30,16 @@ public class Tenant {
         this.password = password;
         this.password2 = password2;
         this.landlordEmail = landlordEmail;
+    }
+
+    public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail, String houseAddress ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.tenantEmail = email;
+        this.password = password;
+        this.password2 = password2;
+        this.landlordEmail = landlordEmail;
+        this.houseAddress = houseAddress;
     }
 
 
@@ -85,4 +96,6 @@ public class Tenant {
     public String getPassword2() {
         return password2;
     }
+
+    public String getHouseAddress(){return houseAddress;}
 }
