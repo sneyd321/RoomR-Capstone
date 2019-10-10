@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
                         if (task.isSuccessful()){
                             network.getLandlord(login);
                         }
+
                     }
                 });
             }

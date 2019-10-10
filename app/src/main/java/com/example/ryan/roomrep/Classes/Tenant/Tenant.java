@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep.Classes.Tenant;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -50,6 +52,7 @@ public class Tenant implements Parcelable {
         password2 = in.readString();
         tenantEmail = in.readString();
         landlordEmail = in.readString();
+        houseAddress = in.readString();
     }
 
     public static final Creator<Tenant> CREATOR = new Creator<Tenant>() {
@@ -134,4 +137,6 @@ public class Tenant implements Parcelable {
         dest.writeString(tenantEmail);
         dest.writeString(landlordEmail);
     }
+
+
 }

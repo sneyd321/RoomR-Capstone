@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchTenantFragment extends Fragment implements ItemClickListener, LandlordShowTeantListingAdapter.OnItemClickListener
+public class SearchTenantFragment extends Fragment implements ItemClickListener
 
         //implements LandlordShowTeantListingAdapter.ItemClickListener
 {
