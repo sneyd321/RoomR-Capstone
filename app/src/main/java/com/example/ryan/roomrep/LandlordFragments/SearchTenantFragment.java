@@ -100,21 +100,23 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
 
 
     private void initMsg() {
-        Tenant tenant1 = new Tenant("King", "Sun", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
-        infListTeant.add(tenant1);
-        Tenant tenant2 = new Tenant("Jack", "Luong", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
-        infListTeant.add(tenant2);
+        //Tenant tenant1 = new Tenant("King", "Sun", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
+        //infListTeant.add(tenant1);
+        //Tenant tenant2 = new Tenant("Jack", "Luong", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
+        //infListTeant.add(tenant2);
         //Tenant(String firstName, String lastName, String email, String password, String password2, String bio) {
     }
 
     @Override
     public void onItemClick(View view, int position) {
         if (routerActionListener != null) {
-            ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(profiles.get(position).getFirstName(),profiles.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
+            ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(profiles.get(position).getFirstName(),profiles.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT", "");
             //((MainActivityLandlord)getActivity()).mainTenants.add(((MainActivityLandlord)getActivity()).peopleToAdd);
             house.addTenant(((MainActivityLandlord)getActivity()).peopleToAdd);
             Network network = Network.getInstance();
             network.registerObserver(this);
+            Profile profile = profiles.get(position);
+            profile.setHouseAddress(house.getAddress());
             network.convertProfileToTenant(profiles.get(position));
             profiles.remove(profiles.get(position));
 

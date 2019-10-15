@@ -53,7 +53,7 @@ public class ListTargetChatUserFragment extends Fragment {
                     if (actionListener != null) {
                         ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant =  tenant.getHouseAddress();
                         if( ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant ==null){
-                            ((MainActivityTenant)getActivity()).chatPeopleName = "Ryan Sneyd";
+
                             ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "empty house";
                         }
                         ((MainActivityTenant)getActivity()).chatRoomType ="PublicChatRoom";

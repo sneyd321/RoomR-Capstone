@@ -25,14 +25,7 @@ public class Tenant implements Parcelable {
     private String houseAddress;
 
 
-    public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.tenantEmail = email;
-        this.password = password;
-        this.password2 = password2;
-        this.landlordEmail = landlordEmail;
-    }
+
 
     public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail, String houseAddress ) {
         this.firstName = firstName;
@@ -136,6 +129,7 @@ public class Tenant implements Parcelable {
         dest.writeString(password2);
         dest.writeString(tenantEmail);
         dest.writeString(landlordEmail);
+        dest.writeString(houseAddress);
     }
 
 
