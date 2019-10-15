@@ -58,6 +58,11 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         }
         else {
             tenant = bundle.getParcelable("TENANT_DATA");
+            chatPeopleName = tenant.getFirstName()+ " "+tenant.getLastName();
+            chatRoomNameInMainActivityTenant = tenant.getHouseAddress();
+            if(chatRoomNameInMainActivityTenant ==null){
+                chatPeopleName = "Ryan Sneyd";
+            }
         }
 
 
@@ -108,7 +113,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
             switch (item.getItemId()) {
                 case R.id.navMessagR:
                     //router.onNavigateToMessages();
-                    router.onNavigateToMessagesPeopleList();
+                    router.onNavigateToMessagesPeopleList(tenant);
                     break;
                 case R.id.navSplitR:
                     break;

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.LanguageTranslation;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.example.ryan.roomrep.TenantFragments.ConfirmRentFragment;
@@ -29,6 +30,7 @@ public class TenantRouter implements TenantRouterAction {
 
     FragmentManager fragmentManager;
     List<Repair> repairs;
+    Tenant tenant;
 
     public TenantRouter(FragmentManager fragmentManager, List<Repair> repairs) {
         this.repairs = repairs;
@@ -124,12 +126,13 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onNavigateToMessagesPeopleList() {
+    public void onNavigateToMessagesPeopleList(Tenant tenant) {
 
         ListTargetChatUserFragment listTargetChatUserFragment = new ListTargetChatUserFragment();
         listTargetChatUserFragment.setActionListener(this);
-
+        listTargetChatUserFragment.setTenant(tenant);
         manageBackstack(listTargetChatUserFragment);
+
     }
 
     @Override
