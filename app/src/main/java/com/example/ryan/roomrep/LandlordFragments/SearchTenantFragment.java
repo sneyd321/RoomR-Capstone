@@ -13,6 +13,8 @@ import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordShowTeantListingAdapter;
 import com.example.ryan.roomrep.Adapters.TenantProfileRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SearchTenantFragment extends Fragment implements ItemClickListener
+public class SearchTenantFragment extends Fragment implements ItemClickListener, FragmentEventListener
 
         //implements LandlordShowTeantListingAdapter.ItemClickListener
 {
@@ -109,8 +111,14 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener
     public void onItemClick(View view, int position) {
         if (routerActionListener != null) {
             ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(profiles.get(position).getFirstName(),profiles.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
-            ((MainActivityLandlord)getActivity()).mainTenants.add(((MainActivityLandlord)getActivity()).peopleToAdd);
+            //((MainActivityLandlord)getActivity()).mainTenants.add(((MainActivityLandlord)getActivity()).peopleToAdd);
+            house.addTenant(((MainActivityLandlord)getActivity()).peopleToAdd);
+            Network network = Network.getInstance();
+            network.registerObserver(this);
+            network.convertProfileToTenant(profiles.get(position));
             profiles.remove(profiles.get(position));
+
+
             //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
             //Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).peopleToAdd.getLastName(),Toast.LENGTH_SHORT).show();
             //routerActionListener.onNaviagateToAddTenant();
@@ -119,5 +127,9 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener
     }
 
 
+    @Override
+    public void update(String response) {
+
+    }
 }
 

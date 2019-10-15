@@ -64,8 +64,8 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show_tenant, container, false);
         //initMsg();
-        List<Tenant> tenants =  ((MainActivityLandlord)getActivity()).mainTenants;
-
+        //List<Tenant> tenants =  ((MainActivityLandlord)getActivity()).mainTenants;
+        tenants = house.getTenants();
 //        rcyTenantProfile = view.findViewById(R.id.rcyTenantProfiles);
 //        rcyTenantProfile.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        adapter = new TenantProfileRecyclerviewAdapter(getActivity(), tenantProfiles);
@@ -75,7 +75,8 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
         btnGroupChat = view.findViewById(R.id.groupChat);
         tenantList = view.findViewById(R.id.rcyShowTenants);
         tenantList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new LandlordShowTeantListingAdapter(getActivity(), ((MainActivityLandlord)getActivity()).mainTenants);
+        //adapter = new LandlordShowTeantListingAdapter(getActivity(), ((MainActivityLandlord)getActivity()).mainTenants);
+        adapter = new LandlordShowTeantListingAdapter(getActivity(), tenants);
         adapter.setOnItemClickListener(this);
         tenantList.setAdapter(adapter);
 
@@ -145,10 +146,13 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
     public void onItemClick(View view, int position) {
         //((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infTeant.get(position).getFirstName(),infTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
         //Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).peopleToAdd.getLastName(),Toast.LENGTH_SHORT).show();
-        List<Tenant>textTenants =  ((MainActivityLandlord)getActivity()).mainTenants;
-        Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).mainTenants.get(position).getFirstName(),Toast.LENGTH_SHORT).show();
+        //List<Tenant>textTenants =  ((MainActivityLandlord)getActivity()).mainTenants;
 
-        ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = ((MainActivityLandlord)getActivity()).mainTenants.get(position).getFirstName()+" "+((MainActivityLandlord)getActivity()).mainTenants.get(position).getLastName();
+        //Toast.makeText(getActivity(),((MainActivityLandlord)getActivity()).mainTenants.get(position).getFirstName(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),tenants.get(position).getFirstName(),Toast.LENGTH_SHORT).show();
+        //((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = ((MainActivityLandlord)getActivity()).mainTenants.get(position).getFirstName()+" "+((MainActivityLandlord)getActivity()).mainTenants.get(position).getLastName();
+        ((MainActivityLandlord)getActivity()).chatRoomNameInMainActivityLandlord = tenants.get(position).getFirstName()+" "+tenants.get(position).getLastName();
+        Toast.makeText(getActivity(),tenants.get(position).getFirstName(),Toast.LENGTH_SHORT).show();
         ((MainActivityLandlord)getActivity()).chatRoomType ="OneToOne";
 
         //((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(infListTeant.get(position).getFirstName(),infListTeant.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT");
