@@ -53,16 +53,14 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
 
         rcyRepairsTenant.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        if(!(repairs == null)){
+
+        if(!(repairs == null)) {
+            RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
             txtIsThereRepairs.setText("Repairs");
+            rcyRepairsTenant.setAdapter(adapter);
+            adapter.setOnItemClickListener(this);
+            adapter.notifyDataSetChanged();
         }
-
-        RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
-
-        rcyRepairsTenant.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
-        adapter.notifyDataSetChanged();
-
         btnAddRepair.setOnClickListener(onAddRepair);
 
         return view;
@@ -82,7 +80,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
         this.routerActionListener = routerActionListener;
     }
 
-    public void getRepairs(){
+    public void getRepairsFromServer(){
         Network network = new Network();
         network.registerObserver(this);
         network.getRepairs();

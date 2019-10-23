@@ -157,7 +157,7 @@ public class TenantRouter implements TenantRouterAction {
         TenantRepairListFragment tenantRepairListFragment = new TenantRepairListFragment();
         tenantRepairListFragment.setActionListener(this);
         tenantRepairListFragment.setRepairs(repairs);
-        tenantRepairListFragment.getRepairs();
+        tenantRepairListFragment.getRepairsFromServer();
         manageBackstack(tenantRepairListFragment);
     }
 
