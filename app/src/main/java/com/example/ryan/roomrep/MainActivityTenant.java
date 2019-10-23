@@ -10,10 +10,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -30,6 +32,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
     TenantRouter router;
     ProgressDialog progressDialog;
 
+    Tenant tenant;
 
     private List<Repair> repairs;
     Toolbar toolbar;
@@ -48,6 +51,20 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         setSupportActionBar(toolbar);
         bottomMenu = findViewById(R.id.navBar);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null){
+            tenant = new Tenant("Ryan", "Sneyd", "sneydr@sheridancollege.ca", "aaaaaa", "aaaaaa", "rts1234567@hotmail.com", "");
+        }
+        else {
+            tenant = bundle.getParcelable("TENANT_DATA");
+            chatPeopleName = tenant.getFirstName()+ " "+tenant.getLastName();
+            chatRoomNameInMainActivityTenant = tenant.getHouseAddress();
+            if(chatRoomNameInMainActivityTenant ==null){
+                chatPeopleName = "Ryan Sneyd";
+            }
+        }
+
 
         router = new TenantRouter(getSupportFragmentManager(), repairs);
 
@@ -96,7 +113,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
             switch (item.getItemId()) {
                 case R.id.navMessagR:
                     //router.onNavigateToMessages();
-                    router.onNavigateToMessagesPeopleList();
+                    router.onNavigateToMessagesPeopleList(tenant);
                     break;
                 case R.id.navSplitR:
                     break;

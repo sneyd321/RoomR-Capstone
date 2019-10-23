@@ -1,6 +1,7 @@
 package com.example.ryan.roomrep.LoginActivities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
 
 import java.util.Map;
 
-public class TenantSignUpActivity extends AppCompatActivity {
+public class TenantSignUpActivity extends AppCompatActivity implements FragmentEventListener {
 
 
     EditText edtFirstName;
@@ -57,27 +60,65 @@ public class TenantSignUpActivity extends AppCompatActivity {
             String password = edtPassword.getText().toString();
             String password2 = edtPassword2.getText().toString();
 
-            Tenant tenant = new Tenant(firstName, lastName, tenantEmail, password, password2, landlordEmail);
-
+            Tenant tenant = new Tenant(firstName, lastName, tenantEmail, password, password2, landlordEmail, "");
 
             Map<Integer, String> validator = tenant.getValidator();
 
-            validator.get("FirstName");
+            boolean isValid = true;
 
+            for (Map.Entry<Integer, String> entry : validator.entrySet()){
+                if (!entry.getValue().isEmpty()) {
+                    switch (entry.getKey()) {
+                        case 0:
+                            edtFirstName.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 2:
+                            edtLastName.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 4:
+                            edtPassword.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 5:
+                            edtPassword.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 6:
+                            edtPassword2.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 7:
+                            edtPassword2.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 8:
+                            edtLandlordEmail.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 10:
+                            edtTenantEmail.setError(entry.getValue());
+                            isValid = false;
+                            break;
 
-
-
-
+                    }
+                }
+            }
+            if (isValid) {
+                Network network = Network.getInstance();
+                network.registerObserver(TenantSignUpActivity.this);
+                network.signupTenant(tenant);
+                Intent intent = new Intent(TenantSignUpActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
 
         }
     };
 
 
+    @Override
+    public void update(String response) {
 
-
-
-
-
-
-
+    }
 }

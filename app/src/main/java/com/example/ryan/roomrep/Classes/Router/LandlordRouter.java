@@ -107,8 +107,9 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onNaviagateToSearchTenant() {
+    public void onNaviagateToSearchTenant(House house) {
         SearchTenantFragment searchTenantFragment = new SearchTenantFragment();
+        searchTenantFragment.setHouse(house);
         searchTenantFragment.setRouterAction(this);
        manageBackstack(searchTenantFragment);
     }

@@ -29,6 +29,7 @@ public class JSONArrayIterator implements Iterator {
         return jsonObject;
     }
 
+
     @Override
     public boolean hasNext() {
         try {

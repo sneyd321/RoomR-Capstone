@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
@@ -27,6 +28,8 @@ public class ListTargetChatUserFragment extends Fragment {
     private TenantRouterAction actionListener;
 
     private ListView list;
+
+    Tenant tenant;
 
     //TenantRouter router;
 
@@ -48,7 +51,11 @@ public class ListTargetChatUserFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
                     if (actionListener != null) {
-                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "136 tower drive";
+                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant =  tenant.getHouseAddress();
+                        if( ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant ==null){
+
+                            ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "empty house";
+                        }
                         ((MainActivityTenant)getActivity()).chatRoomType ="PublicChatRoom";
                         //Toast.makeText(getActivity(),((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant, Toast.LENGTH_SHORT).show();
                         actionListener.onNavigateToMessages();
@@ -59,7 +66,8 @@ public class ListTargetChatUserFragment extends Fragment {
                 }
                 if(position==1){
                     if (actionListener != null) {
-                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "Mexi Liang";
+                        //((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "Mexi Liang";
+                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant =  ((MainActivityTenant)getActivity()).chatPeopleName;
                         ((MainActivityTenant)getActivity()).chatRoomType ="OneToOne";
                         actionListener.onNavigateToMessages();
                     }
@@ -93,6 +101,8 @@ public class ListTargetChatUserFragment extends Fragment {
             }
 
 
-
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
 
 }

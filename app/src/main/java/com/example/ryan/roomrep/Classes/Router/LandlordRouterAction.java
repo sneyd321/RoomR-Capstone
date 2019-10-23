@@ -20,7 +20,7 @@ public interface LandlordRouterAction {
 
     void onNaviagateToAddTenant();
 
-    void onNaviagateToSearchTenant();
+    void onNaviagateToSearchTenant(House house);
 
     void onNavigateToMessagePage();
 
