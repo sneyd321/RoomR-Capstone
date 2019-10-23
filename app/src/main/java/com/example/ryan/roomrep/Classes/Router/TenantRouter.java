@@ -150,10 +150,11 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onNavigateToTenantRepairsList(List<Repair> repairs){
+    public void onNavigateToTenantRepairsList(){
         TenantRepairListFragment tenantRepairListFragment = new TenantRepairListFragment();
         tenantRepairListFragment.setActionListener(this);
         tenantRepairListFragment.setRepairs(repairs);
+        tenantRepairListFragment.getRepairs();
         manageBackstack(tenantRepairListFragment);
     }
 

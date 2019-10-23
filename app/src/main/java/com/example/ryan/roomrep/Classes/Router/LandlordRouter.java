@@ -140,11 +140,12 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onNavigateToLandlordRepairs(List<Repair> repairs){
+    public void onNavigateToLandlordRepairs(){
         RepairHistoryLandlordFragment repairHistoryLandlordFragment = new RepairHistoryLandlordFragment();
-        this.repairs = repairs;
         repairHistoryLandlordFragment.setActionListener(this);
         repairHistoryLandlordFragment.setRepairs(repairs);
+        repairHistoryLandlordFragment.getRepairsFromServer();
+
         manageBackstack(repairHistoryLandlordFragment);
     }
 

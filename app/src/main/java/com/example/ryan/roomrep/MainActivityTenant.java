@@ -73,7 +73,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                 router.onNavigateToPayRent();
                 break;
             case R.id.lblRepair:
-                setViewRepairsList();
+                router.onNavigateToTenantRepairsList();
                 break;
             case R.id.lblListing:
                 router.onNavigateToListings();
@@ -144,7 +144,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         }
         router = new TenantRouter(getSupportFragmentManager(), repairs);
         progressDialog.dismiss();
-        router.onNavigateToTenantRepairsList(repairs);
+        router.onNavigateToTenantRepairsList();
     }
 
 

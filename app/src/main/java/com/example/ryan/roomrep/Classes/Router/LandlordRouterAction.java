@@ -28,7 +28,7 @@ public interface LandlordRouterAction {
 
     void onNavigateToLandlordRepairView(Repair repair, int positon);
 
-    void onNavigateToLandlordRepairs(List<Repair> repairs);
+    void onNavigateToLandlordRepairs();
 
     void onNavigateToLandlordRepairsWithNoUpdate();
 

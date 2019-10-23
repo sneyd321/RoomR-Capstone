@@ -1,5 +1,6 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +14,17 @@ import android.widget.TextView;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -74,8 +82,52 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
         this.routerActionListener = routerActionListener;
     }
 
+    public void getRepairs(){
+        Network network = new Network();
+        network.registerObserver(this);
+        network.getRepairs();
+    }
+
     @Override
     public void update(String response) {
+        repairs = new ArrayList<>();
+        JSONArray jsonArray;
+        if (!response.equals("{'error':'Not such repairs for this house.'}")){
+            try {
+                jsonArray = new JSONArray(response);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Repair repair = new Repair(
+                            jsonObject.getString("Description"),
+                            jsonObject.getString("Name"),
+                            jsonObject.getString("Date"),
+                            jsonObject.getString("Status"),
+                            jsonObject.getString("PhotoRef"));
+                    repairs.add(repair);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else{
+
+        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
+                rcyRepairsTenant.setAdapter(adapter);
+                adapter.setOnItemClickListener(TenantRepairListFragment.this);
+                adapter.notifyDataSetChanged();
+            }
+        });
 
     }
 

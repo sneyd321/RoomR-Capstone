@@ -30,10 +30,6 @@ import java.util.List;
 
 public class MainActivityLandlord extends AppCompatActivity implements FragmentEventListener
 {
-
-    private List<Repair> repairs;
-    ProgressDialog progressDialog;
-
     BottomNavigationView bottomMenu;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -130,7 +126,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navRepairTrackR:
-                    getRepairs();
+                    //getRepairs();
+                    router.onNavigateToLandlordRepairs();
                 case R.id.navHouses:
                     break;
                 case R.id.navNotifyR:
@@ -143,47 +140,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         }
     };
 
-    public void getRepairs(){
-        Network network = new Network();
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading Repairs...");
-        progressDialog.show();
-        network.registerObserver(this);
-        network.getRepairs();
-    }
 
     @Override
     public void update(String response) {
-        repairs = new ArrayList<>();
-        JSONArray jsonArray;
-        if (!response.equals("{'error':'Not such repairs for this house.'}")){
-            try {
-                jsonArray = new JSONArray(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-            for (int i = 0; i < jsonArray.length(); i++) {
-                try {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Repair repair = new Repair(
-                            jsonObject.getString("Description"),
-                            jsonObject.getString("Name"),
-                            jsonObject.getString("Date"),
-                            jsonObject.getString("Status"),
-                            jsonObject.getString("PhotoRef"));
-                    repairs.add(repair);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        else{
-
-        }
-        router = new LandlordRouter(getSupportFragmentManager());
-        progressDialog.dismiss();
-        router.onNavigateToLandlordRepairs(repairs);
     }
 }

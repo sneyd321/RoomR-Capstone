@@ -34,7 +34,7 @@ public interface TenantRouterAction {
 
     void onAddRepair(Repair repair);
 
-    void onNavigateToTenantRepairsList(List<Repair> repairs);
+    void onNavigateToTenantRepairsList();
 
     void onNavigateToTenantRepairsListWithNoRepair();
 
