@@ -136,10 +136,10 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
 
 
     private void initMsg() {
-        Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
-        infTeant.add(tenant1);
-        Tenant tenant2 = new Tenant("Mexi", "Liang", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
-        infTeant.add(tenant2);
+        //Tenant tenant1 = new Tenant("Ziheng", "He", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
+        //infTeant.add(tenant1);
+        //Tenant tenant2 = new Tenant("Mexi", "Liang", "GGWP@GMAIL.COM", "123456", "123456", "We all good");
+        //infTeant.add(tenant2);
         //Tenant(String firstName, String lastName, String email, String password, String password2, String bio) {
     }
 

@@ -59,9 +59,10 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
 
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle == null) {
-            tenant = new Tenant("Ryan", "Sneyd", "sneydr@sheridancollege.ca", "aaaaaa", "aaaaaa", "rts1234567@hotmail.com");
-        } else {
+        if (bundle == null){
+            tenant = new Tenant("Ryan", "Sneyd", "sneydr@sheridancollege.ca", "aaaaaa", "aaaaaa", "rts1234567@hotmail.com", "");
+        }
+        else {
             tenant = bundle.getParcelable("TENANT_DATA");
 
             chatPeopleName = tenant.getFirstName() + " " + tenant.getLastName();
