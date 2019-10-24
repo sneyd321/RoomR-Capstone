@@ -14,15 +14,17 @@ import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Router.ProfileRouter;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProfileActivity extends AppCompatActivity implements FragmentEventListener  {
+public class ProfileActivity extends AppCompatActivity  {
 
 
     public final static String SHARED_PREFERENCES = "PROFILE_PREFERENCES";
@@ -36,20 +38,8 @@ public class ProfileActivity extends AppCompatActivity implements FragmentEventL
 
         houses = new ArrayList<>();
 
-        Network network = Network.getInstance();
-        network.registerObserver(this);
-        network.getTenantListings();
-
-
-
-
-    }
-
-
-    @Override
-    public void update(String response) {
-
         ProfileRouter profileRouter = new ProfileRouter(getSupportFragmentManager(), houses);
         profileRouter.onNavigateToAddProfile();
+
     }
 }

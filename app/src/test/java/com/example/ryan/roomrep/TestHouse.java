@@ -102,7 +102,7 @@ public class TestHouse  {
         house = new House("123 AddressName", 0, 1234, 0, 0, null, null, "");
         Map<Integer,String> validator = house.getValidator();
         String expected = validator.get(2);
-        Assert.assertEquals("Rent validation failed", expected, "Please enter a rent greater than 0.");
+        Assert.assertEquals("Payment validation failed", expected, "Please enter a rent greater than 0.");
     }
 
     @Test

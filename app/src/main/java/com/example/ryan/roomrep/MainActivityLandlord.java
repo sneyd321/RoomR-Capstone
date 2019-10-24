@@ -17,6 +17,7 @@ import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
+import com.example.ryan.roomrep.Classes.Rent.Payment;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
@@ -62,7 +63,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
-            landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
+            landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com", new ArrayList<Payment>());
         }
         else {
             landlord = bundle.getParcelable("LANDLORD_DATA");
@@ -137,7 +138,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
                 case R.id.navHouses:
                     break;
                 case R.id.navNotifyR:
-
+                    router.onNavigateToNotifyR();
                     break;
                 default:
                     return false;

@@ -12,6 +12,7 @@ import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
 import com.example.ryan.roomrep.LandlordFragments.MessageLandlordFragment;
+import com.example.ryan.roomrep.LandlordFragments.NotifyRFragment;
 import com.example.ryan.roomrep.LandlordFragments.RepairHistoryLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.RepairViewLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.SearchTenantFragment;
@@ -164,5 +165,12 @@ public class LandlordRouter implements LandlordRouterAction {
         repairHistoryLandlordFragment.setActionListener(this);
         repairHistoryLandlordFragment.setRepairs(repairs);
         manageBackstack(repairHistoryLandlordFragment);
+    }
+
+    @Override
+    public void onNavigateToNotifyR() {
+        NotifyRFragment notifyRFragment = new NotifyRFragment();
+        notifyRFragment.setLandlord(this.landlord);
+        manageBackstack(notifyRFragment);
     }
 }

@@ -88,6 +88,8 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
 
 
 
+
+
         return view;
 
     }

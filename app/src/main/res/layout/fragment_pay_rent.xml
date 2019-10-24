@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/payRentCircularProgress"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,7 +34,8 @@
         app:cpb_progressbar_color="@color/Green"
         app:cpb_progressbar_width="10dp"
         app:cpb_round_border="false"
-        app:cpb_progress="10"
+        app:cpb_progress="0"
+        app:cpb_progress_max="11"
         app:cpb_start_angle="180"
         android:progressDrawable="@drawable/progressbar_drawable"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +52,7 @@
         android:textSize="24sp"
         android:text="October Rent:"
         app:layout_constraintBottom_toTopOf="@+id/txtPayRentFinalAmount"
-        app:layout_constraintStart_toEndOf="@+id/progressBar"
+        app:layout_constraintStart_toEndOf="@+id/payRentCircularProgress"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
@@ -62,9 +63,9 @@
         android:layout_marginStart="8dp"
         android:textSize="24sp"
         android:text="$665.00"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-        app:layout_constraintStart_toEndOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar" />
+        app:layout_constraintBottom_toBottomOf="@+id/payRentCircularProgress"
+        app:layout_constraintStart_toEndOf="@+id/payRentCircularProgress"
+        app:layout_constraintTop_toTopOf="@+id/payRentCircularProgress" />
 
     <TextView
         android:id="@+id/txtPayRentDueDate"
@@ -77,7 +78,7 @@
         android:textSize="16sp"
         android:text="Due on October 31st"
         app:layout_constraintBottom_toTopOf="@+id/textView23"
-        app:layout_constraintStart_toEndOf="@+id/progressBar"
+        app:layout_constraintStart_toEndOf="@+id/payRentCircularProgress"
         app:layout_constraintTop_toBottomOf="@+id/txtPayRentFinalAmount" />
 
     <TextView
@@ -91,7 +92,7 @@
         android:text="Rent Details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/payRentCircularProgress" />
 
     <TableLayout
         android:layout_width="0dp"
@@ -115,6 +116,7 @@
 
             <TextView
                 style="@style/row_value"
+                android:id="@+id/txtPayRentRentPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -132,9 +134,28 @@
 
             <TextView
                 style="@style/row_value"
+                android:id="@+id/txtPayRentHydroPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:text="$25 ($100 / 4)" />
+        </TableRow>
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Internet:" />
+
+            <TextView
+                style="@style/row_value"
+                android:id="@+id/txtPayRentInternetPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+
                 android:text="$25 ($100 / 4)" />
         </TableRow>
 
@@ -149,12 +170,32 @@
 
             <TextView
                 style="@style/row_value"
+                android:id="@+id/txtPayRentCablePrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+
                 android:text="$25 ($100 / 4)" />
         </TableRow>
 
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Phone Line:" />
+
+            <TextView
+                style="@style/row_value"
+                android:id="@+id/txtPayRentPhonePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+
+                android:text="$25 ($100 / 4)" />
+        </TableRow>
 
 
 

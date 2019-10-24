@@ -15,11 +15,7 @@ public interface TenantRouterAction {
 
     void onNavigateToViewListings();
 
-    void onNavigateToPayRent();
 
-    void onNavigateToConfirmRent();
-
-    void onNavigateToCompleteRent();
 
     void onNavigateToRepairPicture();
 

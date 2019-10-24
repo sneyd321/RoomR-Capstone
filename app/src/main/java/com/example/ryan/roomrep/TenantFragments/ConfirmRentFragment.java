@@ -28,9 +28,6 @@ public class ConfirmRentFragment extends Fragment {
         Confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (actionListener != null) {
-                    actionListener.onNavigateToCompleteRent();
-                }
 
             }
         });
