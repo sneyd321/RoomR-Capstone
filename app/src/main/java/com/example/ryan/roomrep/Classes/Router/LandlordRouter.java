@@ -175,6 +175,7 @@ public class LandlordRouter implements LandlordRouterAction {
     public void onNavigateToNotifyR() {
         NotifyRFragment notifyRFragment = new NotifyRFragment();
         notifyRFragment.setLandlord(this.landlord);
+        notifyRFragment.initNetwork();
         manageBackstack(notifyRFragment);
     }
 

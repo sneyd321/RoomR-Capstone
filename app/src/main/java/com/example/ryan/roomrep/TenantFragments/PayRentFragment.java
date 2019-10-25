@@ -14,16 +14,11 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Rent.Payment;
-import com.example.ryan.roomrep.Classes.Router.RentRouterAction;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
-import com.mysql.jdbc.Util;
-import com.paypal.android.sdk.payments.PayPalConfiguration;
-import com.paypal.android.sdk.payments.PayPalService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +48,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
 
 
     private Tenant tenant;
-    private RentRouterAction actionListener;
+    private TenantRouterAction actionListener;
 
 
     @Override
@@ -62,7 +57,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
         Utility utility = new Utility("Hydro", 150, "Weekly");
         List<Utility> utilities = new ArrayList<>();
         utilities.add(utility);
-        house = new House("3327 Raspberry Bush Trail", 600, 0, 0, 0, null, utilities, "rts1234567@hotmail.com", "", "", false, null, null);
+        //house = new House("3327 Raspberry Bush Trail", 600, 0, 0, 0, null, utilities, "rts1234567@hotmail.com", "", "", false, null, null);
 
 
         progressBar = view.findViewById(R.id.payRentCircularProgress);
@@ -152,7 +147,9 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
         }
     }
 
-
+    public void setHouse(House house) {
+        this.house = house;
+    }
 
 
     private View.OnClickListener onPayRent = new View.OnClickListener() {
@@ -167,7 +164,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
         }
     };
 
-    public void setActionListener(RentRouterAction actionListener) {
+    public void setActionListener(TenantRouterAction actionListener) {
         this.actionListener = actionListener;
     }
 

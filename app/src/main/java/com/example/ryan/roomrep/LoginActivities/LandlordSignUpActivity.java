@@ -62,7 +62,7 @@ public class LandlordSignUpActivity extends AppCompatActivity {
             String password = edtPassword.getText().toString();
             String password2 = edtPassword2.getText().toString();
             String email = edtEmail.getText().toString();
-            Landlord landlord = new Landlord(firstName, lastName, password, password2, email, new ArrayList<Payment>());
+            Landlord landlord = new Landlord(firstName, lastName, password, password2, email);
             Map<Integer, String> validator = landlord.getLandlordValidator();
             boolean isValid = true;
             for (Map.Entry<Integer, String> entry : validator.entrySet()){

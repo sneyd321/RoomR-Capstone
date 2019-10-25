@@ -3,7 +3,6 @@ package com.example.ryan.roomrep;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -13,21 +12,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 
-import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
-import com.example.ryan.roomrep.TenantFragments.RentActivity;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivityTenant extends AppCompatActivity implements FragmentEventListener {
 
@@ -38,8 +34,9 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
 
     Tenant tenant;
 
-    private List<Repair> repairs;
+    //private List<Repair> repairs;
     Toolbar toolbar;
+    House house;
     public String chatPeopleName = "Ziheng He";
     public String chatRoomNameInMainActivityTenant = "TheRegularOne";
     public String chatRoomType = "Test";
@@ -57,31 +54,46 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
 
 
+        handleIntent(getIntent());
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle == null){
-            tenant = new Tenant("Ryan", "Sneyd", "sneydr@sheridancollege.ca", "aaaaaa", "aaaaaa", "rts1234567@hotmail.com", "");
-        }
-        else {
-            tenant = bundle.getParcelable("TENANT_DATA");
 
+        tenant = bundle.getParcelable("TENANT_DATA");
+        if (router == null) {
+            router = new TenantRouter(getSupportFragmentManager(), new ArrayList<Repair>());
             chatPeopleName = tenant.getFirstName() + " " + tenant.getLastName();
             chatRoomNameInMainActivityTenant = tenant.getHouseAddress();
             if (chatRoomNameInMainActivityTenant == null) {
                 chatPeopleName = "Ryan Sneyd";
             }
+
+            Network network = Network.getInstance();
+            network.registerObserver(this);
+            network.getTenantHouse(tenant);
         }
 
 
-        router = new TenantRouter(getSupportFragmentManager(), repairs);
-        router.onNavigateToListings();
+
+
 
 
 
     }
 
 
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
 
+    private void handleIntent(Intent intent) {
+        String appLinkAction = intent.getAction();
+        Uri appLinkData = intent.getData();
+        if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null){
+            router = new TenantRouter(getSupportFragmentManager(), new ArrayList<Repair>());
+            router.onNavigateToCompleteRent();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,9 +109,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.lblRent:
-                Intent intent = new Intent(MainActivityTenant.this, RentActivity.class);
-                intent.putExtra("TENANT_INFO", tenant);
-                startActivity(intent);
+                router.onNavigateToPayRent(tenant);
                 break;
             case R.id.lblRepair:
                 router.onNavigateToTenantRepairsList();
@@ -139,7 +149,28 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         }
     };
 
+    @Override
+    public void update(String response) {
+        JSONObject jsonObject = convertStringToJSONObject(response);
+        Gson gson = new Gson();
+        house = gson.fromJson(jsonObject.toString(), House.class);
 
+        router.onNavigateToSearch(house);
+    }
+
+    private JSONObject convertStringToJSONObject(String response) {
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(response);
+            return jsonObject;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    /*
     @Override
     public void update(String response) {
         repairs = new ArrayList<>();
@@ -175,8 +206,9 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         progressDialog.dismiss();
         router.onNavigateToTenantRepairsList();
     }
+    */
 
-
+    /*
     public void getRepairs(){
         Network network = new Network();
         progressDialog = new ProgressDialog(this);
@@ -185,11 +217,12 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         network.registerObserver(this);
         network.getRepairs();
     }
-
+    */
+    /*
     public void setViewRepairsList(){
         getRepairs();
     }
-
+    */
     //public String GetChatRoomNameInMainActivityTenant(){return chatRoomNameInMainActivityTenant;}
 
 

@@ -30,7 +30,7 @@ public class Network implements NetworkObservable {
 
     private final String SERVER_URL2 = "http://192.168.2.29:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-
+    //private final String SERVER_URL = "http://192.168.0.109:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -622,6 +622,63 @@ public class Network implements NetworkObservable {
             }
         });
     }
+
+    public void getPayments(Landlord landlord) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(landlord);
+        RequestBody body = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "GetLandlordPayments")
+                .post(body)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void getTenantHouse(Tenant tenant) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(tenant);
+        RequestBody body = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "GetTenantHouse")
+                .post(body)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
 
 
 

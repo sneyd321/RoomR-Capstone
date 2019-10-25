@@ -59,7 +59,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
-            landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com", new ArrayList<Payment>());
+            landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
         }
         else {
             landlord = bundle.getParcelable("LANDLORD_DATA");

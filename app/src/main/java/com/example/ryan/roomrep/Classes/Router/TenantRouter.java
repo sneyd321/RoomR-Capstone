@@ -31,10 +31,12 @@ public class TenantRouter implements TenantRouterAction {
     FragmentManager fragmentManager;
     List<Repair> repairs;
     Tenant tenant;
+    House house;
 
     public TenantRouter(FragmentManager fragmentManager, List<Repair> repairs) {
         this.repairs = repairs;
         this.fragmentManager = fragmentManager;
+
 
     }
 
@@ -55,8 +57,9 @@ public class TenantRouter implements TenantRouterAction {
 
     }
     @Override
-    public void onNavigateToSearch() {
+    public void onNavigateToSearch(House house) {
         SearchFragment searchFragment = new SearchFragment();
+        this.house = house;
         //searchFragment.setActionListener(this);
         manageBackstack(searchFragment);
     }
@@ -72,6 +75,28 @@ public class TenantRouter implements TenantRouterAction {
     @Override
     public void onNavigateToViewListings() {
 
+    }
+
+    @Override
+    public void onNavigateToPayRent(Tenant tenant) {
+        PayRentFragment payRentFragment = new PayRentFragment();
+        payRentFragment.setActionListener(this);
+        payRentFragment.setTenant(tenant);
+        payRentFragment.setHouse(this.house);
+        manageBackstack(payRentFragment);
+    }
+
+    @Override
+    public void onNavigateToConfirmRent() {
+        ConfirmRentFragment confirmRentFragment = new ConfirmRentFragment();
+        manageBackstack(confirmRentFragment);
+    }
+
+    @Override
+    public void onNavigateToCompleteRent() {
+        CompleteRentFragment completeRentFragment = new CompleteRentFragment();
+        //completeRentFragment.setActionListener(this);
+        manageBackstack(completeRentFragment);
     }
 
 

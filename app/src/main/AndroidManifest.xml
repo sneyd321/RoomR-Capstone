@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,8 +18,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".TenantFragments.RentActivity">
-            <intent-filter android:autoVerify="true">
+        <activity android:name=".LoginActivities.TenantSignUpActivity">
+
+        </activity>
+        <activity android:name=".LoginActivities.ProfileActivity" />
+        <activity
+            android:name=".MainActivityLandlord"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity android:name=".LoginActivities.LandlordSignUpActivity" />
+        <activity android:name=".LoginActivities.ChooseAccountActivity" />
+        <activity
+            android:name=".MainActivityTenant"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -29,23 +45,6 @@
                     android:host="roomr-222721.appspot.com"
                     android:pathPattern="/PayComplete" />
             </intent-filter>
-        </activity>
-        <activity android:name=".LoginActivities.TenantSignUpActivity">
-            <tools:validation testUrl="https://roomr-222721.appspot.com/PayComplete" />
-        </activity>
-        <activity android:name=".LoginActivities.ProfileActivity" />
-        <activity
-            android:name=".MainActivityLandlord"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".LoginActivities.LandlordSignUpActivity" />
-        <activity android:name=".LoginActivities.ChooseAccountActivity" />
-        <activity
-            android:name=".MainActivityTenant"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustPan">
-            <tools:validation testUrl="https://roomr-222721.appspot.com/PayComplete" />
-
         </activity>
         <activity android:name=".LoginActivities.LoginActivity">
             <intent-filter>
