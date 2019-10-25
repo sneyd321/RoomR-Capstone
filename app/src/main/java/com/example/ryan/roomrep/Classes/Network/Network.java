@@ -544,9 +544,7 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(profile);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL + "" +
-                        "" +
-                        "")
+                .url(SERVER_URL + "ConvertProfileToTenant")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();

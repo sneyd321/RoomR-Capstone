@@ -126,7 +126,6 @@ public class TenantRouter implements TenantRouterAction {
     public void onNavigateToMessages() {
         MessagRFragment messagRFragment = new MessagRFragment();
         messagRFragment.setActionListener(this);
-
         manageBackstack(messagRFragment);
 
     }
