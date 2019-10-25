@@ -18,6 +18,10 @@ public class Utility {
         return name;
     }
 
+    public Double getDoubleAmount(){
+        return amount;
+    }
+
     public String getAmount() {
         String formattedAmount = String.format("%.2f", this.amount);
         formattedAmount = "$" + formattedAmount;

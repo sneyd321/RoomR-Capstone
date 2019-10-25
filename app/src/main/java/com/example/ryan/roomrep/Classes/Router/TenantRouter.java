@@ -74,26 +74,7 @@ public class TenantRouter implements TenantRouterAction {
 
     }
 
-    @Override
-    public void onNavigateToPayRent() {
-        PayRentFragment payRentFragment = new PayRentFragment();
-        payRentFragment.setActionListener(this);
-        manageBackstack(payRentFragment);
-    }
 
-    @Override
-    public void onNavigateToConfirmRent() {
-        ConfirmRentFragment confirmRentFragment = new ConfirmRentFragment();
-        confirmRentFragment.setActionListener(this);
-        manageBackstack(confirmRentFragment);
-    }
-
-    @Override
-    public void onNavigateToCompleteRent() {
-        CompleteRentFragment completeRentFragment = new CompleteRentFragment();
-        //completeRentFragment.setActionListener(this);
-        manageBackstack(completeRentFragment);
-    }
 
     @Override
     public void onNavigateToRepairPicture() {

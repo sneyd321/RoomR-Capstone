@@ -1,6 +1,9 @@
 package com.example.ryan.roomrep;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.TenantFragments.RentActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -52,27 +56,30 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         bottomMenu = findViewById(R.id.navBar);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
 
+
+
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
             tenant = new Tenant("Ryan", "Sneyd", "sneydr@sheridancollege.ca", "aaaaaa", "aaaaaa", "rts1234567@hotmail.com", "");
         }
         else {
             tenant = bundle.getParcelable("TENANT_DATA");
-            chatPeopleName = tenant.getFirstName()+ " "+tenant.getLastName();
+
+            chatPeopleName = tenant.getFirstName() + " " + tenant.getLastName();
             chatRoomNameInMainActivityTenant = tenant.getHouseAddress();
-            if(chatRoomNameInMainActivityTenant ==null){
+            if (chatRoomNameInMainActivityTenant == null) {
                 chatPeopleName = "Ryan Sneyd";
             }
         }
 
 
         router = new TenantRouter(getSupportFragmentManager(), repairs);
+        router.onNavigateToListings();
 
-        if (savedInstanceState == null) {
-            router.onNavigateToListings();
-        }
+
 
     }
+
 
 
 
@@ -83,11 +90,16 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         return true;
     }
 
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.lblRent:
-                router.onNavigateToPayRent();
+                Intent intent = new Intent(MainActivityTenant.this, RentActivity.class);
+                intent.putExtra("TENANT_INFO", tenant);
+                startActivity(intent);
                 break;
             case R.id.lblRepair:
                 router.onNavigateToTenantRepairsList();

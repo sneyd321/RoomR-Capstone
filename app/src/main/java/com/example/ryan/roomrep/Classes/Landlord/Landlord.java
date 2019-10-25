@@ -3,8 +3,10 @@ package com.example.ryan.roomrep.Classes.Landlord;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.ryan.roomrep.Classes.Rent.Payment;
 import com.example.ryan.roomrep.Classes.Tenant.Validator;
 
+import java.util.List;
 import java.util.Map;
 
 public class Landlord implements Parcelable {
@@ -17,13 +19,15 @@ public class Landlord implements Parcelable {
     private String password;
     private String password2;
     private String email;
+    private List<Payment> payments;
 
-    public Landlord(String firstName, String lastName, String password, String password2, String email){
+    public Landlord(String firstName, String lastName, String password, String password2, String email, List<Payment> payments){
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.password2 = password2;
         this.email = email;
+        this.payments = payments;
     }
 
 
@@ -33,6 +37,7 @@ public class Landlord implements Parcelable {
         password = in.readString();
         password2 = in.readString();
         email = in.readString();
+        payments = in.readArrayList(Payment.class.getClassLoader());
     }
 
     public static final Creator<Landlord> CREATOR = new Creator<Landlord>() {
@@ -86,5 +91,10 @@ public class Landlord implements Parcelable {
         dest.writeString(password);
         dest.writeString(password2);
         dest.writeString(email);
+        dest.writeList(payments);
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
     }
 }

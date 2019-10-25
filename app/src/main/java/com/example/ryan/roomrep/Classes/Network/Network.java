@@ -4,6 +4,7 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
+import com.example.ryan.roomrep.Classes.Rent.Payment;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Search;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
@@ -27,7 +28,7 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    private final String SERVER_URL2 = "http://192.168.2.29:8080/";
+    //private final String SERVER_URL = "http://192.168.0.109:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
 
 
@@ -311,7 +312,7 @@ public class Network implements NetworkObservable {
                 .build();
 
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "AddPhoto")
+                .url("http://192.168.0.23:8080/" + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -337,7 +338,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "AddRepair")
+                .url("http://192.168.2.29:8080/" + "AddRepair")
                 .post(body)
                 .build();
 
@@ -364,7 +365,7 @@ public class Network implements NetworkObservable {
 
     public void getRepairs(){
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "GetRepairs")
+                .url("http://192.168.2.29:8080/" + "GetRepairs")
                 .get()
                 .build();
 
@@ -481,7 +482,7 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(repair);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "UpdateRepairs")
+                .url("http://192.168.2.29:8080/" + "UpdateRepairs")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();
@@ -508,7 +509,9 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(profile);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL + "ConvertProfileToTenant")
+                .url(SERVER_URL + "" +
+                        "" +
+                        "")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();
@@ -556,6 +559,35 @@ public class Network implements NetworkObservable {
             }
         });
     }
+
+    public void makePayment(Payment payment) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(payment);
+        RequestBody body = RequestBody.create(JSON, json);
+
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "MakePayment")
+                .post(body)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
 
 
 }

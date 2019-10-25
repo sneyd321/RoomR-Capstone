@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
@@ -19,6 +20,9 @@ import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.LoginActivities.ProfileActivity;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -29,6 +33,7 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
     EditText edtEmail;
     EditText edtBio;
     Button btnAddProfile;
+    TextView txtErrorMessage;
 
     ProfileRouterAction routerAction;
 
@@ -46,6 +51,7 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
         edtBio = view.findViewById(R.id.edtProfileBio);
         btnAddProfile = view.findViewById(R.id.btnCreateProfile);
         btnAddProfile.setOnClickListener(onCreateProfile);
+        txtErrorMessage = view.findViewById(R.id.txtAddProfileErrorMessage);
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         edtFirstName.setText(sharedPref.getString("ProfileFirstName", ""));
         edtLastName.setText(sharedPref.getString("ProfileLastName", ""));
@@ -98,14 +104,11 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
 
             if (isValid){
                 addToSharedPreferences(profile);
-                if (routerAction != null) {
 
-                    Network network = Network.getInstance();
-                    network.registerObserver(AddProfileFragment.this);
-                    network.addProfile(profile);
-                    routerAction.onNavigateToSearchListings();
+                Network network = Network.getInstance();
+                network.registerObserver(AddProfileFragment.this);
+                network.addProfile(profile);
 
-                }
             }
 
         }
@@ -128,7 +131,29 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
 
     @Override
     public void update(String response) {
-        Gson gson = new Gson();
-        Profile profile = gson.fromJson(response, Profile.class);
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            final String result = jsonObject.get("result").toString();
+            if (result.equals("Updated")){
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtErrorMessage.setText("Profile Updated");
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (routerAction != null) {
+            routerAction.onNavigateToSearchListings();
+        }
+
     }
 }

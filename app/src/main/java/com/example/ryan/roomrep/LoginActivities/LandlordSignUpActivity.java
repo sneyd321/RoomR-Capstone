@@ -10,9 +10,11 @@ import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Rent.Payment;
 import com.example.ryan.roomrep.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class LandlordSignUpActivity extends AppCompatActivity {
@@ -60,7 +62,7 @@ public class LandlordSignUpActivity extends AppCompatActivity {
             String password = edtPassword.getText().toString();
             String password2 = edtPassword2.getText().toString();
             String email = edtEmail.getText().toString();
-            Landlord landlord = new Landlord(firstName, lastName, password, password2, email);
+            Landlord landlord = new Landlord(firstName, lastName, password, password2, email, new ArrayList<Payment>());
             Map<Integer, String> validator = landlord.getLandlordValidator();
             boolean isValid = true;
             for (Map.Entry<Integer, String> entry : validator.entrySet()){

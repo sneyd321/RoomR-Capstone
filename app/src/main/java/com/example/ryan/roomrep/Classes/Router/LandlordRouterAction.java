@@ -33,4 +33,7 @@ public interface LandlordRouterAction {
     void onNavigateToLandlordRepairsWithNoUpdate();
 
     void onNavigateToLandlordRepairsWithUpdate(Repair repair, int position);
+
+    void onNavigateToNotifyR();
+
 }
