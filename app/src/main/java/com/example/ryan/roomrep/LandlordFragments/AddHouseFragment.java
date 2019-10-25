@@ -31,6 +31,9 @@ import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -265,9 +268,31 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
     @Override
     public void update(String response) {
         if (routerActionListener != null) {
-            house.setUrl(response);
-            progressDialog.dismiss();
-            routerActionListener.onAddHouse(house);
+            JSONObject jsonObject = convertStringToJSONObject(response);
+            try {
+                String url = jsonObject.getString("url");
+                house.setUrl(url);
+                progressDialog.dismiss();
+                routerActionListener.onAddHouse(house);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
+
+
+    private JSONObject convertStringToJSONObject(String response) {
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(response);
+            return jsonObject;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
 }

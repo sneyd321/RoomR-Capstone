@@ -30,7 +30,7 @@ public interface TenantRouterAction {
 
     void onNavigateToMessages();
 
-    void onNavigateToMessagesPeopleList(Tenant tenant);
+    void onNavigateToMessagesPeopleList(Tenant tenant, House house);
 
     void onNavigateToSendRepair(LanguageTranslation languageTranslation);
 
