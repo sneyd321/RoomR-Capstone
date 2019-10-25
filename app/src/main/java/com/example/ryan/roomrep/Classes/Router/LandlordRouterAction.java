@@ -36,4 +36,6 @@ public interface LandlordRouterAction {
 
     void onNavigateToNotifyR();
 
+    void onNavigateToContactRepairman(String address, String category);
+
 }

@@ -8,7 +8,9 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.RepairContact;
 import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
+import com.example.ryan.roomrep.LandlordFragments.ContactRepairmanFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
 import com.example.ryan.roomrep.LandlordFragments.MessageLandlordFragment;
@@ -32,6 +34,7 @@ public class LandlordRouter implements LandlordRouterAction {
     List<House> houses = new ArrayList<>();
     Landlord landlord;
     List<Repair> repairs = new ArrayList<>();
+    List<RepairContact> repairContacts = new ArrayList<>();
 
 
     public LandlordRouter(FragmentManager fragmentManager){
@@ -173,5 +176,15 @@ public class LandlordRouter implements LandlordRouterAction {
         NotifyRFragment notifyRFragment = new NotifyRFragment();
         notifyRFragment.setLandlord(this.landlord);
         manageBackstack(notifyRFragment);
+    }
+
+    @Override
+    public void onNavigateToContactRepairman(String address, String category){
+        ContactRepairmanFragment contactRepairmanFragment = new ContactRepairmanFragment();
+        contactRepairmanFragment.setActionListener(this);
+        contactRepairmanFragment.setRepairContacts(repairContacts);
+        contactRepairmanFragment.getRepairmansFromServer(address, category);
+        manageBackstack(contactRepairmanFragment);
+
     }
 }

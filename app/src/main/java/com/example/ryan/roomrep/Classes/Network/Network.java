@@ -28,7 +28,7 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    //private final String SERVER_URL = "http://192.168.0.109:8080/";
+    private final String SERVER_URL2 = "http://192.168.2.29:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
 
 
@@ -312,7 +312,7 @@ public class Network implements NetworkObservable {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://192.168.0.23:8080/" + "AddPhoto")
+                .url(SERVER_URL2 + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -338,7 +338,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url("http://192.168.2.29:8080/" + "AddRepair")
+                .url(SERVER_URL2 + "AddRepair")
                 .post(body)
                 .build();
 
@@ -365,7 +365,7 @@ public class Network implements NetworkObservable {
 
     public void getRepairs(){
         Request request = new Request.Builder()
-                .url("http://192.168.2.29:8080/" + "GetRepairs")
+                .url(SERVER_URL2 + "GetRepairs")
                 .get()
                 .build();
 
@@ -482,7 +482,7 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(repair);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url("http://192.168.2.29:8080/" + "UpdateRepairs")
+                .url(SERVER_URL2 + "UpdateRepairs")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();
@@ -495,6 +495,41 @@ public class Network implements NetworkObservable {
                 }
                 response.close();
 
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
+    public void getRepairmans(String address, String category){
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("address",address);
+            jsonObject.put("category",category);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        String json = jsonObject.toString();
+
+
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(SERVER_URL2 + "GetRepairman")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    fragmentEventListener.update(response.body().string());
+                }
+                response.close();
             }
 
             @Override

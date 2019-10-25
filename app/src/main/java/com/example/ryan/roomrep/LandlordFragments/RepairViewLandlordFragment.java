@@ -112,9 +112,10 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
 
         @Override
         public void onClick(View view) {
-
-            //TODO
-
+            String houseaddress = "11 bronte rd";
+            String category = "Electrical";
+            //category = repair.getName();
+            routerActionListener.onNavigateToContactRepairman(houseaddress, category);
         }
 
     };
