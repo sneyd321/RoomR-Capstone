@@ -27,7 +27,7 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    //private final String SERVER_URL = "http://10.16.27.64:8080/";
+    private final String SERVER_URL2 = "http://192.168.2.29:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
 
 
@@ -311,7 +311,7 @@ public class Network implements NetworkObservable {
                 .build();
 
         Request request = new Request.Builder()
-                .url("http://10.16.24.254:8080/" + "AddPhoto")
+                .url(SERVER_URL2 + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -337,7 +337,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url("http://10.16.24.254:8080/" + "AddRepair")
+                .url(SERVER_URL2 + "AddRepair")
                 .post(body)
                 .build();
 
@@ -364,7 +364,7 @@ public class Network implements NetworkObservable {
 
     public void getRepairs(){
         Request request = new Request.Builder()
-                .url("http://10.16.24.254:8080/" + "GetRepairs")
+                .url(SERVER_URL2 + "GetRepairs")
                 .get()
                 .build();
 
@@ -481,7 +481,7 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(repair);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url("http:/10.16.24.254:8080/" + "UpdateRepairs")
+                .url(SERVER_URL2 + "UpdateRepairs")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();
