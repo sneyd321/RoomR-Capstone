@@ -287,4 +287,4 @@ public class MessagRFragment extends Fragment{
             public void setActionListener(TenantRouter tenantRouter) {
                 this.tenantRouterActionListen = tenantRouter;
             }
-        }
+}
