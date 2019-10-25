@@ -97,7 +97,6 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
         //i will se the repair in the other view with the routercall.
         //Repair.
         Repair repair = repairs.get(position);
-        routerActionListener.onSetRepairs(repairs);
         routerActionListener.onNavigateToLandlordRepairView(repair, position);
         //here i will pass to the router the repair and router will set the view on the router call!!!
     }
@@ -126,6 +125,7 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                routerActionListener.onSetRepairs(repairs);
             }
         }
         else{
