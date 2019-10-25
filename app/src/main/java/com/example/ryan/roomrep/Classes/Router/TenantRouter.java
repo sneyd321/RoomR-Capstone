@@ -132,10 +132,11 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onNavigateToMessagesPeopleList(Tenant tenant) {
+    public void onNavigateToMessagesPeopleList(Tenant tenant, House house) {
 
         ListTargetChatUserFragment listTargetChatUserFragment = new ListTargetChatUserFragment();
         listTargetChatUserFragment.setActionListener(this);
+        listTargetChatUserFragment.setHouse(house);
         listTargetChatUserFragment.setTenant(tenant);
         manageBackstack(listTargetChatUserFragment);
 

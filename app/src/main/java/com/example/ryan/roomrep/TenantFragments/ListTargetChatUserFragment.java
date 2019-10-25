@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
@@ -30,6 +31,7 @@ public class ListTargetChatUserFragment extends Fragment {
     private ListView list;
 
     Tenant tenant;
+    House house;
 
     //TenantRouter router;
 
@@ -51,7 +53,7 @@ public class ListTargetChatUserFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
                     if (actionListener != null) {
-                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant =  tenant.getHouseAddress();
+                        ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant =  house.getAddress();
                         if( ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant ==null){
 
                             ((MainActivityTenant)getActivity()).chatRoomNameInMainActivityTenant = "empty house";
@@ -105,4 +107,7 @@ public class ListTargetChatUserFragment extends Fragment {
         this.tenant = tenant;
     }
 
+    public void setHouse (House house){this.house = house;}
+
 }
+

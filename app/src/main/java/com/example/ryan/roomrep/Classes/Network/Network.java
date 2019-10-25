@@ -28,9 +28,9 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    private final String SERVER_URL2 = "http://192.168.2.29:8080/";
-    private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    //private final String SERVER_URL = "http://192.168.0.109:8080/";
+    private final String SERVER_URL2 = "http://172.20.10.11:8080/";
+    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+    private final String SERVER_URL = "http://10.16.25.39:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -544,9 +544,7 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(profile);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL + "" +
-                        "" +
-                        "")
+                .url(SERVER_URL + "ConvertProfileToTenant")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();
