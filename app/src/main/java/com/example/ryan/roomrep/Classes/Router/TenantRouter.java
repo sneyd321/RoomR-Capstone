@@ -56,6 +56,12 @@ public class TenantRouter implements TenantRouterAction {
         }
 
     }
+
+    @Override
+    public void onSetRepairs(List<Repair> repairs){
+        this.repairs = repairs;
+    }
+
     @Override
     public void onNavigateToSearch(House house) {
         SearchFragment searchFragment = new SearchFragment();

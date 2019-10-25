@@ -108,7 +108,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
                             jsonObject.getString("Status"),
                             jsonObject.getString("PhotoRef"));
                     repairs.add(repair);
-
+                    setRepairs(repairs);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -134,6 +134,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
         //i will se the repair in the other view with the routercall.
         //Repair.
         Repair repair = repairs.get(position);
+        routerActionListener.onSetRepairs(repairs);
         routerActionListener.onNavigateToTenantRepairUpdate(repair, position);
         //here i will pass to the router the repair and router will set the view on the router call!!!
     }

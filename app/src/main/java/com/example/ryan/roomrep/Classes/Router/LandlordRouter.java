@@ -60,6 +60,16 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
+    public void onSetRepairmans(List<RepairContact> repairContacts){
+        this.repairContacts = repairContacts;
+    }
+
+    @Override
+    public void onSetRepairs(List<Repair> repairs){
+        this.repairs = repairs;
+    }
+
+    @Override
     public void onNavigateToHousesAdd(Landlord landlord) {
         AddHouseFragment addHouseFragment = new AddHouseFragment();
         addHouseFragment.setRouterAction(this);

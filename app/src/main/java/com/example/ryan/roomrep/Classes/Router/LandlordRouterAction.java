@@ -3,6 +3,7 @@ package com.example.ryan.roomrep.Classes.Router;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Repair;
+import com.example.ryan.roomrep.Classes.RepairContact;
 
 import java.util.List;
 
@@ -37,5 +38,9 @@ public interface LandlordRouterAction {
     void onNavigateToNotifyR();
 
     void onNavigateToContactRepairman(String address, String category);
+
+    void onSetRepairs(List<Repair> repairs);
+
+    void onSetRepairmans(List<RepairContact> repairContacts);
 
 }
