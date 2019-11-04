@@ -15,6 +15,7 @@ import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
 import com.example.ryan.roomrep.LandlordFragments.MessageLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.NotifyRFragment;
+import com.example.ryan.roomrep.LandlordFragments.RatingTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.RepairHistoryLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.RepairViewLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.SearchTenantFragment;
@@ -62,6 +63,15 @@ public class LandlordRouter implements LandlordRouterAction {
     @Override
     public void onSetRepairmans(List<RepairContact> repairContacts){
         this.repairContacts = repairContacts;
+    }
+
+    @Override
+    public void onNavigateToRatingTenant(String tenantName) {
+        RatingTenantFragment ratingTenantFragment = new RatingTenantFragment();
+        ratingTenantFragment.setTenantName(tenantName);
+        ratingTenantFragment.setRouterAction(this);
+        manageBackstack(ratingTenantFragment);
+
     }
 
     @Override
@@ -198,4 +208,5 @@ public class LandlordRouter implements LandlordRouterAction {
         manageBackstack(contactRepairmanFragment);
 
     }
+
 }

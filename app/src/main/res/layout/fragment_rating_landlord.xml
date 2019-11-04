@@ -4,21 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LandlordFragments.RatingTenantFragment">
+    tools:context=".TenantFragments.RatingLandlordFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/ratingTitle"
+            android:id="@+id/ratingTitleLandlord"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="Tenant Name"
+            android:text="Landlord Name"
             android:textAlignment="center"
             android:textSize="24dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/ratingText1"
+            android:id="@+id/ratingText1Landlord"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginStart="8dp"
@@ -38,21 +38,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingTitle"
-             />
+            app:layout_constraintTop_toBottomOf="@+id/ratingTitleLandlord"
+            />
 
         <RatingBar
-            android:id="@+id/paymentRatingBar"
+            android:id="@+id/repairRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="170dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingText1"
+            app:layout_constraintTop_toBottomOf="@+id/ratingText1Landlord"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/ratingText2"
+            android:id="@+id/ratingText2Landlord"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginStart="8dp"
@@ -67,32 +67,32 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <RatingBar
-            android:id="@+id/tenantRepondingRatingBar"
+            android:id="@+id/landlordRepondingRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="320dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingText2"
+            app:layout_constraintTop_toBottomOf="@+id/ratingText2Landlord"
             app:layout_constraintTop_toTopOf="parent" />
 
 
 
 
         <!--<Button-->
-            <!--android:id="@+id/ratingTenatBtn"-->
-            <!--android:layout_width="150dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="150dp"-->
-            <!--android:layout_marginTop="400dp"-->
-            <!--android:layout_marginEnd="150dp"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:text="Submit"-->
-            <!--android:textSize="18dp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/paymentRatingBar"></Button>-->
+        <!--android:id="@+id/ratingTenatBtn"-->
+        <!--android:layout_width="150dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="150dp"-->
+        <!--android:layout_marginTop="400dp"-->
+        <!--android:layout_marginEnd="150dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:text="Submit"-->
+        <!--android:textSize="18dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/repairRatingBar"></Button>-->
 
 
 
@@ -100,4 +100,5 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
 </FrameLayout>

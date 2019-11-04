@@ -43,4 +43,6 @@ public interface LandlordRouterAction {
 
     void onSetRepairmans(List<RepairContact> repairContacts);
 
+    void onNavigateToRatingTenant(String tenantName);
+
 }

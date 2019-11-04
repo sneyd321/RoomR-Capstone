@@ -45,4 +45,6 @@ public interface TenantRouterAction {
     void onNavigateToTenantRepairUpdate(Repair repair, int position);
 
     void onSetRepairs(List<Repair> repairs);
+
+    void onNavigateToRatingLandlord(String landlordName);
 }

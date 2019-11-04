@@ -78,6 +78,17 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
         //adapter = new LandlordShowTeantListingAdapter(getActivity(), ((MainActivityLandlord)getActivity()).mainTenants);
         adapter = new LandlordShowTeantListingAdapter(getActivity(), tenants);
         adapter.setOnItemClickListener(this);
+        adapter.setOnItemLongClickListener(new LandlordShowTeantListingAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                if (routerActionListener != null) {
+
+                    routerActionListener.onNavigateToRatingTenant(tenants.get(position).getFirstName()+" "+tenants.get(position).getLastName());
+
+                }
+
+            }
+        });
         tenantList.setAdapter(adapter);
 
 

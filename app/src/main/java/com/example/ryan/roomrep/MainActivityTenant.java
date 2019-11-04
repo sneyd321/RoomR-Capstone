@@ -138,7 +138,8 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                     //router.onNavigateToMessages();
                     router.onNavigateToMessagesPeopleList(tenant,house);
                     break;
-                case R.id.navSplitR:
+                case R.id.navRating:
+                    router.onNavigateToRatingLandlord(house.getLandlordEmail());
                     break;
                 case R.id.navUseR:
 

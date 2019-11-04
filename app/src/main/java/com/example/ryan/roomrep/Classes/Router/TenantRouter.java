@@ -16,6 +16,7 @@ import com.example.ryan.roomrep.TenantFragments.ListTargetChatUserFragment;
 import com.example.ryan.roomrep.TenantFragments.ListingsFragment;
 import com.example.ryan.roomrep.TenantFragments.MessagRFragment;
 import com.example.ryan.roomrep.TenantFragments.PayRentFragment;
+import com.example.ryan.roomrep.TenantFragments.RatingLandlordFragment;
 import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
 import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
@@ -60,6 +61,14 @@ public class TenantRouter implements TenantRouterAction {
     @Override
     public void onSetRepairs(List<Repair> repairs){
         this.repairs = repairs;
+    }
+
+    @Override
+    public void onNavigateToRatingLandlord(String landlordName) {
+        RatingLandlordFragment ratingLandlordFragment = new RatingLandlordFragment();
+        ratingLandlordFragment.setLandlordName(landlordName);
+        ratingLandlordFragment.setRouterAction(this);
+        manageBackstack(ratingLandlordFragment);
     }
 
     @Override

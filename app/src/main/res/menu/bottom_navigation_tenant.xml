@@ -6,8 +6,8 @@
         android:title="MessagR"
         />
     <item
-        android:id="@+id/navSplitR"
-        android:title="SplitR"
+        android:id="@+id/navRating"
+        android:title="RLandlord"
         />
     <item
         android:id="@+id/navUseR"
