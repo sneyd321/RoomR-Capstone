@@ -83,8 +83,8 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
             public void onItemLongClick(View view, int position) {
                 if (routerActionListener != null) {
 
-                    routerActionListener.onNavigateToRatingTenant(tenants.get(position).getFirstName()+" "+tenants.get(position).getLastName());
-
+                    //routerActionListener.onNavigateToRatingTenant(tenants.get(position).getFirstName()+" "+tenants.get(position).getLastName());
+                    routerActionListener.onNavigateToRatingTenant(tenants.get(position).getEmail());
                 }
 
             }
