@@ -52,6 +52,7 @@ public class RatingTenantFragment extends Fragment implements FragmentEventListe
         tenantNameTxt = view.findViewById(R.id.ratingTitle);
 
         tenantNameTxt.setText(tenantName);
+        //payments.get(1).
 
         return view;
     }

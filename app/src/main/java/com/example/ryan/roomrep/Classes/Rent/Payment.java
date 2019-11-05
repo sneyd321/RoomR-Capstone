@@ -10,14 +10,16 @@ public class Payment implements Parcelable {
     private String dueDate;
     private String landlordEmail;
     private double amount;
+    private  String datePaid;
 
 
-    public Payment(String tenantName, String houseAddress, String dueDate, String landlordEmail, double amount) {
+    public Payment(String tenantName, String houseAddress, String dueDate, String landlordEmail, double amount, String datePaid) {
         this.tenantName = tenantName;
         this.houseAddress = houseAddress;
         this.dueDate = dueDate;
         this.landlordEmail = landlordEmail;
         this.amount = amount;
+        this.datePaid = datePaid;
     }
 
 
@@ -27,6 +29,7 @@ public class Payment implements Parcelable {
         dueDate = in.readString();
         landlordEmail = in.readString();
         amount = in.readDouble();
+        datePaid = in.readString();
     }
 
     public static final Creator<Payment> CREATOR = new Creator<Payment>() {
@@ -57,6 +60,8 @@ public class Payment implements Parcelable {
         return landlordEmail;
     }
 
+    public  String getDatePaid(){return  datePaid;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -69,5 +74,6 @@ public class Payment implements Parcelable {
         dest.writeString(dueDate);
         dest.writeString(landlordEmail);
         dest.writeDouble(amount);
+        dest.writeString(datePaid);
     }
 }

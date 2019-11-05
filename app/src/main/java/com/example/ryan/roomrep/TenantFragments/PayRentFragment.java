@@ -158,7 +158,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
             Network network = Network.getInstance();
             network.registerObserver(PayRentFragment.this);
             String tenantName = tenant.getFirstName() + " " + tenant.getLastName();
-            Payment payment = new Payment(tenantName, house.getAddress(), getDueDate(), house.getLandlordEmail(), finalAmount);
+            Payment payment = new Payment(tenantName, house.getAddress(), getDueDate(), house.getLandlordEmail(), finalAmount,null);
 
             network.makePayment(payment);
         }
