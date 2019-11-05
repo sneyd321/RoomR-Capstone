@@ -68,6 +68,8 @@ public class LandlordRouter implements LandlordRouterAction {
     @Override
     public void onNavigateToRatingTenant(String tenantName) {
         RatingTenantFragment ratingTenantFragment = new RatingTenantFragment();
+        ratingTenantFragment.setLandlord(this.landlord);
+        ratingTenantFragment.initNetwork();
         ratingTenantFragment.setTenantName(tenantName);
         ratingTenantFragment.setRouterAction(this);
         manageBackstack(ratingTenantFragment);
