@@ -20,6 +20,7 @@ import com.example.ryan.roomrep.TenantFragments.RatingLandlordFragment;
 import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
 import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
+import com.example.ryan.roomrep.TenantFragments.SlottingTenant;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairListFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairUpdateFragment;
 
@@ -72,6 +73,14 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
+    public void onNavigateToSlottingLandlord() {
+        SlottingTenant slottingTenant = new SlottingTenant();
+        slottingTenant.setActionListener(this);
+        manageBackstack(slottingTenant);
+
+    }
+
+    @Override
     public void onNavigateToSearch(House house) {
         SearchFragment searchFragment = new SearchFragment();
         this.house = house;
@@ -89,6 +98,9 @@ public class TenantRouter implements TenantRouterAction {
 
     @Override
     public void onNavigateToViewListings() {
+        MessagRFragment messagRFragment = new MessagRFragment();
+        messagRFragment.setActionListener(this);
+        manageBackstack(messagRFragment);
 
     }
 
