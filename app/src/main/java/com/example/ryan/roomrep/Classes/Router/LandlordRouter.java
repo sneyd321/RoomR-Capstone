@@ -20,6 +20,7 @@ import com.example.ryan.roomrep.LandlordFragments.RepairHistoryLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.RepairViewLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.SearchTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.ShowTenantFragment;
+import com.example.ryan.roomrep.LandlordFragments.SlottingLandlord;
 import com.example.ryan.roomrep.LandlordFragments.TenantProfilesFragment;
 import com.example.ryan.roomrep.R;
 
@@ -74,6 +75,13 @@ public class LandlordRouter implements LandlordRouterAction {
         ratingTenantFragment.setRouterAction(this);
         manageBackstack(ratingTenantFragment);
 
+    }
+
+    @Override
+    public void onNavigateToSlottingTenant() {
+        SlottingLandlord slottingLandlord = new SlottingLandlord();
+        slottingLandlord.setActionListener(this);
+        manageBackstack(slottingLandlord);
     }
 
     @Override

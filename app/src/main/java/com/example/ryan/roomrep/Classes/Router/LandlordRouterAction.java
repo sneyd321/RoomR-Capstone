@@ -45,4 +45,6 @@ public interface LandlordRouterAction {
 
     void onNavigateToRatingTenant(String tenantName);
 
+    void onNavigateToSlottingTenant();
+
 }
