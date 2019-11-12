@@ -21,7 +21,7 @@ public class LandlordValidator implements Validator {
         map.put(6, isPassword2Empty(landlord.getPassword2()));
         map.put(7, doPasswordsMatch(landlord.getPassword(), landlord.getPassword2()));
         map.put(8, isEmailEmpty(landlord.getEmail()));
-        //map.put(9, isEmailValid(landlord.getEmail()));
+        //map.put(9, isEmailValid(landlord.getTenantEmail()));
         return map;
     }
 

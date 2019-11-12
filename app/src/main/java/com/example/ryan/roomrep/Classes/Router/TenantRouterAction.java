@@ -10,7 +10,7 @@ import java.util.List;
 public interface TenantRouterAction {
 
 
-    void onNavigateToSearch(House house);
+    void onNavigateToSearch();
 
     void onNavigateToListings();
 
@@ -49,4 +49,7 @@ public interface TenantRouterAction {
     void onNavigateToRatingLandlord(String landlordName);
 
     void onNavigateToSlottingLandlord();
+
+    void onNavigateToTenantLanding(House house, Tenant tenant);
+
 }

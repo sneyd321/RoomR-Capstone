@@ -268,30 +268,12 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
     @Override
     public void update(String response) {
         if (routerActionListener != null) {
-            JSONObject jsonObject = convertStringToJSONObject(response);
-            try {
-                String url = jsonObject.getString("url");
-                house.setUrl(url);
-                progressDialog.dismiss();
-                routerActionListener.onAddHouse(house);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            progressDialog.dismiss();
+            routerActionListener.onAddHouse(house);
         }
     }
 
 
-    private JSONObject convertStringToJSONObject(String response) {
-        JSONObject jsonObject;
-        try {
-            jsonObject = new JSONObject(response);
-            return jsonObject;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 
 

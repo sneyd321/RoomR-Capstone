@@ -116,7 +116,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                 router.onNavigateToTenantRepairsList();
                 break;
             case R.id.lblListing:
-                router.onNavigateToListings();
+                router.onNavigateToSearch();
                 break;
             case R.id.lblSettings:
                 break;
@@ -158,7 +158,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         Gson gson = new Gson();
         house = gson.fromJson(jsonObject.toString(), House.class);
 
-        router.onNavigateToSearch(house);
+        router.onNavigateToTenantLanding(house, tenant);
     }
 
     private JSONObject convertStringToJSONObject(String response) {

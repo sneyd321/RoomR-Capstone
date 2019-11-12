@@ -30,6 +30,7 @@
         android:layout_marginBottom="16dp"
         style="@style/sign_up_edittext"
         android:inputType="textPersonName"
+        android:text="R"
         android:hint="First Name"
         app:layout_constraintBottom_toTopOf="@+id/edtTSULastName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +46,7 @@
         style="@style/sign_up_edittext"
         android:inputType="textPersonName"
         android:hint="Last Name"
+        android:text="S"
         app:layout_constraintBottom_toTopOf="@+id/edtTSULandlordEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -59,6 +61,7 @@
         style="@style/sign_up_edittext"
         android:inputType="textEmailAddress"
         android:hint="Landlord Email"
+        android:text="a@s.com"
         app:layout_constraintBottom_toTopOf="@+id/edtTSUTenantEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -74,6 +77,7 @@
         style="@style/sign_up_edittext"
         android:inputType="textEmailAddress"
         android:hint="Tenant Email"
+        android:text="a@s.com"
         app:layout_constraintBottom_toTopOf="@+id/edtTSUPassword1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -90,6 +94,7 @@
         style="@style/sign_up_edittext"
         android:inputType="textPassword"
         android:hint="Password"
+        android:text="aaaaaa"
         app:layout_constraintBottom_toTopOf="@+id/edtTSUPassword2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -105,6 +110,7 @@
         android:layout_marginBottom="32dp"
         android:inputType="textPassword"
         android:hint="Re-Type Password"
+        android:text="aaaaaa"
         app:layout_constraintBottom_toTopOf="@+id/btnTSUSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

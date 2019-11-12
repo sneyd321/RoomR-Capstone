@@ -42,7 +42,11 @@ public class LandlordListingsRecyclerviewAdapter extends RecyclerView.Adapter<La
 
         holder.txtAddress.setText(house.getAddress());
         holder.txtApplicants.setText(Integer.toString(house.getApplicants()));
-        Picasso.get().load(house.getUrl()).noFade().into(holder.imgHouse);
+        if (house.getUrl().isEmpty()){
+            Picasso.get().load(R.drawable.examplehouse).noFade().into(holder.imgHouse);
+            return;
+        }
+        Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).error(R.drawable.examplehouse).noFade().into(holder.imgHouse);
 
     }
 

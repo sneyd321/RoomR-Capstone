@@ -39,7 +39,11 @@ public class JSONArrayIterator implements Iterator {
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            return false;
         }
+
         return true;
     }
 

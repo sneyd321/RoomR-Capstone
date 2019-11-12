@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "959426188245-fhl4i2dm48k1k1r95btrhto88dlq4l22.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ryan.roomrep",
+            "certificate_hash": "69c38436a0f55d1d09ba4cae38dafdb82fbf2a4e"
+          }
+        },
+        {
           "client_id": "959426188245-klupin6i30gs1hkfikr0c2qujp3qieqj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -25,15 +33,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "959426188245-klupin6i30gs1hkfikr0c2qujp3qieqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -111,6 +111,8 @@ public class ShowTenantFragment extends Fragment implements ItemClickListener, L
 
 
 
+
+
     private View.OnClickListener onNavigateToSearchTenant = new View.OnClickListener() {
         @Override
         public void onClick(View view) {

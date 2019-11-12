@@ -1,7 +1,5 @@
 package com.example.ryan.roomrep.Classes.Tenant;
 
-import com.example.ryan.roomrep.Classes.Landlord.Landlord;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,9 +18,9 @@ public class TenantValidator implements Validator {
         map.put(5, isPasswordLongEnough(tenant.getPassword()));
         map.put(6, isPassword2Empty(tenant.getPassword2()));
         map.put(7, doPasswordsMatch(tenant.getPassword(), tenant.getPassword2()));
-        map.put(8, isLandlordEmailEmpty(tenant.getEmail()));
-        //map.put(9, isEmailValid(landlord.getEmail()));
-        map.put(10, isTenantEmailEmpty(tenant.getEmail()));
+        map.put(8, isLandlordEmailEmpty(tenant.getTenantEmail()));
+        //map.put(9, isEmailValid(landlord.getTenantEmail()));
+        map.put(10, isTenantEmailEmpty(tenant.getTenantEmail()));
 
         return map;
     }

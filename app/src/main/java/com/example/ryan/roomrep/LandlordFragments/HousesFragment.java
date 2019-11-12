@@ -141,6 +141,9 @@ public class HousesFragment extends Fragment implements ItemClickListener, Fragm
     @Override
     public void onItemClick(View view, int position) {
         House house = houses.get(position);
+        if (house.getProfiles() == null || house.getTenants() == null){
+            house.initProfileTenant();
+        }
         if (routerActionListener != null){
             routerActionListener.onNavigateToShowTenant(house);
         }
@@ -153,6 +156,7 @@ public class HousesFragment extends Fragment implements ItemClickListener, Fragm
         Iterator iterator = new JSONArrayIterator(jsonArray);
         while (iterator.hasNext()){
             House house = gson.fromJson(iterator.next().toString(), House.class);
+
             houses.add(house);
         }
         getActivity().runOnUiThread(new Runnable() {

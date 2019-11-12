@@ -21,6 +21,7 @@ import com.example.ryan.roomrep.TenantFragments.RepairPictureFragment;
 import com.example.ryan.roomrep.TenantFragments.SearchFragment;
 import com.example.ryan.roomrep.TenantFragments.SendRepairFragment;
 import com.example.ryan.roomrep.TenantFragments.SlottingTenant;
+import com.example.ryan.roomrep.TenantFragments.TenantLandingFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairListFragment;
 import com.example.ryan.roomrep.TenantFragments.TenantRepairUpdateFragment;
 
@@ -81,12 +82,22 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onNavigateToSearch(House house) {
-        SearchFragment searchFragment = new SearchFragment();
+    public void onNavigateToTenantLanding(House house, Tenant tenant) {
+        TenantLandingFragment tenantLandingFragment = new TenantLandingFragment();
         this.house = house;
+        this.tenant = tenant;
+        tenantLandingFragment.setHouse(house);
+        tenantLandingFragment.setTenant(tenant);
+        manageBackstack(tenantLandingFragment);
+    }
+
+    @Override
+    public void onNavigateToSearch() {
+        SearchFragment searchFragment = new SearchFragment();
         //searchFragment.setActionListener(this);
         manageBackstack(searchFragment);
     }
+
 
     @Override
     public void onNavigateToListings() {

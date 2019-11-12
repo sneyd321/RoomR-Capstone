@@ -80,28 +80,8 @@ public class Tenant implements Parcelable {
     }
 
 
-    public String getEmail() {
+    public String getTenantEmail() {
         return tenantEmail;
-    }
-
-    public String validateTenant(){
-        if (this.firstName.isEmpty()){
-            return "Please enter a first name.";
-        }
-        if (this.lastName.isEmpty()){
-            return "Please enter a first name.";
-        }
-
-        if (this.tenantEmail.isEmpty()){
-            return "Please enter your email address.";
-        }
-        if (this.landlordEmail.isEmpty()){
-            return "Please enter your landlord's email address.";
-        }
-        if (this.password.isEmpty()){
-            return "Please enter a password.";
-        }
-        return "";
     }
 
 

@@ -39,12 +39,13 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
     @Override
     public void onBindViewHolder(@NonNull  HouseRecyclerviewAdapter.ViewHolder holder, int position) {
         House house = data.get(position);
-        if (house.getUrl().isEmpty()){
-           return;
-        }
-
-        Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).noFade().into(holder.imgHouse);
         holder.txtAddress.setText(house.getAddress());
+        if (house.getUrl().isEmpty()){
+            Picasso.get().load(R.drawable.examplehouse).noFade().into(holder.imgHouse);
+            return;
+        }
+        Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).error(R.drawable.examplehouse).noFade().into(holder.imgHouse);
+
     }
 
     @Override
