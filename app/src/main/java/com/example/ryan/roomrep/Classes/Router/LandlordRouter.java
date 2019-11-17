@@ -30,17 +30,18 @@ import java.util.List;
 public class LandlordRouter implements LandlordRouterAction {
 
 
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
 
 
-    List<House> houses = new ArrayList<>();
-    Landlord landlord;
-    List<Repair> repairs = new ArrayList<>();
-    List<RepairContact> repairContacts = new ArrayList<>();
+    private List<House> houses;
+    private Landlord landlord;
+    private List<Repair> repairs = new ArrayList<>();
+    private List<RepairContact> repairContacts = new ArrayList<>();
 
 
-    public LandlordRouter(FragmentManager fragmentManager){
+    public LandlordRouter(FragmentManager fragmentManager, List<House> houses){
         this.fragmentManager = fragmentManager;
+        this.houses = houses;
     }
 
 
@@ -101,6 +102,7 @@ public class LandlordRouter implements LandlordRouterAction {
     public void onAddHouse(House house) {
         HousesFragment housesFragment = new HousesFragment();
         housesFragment.setRouterAction(this);
+        housesFragment.setLandlord(this.landlord);
         this.houses.add(house);
         housesFragment.setHouses(this.houses);
         manageBackstack(housesFragment);
@@ -113,15 +115,15 @@ public class LandlordRouter implements LandlordRouterAction {
         housesFragment.setRouterAction(this);
         housesFragment.setLandlord(landlord);
         housesFragment.setHouses(this.houses);
-        housesFragment.getHousesFromServer();
         manageBackstack(housesFragment);
     }
 
 
     @Override
-    public void onNavigateToLandlordListings() {
+    public void onNavigateToLandlordListings(Landlord landlord) {
         LandlordListingsFragment landlordListingsFragment = new LandlordListingsFragment();
-        landlordListingsFragment.setHouseList(this.houses);
+        landlordListingsFragment.setLandlord(landlord);
+        landlordListingsFragment.setHouses(this.houses);
         landlordListingsFragment.setRouterAction(this);
         manageBackstack(landlordListingsFragment);
     }

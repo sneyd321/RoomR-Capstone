@@ -11,13 +11,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordListingsRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LandlordListingsFragment extends Fragment implements ItemClickListener, AddListingDialogActionListener {
@@ -27,9 +37,11 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
     Button btnPostListing;
 
     private LandlordRouterAction routerActionListener;
-    private List<House> houses;
+    List<House> houses;
     private List<House> listedHouses;
     private LandlordListingsRecyclerviewAdapter adapter;
+
+    private Landlord landlord;
 
     @Nullable
     @Override
@@ -61,9 +73,7 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
     }
 
 
-    public void setHouseList(List<House> houses){
-        this.houses = houses;
-    }
+
 
     @Override
     public void onItemClick(View view, int position) {
@@ -85,14 +95,20 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
         }
     };
 
+    public void setLandlord(Landlord landlord) {
+        this.landlord = landlord;
+    }
+
+
+    public void setHouses(List<House> houses) {
+        this.houses = houses;
+    }
 
     @Override
     public void onAddListing(House house) {
         this.listedHouses.add(house);
         adapter.notifyDataSetChanged();
     }
-
-
 
 
 }

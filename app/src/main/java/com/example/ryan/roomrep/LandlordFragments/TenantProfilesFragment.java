@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.TenantProfileRecyclerviewAdapter;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class TenantProfilesFragment extends Fragment implements ItemClickListener {
 
-
+    TextView txtNoProfiles;
     RecyclerView rcyTenantProfile;
     TenantProfileRecyclerviewAdapter adapter;
 
@@ -36,16 +37,21 @@ public class TenantProfilesFragment extends Fragment implements ItemClickListene
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tenant_profiles, container, false);
 
-        //Tenant tenant = new Tenant("Ryan", "Sneyd", "a@s.com", "a");
-        //tenantProfiles.add(tenant);
-
-         profiles = house.getProfiles();
+        txtNoProfiles = view.findViewById(R.id.txtTenantProfilesNoProfiles);
 
         rcyTenantProfile = view.findViewById(R.id.rcyTenantProfiles);
         rcyTenantProfile.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new TenantProfileRecyclerviewAdapter(getActivity(), profiles);
-        adapter.setItemClickListener(this);
-        rcyTenantProfile.setAdapter(adapter);
+        profiles = house.getProfiles();
+
+        if (profiles.size() != 0) {
+            txtNoProfiles.setVisibility(View.INVISIBLE);
+            adapter = new TenantProfileRecyclerviewAdapter(getActivity(), profiles);
+            adapter.setItemClickListener(this);
+            rcyTenantProfile.setAdapter(adapter);
+            return view;
+        }
+
+        txtNoProfiles.setVisibility(View.VISIBLE);
 
 
 

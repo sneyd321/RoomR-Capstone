@@ -32,7 +32,7 @@ public class Network implements NetworkObservable {
 
     private final String SERVER_URL2 = "http://10.16.24.254:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    //private final String SERVER_URL = "http://192.168.0.105:8080/";
+    //private final String SERVER_URL = "http://10.16.25.27:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -766,6 +766,8 @@ public class Network implements NetworkObservable {
         }
 
     }
+
+
 
 
 }

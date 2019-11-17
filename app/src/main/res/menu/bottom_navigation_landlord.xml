@@ -3,14 +3,17 @@
 
     <item
         android:id="@+id/navRepairTrackR"
+        android:icon="@drawable/ic_build_black_24dp"
         android:title="Repair TrackR"
         />
     <item
         android:id="@+id/navHouses"
+        android:icon="@drawable/ic_home_black_24dp"
         android:title="Houses"
         />
     <item
         android:id="@+id/navNotifyR"
+        android:icon="@drawable/ic_notifications_black_24dp"
         android:title="NotifyR"
         />
 

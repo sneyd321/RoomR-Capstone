@@ -9,8 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordAddListingAdapter;
@@ -26,11 +28,13 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
 
 
     private AddListingDialogActionListener addListingDialogActionListener;
-
+    TextView txtNoHouses;
+    TextView txtClose;
     RecyclerView rcyAddresses;
     List<House> houses;
     LandlordAddListingAdapter adapter;
     House selectedHouse;
+
 
 
     @Override
@@ -48,6 +52,9 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_landlord_add_listing_dialog, container, false);
+        txtClose = view.findViewById(R.id.txtLandlordListingDialogClose);
+        txtClose.setOnTouchListener(onClose);
+        txtNoHouses = view.findViewById(R.id.txtLandlordListingDialogNoHouses);
         rcyAddresses = view.findViewById(R.id.rcyAddListing);
         rcyAddresses.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -60,10 +67,14 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
         }
         adapter = new LandlordAddListingAdapter(getActivity(), filteredHouses);
         adapter.setOnClickListener(this);
-        rcyAddresses.setAdapter(adapter);
+        if (adapter.getItemCount() != 0) {
+            txtNoHouses.setVisibility(View.INVISIBLE);
+            rcyAddresses.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            return view;
+        }
 
-        adapter.notifyDataSetChanged();
-
+        txtNoHouses.setVisibility(View.VISIBLE);
 
         return view;
     }
@@ -71,6 +82,15 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
     public void setHouses(List<House> houses) {
         this.houses = houses;
     }
+
+
+    private View.OnTouchListener onClose = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            dismiss();
+            return false;
+        }
+    };
 
 
     @Override

@@ -47,7 +47,7 @@
         android:layout_marginBottom="8dp"
         android:hint="Username"
         android:inputType="textEmailAddress"
-        android:text="sneydr@sheridancollege.ca"
+        android:text="rts1234567@hotmail.com"
         app:layout_constraintBottom_toTopOf="@+id/edtPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

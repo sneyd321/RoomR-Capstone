@@ -1,6 +1,7 @@
 package com.example.ryan.roomrep;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -13,6 +14,9 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
+import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
@@ -21,6 +25,8 @@ import com.example.ryan.roomrep.Classes.Rent.Payment;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
+import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -28,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivityLandlord extends AppCompatActivity implements FragmentEventListener
@@ -39,12 +46,16 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
     Toolbar myToolbar;
     LandlordRouter router;
     Landlord landlord;
+
+
     public Tenant peopleToAdd;
     public String chatPeopleName = "Ziheng He";
     public String chatRoomNameInMainActivityLandlord = "TheRegularOne";
     public String chatRoomType = "Test";
     public List<Profile> mainProfiles;
     public List<Tenant>mainTenants = new ArrayList<>();
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,15 +89,17 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        router = new LandlordRouter(getSupportFragmentManager());
-        router.onNavigateToHouses(landlord);
+        Network network = Network.getInstance();
+        network.registerObserver(this);
+        network.getLandlordHouses(landlord);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Getting houses...");
 
-        if (savedInstanceState == null){
-            navigationView.setCheckedItem(R.id.nav_listings);
+        progressDialog.show();
 
+        if (savedInstanceState == null) {
+            bottomMenu.getMenu().getItem(1).setChecked(true);
         }
-
-
     }
 
 
@@ -108,14 +121,11 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
                 case R.id.nav_listings:
-                    Toast.makeText(MainActivityLandlord.this, "My Listings", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.nav_settings:
-                    Toast.makeText(MainActivityLandlord.this, "Settings", Toast.LENGTH_SHORT).show();
+                    router.onNavigateToLandlordListings(landlord);
                     break;
                 case R.id.nav_logout:
-                    Toast.makeText(MainActivityLandlord.this, "Logout", Toast.LENGTH_SHORT).show();
-
+                    Intent intent = new Intent(MainActivityLandlord.this, LoginActivity.class);
+                    startActivity(intent);
             }
             drawerLayout.closeDrawer(GravityCompat.START);
 
@@ -124,18 +134,21 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
     };
 
     private BottomNavigationView.OnNavigationItemSelectedListener onBottomMenu = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navRepairTrackR:
                     //getRepairs();
+                    item.setChecked(true);
                     router.onNavigateToLandlordRepairs();
+                    break;
                 case R.id.navHouses:
+                    router.onNavigateToHouses(landlord);
+                    item.setChecked(true);
                     break;
                 case R.id.navNotifyR:
                     router.onNavigateToNotifyR();
+                    item.setChecked(true);
                     break;
                 default:
                     return false;
@@ -147,5 +160,29 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
     @Override
     public void update(String response) {
+        final List<House> networkHouses = new ArrayList<>();
+        JSONArray jsonArray = convertStringToJSONArray(response);
+        Gson gson = new Gson();
+        Iterator iterator = new JSONArrayIterator(jsonArray);
+        while (iterator.hasNext()){
+            House house = gson.fromJson(iterator.next().toString(), House.class);
+
+            networkHouses.add(house);
+        }
+        progressDialog.dismiss();
+        router = new LandlordRouter(getSupportFragmentManager(), networkHouses);
+        router.onNavigateToHouses(landlord);
+    }
+
+
+    private JSONArray convertStringToJSONArray(String response) {
+        JSONArray jsonArray;
+        try {
+            jsonArray = new JSONArray(response);
+            return jsonArray;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

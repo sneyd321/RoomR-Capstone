@@ -4,83 +4,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginTop="8dp"
-    android:background="@drawable/button_border"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txtTenantProfileFirstName"
+    <android.support.v7.widget.CardView
 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        android:textColor="@color/Black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBioTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtTenantProfileRating"
-        style="@style/general_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBioTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtTenantProfileBioTitle"
-        style="@style/title_text"
-        android:layout_width="0dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Bio:"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBio"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/txtTenantProfileBio"
-        style="@style/button_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:lines="5"
-        android:text="TextView"
-        android:textColor="@color/Green"
-        android:textSize="16sp"
+        app:cardBackgroundColor="@color/White"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:numStars="1"
-        android:rating="1"
-
-        android:theme="@style/RatingBar"
-        app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBioTitle"
-        app:layout_constraintEnd_toStartOf="@+id/txtTenantProfileRating"
-        app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_border">
 
 
+            <TextView
+                android:id="@+id/txtTenantProfileFirstName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textColor="@color/Black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/rtbProfileRating"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rtbProfileRating" />
+
+            <TextView
+                android:id="@+id/txtTenantProfileRating"
+                style="@style/general_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/rtbProfileRating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rtbProfileRating" />
+
+            <TextView
+                android:id="@+id/txtTenantProfileBioTitle"
+                style="@style/title_text"
+                android:layout_width="0dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Bio:"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/txtTenantProfileBio"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rtbProfileRating" />
+
+                <TextView
+                    android:id="@+id/txtTenantProfileBio"
+                    style="@style/button_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:inputType="textMultiLine"
+                    android:maxLines="5"
+                    android:ellipsize="end"
+                    android:text="TextView"
+                    android:textColor="@color/Green"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            <RatingBar
+                android:id="@+id/rtbProfileRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:numStars="1"
+                android:rating="1"
+
+                android:theme="@style/RatingBar"
+                app:layout_constraintEnd_toStartOf="@+id/txtTenantProfileRating"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
