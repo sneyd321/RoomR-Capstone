@@ -46,6 +46,7 @@ public class LandlordShowTeantListingAdapter extends RecyclerView.Adapter<Landlo
         final Tenant teant = data.get(position);
 
         holder.txtName.setText(teant.getFirstName() + " " + teant.getLastName());
+        holder.txtRatingInf.setText("4.3");
 
         if(mOnItemClickListener != null){
 
@@ -115,11 +116,13 @@ public class LandlordShowTeantListingAdapter extends RecyclerView.Adapter<Landlo
     {
 
         TextView txtName;
+        TextView txtRatingInf;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.tenantName);
+            txtRatingInf = itemView.findViewById(R.id.tenantRatingInf);
 
             //itemView.setOnClickListener(this);
         }
