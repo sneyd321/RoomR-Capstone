@@ -47,4 +47,6 @@ public interface LandlordRouterAction {
 
     void onNavigateToSlottingTenant();
 
+    void popBackStack();
+
 }

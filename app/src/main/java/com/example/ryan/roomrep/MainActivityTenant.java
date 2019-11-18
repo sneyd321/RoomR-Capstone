@@ -5,6 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,6 +23,8 @@ import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.LoginActivities.LoginActivity;
+import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -29,6 +36,9 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
 
 
     BottomNavigationView bottomMenu;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+
     TenantRouter router;
     ProgressDialog progressDialog;
 
@@ -44,15 +54,28 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tenant);
         toolbar = findViewById(R.id.tenantToolbar);
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        drawerLayout = findViewById(R.id.tenant_drawer_layout);
+        navigationView = findViewById(R.id.tenant_nav_view);
         bottomMenu = findViewById(R.id.navBar);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
 
+
+        navigationView.setNavigationItemSelectedListener(onNavigationMenu);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         handleIntent(getIntent());
 
@@ -72,12 +95,14 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
             network.registerObserver(this);
             network.getTenantHouse(tenant);
         }
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading house data...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
-
-
-
-
-
+        if (savedInstanceState == null) {
+            bottomMenu.getMenu().getItem(1).setChecked(true);
+        }
 
     }
 
@@ -96,37 +121,45 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.side_menu_tenant, menu);
-        return true;
-    }
 
+    private NavigationView.OnNavigationItemSelectedListener onNavigationMenu = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.lblRent:
+                    router.onNavigateToPayRent(tenant);
+                    break;
+                case R.id.lblRepair:
+                    router.onNavigateToTenantRepairsList();
+                    break;
+                case R.id.lblLogout:
+                    Intent intent = new Intent(MainActivityTenant.this, LoginActivity.class);
+                    startActivity(intent);
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
 
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.lblRent:
-                router.onNavigateToPayRent(tenant);
-                break;
-            case R.id.lblRepair:
-                router.onNavigateToTenantRepairsList();
-                break;
-            case R.id.lblListing:
-                router.onNavigateToSearch();
-                break;
-            case R.id.lblSettings:
-                break;
-            case R.id.lblLogout:
-                break;
-            default:
-                return false;
+            return true;
         }
-        return false;
+    };
+
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+
+
+        router.popBackStack();
     }
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener onBottomMenu = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -137,14 +170,18 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                 case R.id.navMessagR:
                     //router.onNavigateToMessages();
                     router.onNavigateToMessagesPeopleList(tenant,house);
+                    item.setChecked(true);
+                    break;
+                case R.id.lblHome:
+                    router.onNavigateToTenantLanding(house, tenant);
+                    item.setChecked(true);
                     break;
                 case R.id.navRating:
                     //router.onNavigateToRatingLandlord(house.getLandlordEmail());
                     router.onNavigateToSlottingLandlord();
+                    item.setChecked(true);
                     break;
-                case R.id.navUseR:
 
-                    break;
                 default:
                     return false;
             }
@@ -154,11 +191,13 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
 
     @Override
     public void update(String response) {
+        progressDialog.dismiss();
         JSONObject jsonObject = convertStringToJSONObject(response);
         Gson gson = new Gson();
         house = gson.fromJson(jsonObject.toString(), House.class);
 
-        router.onNavigateToTenantLanding(house, tenant);
+        //router.onNavigateToTenantLanding(house, tenant);
+        router.onNavigateToCompleteRent();
     }
 
     private JSONObject convertStringToJSONObject(String response) {
@@ -173,60 +212,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
     }
 
 
-    /*
-    @Override
-    public void update(String response) {
-        repairs = new ArrayList<>();
-        JSONArray jsonArray;
-        if (!response.equals("{'error':'Not such repairs for this house.'}")){
-            try {
-                jsonArray = new JSONArray(response);
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                try {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Repair repair = new Repair(
-                            jsonObject.getString("Description"),
-                            jsonObject.getString("Name"),
-                            jsonObject.getString("Date"),
-                            jsonObject.getString("Status"),
-                            jsonObject.getString("PhotoRef"));
-                    repairs.add(repair);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        else{
-
-        }
-        router = new TenantRouter(getSupportFragmentManager(), repairs);
-        progressDialog.dismiss();
-        router.onNavigateToTenantRepairsList();
-    }
-    */
-
-    /*
-    public void getRepairs(){
-        Network network = new Network();
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading Repairs...");
-        progressDialog.show();
-        network.registerObserver(this);
-        network.getRepairs();
-    }
-    */
-    /*
-    public void setViewRepairsList(){
-        getRepairs();
-    }
-    */
-    //public String GetChatRoomNameInMainActivityTenant(){return chatRoomNameInMainActivityTenant;}
 
 
 

@@ -47,9 +47,8 @@ public class ProfileActivity extends AppCompatActivity  {
         if (getSupportFragmentManager().getBackStackEntryCount() == 1){
             Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
             startActivity(intent);
+            return;
         }
-        else {
-            profileRouter.popBackStack();
-        }
+        profileRouter.popBackStack();
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryan.roomrep.R;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,23 +20,16 @@ import org.json.JSONObject;
 
 public class CompleteRentFragment extends Fragment {
 
-    TextView textViewId;
-    TextView textViewStatus;
-    TextView textViewAmount;
 
-
+    CircularProgressBar circularProgressBar;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_complete_rent, container, false);
-
-        textViewId =  view.findViewById(R.id.paymentId);
-        textViewStatus=  view.findViewById(R.id.paymentStatus);
-        textViewAmount = view.findViewById(R.id.paymentAmount);
-
-
-
+        circularProgressBar = view.findViewById(R.id.completeRentCircularProgress);
+        long duration = 2000;
+        circularProgressBar.setProgressWithAnimation(10, duration);
 
 
         return view;
@@ -43,13 +37,6 @@ public class CompleteRentFragment extends Fragment {
     }
 
 
-    private void showDetails(JSONObject jsonDetails, int paymentAmount) throws JSONException {
-        //Views
 
-        //Showing the details from json object
-        textViewId.setText(jsonDetails.getString("id"));
-        textViewStatus.setText(jsonDetails.getString("state"));
-        textViewAmount.setText(Integer.toString(paymentAmount) +" USD");
-    }
 
 }

@@ -230,4 +230,9 @@ public class TenantRouter implements TenantRouterAction {
         manageBackstack(tenantRepairUpdateFragment);
     }
 
+    @Override
+    public void popBackStack() {
+        fragmentManager.popBackStack(fragmentManager.getBackStackEntryCount() - 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
 }

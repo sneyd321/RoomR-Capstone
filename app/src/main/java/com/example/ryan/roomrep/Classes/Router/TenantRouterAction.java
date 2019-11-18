@@ -52,4 +52,6 @@ public interface TenantRouterAction {
 
     void onNavigateToTenantLanding(House house, Tenant tenant);
 
+    void popBackStack();
+
 }

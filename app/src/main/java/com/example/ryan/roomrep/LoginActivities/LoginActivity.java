@@ -63,15 +63,7 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
         edtPassword = findViewById(R.id.edtPassword);
         edtUserName = findViewById(R.id.edtUsername);
 
-
-
-
-
         auth = FirebaseAuth.getInstance();
-
-
-
-
     }
 
 
@@ -108,7 +100,6 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
                         if (task.isSuccessful()){
                             network.getLandlord(login);
                         }
-
                     }
                 });
             }
@@ -122,14 +113,13 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
                     }
                 });
             }
-
-
-
         }
     };
 
+    @Override
+    public void onBackPressed() {
 
-
+    }
 
     @Override
     public void update(String response) {

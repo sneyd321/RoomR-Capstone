@@ -221,5 +221,9 @@ public class LandlordRouter implements LandlordRouterAction {
         manageBackstack(contactRepairmanFragment);
 
     }
+    @Override
+    public void popBackStack() {
+        fragmentManager.popBackStack(fragmentManager.getBackStackEntryCount() - 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
 
 }

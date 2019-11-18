@@ -27,6 +27,7 @@ import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
+import com.example.ryan.roomrep.LoginActivities.ProfileActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -62,7 +63,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_landlord);
         myToolbar = findViewById(R.id.toolbarLandlord);
-        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.landlord_drawer_layout);
         bottomMenu = findViewById(R.id.navBarLandlord);
         navigationView = findViewById(R.id.nav_view);
 
@@ -81,8 +82,9 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
         navigationView.setNavigationItemSelectedListener(onNavigationMenu);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
-        setSupportActionBar(myToolbar);
 
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, myToolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
@@ -94,7 +96,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         network.getLandlordHouses(landlord);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Getting houses...");
-
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         if (savedInstanceState == null) {
@@ -109,7 +111,12 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-        super.onBackPressed();
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+        router.popBackStack();
 
 
     }

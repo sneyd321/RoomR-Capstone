@@ -1,5 +1,6 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ public class SearchFragment extends Fragment implements FragmentEventListener
 
 
     private ProfileRouterAction actionListener;
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +99,9 @@ public class SearchFragment extends Fragment implements FragmentEventListener
 
         search = view.findViewById(R.id.btnSearchListings);
         search.setOnClickListener(onSearchListings);
+
+        progressDialog = new ProgressDialog(getActivity());
+
         return view;
     }
 
@@ -241,6 +246,10 @@ public class SearchFragment extends Fragment implements FragmentEventListener
             Network network = Network.getInstance();
             network.registerObserver(SearchFragment.this);
             network.searchListing(search);
+            progressDialog.setMessage("Searching...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
         }
     };
 
@@ -261,6 +270,7 @@ public class SearchFragment extends Fragment implements FragmentEventListener
 
     @Override
     public void update(String response) {
+        progressDialog.dismiss();
         List<House> houses = new ArrayList<>();
         JSONArray jsonArray;
         try {
