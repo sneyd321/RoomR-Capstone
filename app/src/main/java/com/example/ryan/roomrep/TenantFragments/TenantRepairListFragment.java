@@ -39,6 +39,8 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
 
     private List<Repair> repairs;
 
+    String houseAddress;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,6 +78,10 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
         }
     };
 
+    public void setHouseAddress(String houseAddress) {
+        this.houseAddress = houseAddress;
+    }
+
     public void setActionListener(TenantRouterAction routerActionListener){
         this.routerActionListener = routerActionListener;
     }
@@ -83,7 +89,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
     public void getRepairsFromServer(){
         Network network = new Network();
         network.registerObserver(this);
-        network.getRepairs();
+        network.getRepairs(houseAddress);
     }
 
     @Override
@@ -106,7 +112,9 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
                             jsonObject.getString("Name"),
                             jsonObject.getString("Date"),
                             jsonObject.getString("Status"),
-                            jsonObject.getString("PhotoRef"));
+                            jsonObject.getString("PhotoRef"),
+                            jsonObject.getString("DateUpdated"),
+                            houseAddress);
                     repairs.add(repair);
                     setRepairs(repairs);
                     routerActionListener.onSetRepairs(repairs);

@@ -44,6 +44,8 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
     TextView txt_otherLanguage4;
     TextView txt_otherLanguage5;
 
+    String houseAddress;
+
 
     private TenantRouterAction actionListener;
 
@@ -116,7 +118,8 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
                 String photoRef = languageTranslation.getImgUrl();
                 String name = languageTranslation.getCategory();
                 String date = dateFormat.format(calendar.getTime());
-                repair = new Repair(description,name,date,status,photoRef);
+                String dateUpdated = "";
+                repair = new Repair(description,name,date,status,photoRef, dateUpdated, houseAddress);
                 saveRepair();
             }else{
                 Toast.makeText(getActivity(), "Please write a description", Toast.LENGTH_SHORT).show();
@@ -142,6 +145,9 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         //Use this actionListener to later manage the back stack and pop off this view and the other view and re-direct to viewRepairList.
     }
 
+    public void setHouseAddress(String houseAddress){
+        this.houseAddress = houseAddress;
+    }
     public void setLanguageTranslation(LanguageTranslation languageTranslation){
         this.languageTranslation = languageTranslation;
     }

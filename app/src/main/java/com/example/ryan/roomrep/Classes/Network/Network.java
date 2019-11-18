@@ -11,6 +11,7 @@ import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -30,7 +31,7 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    private final String SERVER_URL2 = "http://10.16.24.254:8080/";
+    private final String SERVER_URL2 = "http://10.16.27.149:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
     //private final String SERVER_URL = "http://10.16.25.27:8080/";
 
@@ -343,6 +344,7 @@ public class Network implements NetworkObservable {
     public void addRepair(Repair repair){
         final Gson gson = new Gson();
         String json = gson.toJson(repair);
+
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
@@ -371,10 +373,20 @@ public class Network implements NetworkObservable {
 
     }
 
-    public void getRepairs(){
+    public void getRepairs(String houseAddress){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("houseAddress", houseAddress);
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+        String jsonString = json.toString();
+        RequestBody body = RequestBody.create(JSON, jsonString);
+
         Request request = new Request.Builder()
                 .url(SERVER_URL2 + "GetRepairs")
-                .get()
+                .post(body)
                 .build();
 
         OkHttpClient client = new OkHttpClient();
@@ -521,10 +533,37 @@ public class Network implements NetworkObservable {
         });
     }
 
+    public void updateRepairLandlord(Repair repair) {
+        final Gson gson = new Gson();
+        String json = gson.toJson(repair);
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(SERVER_URL2 + "UpdateRepairsLandlord")
+                .post(body)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    notifyObserver(response.body().string());
+                }
+                response.close();
+
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+    }
+
     public void getRepairmans(String address, String category){
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("address",address);
+            jsonObject.put("houseAddress",address);
             jsonObject.put("category",category);
         }catch (JSONException e){
             e.printStackTrace();

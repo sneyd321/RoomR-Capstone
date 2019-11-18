@@ -35,6 +35,7 @@ public class TenantRouter implements TenantRouterAction {
     List<Repair> repairs;
     Tenant tenant;
     House house;
+    Repair repair;
 
     public TenantRouter(FragmentManager fragmentManager, List<Repair> repairs) {
         this.repairs = repairs;
@@ -182,6 +183,7 @@ public class TenantRouter implements TenantRouterAction {
     @Override
     public void onNavigateToSendRepair(LanguageTranslation languageTranslation) {
         SendRepairFragment sendRepairFragment = new SendRepairFragment();
+        sendRepairFragment.setHouseAddress(house.getAddress());
         sendRepairFragment.setLanguageTranslation(languageTranslation);
         sendRepairFragment.setActionListener(this);
         manageBackstack(sendRepairFragment);
@@ -191,6 +193,7 @@ public class TenantRouter implements TenantRouterAction {
     public void onAddRepair(Repair repair){
         TenantRepairListFragment tenantRepairFragment = new TenantRepairListFragment();
         this.repairs.add(repair);
+        tenantRepairFragment.setHouseAddress(house.getAddress());
         tenantRepairFragment.setActionListener(this);
         tenantRepairFragment.setRepairs(repairs);
         manageBackstack(tenantRepairFragment);
@@ -199,6 +202,7 @@ public class TenantRouter implements TenantRouterAction {
     @Override
     public void onNavigateToTenantRepairsList(){
         TenantRepairListFragment tenantRepairListFragment = new TenantRepairListFragment();
+        tenantRepairListFragment.setHouseAddress(house.getAddress());
         tenantRepairListFragment.setActionListener(this);
         tenantRepairListFragment.setRepairs(repairs);
         tenantRepairListFragment.getRepairsFromServer();

@@ -20,6 +20,9 @@ import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class RepairViewLandlordFragment extends Fragment implements FragmentEventListener {
     Repair repair;
     String status;
@@ -34,6 +37,7 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
     TextView txt_repair_category;
     Spinner spn_status;
     TextView txt_description;
+    TextView txt_dateUpdated;
 
     Button btn_goback;
     Button btn_updateRepair;
@@ -45,8 +49,8 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_landlord_repair_view, container, false);
 
-
         img_view = view.findViewById(R.id.imgRepairLandlord);
+        txt_dateUpdated = view.findViewById(R.id.txt_dateUpdated_landlord);
         txt_date = view.findViewById(R.id.txt_date_landlord);
         txt_description = view.findViewById(R.id.txt_descriptionLandlord);
         txt_repair_category = view.findViewById(R.id.txt_category_landlord);
@@ -84,6 +88,7 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
         txt_date.setText(repair.getDate());
         txt_repair_category.setText(repair.getName());
         txt_description.setText(repair.getDescription());
+        txt_dateUpdated.setText(repair.getDateUpdated());
         Picasso.get().load(repair.getPhotoRef()).placeholder(R.drawable.house).noFade().into(img_view);
     }
 
@@ -101,6 +106,10 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
 
         @Override
         public void onClick(View view) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar calendar = Calendar.getInstance();
+            String dateUpdated = dateFormat.format(calendar.getTime());
+            repair.setDateUpdated(dateUpdated);
             repair.setStatus(status);
             updateRepair();
             routerActionListener.onNavigateToLandlordRepairView(repair,position);
@@ -112,10 +121,10 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
 
         @Override
         public void onClick(View view) {
-            String houseaddress = "11 bronte rd";
+            String houseAddress = repair.getHouseAddress();
             //String category = "Electrical";
             String category = repair.getName();
-            routerActionListener.onNavigateToContactRepairman(houseaddress, category);
+            routerActionListener.onNavigateToContactRepairman(houseAddress, category);
         }
 
     };
@@ -126,7 +135,7 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Updating Repair...");
         progressDialog.show();
-        network.updateRepair(repair);
+        network.updateRepairLandlord(repair);
     }
 
     public void setRepair(Repair repair, int position){
