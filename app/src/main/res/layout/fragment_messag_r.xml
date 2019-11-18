@@ -13,6 +13,7 @@
 
         <EditText
             android:id="@+id/editText"
+            style="@style/general_text"
             android:layout_width="222dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -27,6 +28,7 @@
 
         <Button
             android:id="@+id/sendButton"
+            style="@style/button_layout"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

@@ -9,6 +9,7 @@
     <!--This is a comment-->
 
     <TextView
+        style="@style/general_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -21,6 +22,7 @@
     <ListView
 
         android:layout_gravity="center_vertical"
+        style="@style/general_text"
         android:id="@+id/chatList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -16,7 +16,7 @@ public class SimpleLineChart extends View {
     private int mWidth, mHeight;
 
 
-    private float mYAxisFontSize = 24;
+    private float mYAxisFontSize = 20;
 
 
     private int mLineColor = Color.parseColor("#00BCD4");
@@ -65,7 +65,8 @@ public class SimpleLineChart extends View {
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
-            mHeight = heightSize;
+            //mHeight = heightSize;
+            mHeight = 1000;
         }else if(widthMeasureSpec == MeasureSpec.AT_MOST){
 
             throw new IllegalArgumentException("height must be EXACTLY,you should set like android:height=\"200dp\"");

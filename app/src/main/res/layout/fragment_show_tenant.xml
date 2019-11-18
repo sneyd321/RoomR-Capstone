@@ -13,6 +13,8 @@
 
         <TextView
             android:id="@+id/txtTenantTitleName"
+            style="@style/general_text"
+
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginStart="8dp"
@@ -43,6 +45,7 @@
 
         <Button
             android:id="@+id/btnAddTenant"
+            style="@style/button_layout"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="300dp"
@@ -58,6 +61,7 @@
 
         <Button
             android:id="@+id/groupChat"
+            style="@style/button_layout"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"

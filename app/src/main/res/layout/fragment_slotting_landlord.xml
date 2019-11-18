@@ -20,6 +20,39 @@
             android:id="@+id/simpleLineChartLandlord"
             android:layout_width="400dp"
             android:layout_height="200dp" />
+
+        <Button
+            android:id="@+id/buttonYearLandlord"
+            style="@style/button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/plottingImgName"
+            android:layout_toRightOf="@id/buttonMonthLandlord"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="150dp"
+            android:text="Year" />
+
+        <Button
+            android:id="@+id/buttonMonthLandlord"
+            style="@style/button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/plottingImgName"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:text="Month" />
+
+        <TextView
+            android:id="@+id/plottingImgName"
+            style="@style/general_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/simpleLineChartLandlord"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textSize="22dp"
+            android:text="Payment Speed Rating" />
     </RelativeLayout>
 
 </FrameLayout>
