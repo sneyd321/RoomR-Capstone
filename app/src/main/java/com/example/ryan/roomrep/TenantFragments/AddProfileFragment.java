@@ -1,22 +1,29 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
+import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.example.ryan.roomrep.LoginActivities.ProfileActivity;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
@@ -34,9 +41,10 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
     EditText edtBio;
     Button btnAddProfile;
     TextView txtErrorMessage;
+    TextView txtGoBack;
 
     ProfileRouterAction routerAction;
-
+    Profile profile;
 
 
 
@@ -52,6 +60,8 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
         btnAddProfile = view.findViewById(R.id.btnCreateProfile);
         btnAddProfile.setOnClickListener(onCreateProfile);
         txtErrorMessage = view.findViewById(R.id.txtAddProfileErrorMessage);
+        txtGoBack = view.findViewById(R.id.txtCreateProfileGoBack);
+        txtGoBack.setOnTouchListener(onGoBack);
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         edtFirstName.setText(sharedPref.getString("ProfileFirstName", ""));
         edtLastName.setText(sharedPref.getString("ProfileLastName", ""));
@@ -63,6 +73,16 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
         return view;
     }
 
+
+    View.OnTouchListener onGoBack = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            return false;
+        }
+    };
+
     View.OnClickListener onCreateProfile = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -71,7 +91,7 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
             String lastName = edtLastName.getText().toString();
             String email = edtEmail.getText().toString();
             String bio = edtBio.getText().toString();
-            Profile profile = new Profile(firstName, lastName, email, bio);
+            profile = new Profile(firstName, lastName, email, bio);
             boolean isValid = true;
 
             Map<Integer, String> map = profile.getValidator();
@@ -133,27 +153,48 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
     public void update(String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
-            final String result = jsonObject.get("result").toString();
-            if (result.equals("Updated")){
+            final String result = jsonObject.get("Result").toString();
+            if (result.equals("Error: Profile already exists")){
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        txtErrorMessage.setText("Profile Updated");
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                        alertDialog.setTitle("Profile Already Exists");
+                        alertDialog.setMessage("Would you like to update your profile?");
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Update", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Network network = Network.getInstance();
+                                network.updateProfile(profile);
+                                alertDialog.dismiss();
+                                if (routerAction != null) {
+                                    routerAction.onNavigateToSearchListings();
+                                }
+                            }
+                        });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Don't Update", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alertDialog.dismiss();
+                                if (routerAction != null) {
+                                    routerAction.onNavigateToSearchListings();
+                                }
+                            }
+                        });
+                        alertDialog.show();
                     }
                 });
+            }
+            else {
+                if (routerAction != null) {
+                    routerAction.onNavigateToSearchListings();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        if (routerAction != null) {
-            routerAction.onNavigateToSearchListings();
-        }
+
 
     }
 }

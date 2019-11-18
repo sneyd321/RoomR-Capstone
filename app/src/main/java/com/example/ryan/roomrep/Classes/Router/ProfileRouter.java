@@ -20,9 +20,9 @@ public class ProfileRouter implements ProfileRouterAction{
     FragmentManager fragmentManager;
     List<House> houses;
 
-    public ProfileRouter(FragmentManager fragmentManager, List<House> houses) {
+    public ProfileRouter(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
-        this.houses = houses;
+
     }
 
     private void manageBackstack(Fragment fragment) {
@@ -67,6 +67,12 @@ public class ProfileRouter implements ProfileRouterAction{
     public void onNavigateToViewListings(House house) {
         TenantViewListingFragment tenantViewListingFragment = new TenantViewListingFragment();
         tenantViewListingFragment.setHouse(house);
+        tenantViewListingFragment.setRouterAction(this);
         manageBackstack(tenantViewListingFragment);
+    }
+
+    @Override
+    public void popBackStack() {
+        fragmentManager.popBackStack(fragmentManager.getBackStackEntryCount() - 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }

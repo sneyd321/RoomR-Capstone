@@ -1,5 +1,6 @@
-package com.example.ryan.roomrep.Classes;
+package com.example.ryan.roomrep.Classes.Search;
 
+import com.example.ryan.roomrep.Classes.Tenant.Validator;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -36,6 +37,11 @@ public class Search {
 
     public Map<String, Boolean> getAmenities() {
         return amenities;
+    }
+
+    public Map<Integer, String> getValidator() {
+        Validator validator = new SearchValidator();
+        return validator.validator(this);
     }
 
     public String convertToJSON() {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.TenantListingsRecyclerViewAdapter;
@@ -29,6 +30,7 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
 
 
     RecyclerView rcyTenantListings;
+    TextView txtNoHouses;
     Button btnExitListings;
     ProfileRouterAction profileRouterAction;
     List<House> houses;
@@ -38,17 +40,34 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listings, container, false);
         rcyTenantListings = view.findViewById(R.id.rcyTenantListings);
+        txtNoHouses = view.findViewById(R.id.txtTenantListingsNoHouses);
         btnExitListings = view.findViewById(R.id.btnExitListings);
+        btnExitListings.setOnClickListener(onExitListings);
 
         rcyTenantListings.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         TenantListingsRecyclerViewAdapter adapter = new TenantListingsRecyclerViewAdapter(getActivity(), houses);
-        adapter.setItemClickListener(this);
-        rcyTenantListings.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        if (adapter.getItemCount() != 0){
+            txtNoHouses.setVisibility(View.INVISIBLE);
+            adapter.setItemClickListener(this);
+            rcyTenantListings.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            return view;
 
+        }
+
+        txtNoHouses.setVisibility(View.VISIBLE);
         return view;
     }
+
+    View.OnClickListener onExitListings = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (profileRouterAction != null){
+                profileRouterAction.popBackStack();
+            }
+        }
+    };
 
 
     public void setRouterAction(ProfileRouterAction profileRouterAction) {

@@ -1,6 +1,7 @@
 package com.example.ryan.roomrep.LoginActivities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,20 +27,29 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity  {
 
+    ProfileRouter profileRouter;
 
-    public final static String SHARED_PREFERENCES = "PROFILE_PREFERENCES";
-
-    List<House> houses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        houses = new ArrayList<>();
-
-        ProfileRouter profileRouter = new ProfileRouter(getSupportFragmentManager(), houses);
+        profileRouter = new ProfileRouter(getSupportFragmentManager());
         profileRouter.onNavigateToAddProfile();
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+        else {
+            profileRouter.popBackStack();
+        }
     }
 }

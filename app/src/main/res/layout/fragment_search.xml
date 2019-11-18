@@ -40,11 +40,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnProvinces" />
-
-
 
 
     <TextView
@@ -57,32 +56,9 @@
         android:layout_marginEnd="8dp"
         android:text="Price:"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnCities" />
-
-    <SeekBar
-        android:id="@+id/skbPriceRange"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-    <TextView
-        android:id="@+id/txtPriceRange"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="$500"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/skbPriceRange" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout3" />
 
     <TextView
         android:id="@+id/textView13"
@@ -94,9 +70,9 @@
         android:layout_marginEnd="8dp"
         android:text="Amenities:"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPriceRange" />
-
+        app:layout_constraintTop_toBottomOf="@+id/spnCities" />
 
     <TableLayout
         android:id="@+id/tableLayout3"
@@ -116,6 +92,7 @@
                 android:id="@+id/chkSearchAmenity1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:text="Pets"
                 tools:layout_editor_absoluteX="74dp"
                 tools:layout_editor_absoluteY="601dp" />
@@ -166,32 +143,69 @@
 
     </TableLayout>
 
-
-    <Button
-        android:id="@+id/btnSearchListings"
-        android:layout_width="0dp"
-        android:layout_height="51dp"
+    <SeekBar
+        android:id="@+id/skbPriceRange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        style="@style/button_layout"
-        android:text="Search"
-        app:layout_constraintBottom_toTopOf="@+id/textView18"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/txtPriceRange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="$500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skbPriceRange" />
+
+
+    <Button
+        android:id="@+id/btnSearchListings"
+        style="@style/button_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Search"
+        app:layout_constraintBottom_toTopOf="@+id/txtSearchExitSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSearchExitSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:padding="8dp"
-        android:text="Back"
+        android:text="Exit Search"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSearchShowError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        style="@style/general_text"
+        android:textColor="@color/Red"
+        android:visibility="invisible"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/btnSearchListings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -186,6 +186,10 @@ public class House {
         this.tenants.add(tenant);
     }
 
+    public void addProfile(Profile profile) {
+        this.profiles.add(profile);
+    }
+
     public void initProfileTenant() {
         this.profiles = new ArrayList<>();
         this.tenants = new ArrayList<>();

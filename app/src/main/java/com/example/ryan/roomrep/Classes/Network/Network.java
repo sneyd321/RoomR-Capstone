@@ -6,7 +6,7 @@ import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Rent.Payment;
 import com.example.ryan.roomrep.Classes.Repair;
-import com.example.ryan.roomrep.Classes.Search;
+import com.example.ryan.roomrep.Classes.Search.Search;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,8 +31,8 @@ import okhttp3.Response;
 public class Network implements NetworkObservable {
 
     private final String SERVER_URL2 = "http://10.16.24.254:8080/";
-    private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    //private final String SERVER_URL = "http://10.16.25.27:8080/";
+    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+    private final String SERVER_URL = "http://192.168.0.106:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -768,6 +768,31 @@ public class Network implements NetworkObservable {
     }
 
 
+    public void updateProfile(Profile profile) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            final Gson gson = new Gson();
+            String json = gson.toJson(profile);
+            RequestBody body = RequestBody.create(JSON, json);
 
+            Request request = new Request.Builder()
+                    .url(SERVER_URL + "UpdateProfile/" + user.getUid())
+                    .post(body)
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if (response.isSuccessful()){
 
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+            });
+        }
+    }
 }

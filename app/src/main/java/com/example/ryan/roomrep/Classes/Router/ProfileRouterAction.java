@@ -14,4 +14,6 @@ public interface ProfileRouterAction {
 
     void onNavigateToViewListings(House house);
 
+    void popBackStack();
+
 }

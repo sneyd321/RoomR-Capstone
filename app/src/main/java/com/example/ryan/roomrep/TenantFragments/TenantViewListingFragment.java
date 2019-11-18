@@ -12,15 +12,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
+import com.example.ryan.roomrep.Classes.Router.ProfileRouter;
+import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.R;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class TenantViewListingFragment extends Fragment implements FragmentEventListener {
 
@@ -38,8 +43,10 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     TextView txtPhoneLine;
 
     Button btnContactLandlord;
+    Button btnGoBack;
 
     House house;
+    ProfileRouterAction routerActionListener;
 
 
     @Nullable
@@ -60,6 +67,8 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         txtPhoneLine = view.findViewById(R.id.txtTenantViewListingPhoneLineIncluded);
         btnContactLandlord = view.findViewById(R.id.btnTenantViewListingsContactLandlord);
         btnContactLandlord.setOnClickListener(onContactLandlord);
+        btnGoBack = view.findViewById(R.id.btnTenantViewListingsGoBack);
+        btnGoBack.setOnClickListener(onGoBack);
         txtAddress.setText(house.getAddress());
         Picasso.get().load(house.getUrl()).into(imgHouseImage);
         txtRent.setText(Integer.toString(house.getRent()));
@@ -71,6 +80,8 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         txtElectrical.setText("Not Included");
         txtInternet.setText("Not Included");
         txtPhoneLine.setText("Not Included");
+
+        isLandlordAlreadyNotified();
 
         for (Utility utility : house.getUtilities()){
             switch (utility.getName()){
@@ -94,6 +105,27 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         return view;
     }
 
+    private void isLandlordAlreadyNotified() {
+        List<Profile> profiles = house.getProfiles();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String email = (sharedPref.getString("ProfileEmail", ""));
+
+        for (Profile profile : profiles) {
+            if (profile.getEmail().equals(email)){
+                btnContactLandlord.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    View.OnClickListener onGoBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (routerActionListener != null) {
+                routerActionListener.popBackStack();
+            }
+        }
+    };
+
     View.OnClickListener onContactLandlord = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -107,6 +139,9 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
             Profile profile = new Profile(firstName, lastName, email, bio);
             profile.setHouseAddress(house.getAddress());
             network.contactLandlord(profile);
+            Toast.makeText(getActivity(), "Landlord Notified", Toast.LENGTH_SHORT).show();
+            btnContactLandlord.setVisibility(View.INVISIBLE);
+            house.addProfile(profile);
 
         }
     };
@@ -119,5 +154,9 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     @Override
     public void update(String response) {
 
+    }
+
+    public void setRouterAction(ProfileRouterAction routerActionListener) {
+        this.routerActionListener = routerActionListener;
     }
 }

@@ -3,6 +3,7 @@ package com.example.ryan.roomrep.TenantFragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,12 +18,8 @@ import android.widget.Toast;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Router.ProfileRouter;
 import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
-import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
-import com.example.ryan.roomrep.Classes.Search;
-import com.example.ryan.roomrep.MainActivityTenant;
+import com.example.ryan.roomrep.Classes.Search.Search;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
 
@@ -46,10 +43,12 @@ public class SearchFragment extends Fragment implements FragmentEventListener
     Spinner spnCities;
     SeekBar skbRent;
     TextView txtSkbRentOutput;
+    TextView txtErrorMessage;
+    TextView txtExitSearch;
 
     Button search;
-    String provinceSelected;
-    String citySelected;
+    String provinceSelected = "";
+    String citySelected = "";
     int selectedPrice = 0;
     int cityResourceStringArray;
     Map<String, Boolean> selectedAmenities;
@@ -70,6 +69,9 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         spnCities = view.findViewById(R.id.spnCities);
         skbRent = view.findViewById(R.id.skbPriceRange);
         txtSkbRentOutput = view.findViewById(R.id.txtPriceRange);
+        txtErrorMessage = view.findViewById(R.id.txtSearchShowError);
+        txtExitSearch = view.findViewById(R.id.txtSearchExitSearch);
+        txtExitSearch.setOnTouchListener(onExitSearch);
         selectedAmenities = new LinkedHashMap<>();
 
 
@@ -77,7 +79,10 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         provinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProvinces.setAdapter(provinceAdapter);
         spnProvinces.setOnItemSelectedListener(onProvinceSelected);
-        spnCities.setVisibility(View.INVISIBLE);
+
+        swapAdapters(R.array.AL_Cities);
+
+        spnCities.setEnabled(false);
 
         skbRent.setOnSeekBarChangeListener(onPriceSelected);
         skbRent.setMax(MAX_RENT);
@@ -101,8 +106,8 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String province = (String) parent.getItemAtPosition(position);
             if (province.equals("- Select A Province -")){
-                spnCities.setVisibility(View.INVISIBLE);
-                Toast.makeText(getActivity(), "Please select a province.", Toast.LENGTH_SHORT).show();
+                spnCities.setSelection(0);
+                spnCities.setEnabled(false);
                 return;
             }
             provinceSelected = province;
@@ -158,11 +163,9 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String city = (String) parent.getItemAtPosition(position);
             if (city.equals("- Select A City -")) {
-                Toast.makeText(getActivity(), "Please select a city.", Toast.LENGTH_SHORT).show();
                 return;
             }
             else if (city.equals("- Select A Province")){
-                Toast.makeText(getActivity(), "Please select a city.", Toast.LENGTH_SHORT).show();
                 return;
             }
             citySelected = city;
@@ -180,7 +183,7 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         cityAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(arrayResource));
         cityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnCities.setAdapter(cityAdapter);
-        spnCities.setVisibility(View.VISIBLE);
+        spnCities.setEnabled(true);
         spnCities.setOnItemSelectedListener(onCitySelected);
     }
 
@@ -216,13 +219,40 @@ public class SearchFragment extends Fragment implements FragmentEventListener
                 selectedAmenities.put(checkBox.getText().toString(), checkBox.isChecked());
             }
             Search search = new Search(provinceSelected, citySelected, selectedPrice, selectedAmenities);
+            Map<Integer, String> validator = search.getValidator();
+
+            for (Map.Entry<Integer, String> entry : validator.entrySet()){
+                switch (entry.getKey()){
+                    case 0:
+                        if (!entry.getValue().isEmpty()){
+                            txtErrorMessage.setText(entry.getValue());
+                            txtErrorMessage.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                    case 1:
+                        if (!entry.getValue().isEmpty()){
+                            txtErrorMessage.setText(entry.getValue());
+                            txtErrorMessage.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                }
+            }
+
             Network network = Network.getInstance();
             network.registerObserver(SearchFragment.this);
             network.searchListing(search);
         }
     };
 
-
+    View.OnTouchListener onExitSearch = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (actionListener != null) {
+                actionListener.popBackStack();
+            }
+            return false;
+        }
+    };
 
 
     public void setActionListener(ProfileRouterAction actionListener) {
