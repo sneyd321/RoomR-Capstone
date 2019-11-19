@@ -1,35 +1,41 @@
 package com.example.ryan.roomrep.Classes;
 
 
-import android.support.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Repair {
     private String description;
     private String name;
     private String date;
     private String status;
     private String photoRef;
+    private String dateUpdated;
+    private String houseAddress;
 
-    public Repair(String description, String name, String date, String status, String photoRef){
+    public Repair(String description, String name, String date, String status, String photoRef, String dateUpdated, String houseAddress){
         this.description = description;
         this.name = name;
         this.date = date;
         this.status = status;
         this.photoRef = photoRef;
+        this.dateUpdated = dateUpdated;
+        this.houseAddress = houseAddress;
 
     }
 
+    public String getHouseAddress() {
+        return houseAddress;
+    }
 
+    public void setHouseAddress(String houseAddress) {
+        this.houseAddress = houseAddress;
+    }
+
+    public String getDateUpdated() {
+        return dateUpdated;
+    }
+
+    public void setDateUpdated(String dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
 
     public String getStatus() {
         return status;

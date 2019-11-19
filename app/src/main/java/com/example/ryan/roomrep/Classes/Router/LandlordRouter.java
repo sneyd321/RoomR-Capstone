@@ -180,6 +180,7 @@ public class LandlordRouter implements LandlordRouterAction {
     public void onNavigateToLandlordRepairs(){
         RepairHistoryLandlordFragment repairHistoryLandlordFragment = new RepairHistoryLandlordFragment();
         repairHistoryLandlordFragment.setActionListener(this);
+        repairHistoryLandlordFragment.setHouses(houses);
         repairHistoryLandlordFragment.setRepairs(repairs);
         repairHistoryLandlordFragment.getRepairsFromServer();
 

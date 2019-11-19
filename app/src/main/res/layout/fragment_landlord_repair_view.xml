@@ -82,6 +82,25 @@
                 android:textColor="@color/Black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:text="Date Updated:" />
+
+            <TextView
+                android:id="@+id/txt_dateUpdated_landlord"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="Description:" />
 
             <TextView
@@ -94,7 +113,8 @@
 
         </TableRow>
 
-        <TableRow>
+        <TableRow
+            android:paddingBottom="8dp">
             <TextView
                 style="@style/row_key"
                 android:layout_width="wrap_content"
@@ -112,33 +132,36 @@
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="64dp">
+            android:paddingTop="64dp">
             <Button
                 android:id="@+id/btn_GoBack_landlord"
-                android:text="Go Back To Repairs"
+                android:text="Go Back to Repairs"
                 style="@style/button_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:layout_weight="1"
                 />
 
-
             <Button
                 android:id="@+id/btn_UpdateLandlord"
-                android:text="Update Repair"
+                android:text="Update"
                 style="@style/button_layout"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+        </TableRow>
+        <TableRow>
             <Button
                 android:id="@+id/btn_callRepair"
-                android:text="Contact Repair"
+                android:text="Contact Repairmen"
                 style="@style/button_layout"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
         </TableRow>
 
 

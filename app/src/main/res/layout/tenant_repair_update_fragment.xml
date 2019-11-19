@@ -75,6 +75,25 @@
                 android:textColor="@color/Black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:text="Date Seen by Landlord:" />
+
+            <TextView
+                android:id="@+id/txt_dateUpdatedUpdate"
+                style="@style/row_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                style="@style/row_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:text="Status:" />
 
             <TextView

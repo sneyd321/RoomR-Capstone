@@ -32,6 +32,7 @@
         <item>French</item>
         <item>Italian</item>
         <item>Portuguese </item>
+        <item>Albanian</item>
     </string-array>
 
     <string-array name="languagesShortForm">
@@ -44,6 +45,7 @@
         <item>fr</item>
         <item>it</item>
         <item>pt</item>
+        <item>sq</item>
     </string-array>
 
     <string-array name="bedNumbers">

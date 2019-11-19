@@ -9,10 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
+import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
@@ -44,7 +48,15 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
 
     private List<Repair> repairs;
 
+    List<House> houses;
+
+    Spinner spn_houseAddresses;
+
     ProgressDialog progressDialog;
+
+    String houseAddress;
+
+    List<String> addresses;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,10 +69,21 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
 
         txtIsThereRepairs = view.findViewById(R.id.txtIsThereRepairsLandlord);
 
+        spn_houseAddresses = view.findViewById(R.id.spnhouseAddresses);
+
         rcyRepairsLandlord.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        if(!(addresses == null)){
+            ArrayAdapter<String> houseAddressesAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, addresses);
+            houseAddressesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spn_houseAddresses.setAdapter(houseAddressesAdapter);
+            spn_houseAddresses.setOnItemSelectedListener(onListHouseAddress);
+        }
+        else{
+            txtIsThereRepairs.setText("No Houses Detected, So no repairs");
+        }
 
-        if(!(repairs == null)){
+        if(!(repairs == null || repairs.isEmpty())){
             txtIsThereRepairs.setText("Repairs");
             RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
             //progressDialog = new ProgressDialog(getActivity());
@@ -70,16 +93,52 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
             rcyRepairsLandlord.setAdapter(adapter);
             adapter.setOnItemClickListener(this);
             adapter.notifyDataSetChanged();
+        }else{
+            txtIsThereRepairs.setText("No Repairs");
         }
 
 
         return view;
     }
 
+    Spinner.OnItemSelectedListener onListHouseAddress = new Spinner.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            String selectedAddress = (String) adapterView.getSelectedItem();
+            if (selectedAddress.equals("- Select An Address -")){
+                return;
+            }else{
+                houseAddress = selectedAddress;
+                getRepairsFromServer();
+                if (repairs == null || repairs.isEmpty()){
+                    txtIsThereRepairs.setText("No Repairs");
+                }
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    };
+
     public void setRepairs(List<Repair> repairs){
         this.repairs = repairs;
     }
 
+    public void setHouses(List<House> houses) {
+        this.houses = houses;
+        convertHousesToAddressList(houses);
+    }
+
+    private List<String> convertHousesToAddressList(List<House> houses) {
+        addresses = new ArrayList<>();
+        addresses.add("- Select An Address -");
+        for (House house : houses){
+            addresses.add(house.getAddress());
+        }
+        return addresses;
+    }
 
     public void setActionListener(LandlordRouterAction routerActionListener){
         this.routerActionListener = routerActionListener;
@@ -88,7 +147,7 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
     public void getRepairsFromServer() {
         Network network = Network.getInstance();
         network.registerObserver(this);
-        network.getRepairs();
+        network.getRepairs(houseAddress);
     }
 
 
@@ -104,6 +163,7 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
     @Override
     public void update(String response) {
         JSONArray jsonArray;
+        List<Repair> lstRepairs = new ArrayList<>();
         if (!response.equals("{'error':'Not such repairs for this house.'}")){
             try {
                 jsonArray = new JSONArray(response);
@@ -119,21 +179,30 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
                             jsonObject.getString("Name"),
                             jsonObject.getString("Date"),
                             jsonObject.getString("Status"),
-                            jsonObject.getString("PhotoRef"));
-                    repairs.add(repair);
-
+                            jsonObject.getString("PhotoRef"),
+                            jsonObject.getString("DateUpdated"),
+                            houseAddress);
+                    lstRepairs.add(repair);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                routerActionListener.onSetRepairs(repairs);
+                //routerActionListener.onSetRepairs(repairs);
             }
+            repairs = lstRepairs;
+            routerActionListener.onSetRepairs(repairs);
         }
         else{
-
+            repairs = new ArrayList<>();
         }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (repairs == null || repairs.isEmpty()){
+                    txtIsThereRepairs.setText("No Repairs have been posted");
+                }
+                else{
+                    txtIsThereRepairs.setText("Repairs");
+                }
                 RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
 
                 rcyRepairsLandlord.setAdapter(adapter);

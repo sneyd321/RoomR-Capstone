@@ -26,6 +26,7 @@ public class TenantRepairUpdateFragment extends Fragment implements FragmentEven
     TextView txt_date;
     TextView txt_repair_category;
     TextView txt_status;
+    TextView txt_dateUpdated;
     EditText edt_description;
     Button btn_goback;
     Button btn_update;
@@ -36,6 +37,7 @@ public class TenantRepairUpdateFragment extends Fragment implements FragmentEven
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.tenant_repair_update_fragment, container, false);
 
+        txt_dateUpdated = view.findViewById(R.id.txt_dateUpdatedUpdate);
         txt_date = view.findViewById(R.id.txt_date);
         txt_repair_category = view.findViewById(R.id.txt_category);
         txt_status = view.findViewById(R.id.txt_status);
@@ -102,6 +104,7 @@ public class TenantRepairUpdateFragment extends Fragment implements FragmentEven
         txt_date.setText(repair.getDate());
         txt_status.setText(repair.getStatus());
         txt_repair_category.setText(repair.getName());
+        txt_dateUpdated.setText(repair.getDateUpdated());
         edt_description.setText(repair.getDescription());
         Picasso.get().load(repair.getPhotoRef()).placeholder(R.drawable.house).noFade().into(img_view);
     }
