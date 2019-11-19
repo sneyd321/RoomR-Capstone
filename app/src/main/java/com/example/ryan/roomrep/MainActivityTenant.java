@@ -196,8 +196,8 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         Gson gson = new Gson();
         house = gson.fromJson(jsonObject.toString(), House.class);
 
-        //router.onNavigateToTenantLanding(house, tenant);
-        router.onNavigateToCompleteRent();
+        router.onNavigateToTenantLanding(house, tenant);
+
     }
 
     private JSONObject convertStringToJSONObject(String response) {
