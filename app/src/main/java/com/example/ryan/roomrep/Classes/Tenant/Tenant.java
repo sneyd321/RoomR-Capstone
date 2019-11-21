@@ -37,6 +37,15 @@ public class Tenant implements Parcelable {
         this.houseAddress = houseAddress;
     }
 
+    public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.tenantEmail = email;
+        this.password = password;
+        this.password2 = password2;
+        this.landlordEmail = landlordEmail;
+    }
+
 
     protected Tenant(Parcel in) {
         firstName = in.readString();

@@ -43,7 +43,11 @@ public class TenantListingsRecyclerViewAdapter extends Adapter<TenantListingsRec
         holder.txtAddress.setText(house.getAddress());
         holder.txtRent.setText(Integer.toString(house.getRent()));
         holder.txtDescription.setText(house.getDescription());
-        Picasso.get().load(house.getUrl()).into(holder.imgHouse);
+        if (house.getUrl().isEmpty() || house.getUrl().equals("Not Empty")){
+            Picasso.get().load(R.drawable.examplehouse).noFade().into(holder.imgHouse);
+            return;
+        }
+        Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).error(R.drawable.examplehouse).noFade().into(holder.imgHouse);
     }
 
     @Override

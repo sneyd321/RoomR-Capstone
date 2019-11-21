@@ -49,4 +49,6 @@ public interface LandlordRouterAction {
 
     void popBackStack();
 
+    void updateHouses(List<House> houses);
+
 }

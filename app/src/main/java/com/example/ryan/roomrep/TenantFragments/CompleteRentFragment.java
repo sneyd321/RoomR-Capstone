@@ -1,20 +1,30 @@
 package com.example.ryan.roomrep.TenantFragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
+import com.google.gson.Gson;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.squareup.picasso.Picasso;
 
@@ -22,13 +32,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class CompleteRentFragment extends Fragment {
+public class CompleteRentFragment extends Fragment implements FragmentEventListener {
 
 
 
     CircularProgressBar circularProgressBar;
     ImageView imgCheckbox;
     TextView txtShowPaymentStatus;
+    Button btnGoBack;
+
+    ProgressDialog progressDialog;
+
+    Tenant tenant;
 
 
     @Override
@@ -37,7 +52,27 @@ public class CompleteRentFragment extends Fragment {
         circularProgressBar = view.findViewById(R.id.completeRentCircularProgress);
         imgCheckbox = view.findViewById(R.id.imgCheckbox);
         txtShowPaymentStatus = view.findViewById(R.id.txtShowPaymentStatus);
+        btnGoBack = view.findViewById(R.id.btnCompleteRentGoBack);
+        btnGoBack.setOnClickListener(onGoBack);
         txtShowPaymentStatus.setText("Payment Sent");
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String firstName = sharedPref.getString("TenantFirstName", "");
+        String lastName = sharedPref.getString("TenantLastName", "");
+        String tenantEmail = sharedPref.getString("TenantTenantEmail", "");
+        String landlordEmail = sharedPref.getString("TenantLandlordEmail", "");
+        String password = sharedPref.getString("TenantPassword", "");
+        String password2 = sharedPref.getString("TenantPassword2", "");
+
+        tenant = new Tenant(firstName, lastName, tenantEmail, password, password2, landlordEmail);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Network network = Network.getInstance();
+        network.registerObserver(this);
+        network.getTenantHouse(tenant);
 
 
         long duration = 2000;
@@ -48,11 +83,37 @@ public class CompleteRentFragment extends Fragment {
         imgCheckbox.startAnimation(fadeIn);
 
 
+
         return view;
 
     }
 
+    View.OnClickListener onGoBack = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
 
 
+    @Override
+    public void update(String response) {
+        progressDialog.dismiss();
+        JSONObject jsonObject = convertStringToJSONObject(response);
+        Gson gson = new Gson();
+        House house = gson.fromJson(jsonObject.toString(), House.class);
+        ((MainActivityTenant)getActivity()).setTenantAndHouse(tenant, house);
+    }
+
+    private JSONObject convertStringToJSONObject(String response) {
+        JSONObject jsonObject;
+        try {
+            jsonObject = new JSONObject(response);
+            return jsonObject;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

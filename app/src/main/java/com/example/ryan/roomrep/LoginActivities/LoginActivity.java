@@ -1,5 +1,6 @@
 package com.example.ryan.roomrep.LoginActivities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A login screen that offers login via email/password.
@@ -41,8 +46,10 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
     RadioButton rbtnLandlord;
     RadioButton rbtnTenant;
 
+    TextView txtShowError;
 
 
+    ProgressDialog progressDialog;
     FirebaseAuth auth;
 
 
@@ -62,6 +69,9 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
         signup.setOnTouchListener(onSignUp);
         edtPassword = findViewById(R.id.edtPassword);
         edtUserName = findViewById(R.id.edtUsername);
+        txtShowError = findViewById(R.id.txtLoginShowError);
+
+        progressDialog = new ProgressDialog(this);
 
         auth = FirebaseAuth.getInstance();
     }
@@ -92,6 +102,9 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
         public void onClick(View v) {
             final Network network = new Network();
             network.registerObserver(LoginActivity.this);
+            progressDialog.setMessage("Logging in...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
             final Login login = new Login(edtUserName.getText().toString(), edtPassword.getText().toString());
             if (rbtnLandlord.isChecked()){
                 auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -126,21 +139,26 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
         if (rbtnLandlord.isChecked()){
             Gson gson = new Gson();
             Landlord landlord = gson.fromJson(response, Landlord.class);
-            if (landlord == null){
-                promptInvalidCredentials();
+            if (landlord.getEmail() == null){
+                promptInvalidCredentials(response);
+                progressDialog.dismiss();
                 return;
             }
+            progressDialog.dismiss();
             Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
             intent.putExtra("LANDLORD_DATA", landlord);
             startActivity(intent);
         }
         else if (rbtnTenant.isChecked()){
+
             Gson gson = new Gson();
             Tenant tenant = gson.fromJson(response, Tenant.class);
-            if (tenant == null){
-                promptInvalidCredentials();
+            if (tenant.getTenantEmail() == null){
+                promptInvalidCredentials(response);
+                progressDialog.dismiss();
                 return;
             }
+            progressDialog.dismiss();
             Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
             intent.putExtra("TENANT_DATA", tenant);
             startActivity(intent);
@@ -148,13 +166,23 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
 
     }
 
-    private void promptInvalidCredentials() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                edtPassword.setError("Invalid account credentials");
-            }
-        });
+    private void promptInvalidCredentials(String response) {
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            final String result = jsonObject.getString("Result");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    txtShowError.setText(result);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
 }

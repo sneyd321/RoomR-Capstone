@@ -34,7 +34,7 @@
             android:name=".MainActivityTenant"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -42,8 +42,8 @@
 
                 <data
                     android:host="roomr-222721.appspot.com"
-                    android:pathPattern="/PayComplete"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    android:pathPattern="/PayComplete" />
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivities.LoginActivity">
@@ -54,6 +54,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TenantFragments.TenantMessagRActivity" />
+
         <service android:name=".NotificationService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

@@ -227,4 +227,9 @@ public class LandlordRouter implements LandlordRouterAction {
         fragmentManager.popBackStack(fragmentManager.getBackStackEntryCount() - 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
+    @Override
+    public void updateHouses(List<House> houses) {
+        this.houses = houses;
+    }
+
 }

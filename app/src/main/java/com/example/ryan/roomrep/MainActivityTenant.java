@@ -1,7 +1,9 @@
 package com.example.ryan.roomrep;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
@@ -91,14 +94,17 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                 chatPeopleName = "Ryan Sneyd";
             }
 
+
+            addToSharedPreferences(tenant);
             Network network = Network.getInstance();
             network.registerObserver(this);
             network.getTenantHouse(tenant);
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Loading house data...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading house data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
         if (savedInstanceState == null) {
             bottomMenu.getMenu().getItem(1).setChecked(true);
@@ -159,6 +165,29 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         router.popBackStack();
     }
 
+    public void addToSharedPreferences(Tenant tenant) {
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("TenantFirstName", tenant.getFirstName());
+        editor.putString("TenantLastName", tenant.getLastName());
+        editor.putString("TenantTenantEmail", tenant.getTenantEmail());
+        editor.putString("TenantLandlordEmail", tenant.getLandlordEmail());
+        editor.putString("TenantPassword", tenant.getPassword());
+        editor.putString("TenantPassword2", tenant.getPassword2());
+        editor.apply();
+    }
+
+    public void setTenantAndHouse(Tenant tenant, House house) {
+        this.house = house;
+        this.tenant = tenant;
+        if (router == null) {
+            router = new TenantRouter(getSupportFragmentManager(), new ArrayList<Repair>());
+            router.setTenantAndHouse(tenant, house);
+            return;
+        }
+        router.setTenantAndHouse(tenant, house);
+    }
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener onBottomMenu = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -197,6 +226,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         house = gson.fromJson(jsonObject.toString(), House.class);
 
         router.onNavigateToTenantLanding(house, tenant);
+
 
     }
 

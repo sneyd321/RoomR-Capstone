@@ -267,7 +267,11 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
 
     @Override
     public void update(String response) {
+
+
+
         if (routerActionListener != null) {
+            house.initProfileTenant();
             progressDialog.dismiss();
             routerActionListener.onAddHouse(house);
         }

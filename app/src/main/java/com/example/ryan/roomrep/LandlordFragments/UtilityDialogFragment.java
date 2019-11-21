@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +33,7 @@ public class UtilityDialogFragment extends DialogFragment {
     UtilityDialogActionListener dialogActionListener;
     String selectedFreqency = "Weekly";
     String selectedName = "Hydro";
+    TextView txtClose;
 
     @Override
     public void onStart() {
@@ -44,7 +46,6 @@ public class UtilityDialogFragment extends DialogFragment {
         }
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class UtilityDialogFragment extends DialogFragment {
         spnFrequency = view.findViewById(R.id.spnAddUtilitiesPaymentFrequency);
         btnAddUtility = view.findViewById(R.id.btnAddUtilityAddUtility);
         skbAmount.setOnSeekBarChangeListener(onSeekBarAmount);
+        txtClose = view.findViewById(R.id.txtAddUtilityClose);
+        txtClose.setOnTouchListener(onClose);
         skbAmount.setMax(MAX_UTILITY);
         skbAmount.setProgress(MAX_UTILITY/2);
 
@@ -77,6 +80,14 @@ public class UtilityDialogFragment extends DialogFragment {
 
         return view;
     }
+
+    View.OnTouchListener onClose = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            dismiss();
+            return false;
+        }
+    };
 
     private Spinner.OnItemSelectedListener onNameSelected = new Spinner.OnItemSelectedListener() {
         @Override

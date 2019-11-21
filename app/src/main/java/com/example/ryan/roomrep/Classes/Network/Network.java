@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,7 +35,7 @@ public class Network implements NetworkObservable {
 
     private final String SERVER_URL2 = "http://10.16.27.21:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    //private final String SERVER_URL = "http://10.16.25.27:8080/";
+    //private final String SERVER_URL = "http://10.16.25.141:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -180,6 +182,7 @@ public class Network implements NetworkObservable {
                     .build();
 
             OkHttpClient client = new OkHttpClient();
+
             client.newCall(request).enqueue(new Callback() {
 
                 @Override
@@ -834,4 +837,46 @@ public class Network implements NetworkObservable {
             });
         }
     }
+
+    public void updateHouse(String province, String city, String houseAddress) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            JSONObject jsonObject = formatLocationObject(province, city, houseAddress);
+            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+
+            Request request = new Request.Builder()
+                    .url(SERVER_URL + "AddLocationToHouse/" + user.getUid())
+                    .post(body)
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if (response.isSuccessful()){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+            });
+        }
+    }
+
+    private JSONObject formatLocationObject(String province, String city, String houseAddress) {
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("province", province);
+            jsonObject.put("city", city);
+            jsonObject.put("houseAddress", houseAddress);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+
 }

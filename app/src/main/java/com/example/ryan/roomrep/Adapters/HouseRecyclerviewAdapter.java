@@ -40,7 +40,7 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
     public void onBindViewHolder(@NonNull  HouseRecyclerviewAdapter.ViewHolder holder, int position) {
         House house = data.get(position);
         holder.txtAddress.setText(house.getAddress());
-        if (house.getUrl().isEmpty()){
+        if (house.getUrl().isEmpty() || house.getUrl().equals("Not Empty")){
             Picasso.get().load(R.drawable.examplehouse).noFade().into(holder.imgHouse);
             return;
         }

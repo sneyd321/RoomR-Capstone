@@ -1,5 +1,7 @@
 package com.example.ryan.roomrep.LandlordFragments;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -49,7 +51,6 @@ public class HousesFragment extends Fragment implements ItemClickListener {
     TextView txtLandlordGreeting;
 
 
-
     private List<House> houses;
 
     Landlord landlord;
@@ -67,8 +68,17 @@ public class HousesFragment extends Fragment implements ItemClickListener {
         rcyHouses = view.findViewById(R.id.rcyHouses);
         rcyHouses.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
         if (houses != null) {
+            for (House house : houses) {
+                if (house.getUrl().isEmpty()){
+                    LocationUnknownDialogFragment locationUnknownDialogFragment = new LocationUnknownDialogFragment();
+                    locationUnknownDialogFragment.setHouse(house);
+                    locationUnknownDialogFragment.show(getActivity().getFragmentManager(), null);
+                    house.setUrl("Not Empty");
+                }
+            }
+
+
             HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
             adapter.setOnItemClickListener(HousesFragment.this);
             rcyHouses.swapAdapter(adapter, true);
@@ -115,6 +125,7 @@ public class HousesFragment extends Fragment implements ItemClickListener {
             routerActionListener.onNavigateToShowTenant(house);
         }
     }
+
 
 
 }

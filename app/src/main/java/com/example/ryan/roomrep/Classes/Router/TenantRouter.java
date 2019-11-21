@@ -239,4 +239,9 @@ public class TenantRouter implements TenantRouterAction {
         fragmentManager.popBackStack(fragmentManager.getBackStackEntryCount() - 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
+    public void setTenantAndHouse(Tenant tenant, House house) {
+        this.tenant = tenant;
+        this.house = house;
+    }
+
 }
