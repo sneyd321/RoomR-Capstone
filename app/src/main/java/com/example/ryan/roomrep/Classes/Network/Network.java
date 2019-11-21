@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    private final String SERVER_URL2 = "http://10.16.27.21:8080/";
+    private final String SERVER_URL2 = "http://10.16.25.62:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
     //private final String SERVER_URL = "http://10.16.25.141:8080/";
 
