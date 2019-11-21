@@ -12,8 +12,9 @@
         android:layout_height="match_parent">
 
         <Spinner
+            style="@style/spinner_layout"
             android:id="@+id/spnhouseAddresses"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/txtIsThereRepairsLandlord"
             app:layout_constraintLeft_toLeftOf="parent"

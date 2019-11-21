@@ -78,24 +78,21 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
             houseAddressesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spn_houseAddresses.setAdapter(houseAddressesAdapter);
             spn_houseAddresses.setOnItemSelectedListener(onListHouseAddress);
+            if(!(repairs == null || repairs.isEmpty())){
+                txtIsThereRepairs.setText("Repairs");
+                RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
+
+                rcyRepairsLandlord.setAdapter(adapter);
+                adapter.setOnItemClickListener(this);
+                adapter.notifyDataSetChanged();
+            }else{
+                txtIsThereRepairs.setText("No Repairs");
+            }
         }
         else{
             txtIsThereRepairs.setText("No Houses Detected, So no repairs");
         }
 
-        if(!(repairs == null || repairs.isEmpty())){
-            txtIsThereRepairs.setText("Repairs");
-            RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
-            //progressDialog = new ProgressDialog(getActivity());
-            //progressDialog.setMessage("Getting all Repairs...");
-            //progressDialog.show();
-
-            rcyRepairsLandlord.setAdapter(adapter);
-            adapter.setOnItemClickListener(this);
-            adapter.notifyDataSetChanged();
-        }else{
-            txtIsThereRepairs.setText("No Repairs");
-        }
 
 
         return view;
@@ -106,12 +103,27 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             String selectedAddress = (String) adapterView.getSelectedItem();
             if (selectedAddress.equals("- Select An Address -")){
+                txtIsThereRepairs.setText("Select a House to get Repairs");
+                repairs = new ArrayList<>();
+                RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
+
+                rcyRepairsLandlord.setAdapter(adapter);
+                adapter.setOnItemClickListener(RepairHistoryLandlordFragment.this);
+                adapter.notifyDataSetChanged();
                 return;
             }else{
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Getting all Repairs...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
                 houseAddress = selectedAddress;
                 getRepairsFromServer();
                 if (repairs == null || repairs.isEmpty()){
+                    progressDialog.dismiss();
                     txtIsThereRepairs.setText("No Repairs");
+                }
+                else{
+                    progressDialog.dismiss();
                 }
             }
         }
@@ -162,6 +174,7 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
 
     @Override
     public void update(String response) {
+        progressDialog.dismiss();
         JSONArray jsonArray;
         List<Repair> lstRepairs = new ArrayList<>();
         if (!response.equals("{'error':'Not such repairs for this house.'}")){
@@ -210,6 +223,5 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
                 adapter.notifyDataSetChanged();
             }
         });
-        //progressDialog.dismiss();
     }
 }

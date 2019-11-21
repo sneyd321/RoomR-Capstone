@@ -41,6 +41,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
 
     String houseAddress;
 
+    ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,6 +56,10 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
 
         rcyRepairsTenant.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Getting all Repairs...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
         if(!(repairs == null)) {
             RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
@@ -62,8 +67,11 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
             rcyRepairsTenant.setAdapter(adapter);
             adapter.setOnItemClickListener(this);
             adapter.notifyDataSetChanged();
+            progressDialog.dismiss();
         }
         btnAddRepair.setOnClickListener(onAddRepair);
+
+
 
         return view;
     }
@@ -87,6 +95,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
     }
 
     public void getRepairsFromServer(){
+
         Network network = new Network();
         network.registerObserver(this);
         network.getRepairs(houseAddress);
@@ -94,6 +103,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
 
     @Override
     public void update(String response) {
+        progressDialog.dismiss();
         repairs = new ArrayList<>();
         JSONArray jsonArray;
         if (!response.equals("{'error':'Not such repairs for this house.'}")){

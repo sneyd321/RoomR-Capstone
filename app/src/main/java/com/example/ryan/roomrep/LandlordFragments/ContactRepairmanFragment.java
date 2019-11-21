@@ -1,5 +1,6 @@
 package com.example.ryan.roomrep.LandlordFragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +37,8 @@ public class ContactRepairmanFragment extends Fragment implements FragmentEventL
 
     TextView txtIsThereRepairmans;
 
+    ProgressDialog progressDialog;
+
     Button btn_goback;
 
     @Override
@@ -60,6 +63,11 @@ public class ContactRepairmanFragment extends Fragment implements FragmentEventL
         adapter.setOnItemClickListener(this);
         adapter.notifyDataSetChanged();
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Getting Repairmen Near you...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         return view;
     }
 
@@ -81,6 +89,7 @@ public class ContactRepairmanFragment extends Fragment implements FragmentEventL
 
     @Override
     public void update(String response) {
+        progressDialog.dismiss();
         JSONArray jsonArray;
         try {
             jsonArray = new JSONArray(response);

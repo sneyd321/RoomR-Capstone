@@ -21,10 +21,12 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
     private List<Repair> data;
     private ItemClickListener itemClickListener;
     private LayoutInflater inflater;
+    private Context context;
 
     public RepairRecyclerViewAdapter(Context context, List<Repair> data){
         this.data = data;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
@@ -37,12 +39,21 @@ public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecycl
     public void onBindViewHolder(@NonNull RepairRecyclerViewAdapter.ViewHolder holder, int position) {
         //This allows the method to bind the values to the views.
         Repair repair = data.get(position);
-        holder.txt_descriptionRow.setText("Description: " + repair.getDescription());
-        holder.txt_dateRow.setText("Date: " + repair.getDate());
-        holder.txt_problemIdRow.setText("Repair Category" + repair.getName());
-        holder.txt_status.setText("Status: " + repair.getStatus());
-        holder.txt_dateUpdated.setText("Date Seen By Landlord: " + repair.getDateUpdated());
-        Picasso.get().load(repair.getPhotoRef()).placeholder(R.drawable.house).noFade().into(holder.imgViewRow);
+        holder.txt_descriptionRow.setText(repair.getDescription());
+        holder.txt_dateRow.setText(repair.getDate());
+        holder.txt_problemIdRow.setText(repair.getName());
+        if(repair.getStatus().equals("Unseen")){
+            holder.txt_status.setTextColor(context.getResources().getColor(R.color.Red));
+        }
+        if(repair.getStatus().equals("Pending")){
+            holder.txt_status.setTextColor(context.getResources().getColor(R.color.Purple));
+        }
+        if(repair.getStatus().equals("Completed")){
+            holder.txt_status.setTextColor(context.getResources().getColor(R.color.Green));
+        }
+        holder.txt_status.setText(repair.getStatus());
+        holder.txt_dateUpdated.setText(repair.getDateUpdated());
+        Picasso.get().load(repair.getPhotoRef()).noFade().into(holder.imgViewRow);
     }
 
     @Override

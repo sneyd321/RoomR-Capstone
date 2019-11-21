@@ -182,8 +182,6 @@ public class LandlordRouter implements LandlordRouterAction {
         repairHistoryLandlordFragment.setActionListener(this);
         repairHistoryLandlordFragment.setHouses(houses);
         repairHistoryLandlordFragment.setRepairs(repairs);
-        repairHistoryLandlordFragment.getRepairsFromServer();
-
         manageBackstack(repairHistoryLandlordFragment);
     }
 
@@ -191,6 +189,7 @@ public class LandlordRouter implements LandlordRouterAction {
     public void onNavigateToLandlordRepairsWithNoUpdate(){
         RepairHistoryLandlordFragment repairHistoryLandlordFragment = new RepairHistoryLandlordFragment();
         repairHistoryLandlordFragment.setActionListener(this);
+        repairHistoryLandlordFragment.setHouses(houses);
         repairHistoryLandlordFragment.setRepairs(repairs);
         manageBackstack(repairHistoryLandlordFragment);
     }
@@ -200,6 +199,7 @@ public class LandlordRouter implements LandlordRouterAction {
         repairs.set(position, repair);
         RepairHistoryLandlordFragment repairHistoryLandlordFragment = new RepairHistoryLandlordFragment();
         repairHistoryLandlordFragment.setActionListener(this);
+        repairHistoryLandlordFragment.setHouses(houses);
         repairHistoryLandlordFragment.setRepairs(repairs);
         manageBackstack(repairHistoryLandlordFragment);
     }
