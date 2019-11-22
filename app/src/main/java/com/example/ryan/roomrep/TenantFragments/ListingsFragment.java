@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.TenantListingsRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
@@ -34,7 +35,6 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
     Button btnExitListings;
     ProfileRouterAction profileRouterAction;
     List<House> houses;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +77,7 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
     public void setHouses(List<House> houses){
         this.houses = houses;
     }
+
 
 
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.House.Utility;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
@@ -24,6 +25,9 @@ import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.R;
 
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -41,12 +45,14 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     TextView txtElectrical;
     TextView txtInternet;
     TextView txtPhoneLine;
+    TextView txtRating;
 
     Button btnContactLandlord;
     Button btnGoBack;
 
     House house;
     ProfileRouterAction routerActionListener;
+    String rating;
 
 
     @Nullable
@@ -61,6 +67,7 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         txtBaths = view.findViewById(R.id.txtTenantViewListingBath);
         txtBeds = view.findViewById(R.id.txtTenantViewListingBed);
         txtDescription = view.findViewById(R.id.txtTenantViewListingDescription);
+        txtRating = view.findViewById(R.id.txtLandlordRating);
         txtHydro = view.findViewById(R.id.txtTenantViewListingHydroIncluded);
         txtElectrical = view.findViewById(R.id.txtTenantViewListingElectricalIncluded);
         txtInternet = view.findViewById(R.id.txtTenantViewListingInternetIncluded);
@@ -80,8 +87,10 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         txtElectrical.setText("Not Included");
         txtInternet.setText("Not Included");
         txtPhoneLine.setText("Not Included");
+        //txtRating.setText(rating);
 
         isLandlordAlreadyNotified();
+
 
         for (Utility utility : house.getUtilities()){
             switch (utility.getName()){
@@ -103,6 +112,16 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
 
 
         return view;
+    }
+
+    public void setThatBread(String rating){
+        this.rating = rating;
+    }
+
+    public void  getThatbread(String address){
+        Network network = new Network();
+        network.registerObserver(this);
+        network.getLandlordRating(address);
     }
 
     private void isLandlordAlreadyNotified() {
@@ -153,7 +172,24 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
 
     @Override
     public void update(String response) {
+        if (response.equals("")){
+            return;
+        }
+        else{
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                rating = jsonObject.get("repairrating").toString();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtRating.setText(rating);
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
+        }
     }
 
     public void setRouterAction(ProfileRouterAction routerActionListener) {

@@ -66,6 +66,7 @@ public class ProfileRouter implements ProfileRouterAction{
     @Override
     public void onNavigateToViewListings(House house) {
         TenantViewListingFragment tenantViewListingFragment = new TenantViewListingFragment();
+        tenantViewListingFragment.getThatbread(house.getAddress());
         tenantViewListingFragment.setHouse(house);
         tenantViewListingFragment.setRouterAction(this);
         manageBackstack(tenantViewListingFragment);

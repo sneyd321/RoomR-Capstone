@@ -66,12 +66,9 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         drawerLayout = findViewById(R.id.landlord_drawer_layout);
         bottomMenu = findViewById(R.id.navBarLandlord);
         navigationView = findViewById(R.id.nav_view);
-
-
-
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
-            landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
+         //   landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
         }
         else {
             landlord = bundle.getParcelable("LANDLORD_DATA");

@@ -838,6 +838,40 @@ public class Network implements NetworkObservable {
         }
     }
 
+    public void getLandlordRating(String houseAddress) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("houseAddress",houseAddress);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+
+            Request request = new Request.Builder()
+                    .url(SERVER_URL2 + "GetLandlordWithHouseAddress")
+                    .post(body)
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if (response.isSuccessful()){
+                        notifyObserver(response.body().string());
+                        response.close();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                }
+            });
+        }
+    }
+
     public void updateHouse(String province, String city, String houseAddress) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){

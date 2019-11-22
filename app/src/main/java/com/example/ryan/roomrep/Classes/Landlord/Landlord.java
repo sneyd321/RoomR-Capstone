@@ -19,13 +19,15 @@ public class Landlord implements Parcelable {
     private String password;
     private String password2;
     private String email;
+    private String repairrating;
 
-    public Landlord(String firstName, String lastName, String password, String password2, String email){
+    public Landlord(String firstName, String lastName, String password, String password2, String email, String repairrating){
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.password2 = password2;
         this.email = email;
+        this.repairrating = repairrating;
     }
 
 
@@ -35,6 +37,7 @@ public class Landlord implements Parcelable {
         password = in.readString();
         password2 = in.readString();
         email = in.readString();
+        repairrating = in.readString();
     }
 
     public static final Creator<Landlord> CREATOR = new Creator<Landlord>() {
@@ -61,6 +64,9 @@ public class Landlord implements Parcelable {
         return lastName;
     }
 
+    public String getRepairrating() {
+        return repairrating;
+    }
 
     public Map<Integer, String> getLandlordValidator() {
         Validator validator = new LandlordValidator();
@@ -88,6 +94,7 @@ public class Landlord implements Parcelable {
         dest.writeString(password);
         dest.writeString(password2);
         dest.writeString(email);
+        dest.writeString(repairrating);
     }
 
 }
