@@ -79,8 +79,11 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
-    public void onNavigateToSlottingTenant() {
+    public void onNavigateToSlottingTenant( String tenantName) {
         SlottingLandlord slottingLandlord = new SlottingLandlord();
+        slottingLandlord.setLandlord(this.landlord);
+        slottingLandlord.setTenantName(tenantName);
+        slottingLandlord.initNetwork();
         slottingLandlord.setActionListener(this);
         manageBackstack(slottingLandlord);
     }

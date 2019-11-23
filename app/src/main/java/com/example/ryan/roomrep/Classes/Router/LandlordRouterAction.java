@@ -45,7 +45,7 @@ public interface LandlordRouterAction {
 
     void onNavigateToRatingTenant(String tenantName);
 
-    void onNavigateToSlottingTenant();
+    void onNavigateToSlottingTenant(String tenantName);
 
     void popBackStack();
 
