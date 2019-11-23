@@ -34,8 +34,8 @@ import okhttp3.Response;
 public class Network implements NetworkObservable {
 
     private final String SERVER_URL2 = "http://10.16.25.62:8080/";
-    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    private final String SERVER_URL = "http://192.168.0.106:8080/";
+    private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+    //private final String SERVER_URL = "http://10.16.25.141:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -910,34 +910,6 @@ public class Network implements NetworkObservable {
             e.printStackTrace();
         }
         return jsonObject;
-    }
-
-    public void removeHouse(House house) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            Gson gson = new Gson();
-            String json = gson.toJson(house);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "RemoveHouse/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
     }
 
 

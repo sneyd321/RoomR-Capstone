@@ -67,6 +67,7 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
     TextView txtError;
     ImageView imgView;
     String language;
+    String languageSelected;
     File file;
     ProgressDialog progressDialog;
     //LanguageTranslation languageTranslation;
@@ -101,11 +102,16 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
         btnTakePhoto.setOnClickListener(onTakePhoto);
         btnPickPhoto.setOnClickListener(onPickPhoto);
         language = "none";
-
+        languageSelected = "English";
         languages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
                 String shortFormLanguages[] = getResources().getStringArray(R.array.languagesShortForm);
+                if (pos == 0){
+                    languageSelected = "English";
+                }else{
+                    languageSelected = languages.getSelectedItem().toString();
+                }
                 language = shortFormLanguages[pos];
 
             }
@@ -269,7 +275,7 @@ public class RepairPictureFragment extends Fragment implements FragmentEventList
             Log.d(TAG, "update: " + languageTranslation);
             languageTranslation.setLanguage(language);
             progressDialog.dismiss();
-            actionListener.onNavigateToSendRepair(languageTranslation);
+            actionListener.onNavigateToSendRepair(languageTranslation, languageSelected);
         } catch (JSONException e) {
             e.printStackTrace();
         }

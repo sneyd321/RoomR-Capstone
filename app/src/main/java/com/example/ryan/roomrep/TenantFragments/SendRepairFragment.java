@@ -31,6 +31,7 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
     EditText edt_description;
     Repair repair;
     ProgressDialog progressDialog;
+    String languageSelected;
 
     //texviews for the english words and other language words
     TextView txt_english1;
@@ -43,6 +44,7 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
     TextView txt_otherLanguage3;
     TextView txt_otherLanguage4;
     TextView txt_otherLanguage5;
+    TextView txt_LanguageSelected;
 
     String houseAddress;
 
@@ -73,6 +75,8 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         txt_otherLanguage4 = view.findViewById(R.id.txt_otherLanguage4);
         txt_otherLanguage5 = view.findViewById(R.id.txt_otherLanguage5);
 
+        txt_LanguageSelected = view.findViewById(R.id.txt_LanguageSelected);
+
         setView();
         return view;
     }
@@ -87,6 +91,8 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         txt_english3.setText(englishWords.get(2));
         txt_english4.setText(englishWords.get(3));
         txt_english5.setText(englishWords.get(4));
+
+        txt_LanguageSelected.setText(languageSelected);
 
         if(!otherLanguageWords.get(0).equals("none")){
             txt_otherLanguage1.setText(otherLanguageWords.get(0));
@@ -128,6 +134,9 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
     };
 
 
+    public void setLanguageSelected(String languageSelected){
+        this.languageSelected = languageSelected;
+    }
     private void saveRepair(){
         Network network = Network.getInstance();
         progressDialog = new ProgressDialog(getActivity());

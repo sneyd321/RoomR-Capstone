@@ -32,7 +32,7 @@ public interface TenantRouterAction {
 
     void onNavigateToMessagesPeopleList(Tenant tenant, House house);
 
-    void onNavigateToSendRepair(LanguageTranslation languageTranslation);
+    void onNavigateToSendRepair(LanguageTranslation languageTranslation, String languageSelected);
 
     void onAddRepair(Repair repair);
 
