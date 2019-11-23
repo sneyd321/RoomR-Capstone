@@ -914,58 +914,35 @@ public class Network implements NetworkObservable {
     }
 
     public void removeHouse(House house) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            Gson gson = new Gson();
+            String json = gson.toJson(house);
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(SERVER_URL + "RemoveHouse/" + user.getUid())
+                    .post(body)
+                    .build();
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            OkHttpClient client = new OkHttpClient();
 
-                if (user != null){
-
-                        Gson gson = new Gson();
-
-                        String json = gson.toJson(house);
-
-                        RequestBody body = RequestBody.create(JSON, json);
-
-
-
-                                Request request = new Request.Builder()
-
-                                        .url(SERVER_URL + "RemoveHouse/" + user.getUid())
-
-                                        .post(body)
-
-                                        .build();
-
-                        OkHttpClient client = new OkHttpClient();
-
-                        client.newCall(request).enqueue(new Callback() {
+            client.newCall(request).enqueue(new Callback() {
 
                 @Override
-
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                                        if (response.isSuccessful()){
-
-
+                    if (response.isSuccessful()){
 
                     }
-
-              }
-
-
-
-                   @Override
-
+                }
+               @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-
-
-                                          }
+                }
 
             });
+        }
 
-                    }
-
-            }
+    }
 
 
 }
