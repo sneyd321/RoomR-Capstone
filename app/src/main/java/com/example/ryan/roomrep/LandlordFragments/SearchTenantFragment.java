@@ -110,7 +110,7 @@ public class SearchTenantFragment extends Fragment implements ItemClickListener,
     @Override
     public void onItemClick(View view, int position) {
         if (routerActionListener != null) {
-            ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(profiles.get(position).getFirstName(),profiles.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT", "");
+            ((MainActivityLandlord)getActivity()).peopleToAdd = new Tenant(profiles.get(position).getFirstName(),profiles.get(position).getLastName(),"LOL@GMAIL.COM","123456","123456","FINALMAKE IT", "","");
             //((MainActivityLandlord)getActivity()).mainTenants.add(((MainActivityLandlord)getActivity()).peopleToAdd);
             house.addTenant(((MainActivityLandlord)getActivity()).peopleToAdd);
             Network network = Network.getInstance();

@@ -37,7 +37,7 @@ public class TenantProfileRecyclerviewAdapter extends RecyclerView.Adapter<Tenan
         Profile profile = data.get(position);
         holder.txtFirstName.setText(profile.getFirstName() + " " + profile.getLastName());
         holder.txtBio.setText(profile.getBio());
-        holder.txtRating.setText("4.5");
+
     }
 
     @Override
@@ -55,7 +55,7 @@ public class TenantProfileRecyclerviewAdapter extends RecyclerView.Adapter<Tenan
             super(itemView);
             txtFirstName = itemView.findViewById(R.id.txtTenantProfileFirstName);
             txtBio = itemView.findViewById(R.id.txtTenantProfileBio);
-            txtRating = itemView.findViewById(R.id.txtTenantProfileRating);
+
             itemView.setOnClickListener(this);
 
         }

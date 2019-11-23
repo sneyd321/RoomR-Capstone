@@ -34,8 +34,8 @@ import okhttp3.Response;
 public class Network implements NetworkObservable {
 
     private final String SERVER_URL2 = "http://10.16.25.62:8080/";
-    private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    //private final String SERVER_URL = "http://10.16.25.141:8080/";
+    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+    private final String SERVER_URL = "http://10.16.27.21:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -638,6 +638,7 @@ public class Network implements NetworkObservable {
         json.put("landlordEmail", tenant.getLandlordEmail());
         json.put("password", tenant.getPassword());
         json.put("password2", tenant.getPassword2());
+        json.put("tenantRating", tenant.getTenantRating());
         json.put("token", token);
         return json;
 

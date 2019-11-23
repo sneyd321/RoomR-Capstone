@@ -23,6 +23,7 @@ public class Tenant implements Parcelable {
     private String tenantEmail;
     private String landlordEmail;
     private String houseAddress;
+    private String tenantRating;
 
 
 
@@ -35,6 +36,18 @@ public class Tenant implements Parcelable {
         this.password2 = password2;
         this.landlordEmail = landlordEmail;
         this.houseAddress = houseAddress;
+
+    }
+
+    public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail, String houseAddress, String tenantRating ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.tenantEmail = email;
+        this.password = password;
+        this.password2 = password2;
+        this.landlordEmail = landlordEmail;
+        this.houseAddress = houseAddress;
+        this.tenantRating = tenantRating;
     }
 
     public Tenant(String firstName, String lastName, String email, String password, String password2, String landlordEmail) {
@@ -55,6 +68,7 @@ public class Tenant implements Parcelable {
         tenantEmail = in.readString();
         landlordEmail = in.readString();
         houseAddress = in.readString();
+        tenantRating = in.readString();
     }
 
     public static final Creator<Tenant> CREATOR = new Creator<Tenant>() {
@@ -105,6 +119,8 @@ public class Tenant implements Parcelable {
 
     public String getHouseAddress(){return houseAddress;}
 
+    public String getTenantRating(){return  tenantRating;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -119,6 +135,7 @@ public class Tenant implements Parcelable {
         dest.writeString(tenantEmail);
         dest.writeString(landlordEmail);
         dest.writeString(houseAddress);
+        dest.writeString(tenantRating);
     }
 
 

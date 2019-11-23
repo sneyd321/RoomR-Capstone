@@ -65,7 +65,7 @@ public class TenantSignUpActivity extends AppCompatActivity implements FragmentE
             String password = edtPassword.getText().toString();
             String password2 = edtPassword2.getText().toString();
 
-            Tenant tenant = new Tenant(firstName, lastName, tenantEmail, password, password2, landlordEmail, "");
+            Tenant tenant = new Tenant(firstName, lastName, tenantEmail, password, password2, landlordEmail, "","5.0");
 
             Map<Integer, String> validator = tenant.getValidator();
 
