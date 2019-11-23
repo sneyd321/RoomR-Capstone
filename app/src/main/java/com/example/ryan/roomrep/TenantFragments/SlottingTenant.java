@@ -98,15 +98,21 @@ public class SlottingTenant extends Fragment {
                 mSimpleLineChart.setXItem(xItem);
                 mSimpleLineChart.setYItem(yItem);
                 HashMap<Integer,Integer> pointMap = new HashMap();
-                for(int i = 0;i<xnumber.size();i++){
-
-                    score  =(score+xnumber.get(i));
-
-                }
+//                for(int i = 0;i<xnumber.size();i++){
+//
+//                    score  =(score+xnumber.get(i));
+//
+//                }
                 //score =  score/monthRatinglist.size();
                 pointMap.put(0,12 );
 //                Toast.makeText(getActivity(), score, Toast.LENGTH_LONG).show();
-                mSimpleLineChart.setData(pointMap);
+                if(xnumber.size()==0||yname.size()==0){
+
+                }
+                else{
+                    mSimpleLineChart.setData(pointMap);
+                }
+
                 score = 0;
             }
         });
@@ -132,7 +138,12 @@ public class SlottingTenant extends Fragment {
                 for(int i = 0;i<ynnameList.length;i++){
                     pointMap.put(i, xnumber.get(i));
                 }
-                mSimpleLineChart.setData(pointMap);
+                if(xnumber.size()==0||yname.size()==0){
+
+                }
+                else{
+                    mSimpleLineChart.setData(pointMap);
+                }
 
             }
         });

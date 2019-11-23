@@ -94,8 +94,13 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
                 for(int i = 0;i<xItem.length;i++){
                     pointMap.put(i, score2);
                 }
-                mSimpleLineChart.setData(pointMap);
-                Toast.makeText(getActivity(),tenantName,Toast.LENGTH_SHORT).show();
+                if(xnumber.size()==0||yname.size()==0){
+
+                }
+                else{
+                    mSimpleLineChart.setData(pointMap);
+                }
+                //Toast.makeText(getActivity(),tenantName,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -120,7 +125,12 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
                     //pointMap.put(i, (int) (Math.random()*41));
                     pointMap.put(i, xnumber.get(i));
                 }
-                mSimpleLineChart.setData(pointMap);
+                if(xnumber.size()==0||yname.size()==0){
+
+                }
+                else{
+                    mSimpleLineChart.setData(pointMap);
+                }
 
             }
         });
