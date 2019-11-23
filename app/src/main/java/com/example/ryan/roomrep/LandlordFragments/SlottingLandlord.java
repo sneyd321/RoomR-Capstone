@@ -196,11 +196,11 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
                         score = 50;
                     }
                     score2 = score2-2;
-                    if (score <0) {
-                        score = 0;
+                    if (score2 <0) {
+                        score2 = 0;
                     }
                 }
-                if (dueDateDay - paidDateDay < 7 || dueDateDay - paidDateDay >= 0) {
+                if (dueDateDay - paidDateDay < 7 && dueDateDay - paidDateDay >= 0) {
                     score = score + 1;
                     if (score > 50) {
                         score = 50;
