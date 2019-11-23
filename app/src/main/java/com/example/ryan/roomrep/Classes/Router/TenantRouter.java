@@ -75,12 +75,16 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onNavigateToSlottingLandlord() {
+    public void onNavigateToSlottingLandlord(String landlordEmail) {
         SlottingTenant slottingTenant = new SlottingTenant();
+        slottingTenant.setTenant(this.tenant);
+        slottingTenant.setLandlordEmail(landlordEmail);
         slottingTenant.setActionListener(this);
         manageBackstack(slottingTenant);
 
     }
+
+
 
     @Override
     public void onNavigateToTenantLanding(House house, Tenant tenant) {

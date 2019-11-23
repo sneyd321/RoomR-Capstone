@@ -48,7 +48,7 @@ public interface TenantRouterAction {
 
     void onNavigateToRatingLandlord(String landlordName);
 
-    void onNavigateToSlottingLandlord();
+    void onNavigateToSlottingLandlord(String landlordEmail);
 
     void onNavigateToTenantLanding(House house, Tenant tenant);
 

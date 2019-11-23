@@ -79,7 +79,7 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
         for(int i = 0;i<xItem.length;i++){
             pointMap.put(i, (int) (Math.random()*5));
         }
-        mSimpleLineChart.setData(pointMap);
+        //mSimpleLineChart.setData(pointMap);
 
         showYear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +104,7 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
             public void onClick(View view) {
                 xnumber.clear();
                 yname.clear();
-                String[] xItem = {"Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"};
+                //String[] xItem = {"Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"};
                 //String[] yItem = {"5.0","4.9","4.8","4.7","4.6","4.5","4.4","4.3","4.2","4.1","4.0","3.9","3.8","3.7","3.6","3.5","3.4","3.3","3.2","3.1","3.0","2.9","2.8","2.7","2.6","2.5","2.4","2.3","2.2","2.1","2.0","1.9","1.8","1.7","1.6","1.5","1.4","1.3","1.2","1.1","1.0"};
                 String[] yItem = {"5.0","","","","","4.5","","","","","4.0","","","","","3.5","","","","","3.0","","","","","2.5","","","","","2.0","","","","","1.5","","","","","1.0"};
                 getPaymentRating();
