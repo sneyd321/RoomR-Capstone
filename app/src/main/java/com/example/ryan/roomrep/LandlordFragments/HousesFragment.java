@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,11 +17,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
+import com.example.ryan.roomrep.Adapters.LongClickItemListener;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
@@ -42,16 +49,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class HousesFragment extends Fragment implements ItemClickListener {
+public class HousesFragment extends Fragment implements ItemClickListener, LongClickItemListener {
 
 
     Button btnAddHouse;
     LandlordRouterAction routerActionListener;
     RecyclerView rcyHouses;
     TextView txtLandlordGreeting;
+    TextView txtNoHouses;
+    ImageView imgUpArrow;
 
 
     private List<House> houses;
+    HouseRecyclerviewAdapter adapter;
 
     Landlord landlord;
 
@@ -66,7 +76,12 @@ public class HousesFragment extends Fragment implements ItemClickListener {
         txtLandlordGreeting.setText(landlord.getFirstName() + " " + landlord.getLastName());
         btnAddHouse = view.findViewById(R.id.btnHousesAddHouse);
         rcyHouses = view.findViewById(R.id.rcyHouses);
+        txtNoHouses = view.findViewById(R.id.txtHousesNoHouses);
+        imgUpArrow = view.findViewById(R.id.imgHousesUpArrow);
         rcyHouses.setLayoutManager(new LinearLayoutManager(getActivity()));
+        btnAddHouse.setOnClickListener(onAddHouse);
+
+
 
         if (houses != null) {
             for (House house : houses) {
@@ -77,15 +92,29 @@ public class HousesFragment extends Fragment implements ItemClickListener {
                     house.setUrl("Not Empty");
                 }
             }
-
-
-            HouseRecyclerviewAdapter adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
+        }
+        if (houses.size() != 0) {
+            txtNoHouses.setVisibility(View.INVISIBLE);
+            imgUpArrow.setVisibility(View.INVISIBLE);
+            adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
             adapter.setOnItemClickListener(HousesFragment.this);
+            adapter.setLongClickItemListener(this);
             rcyHouses.swapAdapter(adapter, true);
             adapter.notifyDataSetChanged();
+            return view;
         }
+        txtNoHouses.setVisibility(View.VISIBLE);
+        imgUpArrow.setVisibility(View.VISIBLE);
 
-        btnAddHouse.setOnClickListener(onAddHouse);
+        Animation animFadein = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in);
+        Animation animslideup = AnimationUtils.loadAnimation(getActivity(), R.anim.bottom_to_top);
+
+        final AnimationSet s = new AnimationSet(true);
+        s.setInterpolator(new AccelerateInterpolator());
+
+        s.addAnimation(animslideup);
+        s.addAnimation(animFadein);
+        imgUpArrow.startAnimation(s);
 
         return view;
     }
@@ -127,5 +156,30 @@ public class HousesFragment extends Fragment implements ItemClickListener {
     }
 
 
+    @Override
+    public boolean onLongClick(View view, final int position) {
+        final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
 
+        alertDialog.setTitle("Remove House");
+        alertDialog.setMessage("Are you sure you want to remove this property?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                House house = houses.get(position);
+                adapter.removeHouse(house);
+                Network network = Network.getInstance();
+                network.removeHouse(house);
+
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Don't Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+        return true;
+    }
 }

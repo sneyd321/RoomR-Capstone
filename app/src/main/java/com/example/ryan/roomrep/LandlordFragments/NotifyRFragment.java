@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.LandlordPaymentRecyclerviewAdapter;
@@ -149,6 +150,10 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
 
                 b.show();
             }
+            else {
+                Toast.makeText(getActivity(), "No Tenants in " + house.getAddress(), Toast.LENGTH_SHORT).show();
+            }
+
 
         }
 

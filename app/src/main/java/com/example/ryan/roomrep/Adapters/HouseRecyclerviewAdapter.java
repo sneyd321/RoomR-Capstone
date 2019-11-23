@@ -22,6 +22,7 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
     private List<House> data;
     private LayoutInflater inflater;
     private ItemClickListener itemClickListener;
+    private LongClickItemListener longClickItemListener;
 
     public HouseRecyclerviewAdapter(Context context, List<House> data){
         this.data = data;
@@ -55,7 +56,7 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         ImageView imgHouse;
         TextView txtAddress;
@@ -65,6 +66,7 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
             imgHouse = itemView.findViewById(R.id.imgHouse);
             txtAddress = itemView.findViewById(R.id.txtAddress);
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -73,6 +75,23 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
                 itemClickListener.onItemClick(v, getAdapterPosition());
             }
         }
+        @Override
+        public boolean onLongClick(View v) {
+            if (longClickItemListener != null){
+                longClickItemListener.onLongClick(v, getAdapterPosition());
+            }
+            return false;
+        }
+    }
+
+
+    public void removeHouse(House house) {
+        this.data.remove(house);
+        notifyDataSetChanged();
+    }
+
+    public void setLongClickItemListener(LongClickItemListener longClickItemListener) {
+        this.longClickItemListener = longClickItemListener;
     }
 
     public void setOnItemClickListener(ItemClickListener itemClickListener){

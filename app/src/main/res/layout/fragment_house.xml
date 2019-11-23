@@ -56,8 +56,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnHousesAddHouse" />
 
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/txtHousesNoHouses"
+        style="@style/button_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="No Houses Added"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgHousesUpArrow" />
 
-
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/imgHousesUpArrow"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_arrow_upward_black_24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHousesAddHouse" />
 
 
 </android.support.constraint.ConstraintLayout>

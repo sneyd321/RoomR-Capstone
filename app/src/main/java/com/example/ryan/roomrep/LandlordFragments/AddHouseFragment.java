@@ -268,13 +268,36 @@ public class AddHouseFragment extends Fragment implements UtilityDialogActionLis
     @Override
     public void update(String response) {
 
+        String result = parseResult(response);
+        if (result.equals("Error: House already exists")){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    edtAddress.setError("House already exists");
+                    progressDialog.dismiss();
 
+                }
+            });
+            return;
+
+        }
 
         if (routerActionListener != null) {
             house.initProfileTenant();
             progressDialog.dismiss();
             routerActionListener.onAddHouse(house);
         }
+    }
+
+
+    private String parseResult(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            return jsonObject.getString("Result");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 

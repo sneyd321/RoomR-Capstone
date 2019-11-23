@@ -25,6 +25,7 @@ public class LandlordListingsRecyclerviewAdapter extends RecyclerView.Adapter<La
 
     LayoutInflater inflater;
     List<House> data;
+    LongClickItemListener longClickItemListener;
     ItemClickListener itemClickListener;
     Context context;
 
@@ -54,11 +55,7 @@ public class LandlordListingsRecyclerviewAdapter extends RecyclerView.Adapter<La
             return;
         }
         Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).error(R.drawable.examplehouse).noFade().into(holder.imgHouse);
-
     }
-
-
-
 
     @Override
     public int getItemCount() {
@@ -92,37 +89,31 @@ public class LandlordListingsRecyclerviewAdapter extends RecyclerView.Adapter<La
 
         @Override
         public boolean onLongClick(View v) {
-            final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-
-            alertDialog.setTitle("Remove Listing");
-            alertDialog.setMessage("Are you sure you want to remove this property?");
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Remove", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    House house = data.get(getAdapterPosition());
-                    house.setPosted(false);
-                    Network network = Network.getInstance();
-                    network.postListing(house);
-                    data.remove(getAdapterPosition());
-                    notifyDataSetChanged();
-                    alertDialog.dismiss();
-                }
-            });
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Don't Remove", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    alertDialog.dismiss();
-                }
-            });
-            alertDialog.show();
+            if (longClickItemListener != null){
+                longClickItemListener.onLongClick(v, getAdapterPosition());
+            }
             return false;
         }
     }
 
+    public void addHouse(House house, int position) {
+        this.data.add(house);
+        notifyItemInserted(position);
+    }
+
+    public void removeHouse(House house) {
+        this.data.remove(house);
+        notifyDataSetChanged();
+    }
+
+    public void setLongClickItemListener(LongClickItemListener longClickItemListener) {
+        this.longClickItemListener = longClickItemListener;
+    }
 
 
     public void setItemClickListener(ItemClickListener itemClickListener){
         this.itemClickListener = itemClickListener;
     }
+
 
 }
