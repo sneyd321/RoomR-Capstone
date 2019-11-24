@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactRepairmanFragment extends Fragment implements FragmentEventListener, ItemClickListener {
@@ -97,6 +98,7 @@ public class ContactRepairmanFragment extends Fragment implements FragmentEventL
     public void update(String response) {
         progressDialog.dismiss();
         JSONArray jsonArray;
+        repairContacts = new ArrayList<>();
         try {
             jsonArray = new JSONArray(response);
         } catch (JSONException e) {
