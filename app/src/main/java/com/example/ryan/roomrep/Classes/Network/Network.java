@@ -35,7 +35,7 @@ public class Network implements NetworkObservable {
 
     //private final String SERVER_URL2 = "http://10.16.25.62:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    //private final String SERVER_URL = "http://10.16.24.80:8080/";
+    //private final String SERVER_URL = "http://10.16.27.21:8080/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
@@ -139,33 +139,32 @@ public class Network implements NetworkObservable {
     }
 
     public void signUpLandlord(final Landlord landlord){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            Gson gson = new Gson();
-            String json = gson.toJson(landlord);
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "SignUpTempLandlord/" + user.getUid())
-                    .post(body)
-                    .build();
 
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
+        Gson gson = new Gson();
+        String json = gson.toJson(landlord);
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(SERVER_URL + "SignUpTempLandlord/")
+                .post(body)
+                .build();
 
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
 
-                    }
-                    response.close();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
 
                 }
-            });
-        }
+                response.close();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+        });
+
 
     }
 
