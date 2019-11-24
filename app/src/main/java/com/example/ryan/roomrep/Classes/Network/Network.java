@@ -33,7 +33,7 @@ import okhttp3.Response;
 
 public class Network implements NetworkObservable {
 
-    private final String SERVER_URL2 = "http://10.16.25.62:8080/";
+    //private final String SERVER_URL2 = "http://10.16.25.62:8080/";
     private final String SERVER_URL = "https://roomr-222721.appspot.com/";
     //private final String SERVER_URL = "http://10.16.24.80:8080/";
 
@@ -324,7 +324,7 @@ public class Network implements NetworkObservable {
                 .build();
 
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "AddPhoto")
+                .url(SERVER_URL + "AddPhoto")
                 .post(requestBody)
                 .build();
 
@@ -351,7 +351,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "AddRepair")
+                .url(SERVER_URL + "AddRepair")
                 .post(body)
                 .build();
 
@@ -388,7 +388,7 @@ public class Network implements NetworkObservable {
         RequestBody body = RequestBody.create(JSON, jsonString);
 
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "GetRepairs")
+                .url(SERVER_URL + "GetRepairs")
                 .post(body)
                 .build();
 
@@ -514,7 +514,7 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(repair);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "UpdateRepairs")
+                .url(SERVER_URL + "UpdateRepairs")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();
@@ -541,7 +541,7 @@ public class Network implements NetworkObservable {
         String json = gson.toJson(repair);
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "UpdateRepairsLandlord")
+                .url(SERVER_URL + "UpdateRepairsLandlord")
                 .post(body)
                 .build();
         OkHttpClient client = new OkHttpClient();
@@ -576,11 +576,12 @@ public class Network implements NetworkObservable {
 
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL2 + "GetRepairman")
+                .url(SERVER_URL + "GetRepairman")
                 .post(body)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder().readTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
+
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -593,7 +594,7 @@ public class Network implements NetworkObservable {
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
+                System.out.println("Hello");
             }
         });
     }
@@ -851,7 +852,7 @@ public class Network implements NetworkObservable {
             RequestBody body = RequestBody.create(JSON, jsonObject.toString());
 
             Request request = new Request.Builder()
-                    .url(SERVER_URL2 + "GetLandlordWithHouseAddress")
+                    .url(SERVER_URL + "GetLandlordWithHouseAddress")
                     .post(body)
                     .build();
             OkHttpClient client = new OkHttpClient();
