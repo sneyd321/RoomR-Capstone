@@ -140,7 +140,7 @@ public class SlottingTenant extends Fragment {
                 for(int i = 0;i<ynnameList.length;i++){
                     pointMap.put(i, xnumber.get(i));
                 }
-                if(xnumber.size()==0||yname.size()==0){
+                if(xnumber.size()<2||yname.size()<2){
 
                 }
                 else{
@@ -174,7 +174,16 @@ public class SlottingTenant extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         //Log.d(TAG, document.getId() + " => " + document.getData());
                         //Toast.makeText(getActivity(), document.getData().toString(), Toast.LENGTH_LONG).show();
-                        monthRatinglist.add(document.get("Rating").toString());
+                        //String rating;
+                        Object rating;
+                        rating =document.get("rating");
+                        if(rating==null){
+                            //rating =document.get("Rating").toString();
+                            monthRatinglist.add(document.get("Rating").toString());
+                        }else{
+                            monthRatinglist.add(document.get("rating").toString());
+                        }
+
 
                         //Toast.makeText(getActivity(), monthRatinglist.get(1), Toast.LENGTH_LONG).show();
 
