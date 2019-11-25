@@ -58,6 +58,7 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
     String monthName;
     List<Integer> xnumber = new ArrayList<>();
     List<String> yname = new ArrayList<>();
+    List<Integer> years = new ArrayList<>();
 
 
     @Override
@@ -69,6 +70,7 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
         mSimpleLineChart = view.findViewById(R.id.simpleLineChartLandlord);
         showMonth = view.findViewById(R.id.buttonMonthLandlord);
         showYear = view.findViewById(R.id.buttonYearLandlord);
+
         final String[] xItem = {"1","2","3","4","5","6","7"};
         String[] yItem = {"10","20","30","40","50"};
         if(mSimpleLineChart == null)
@@ -84,18 +86,25 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
         showYear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] xItem = {"2019"};
+                xnumber.clear();
+                yname.clear();
+                years.clear();
+                String[] xItem = {"2017","2018","2019"};
                 String[] yItem = {"5.0","","","","","4.5","","","","","4.0","","","","","3.5","","","","","3.0","","","","","2.5","","","","","2.0","","","","","1.5","","","","","1.0"};
+                getPaymentRating();
                 if(mSimpleLineChart == null)
                     Log.e("wing","null!!!!");
+                years.add(0);
+                years.add(2);
+                years.add(0);
                 mSimpleLineChart.setXItem(xItem);
                 mSimpleLineChart.setYItem(yItem);
                 HashMap<Integer,Integer> pointMap = new HashMap();
                 for(int i = 0;i<xItem.length;i++){
-                    pointMap.put(i, score2);
+                    pointMap.put(i, years.get(i));
                 }
-                if(xnumber.size()==0||yname.size()==0){
-
+                if(xnumber.size()<4||yname.size()<4){
+                    Toast.makeText(getActivity(),"Not enough data to generate graph",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     mSimpleLineChart.setData(pointMap);
@@ -109,7 +118,7 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
             public void onClick(View view) {
                 xnumber.clear();
                 yname.clear();
-                //String[] xItem = {"Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"};
+                String[] xItem = {"Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct","Nov","Dec"};
                 //String[] yItem = {"5.0","4.9","4.8","4.7","4.6","4.5","4.4","4.3","4.2","4.1","4.0","3.9","3.8","3.7","3.6","3.5","3.4","3.3","3.2","3.1","3.0","2.9","2.8","2.7","2.6","2.5","2.4","2.3","2.2","2.1","2.0","1.9","1.8","1.7","1.6","1.5","1.4","1.3","1.2","1.1","1.0"};
                 String[] yItem = {"5.0","","","","","4.5","","","","","4.0","","","","","3.5","","","","","3.0","","","","","2.5","","","","","2.0","","","","","1.5","","","","","1.0"};
                 getPaymentRating();
@@ -117,7 +126,8 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
                 if(mSimpleLineChart == null)
                     Log.e("wing","null!!!!");
                 String[] ynnameList = yname.toArray(new String[]{});
-                mSimpleLineChart.setXItem(ynnameList);
+
+                mSimpleLineChart.setXItem(xItem);
 
                 mSimpleLineChart.setYItem(yItem);
                 HashMap<Integer,Integer> pointMap = new HashMap();
@@ -125,8 +135,8 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
                     //pointMap.put(i, (int) (Math.random()*41));
                     pointMap.put(i, xnumber.get(i));
                 }
-                if(xnumber.size()==0||yname.size()==0){
-
+                if(xnumber.size()<4||yname.size()<4){
+                    Toast.makeText(getActivity(),"Not enough data to generate graph",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     mSimpleLineChart.setData(pointMap);
@@ -190,7 +200,7 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
 //            }
                 formatPaymentDueDate(payments.get(i).getDueDate());
                 formatDatePaid(payments.get(i).getDatePaid());
-                if (dueDateDay - paidDateDay > 7) {
+                if(dueDateDay - paidDateDay > 7){
                     score = score + 2;
                     if (score > 50) {
                         score = 50;
@@ -199,8 +209,7 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
                     if (score2 <0) {
                         score2 = 0;
                     }
-                }
-                if (dueDateDay - paidDateDay < 7 && dueDateDay - paidDateDay >= 0) {
+                }else if(dueDateDay - paidDateDay < 7 && dueDateDay - paidDateDay >= 0){
                     score = score + 1;
                     if (score > 50) {
                         score = 50;
@@ -209,17 +218,15 @@ public class SlottingLandlord extends Fragment implements FragmentEventListener 
                     if (score2 <0) {
                         score2 = 0;
                     }
-
-
-                }
-                else {
+                }else{
                     score = score - 1;
                     score2 = score2+ 1;
                     if(score2 >41){
                         score2 = 41;
                     }
                 }
-                //xnumber.add(payments.get(i).getDueDate())
+
+
                 xnumber.add(score2);
                 yname.add(monthName);
             }
