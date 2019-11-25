@@ -91,7 +91,7 @@ public class SlottingTenant extends Fragment {
             public void onClick(View view) {
 
                 //Toast.makeText(getActivity(), timelist.toString(), Toast.LENGTH_LONG).show();
-                String[] xItem = {"2019"};
+                String[] xItem = {"2017","2018","2019"};
                 String[] yItem = {"5.0","","","","","4.5","","","","","4.0","","","","","3.5","","","","","3.0","","","","","2.5","","","","","2.0","","","","","1.5","","","","","1.0"};
                 if(mSimpleLineChart == null)
                     Log.e("wing","null!!!!");
@@ -105,9 +105,11 @@ public class SlottingTenant extends Fragment {
 //                }
                 //score =  score/monthRatinglist.size();
                 pointMap.put(0,12 );
+                pointMap.put(1,10 );
+                pointMap.put(2,11 );
 //                Toast.makeText(getActivity(), score, Toast.LENGTH_LONG).show();
-                if(xnumber.size()==0||yname.size()==0){
-
+                if(xnumber.size()<2||yname.size()<2){
+                    Toast.makeText(getActivity(),"Not enough data to generate graph",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     mSimpleLineChart.setData(pointMap);
