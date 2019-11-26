@@ -141,7 +141,7 @@ public class SlottingTenant extends Fragment {
                     pointMap.put(i, xnumber.get(i));
                 }
                 if(xnumber.size()<2||yname.size()<2){
-
+                    Toast.makeText(getActivity(),"Not enough data to generate graph",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     mSimpleLineChart.setData(pointMap);
