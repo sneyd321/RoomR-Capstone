@@ -93,7 +93,6 @@
         </TableRow>
 
         <TableRow>
-
             <TextView
                 style="@style/row_key"
                 android:layout_width="wrap_content"
@@ -106,15 +105,14 @@
             <TextView
                 android:id="@+id/txt_descriptionLandlord"
                 style="@style/row_value"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:lines="4"/>
-
+                android:lines="4"
+                android:scrollbars="vertical"/>
         </TableRow>
 
-        <TableRow
-            android:paddingBottom="8dp">
+        <TableRow>
             <TextView
                 style="@style/row_key"
                 android:layout_width="wrap_content"
@@ -126,9 +124,8 @@
 
             <Spinner
                 android:id="@+id/status_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
         </TableRow>
 
         <TableRow
@@ -137,7 +134,7 @@
                 android:id="@+id/btn_GoBack_landlord"
                 android:text="Go Back to Repairs"
                 style="@style/button_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_weight="1"
@@ -149,7 +146,7 @@
                 style="@style/button_layout"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
         </TableRow>
@@ -160,7 +157,7 @@
                 style="@style/button_layout"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
         </TableRow>
 

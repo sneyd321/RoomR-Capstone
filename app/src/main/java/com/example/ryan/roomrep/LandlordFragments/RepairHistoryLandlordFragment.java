@@ -119,7 +119,7 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
                 houseAddress = selectedAddress;
                 getRepairsFromServer();
                 if (repairs == null || repairs.isEmpty()){
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
                     txtIsThereRepairs.setText("No Repairs");
                 }
                 else{

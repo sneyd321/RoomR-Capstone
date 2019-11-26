@@ -3,6 +3,7 @@ package com.example.ryan.roomrep.LandlordFragments;
 import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
     Button btn_updateRepair;
     Button btn_contactRepair;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
         btn_contactRepair = view.findViewById(R.id.btn_callRepair);
         btn_goback = view.findViewById(R.id.btn_GoBack_landlord);
         btn_updateRepair = view.findViewById(R.id.btn_UpdateLandlord);
+
+        txt_description.setMovementMethod(new ScrollingMovementMethod());
 
         btn_goback.setOnClickListener(onGoBackView);
         btn_updateRepair.setOnClickListener(onUpdateRepairView);
@@ -122,7 +127,6 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
         @Override
         public void onClick(View view) {
             String houseAddress = repair.getHouseAddress();
-            //String category = "Electrical";
             String category = repair.getName();
             routerActionListener.onNavigateToContactRepairman(houseAddress, category);
         }
@@ -147,6 +151,7 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
         this.routerActionListener = routerActionListener;
     }
 
+
     @Override
     public void update(String response) {
         if (routerActionListener != null) {
@@ -154,4 +159,6 @@ public class RepairViewLandlordFragment extends Fragment implements FragmentEven
             routerActionListener.onNavigateToLandlordRepairsWithUpdate(repair, position);
         }
     }
+
+
 }
