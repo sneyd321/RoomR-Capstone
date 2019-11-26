@@ -108,7 +108,7 @@ public class SlottingTenant extends Fragment {
                 pointMap.put(1,10 );
                 pointMap.put(2,11 );
 //                Toast.makeText(getActivity(), score, Toast.LENGTH_LONG).show();
-                if(xnumber.size()<2||yname.size()<2){
+                if(xnumber.size()<4||yname.size()<4){
                     Toast.makeText(getActivity(),"Not enough data to generate graph",Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -140,7 +140,7 @@ public class SlottingTenant extends Fragment {
                 for(int i = 0;i<ynnameList.length;i++){
                     pointMap.put(i, xnumber.get(i));
                 }
-                if(xnumber.size()<2||yname.size()<2){
+                if(xnumber.size()<4||yname.size()<4){
                     Toast.makeText(getActivity(),"Not enough data to generate graph",Toast.LENGTH_SHORT).show();
                 }
                 else{
