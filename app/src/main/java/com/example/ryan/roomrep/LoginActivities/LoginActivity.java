@@ -34,6 +34,8 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -101,44 +103,70 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
     View.OnClickListener onLogin = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            final Network network = new Network();
-            network.registerObserver(LoginActivity.this);
-            progressDialog.setMessage("Logging in...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+
             final Login login = new Login(edtUserName.getText().toString(), edtPassword.getText().toString());
-            if (rbtnLandlord.isChecked()){
-                auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            network.getLandlord(login);
-                        }
+
+            Map<Integer, String> validator = login.getValidator();
+            boolean isValid = true;
+            for (Map.Entry<Integer, String> entry : validator.entrySet()) {
+                if (!entry.getValue().isEmpty()) {
+                    switch (entry.getKey()) {
+                        case 0:
+                            edtUserName.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 1:
+                            edtPassword.setError(entry.getValue());
+                            isValid = false;
+                            break;
+                        case 2:
+                            edtPassword.setError(entry.getValue());
+                            isValid = false;
+                            break;
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        txtShowError.setText("Invalid Username or Password");
-                        progressDialog.dismiss();
-                    }
-                });
+                }
             }
-            else if(rbtnTenant.isChecked()){
-                auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            network.getTenant(login);
+            if (isValid) {
+                final Network network = new Network();
+                network.registerObserver(LoginActivity.this);
+                progressDialog.setMessage("Logging in...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
+                if (rbtnLandlord.isChecked()){
+                    auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                network.getLandlord(login);
+                            }
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        txtShowError.setText("Invalid Username or Password");
-                        progressDialog.dismiss();
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            txtShowError.setText("Invalid Username or Password");
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
+                else if(rbtnTenant.isChecked()){
+                    auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                network.getTenant(login);
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            txtShowError.setText("Invalid Username or Password");
+                            progressDialog.dismiss();
+                        }
+                    });
+                }
             }
+
         }
     };
 

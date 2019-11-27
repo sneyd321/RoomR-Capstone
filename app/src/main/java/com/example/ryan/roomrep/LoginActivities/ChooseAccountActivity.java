@@ -3,11 +3,13 @@ package com.example.ryan.roomrep.LoginActivities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryan.roomrep.MainActivityTenant;
@@ -18,6 +20,7 @@ public class ChooseAccountActivity extends AppCompatActivity {
 
     Button btnTenant;
     Button btnLandlord;
+    TextView txtGoBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -26,6 +29,8 @@ public class ChooseAccountActivity extends AppCompatActivity {
 
         btnTenant = findViewById(R.id.btnTenant);
         btnLandlord = findViewById(R.id.btnLandlord);
+        txtGoBack = findViewById(R.id.txtCAback);
+        txtGoBack.setOnTouchListener(onGoBack);
 
 
         btnTenant.setOnClickListener(onTenant);
@@ -50,6 +55,15 @@ public class ChooseAccountActivity extends AppCompatActivity {
             Intent intent = new Intent(ChooseAccountActivity.this, LandlordSignUpActivity.class);
             //Intent intent = new Intent(ChooseAccountActivity.this, MainActivityTenant.class);
             startActivity(intent);
+        }
+    };
+
+    View.OnTouchListener onGoBack = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Intent intent = new Intent(ChooseAccountActivity.this, LoginActivity.class);
+            startActivity(intent);
+            return false;
         }
     };
 

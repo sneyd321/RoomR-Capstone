@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
@@ -31,6 +33,7 @@ public class TenantSignUpActivity extends AppCompatActivity implements FragmentE
     EditText edtPassword;
     EditText edtPassword2;
     Button btnSignUp;
+    TextView txtGoBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class TenantSignUpActivity extends AppCompatActivity implements FragmentE
         edtPassword2 = findViewById(R.id.edtTSUPassword2);
         btnSignUp = findViewById(R.id.btnTSUSignUp);
         btnSignUp.setOnClickListener(onSignUp);
+        txtGoBack = findViewById(R.id.txtTSUGoBack);
+        txtGoBack.setOnTouchListener(onGoBack);
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         edtFirstName.setText(sharedPref.getString("ProfileFirstName", ""));
@@ -138,6 +143,15 @@ public class TenantSignUpActivity extends AppCompatActivity implements FragmentE
             }
         });
     }
+
+    View.OnTouchListener onGoBack = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Intent intent = new Intent(TenantSignUpActivity.this, ChooseAccountActivity.class);
+            startActivity(intent);
+            return false;
+        }
+    };
 
 
     @Override

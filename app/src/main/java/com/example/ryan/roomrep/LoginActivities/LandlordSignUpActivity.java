@@ -3,9 +3,11 @@ package com.example.ryan.roomrep.LoginActivities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
@@ -29,6 +31,7 @@ public class LandlordSignUpActivity extends AppCompatActivity {
     EditText edtPassword2;
     EditText edtEmail;
     Button btnSignup;
+    TextView txtOnGoBack;
 
     FirebaseAuth auth;
 
@@ -45,6 +48,8 @@ public class LandlordSignUpActivity extends AppCompatActivity {
         edtPassword2 = findViewById(R.id.edtLSUpassword2);
         edtEmail = findViewById(R.id.edtLSUemail);
         btnSignup = findViewById(R.id.btnLSUsignup);
+        txtOnGoBack = findViewById(R.id.txtLSUback);
+        txtOnGoBack.setOnTouchListener(onGoBack);
         btnSignup.setOnClickListener(onSignUp);
 
         auth = FirebaseAuth.getInstance();
@@ -110,6 +115,16 @@ public class LandlordSignUpActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
+        }
+    };
+
+
+    View.OnTouchListener onGoBack = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Intent intent = new Intent(LandlordSignUpActivity.this, ChooseAccountActivity.class);
+            startActivity(intent);
+            return false;
         }
     };
 
