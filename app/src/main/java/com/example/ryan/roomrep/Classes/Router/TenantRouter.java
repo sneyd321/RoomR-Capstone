@@ -188,6 +188,7 @@ public class TenantRouter implements TenantRouterAction {
     public void onNavigateToSendRepair(LanguageTranslation languageTranslation, String languageSelected) {
         SendRepairFragment sendRepairFragment = new SendRepairFragment();
         sendRepairFragment.setLanguageSelected(languageSelected);
+        sendRepairFragment.setTenant(tenant);
         sendRepairFragment.setHouseAddress(house.getAddress());
         sendRepairFragment.setLanguageTranslation(languageTranslation);
         sendRepairFragment.setActionListener(this);
@@ -195,7 +196,7 @@ public class TenantRouter implements TenantRouterAction {
     }
 
     @Override
-    public void onAddRepair(Repair repair){
+    public void onAddRepair(Repair repair, Tenant tenant){
         TenantRepairListFragment tenantRepairFragment = new TenantRepairListFragment();
         this.repairs.add(repair);
         tenantRepairFragment.setHouseAddress(house.getAddress());

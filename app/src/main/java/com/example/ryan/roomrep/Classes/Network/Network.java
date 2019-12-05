@@ -343,11 +343,25 @@ public class Network implements NetworkObservable {
         });
     }
 
-    public void addRepair(Repair repair){
-        final Gson gson = new Gson();
-        String json = gson.toJson(repair);
+    public void addRepair(Repair repair, Tenant tenant){
+        Tenant tempTenant = tenant;
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", repair.getName());
+            json.put("status", repair.getStatus());
+            json.put("description", repair.getDescription());
+            json.put("photoRef", repair.getPhotoRef());
+            json.put("date", repair.getDate());
+            json.put("dateUpdated", repair.getDateUpdated());
+            json.put("houseAddress", repair.getHouseAddress());
+            json.put("landlordEmail", tempTenant.getLandlordEmail());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        RequestBody body = RequestBody.create(JSON, json);
+        String jsonString = json.toString();
+
+        RequestBody body = RequestBody.create(JSON, jsonString);
 
         Request request = new Request.Builder()
                 .url(SERVER_URL + "AddRepair")
@@ -809,6 +823,7 @@ public class Network implements NetworkObservable {
         }
 
     }
+
 
 
     public void updateProfile(Profile profile) {

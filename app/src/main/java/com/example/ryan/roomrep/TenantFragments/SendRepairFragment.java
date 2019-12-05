@@ -16,6 +16,7 @@ import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
+import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +33,8 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
     Repair repair;
     ProgressDialog progressDialog;
     String languageSelected;
+
+    Tenant tenant;
 
     //texviews for the english words and other language words
     TextView txt_english1;
@@ -143,12 +146,15 @@ public class SendRepairFragment extends Fragment implements FragmentEventListene
         progressDialog.setMessage("Sending Repair...");
         progressDialog.show();
         network.registerObserver(this);
-        network.addRepair(repair);
+        network.addRepair(repair, tenant);
         Toast.makeText(getContext(), "Repair Sent", Toast.LENGTH_SHORT).show();
-        actionListener.onAddRepair(repair);
+        actionListener.onAddRepair(repair, tenant);
 
     }
 
+    public void setTenant(Tenant tenant){
+        this.tenant = tenant;
+    }
     public void setActionListener(TenantRouterAction actionListener) {
         this.actionListener = actionListener;
         //Use this actionListener to later manage the back stack and pop off this view and the other view and re-direct to viewRepairList.

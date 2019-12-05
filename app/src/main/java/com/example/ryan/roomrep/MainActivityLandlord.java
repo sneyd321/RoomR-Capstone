@@ -151,7 +151,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
                     item.setChecked(true);
                     break;
                 case R.id.navNotifyR:
-                    router.onNavigateToNotifyR();
+                    router.onNavigateToNotifyrOptions();
                     item.setChecked(true);
                     break;
                 default:

@@ -51,4 +51,8 @@ public interface LandlordRouterAction {
 
     void updateHouses(List<House> houses);
 
+    void onNavigateToNotifyrOptions();
+
+    void onNavigateToNotifyRepairs();
+
 }

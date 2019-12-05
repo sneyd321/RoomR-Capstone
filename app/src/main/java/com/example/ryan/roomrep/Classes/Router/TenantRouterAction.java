@@ -34,7 +34,7 @@ public interface TenantRouterAction {
 
     void onNavigateToSendRepair(LanguageTranslation languageTranslation, String languageSelected);
 
-    void onAddRepair(Repair repair);
+    void onAddRepair(Repair repair, Tenant tenant);
 
     void onNavigateToTenantRepairsList();
 

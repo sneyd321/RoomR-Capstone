@@ -14,9 +14,11 @@ import com.example.ryan.roomrep.LandlordFragments.ContactRepairmanFragment;
 import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LandlordFragments.LandlordListingsFragment;
 import com.example.ryan.roomrep.LandlordFragments.MessageLandlordFragment;
+import com.example.ryan.roomrep.LandlordFragments.NotificationOptionsFragment;
 import com.example.ryan.roomrep.LandlordFragments.NotifyRFragment;
 import com.example.ryan.roomrep.LandlordFragments.RatingTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.RepairHistoryLandlordFragment;
+import com.example.ryan.roomrep.LandlordFragments.RepairNotificationLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.RepairViewLandlordFragment;
 import com.example.ryan.roomrep.LandlordFragments.SearchTenantFragment;
 import com.example.ryan.roomrep.LandlordFragments.ShowTenantFragment;
@@ -217,12 +219,29 @@ public class LandlordRouter implements LandlordRouterAction {
     }
 
     @Override
+    public void onNavigateToNotifyrOptions(){
+        NotificationOptionsFragment notificationOptionsFragment = new NotificationOptionsFragment();
+        notificationOptionsFragment.setActionListener(this);
+        manageBackstack(notificationOptionsFragment);
+    }
+
+    @Override
     public void onNavigateToContactRepairman(String address, String category){
         ContactRepairmanFragment contactRepairmanFragment = new ContactRepairmanFragment();
         contactRepairmanFragment.setActionListener(this);
         contactRepairmanFragment.setRepairContacts(repairContacts);
         contactRepairmanFragment.getRepairmansFromServer(address, category);
         manageBackstack(contactRepairmanFragment);
+
+    }
+
+    @Override
+    public void onNavigateToNotifyRepairs(){
+        RepairNotificationLandlordFragment repairNotificationLandlordFragment = new RepairNotificationLandlordFragment();
+        repairNotificationLandlordFragment.setActionListener(this);
+        repairNotificationLandlordFragment.setHouses(houses);
+        repairNotificationLandlordFragment.setRepairs(repairs);
+        manageBackstack(repairNotificationLandlordFragment);
 
     }
     @Override

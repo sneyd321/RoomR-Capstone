@@ -1,9 +1,8 @@
 package com.example.ryan.roomrep.LandlordFragments;
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,23 +11,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
-import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,79 +29,60 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-public class RepairHistoryLandlordFragment extends Fragment implements FragmentEventListener, ItemClickListener {
+public class RepairNotificationLandlordFragment extends Fragment implements FragmentEventListener, ItemClickListener {
 
     LandlordRouterAction routerActionListener;
 
-    RecyclerView rcyRepairsLandlord;
-
-    TextView txtIsThereRepairs;
+    Spinner spnNotifyHousesAddresses;
+    RecyclerView rycNotificationRepairs;
 
     private List<Repair> repairs;
-
-    List<House> houses;
-
-    Spinner spn_houseAddresses;
-
-    ProgressDialog progressDialog;
-
-    String houseAddress;
-
     List<String> addresses;
+    List<House> houses;
+    ProgressDialog progressDialog;
+    String houseAddress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_repair_history_landlord, container, false);
-
-
-        rcyRepairsLandlord = view.findViewById(R.id.rcyRepairsLandlord);
-
-        txtIsThereRepairs = view.findViewById(R.id.txtIsThereRepairsLandlord);
-
-        spn_houseAddresses = view.findViewById(R.id.spnhouseAddresses);
-
-        rcyRepairsLandlord.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View view =  inflater.inflate(R.layout.notification_repair_fragment, container, false);
+        spnNotifyHousesAddresses = view.findViewById(R.id.spnNotifyHouseAddresses);
+        rycNotificationRepairs = view.findViewById(R.id.rcyNotifyRrepairs);
+        rycNotificationRepairs.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if(!(addresses == null)){
             ArrayAdapter<String> houseAddressesAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, addresses);
             houseAddressesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spn_houseAddresses.setAdapter(houseAddressesAdapter);
-            spn_houseAddresses.setOnItemSelectedListener(onListHouseAddress);
+            spnNotifyHousesAddresses.setAdapter(houseAddressesAdapter);
+            spnNotifyHousesAddresses.setOnItemSelectedListener(onListHouseAddress);
             if(!(repairs == null || repairs.isEmpty())){
-                txtIsThereRepairs.setText("Repairs");
+                //txtIsThereRepairs.setText("Repairs");
                 Collections.reverse(repairs);
                 RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
 
-                rcyRepairsLandlord.setAdapter(adapter);
+                rycNotificationRepairs.setAdapter(adapter);
                 adapter.setOnItemClickListener(this);
                 adapter.notifyDataSetChanged();
             }else{
-                txtIsThereRepairs.setText("No Repairs");
+                //txtIsThereRepairs.setText("No Repairs");
             }
         }
-        else{
-            txtIsThereRepairs.setText("No Houses Detected, So no repairs");
-        }
-
-
 
         return view;
     }
+
 
     Spinner.OnItemSelectedListener onListHouseAddress = new Spinner.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             String selectedAddress = (String) adapterView.getSelectedItem();
             if (selectedAddress.equals("- Select An Address -")){
-                txtIsThereRepairs.setText("Select a House to get Repairs");
+                //txtIsThereRepairs.setText("Select a House to get Repairs");
                 repairs = new ArrayList<>();
                 RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
 
-                rcyRepairsLandlord.setAdapter(adapter);
-                adapter.setOnItemClickListener(RepairHistoryLandlordFragment.this);
+                rycNotificationRepairs.setAdapter(adapter);
+                adapter.setOnItemClickListener(RepairNotificationLandlordFragment.this);
                 adapter.notifyDataSetChanged();
                 return;
             }else{
@@ -122,7 +94,7 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
                 getRepairsFromServer();
                 if (repairs == null || repairs.isEmpty()){
                     //progressDialog.dismiss();
-                    txtIsThereRepairs.setText("No Repairs");
+                    //txtIsThereRepairs.setText("No Repairs");
                 }
                 else{
                     progressDialog.dismiss();
@@ -135,6 +107,14 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
 
         }
     };
+
+
+    public void getRepairsFromServer() {
+        Network network = Network.getInstance();
+        network.registerObserver(this);
+        network.getRepairs(houseAddress);
+    }
+
 
     public void setRepairs(List<Repair> repairs){
         this.repairs = repairs;
@@ -154,24 +134,13 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
         return addresses;
     }
 
-    public void setActionListener(LandlordRouterAction routerActionListener){
-        this.routerActionListener = routerActionListener;
+    public void setActionListener(LandlordRouterAction landlordRouterAction){
+        this.routerActionListener = landlordRouterAction;
     }
-
-    public void getRepairsFromServer() {
-        Network network = Network.getInstance();
-        network.registerObserver(this);
-        network.getRepairs(houseAddress);
-    }
-
-
     @Override
     public void onItemClick(View view, int position) {
-        //i will se the repair in the other view with the routercall.
-        //Repair.
-        Repair repair = repairs.get(position);
-        routerActionListener.onNavigateToLandlordRepairView(repair, position);
-        //here i will pass to the router the repair and router will set the view on the router call!!!
+        //TODO: Implement Notification sent to Tenant. When tenant creates he sends notification to landlord. But landlord needs to be able to send one.
+
     }
 
     @Override
@@ -213,16 +182,16 @@ public class RepairHistoryLandlordFragment extends Fragment implements FragmentE
             @Override
             public void run() {
                 if (repairs == null || repairs.isEmpty()){
-                    txtIsThereRepairs.setText("No Repairs have been posted");
+                    //txtIsThereRepairs.setText("No Repairs have been posted");
                 }
                 else{
-                    txtIsThereRepairs.setText("Repairs");
+                    //txtIsThereRepairs.setText("Repairs");
                     Collections.reverse(repairs);
                 }
                 RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
 
-                rcyRepairsLandlord.setAdapter(adapter);
-                adapter.setOnItemClickListener(RepairHistoryLandlordFragment.this);
+                rycNotificationRepairs.setAdapter(adapter);
+                adapter.setOnItemClickListener(RepairNotificationLandlordFragment.this);
                 adapter.notifyDataSetChanged();
             }
         });

@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -62,6 +63,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
         progressDialog.show();
 
         if(!(repairs == null)) {
+            Collections.reverse(repairs);
             RepairRecyclerViewAdapter adapter = new RepairRecyclerViewAdapter(getActivity(), repairs);
             txtIsThereRepairs.setText("Repairs");
             rcyRepairsTenant.setAdapter(adapter);
@@ -127,6 +129,7 @@ public class TenantRepairListFragment extends Fragment implements FragmentEventL
                             houseAddress);
                     repairs.add(repair);
                     setRepairs(repairs);
+                    Collections.reverse(repairs);
                     routerActionListener.onSetRepairs(repairs);
                 } catch (JSONException e) {
                     e.printStackTrace();

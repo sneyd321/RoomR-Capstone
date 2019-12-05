@@ -13,12 +13,15 @@ import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RepairRecyclerViewAdapter extends RecyclerView.Adapter<RepairRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "RepairRecyclerView";
     private List<Repair> data;
+
+
     private ItemClickListener itemClickListener;
     private LayoutInflater inflater;
     private Context context;
