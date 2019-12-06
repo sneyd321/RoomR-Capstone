@@ -15,7 +15,7 @@
         android:padding="5dp"
         android:layout_marginTop="5dp"
         android:id="@+id/user"
-        android:text="Choose your opinions"
+        android:text="Choose your options"
         android:gravity="center"
         android:layout_marginBottom="20dp"
         android:textSize="18sp"/>

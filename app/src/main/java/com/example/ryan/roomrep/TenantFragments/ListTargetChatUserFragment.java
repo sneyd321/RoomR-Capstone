@@ -24,7 +24,7 @@ import com.example.ryan.roomrep.R;
 
 public class ListTargetChatUserFragment extends Fragment {
 
-    private String[]  chatList ={"House chatting room","Talk to Landlord"};
+    private String[]  chatList ={"House chat room","Talk to Landlord"};
 
     private TenantRouterAction actionListener;
 
