@@ -11,6 +11,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/Green</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
     
@@ -79,6 +80,14 @@
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/Yellow</item>
         <item name="colorControlActivated">@color/Yellow</item>
+    </style>
+
+    <style name="update_primary_action">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:background">@drawable/button_primary_action</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:text">Update</item>
     </style>
 
 

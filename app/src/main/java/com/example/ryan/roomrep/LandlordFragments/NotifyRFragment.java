@@ -3,12 +3,12 @@ package com.example.ryan.roomrep.LandlordFragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.LandlordPaymentRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
@@ -28,10 +27,6 @@ import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Rent.Payment;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -89,16 +84,14 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
         List<String> addresses = new ArrayList<>();
         addresses.add("- Select An Address -");
         for (House house : houses){
-            addresses.add(house.getAddress());
+            //addresses.add(house.getLocation().getAddress());
         }
         return addresses;
     }
 
     private House getHouseFromAddress(String address) {
         for (House house : houses) {
-            if (house.getAddress().equals(address)){
-                return house;
-            }
+
         }
         return null;
     }
@@ -125,7 +118,7 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
             if (house == null){
                 return;
             }
-            List<String> tenantNames = convertTenantsToNameList(house.getTenants());
+            List<String> tenantNames = convertTenantsToNameList(new ArrayList<>());
             if (!tenantNames.isEmpty()){
                 final String[] items = tenantNames.toArray(new String[tenantNames.size()]);
                 AlertDialog.Builder b = new AlertDialog.Builder(getActivity());
@@ -135,7 +128,7 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String selectedName = items[which];
-                        for (Tenant tenant : house.getTenants()) {
+                        for (Tenant tenant : new ArrayList<Tenant>()) {
                             String name = tenant.getFirstName() + " " + tenant.getLastName();
                             if (name.equals(selectedName)){
                                 Network network = Network.getInstance();
@@ -151,7 +144,7 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
                 b.show();
             }
             else {
-                Toast.makeText(getActivity(), "No Tenants in " + house.getAddress(), Toast.LENGTH_SHORT).show();
+
             }
 
 

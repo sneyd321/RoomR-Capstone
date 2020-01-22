@@ -5,14 +5,11 @@ import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Rent.Payment;
-import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Search.Search;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -343,85 +340,9 @@ public class Network implements NetworkObservable {
         });
     }
 
-    public void addRepair(Repair repair, Tenant tenant){
-        Tenant tempTenant = tenant;
-        JSONObject json = new JSONObject();
-        try {
-            json.put("name", repair.getName());
-            json.put("status", repair.getStatus());
-            json.put("description", repair.getDescription());
-            json.put("photoRef", repair.getPhotoRef());
-            json.put("date", repair.getDate());
-            json.put("dateUpdated", repair.getDateUpdated());
-            json.put("houseAddress", repair.getHouseAddress());
-            json.put("landlordEmail", tempTenant.getLandlordEmail());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        String jsonString = json.toString();
 
-        RequestBody body = RequestBody.create(JSON, jsonString);
 
-        Request request = new Request.Builder()
-                .url(SERVER_URL + "AddRepair")
-                .post(body)
-                .build();
-
-        OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    //I want the response to navigate back to the Tenant Listings which sees all the repairs view!!!
-                    fragmentEventListener.update(response.body().string());
-                }
-                response.close();
-
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-        });
-
-    }
-
-    public void getRepairs(String houseAddress){
-        JSONObject json = new JSONObject();
-        try {
-            json.put("houseAddress", houseAddress);
-        }
-        catch (JSONException e){
-            e.printStackTrace();
-        }
-        String jsonString = json.toString();
-        RequestBody body = RequestBody.create(JSON, jsonString);
-
-        Request request = new Request.Builder()
-                .url(SERVER_URL + "GetRepairs")
-                .post(body)
-                .build();
-
-        OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    fragmentEventListener.update(response.body().string());
-                }
-                response.close();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-        });
-    }
     public void contactLandlord(Profile profile) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null){
@@ -522,95 +443,10 @@ public class Network implements NetworkObservable {
 
     }
 
-    public void updateRepair(Repair repair) {
-        final Gson gson = new Gson();
-        String json = gson.toJson(repair);
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(SERVER_URL + "UpdateRepairs")
-                .post(body)
-                .build();
-        OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    notifyObserver(response.body().string());
-                }
-                response.close();
-
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-        });
-    }
-
-    public void updateRepairLandlord(Repair repair) {
-        final Gson gson = new Gson();
-        String json = gson.toJson(repair);
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(SERVER_URL + "UpdateRepairsLandlord")
-                .post(body)
-                .build();
-        OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    notifyObserver(response.body().string());
-                }
-                response.close();
-
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-        });
-    }
-
-    public void getRepairmans(String address, String category){
-        JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("houseAddress",address);
-            jsonObject.put("category",category);
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-        String json = jsonObject.toString();
 
 
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(SERVER_URL + "GetRepairman")
-                .post(body)
-                .build();
 
-        OkHttpClient client = new OkHttpClient.Builder().readTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
 
-        client.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    fragmentEventListener.update(response.body().string());
-                }
-                response.close();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                System.out.println("Hello");
-            }
-        });
-    }
 
     public void convertProfileToTenant(Profile profile) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

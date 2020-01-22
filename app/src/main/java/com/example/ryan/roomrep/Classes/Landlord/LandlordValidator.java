@@ -9,7 +9,7 @@ public class LandlordValidator implements Validator {
 
 
     @Override
-    public <T> Map<Integer, String> validator(T object) {
+    public <T> Map<Integer, String> validate(T object) {
         Landlord landlord = (Landlord) object;
         Map <Integer,String> map = new LinkedHashMap<>();
         map.put(0, isFirstNameEmpty(landlord.getFirstName()));

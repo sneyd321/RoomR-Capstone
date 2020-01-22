@@ -2,7 +2,7 @@ package com.example.ryan.roomrep.TenantFragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,7 +14,6 @@ import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
@@ -90,12 +89,12 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         skbRent.setMax(MAX_RENT);
 
         checkBoxList = new ArrayList<>();
-        checkBoxList.add((CheckBox) view.findViewById(R.id.chkSearchAmenity1));
-        checkBoxList.add((CheckBox) view.findViewById(R.id.chkSearchAmenity2));
-        checkBoxList.add((CheckBox) view.findViewById(R.id.chkSearchAmenity3));
-        checkBoxList.add((CheckBox) view.findViewById(R.id.chkSearchAmenity4));
-        checkBoxList.add((CheckBox) view.findViewById(R.id.chkSearchAmenity5));
-        checkBoxList.add((CheckBox) view.findViewById(R.id.chkSearchAmenity6));
+        checkBoxList.add(view.findViewById(R.id.chkSearchAmenity1));
+        checkBoxList.add(view.findViewById(R.id.chkSearchAmenity2));
+        checkBoxList.add(view.findViewById(R.id.chkSearchAmenity3));
+        checkBoxList.add(view.findViewById(R.id.chkSearchAmenity4));
+        checkBoxList.add(view.findViewById(R.id.chkSearchAmenity5));
+        checkBoxList.add(view.findViewById(R.id.chkSearchAmenity6));
 
         search = view.findViewById(R.id.btnSearchListings);
         search.setOnClickListener(onSearchListings);
@@ -198,10 +197,10 @@ public class SearchFragment extends Fragment implements FragmentEventListener
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            progress = ((int) Math.round(progress/INTERVAL)) * INTERVAL;
+            progress = Math.round(progress/INTERVAL) * INTERVAL;
             seekBar.setProgress(progress);
 
-            txtSkbRentOutput.setText("$0 - " + Integer.toString(progress));
+            txtSkbRentOutput.setText("$0 - " + progress);
             selectedPrice = progress;
 
         }
@@ -283,7 +282,7 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 houses.add(gson.fromJson(jsonArray.get(i).toString(), House.class));
-                houses.get(i).setUrl(jsonArray.getJSONObject(i).getString("image"));
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

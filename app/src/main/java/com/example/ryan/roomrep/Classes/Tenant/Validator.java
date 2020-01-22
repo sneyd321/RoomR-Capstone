@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface Validator {
 
-    <T> Map<Integer, String> validator(T object);
+    <T> Map<Integer, String> validate(T object);
 
 }

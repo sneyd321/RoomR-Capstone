@@ -81,6 +81,14 @@
         <item>Yearly</item>
     </string-array>
 
+
+    <string-array name="rentDueDate">
+        <item>First</item>
+        <item>Second</item>
+        <item>Last</item>
+    </string-array>
+
+
     <string-array name="utilityName">
         <item>Hydro</item>
         <item>Internet</item>
@@ -344,6 +352,9 @@
     <string name="add_utility_name">Utility Name</string>
     <string name="add_utility_amount">Amount:</string>
     <string name="add_utility_add_utility">Add Utility</string>
+
+    <!-- Additional terms -->
+    <string name="additional_terms">The landlord agrees to recie</string>
 
 
 </resources>

@@ -5,35 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
-import com.example.ryan.roomrep.TenantFragments.CompleteRentFragment;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class MainActivityTenant extends AppCompatActivity implements FragmentEventListener {
 
@@ -86,7 +78,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
 
         tenant = bundle.getParcelable("TENANT_DATA");
         if (router == null) {
-            router = new TenantRouter(getSupportFragmentManager(), new ArrayList<Repair>());
+
             chatPeopleName = tenant.getFirstName() + " " + tenant.getLastName();
             //chatRoomNameInMainActivityTenant = house.getAddress();
             //chatRoomNameInMainActivityTenant = tenant.getHouseAddress();
@@ -122,7 +114,6 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         String appLinkAction = intent.getAction();
         Uri appLinkData = intent.getData();
         if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null){
-            router = new TenantRouter(getSupportFragmentManager(), new ArrayList<Repair>());
             router.onNavigateToCompleteRent();
         }
     }
@@ -136,7 +127,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                     router.onNavigateToPayRent(tenant);
                     break;
                 case R.id.lblRepair:
-                    router.onNavigateToTenantRepairsList();
+
                     break;
                 case R.id.lblLogout:
                     Intent intent = new Intent(MainActivityTenant.this, LoginActivity.class);
@@ -181,7 +172,6 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         this.house = house;
         this.tenant = tenant;
         if (router == null) {
-            router = new TenantRouter(getSupportFragmentManager(), new ArrayList<Repair>());
             router.setTenantAndHouse(tenant, house);
             return;
         }
@@ -198,7 +188,6 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
             switch (item.getItemId()) {
                 case R.id.navMessagR:
                     //router.onNavigateToMessages();
-                    router.onNavigateToMessagesPeopleList(tenant,house);
                     item.setChecked(true);
                     break;
                 case R.id.lblHome:
@@ -207,7 +196,6 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                     break;
                 case R.id.navRating:
                     //router.onNavigateToRatingLandlord(house.getLandlordEmail());
-                    router.onNavigateToSlottingLandlord(tenant.getLandlordEmail());
                     item.setChecked(true);
                     break;
 

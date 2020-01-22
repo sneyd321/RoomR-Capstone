@@ -2,8 +2,8 @@ package com.example.ryan.roomrep.LoginActivities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,23 +18,15 @@ import android.widget.Toast;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
-import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.MainActivityLandlord;
 import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 /**
  * A login screen that offers login via email/password.
@@ -105,10 +97,12 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
         public void onClick(View v) {
 
             final Login login = new Login(edtUserName.getText().toString(), edtPassword.getText().toString());
-
-            Map<Integer, String> validator = login.getValidator();
+            Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
+            startActivity(intent);
+            /*
+            Map<Integer, String> validate = login.getValidator();
             boolean isValid = true;
-            for (Map.Entry<Integer, String> entry : validator.entrySet()) {
+            for (Map.Entry<Integer, String> entry : validate.entrySet()) {
                 if (!entry.getValue().isEmpty()) {
                     switch (entry.getKey()) {
                         case 0:
@@ -166,6 +160,8 @@ public class LoginActivity extends AppCompatActivity implements FragmentEventLis
                     });
                 }
             }
+
+             */
 
         }
     };

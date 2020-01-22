@@ -2,15 +2,7 @@ package com.example.ryan.roomrep.Classes.Tenant;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class Tenant implements Parcelable {
@@ -85,7 +77,7 @@ public class Tenant implements Parcelable {
 
     public Map<Integer, String> getValidator() {
         Validator validator = new TenantValidator();
-        return validator.validator(this);
+        return validator.validate(this);
     }
 
     public String getFirstName() {

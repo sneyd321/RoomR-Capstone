@@ -1,16 +1,7 @@
 package com.example.ryan.roomrep.Classes;
 
-import android.support.annotation.NonNull;
-
 import com.example.ryan.roomrep.Classes.Tenant.Validator;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class Login {
@@ -28,7 +19,7 @@ public class Login {
 
     public Map<Integer, String> getValidator() {
         Validator validator = new LoginValidator();
-        return validator.validator(this);
+        return validator.validate(this);
     }
 
 

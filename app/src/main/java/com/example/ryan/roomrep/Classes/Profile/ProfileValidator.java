@@ -9,7 +9,7 @@ public class ProfileValidator implements Validator {
 
 
     @Override
-    public <T> Map<Integer, String> validator(T object) {
+    public <T> Map<Integer, String> validate(T object) {
         Profile profile = (Profile) object;
         Map<Integer, String> validator = new LinkedHashMap<>();
         validator.put(0, isFirstNameEmpty(profile.getFirstName()));

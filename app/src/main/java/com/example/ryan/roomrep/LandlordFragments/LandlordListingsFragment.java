@@ -3,35 +3,27 @@ package com.example.ryan.roomrep.LandlordFragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LandlordListingsRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.LongClickItemListener;
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class LandlordListingsFragment extends Fragment implements ItemClickListener, AddListingDialogActionListener, LongClickItemListener {
@@ -60,7 +52,7 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
 
         listedHouses = new ArrayList<>();
         for (House house : houses){
-            if (house.getPosted()){
+            if (house.isPosted()){
                 listedHouses.add(house);
             }
         }
@@ -142,7 +134,7 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
             public void onClick(DialogInterface dialog, int which) {
 
                 House house = listedHouses.get(position);
-                house.setPosted(false);
+
                 Network network = Network.getInstance();
                 network.postListing(house);
                 adapter.removeHouse(house);

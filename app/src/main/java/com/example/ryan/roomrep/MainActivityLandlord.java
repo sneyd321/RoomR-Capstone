@@ -2,37 +2,40 @@ package com.example.ryan.roomrep;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
+import com.example.ryan.roomrep.LandlordFragments.AddHouseFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Rent.Payment;
-import com.example.ryan.roomrep.Classes.Repair;
 import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
-import com.example.ryan.roomrep.Classes.Tenant.Tenant;
-import com.example.ryan.roomrep.LandlordFragments.HousesFragment;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
-import com.example.ryan.roomrep.LoginActivities.ProfileActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,12 +52,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
     Landlord landlord;
 
 
-    public Tenant peopleToAdd;
-    public String chatPeopleName = "Ziheng He";
-    public String chatRoomNameInMainActivityLandlord = "TheRegularOne";
-    public String chatRoomType = "Test";
-    public List<Profile> mainProfiles;
-    public List<Tenant>mainTenants = new ArrayList<>();
+    AppBarConfiguration appBarConfiguration;
+    NavController navController;
 
     ProgressDialog progressDialog;
 
@@ -63,57 +62,68 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_landlord);
         myToolbar = findViewById(R.id.toolbarLandlord);
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
         drawerLayout = findViewById(R.id.landlord_drawer_layout);
         bottomMenu = findViewById(R.id.navBarLandlord);
         navigationView = findViewById(R.id.nav_view);
+
+
+
+
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
          //   landlord = new Landlord("Ryan", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
         }
         else {
             landlord = bundle.getParcelable("LANDLORD_DATA");
-            chatPeopleName = landlord.getFirstName()+ " "+landlord.getLastName();
-        }
 
+        }
 
 
         navigationView.setNavigationItemSelectedListener(onNavigationMenu);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
 
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, myToolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
 
-        Network network = Network.getInstance();
-        network.registerObserver(this);
-        network.getLandlordHouses(landlord);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Getting houses...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
+        navController = Navigation.findNavController(this, R.id.nav_landlord_host_fragment);
+
+        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setDrawerLayout(drawerLayout).build();
+
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(bottomMenu, navController);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         if (savedInstanceState == null) {
             bottomMenu.getMenu().getItem(1).setChecked(true);
         }
+        router = new LandlordRouter(getSupportFragmentManager(), new ArrayList<House>());
+        router.onNavigateToHouses(landlord);
     }
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_landlord_host_fragment);
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
 
     @Override
     public void onBackPressed() {
+
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
-        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            return;
+
+        if(!Navigation.findNavController(this, R.id.nav_landlord_host_fragment).popBackStack()){
+            finish();
         }
-        router.popBackStack();
+
 
 
     }
@@ -144,14 +154,14 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
                 case R.id.navRepairTrackR:
                     //getRepairs();
                     item.setChecked(true);
-                    router.onNavigateToLandlordRepairs();
+
                     break;
                 case R.id.navHouses:
                     router.onNavigateToHouses(landlord);
                     item.setChecked(true);
                     break;
                 case R.id.navNotifyR:
-                    router.onNavigateToNotifyrOptions();
+
                     item.setChecked(true);
                     break;
                 default:
@@ -174,8 +184,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
             networkHouses.add(house);
         }
         progressDialog.dismiss();
-        router = new LandlordRouter(getSupportFragmentManager(), networkHouses);
-        router.onNavigateToHouses(landlord);
+
+
     }
 
 

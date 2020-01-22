@@ -1,8 +1,8 @@
 package com.example.ryan.roomrep.Adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -40,13 +39,9 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
     @Override
     public void onBindViewHolder(@NonNull  HouseRecyclerviewAdapter.ViewHolder holder, int position) {
         House house = data.get(position);
-        holder.txtAddress.setText(house.getAddress());
-        if (house.getUrl().isEmpty() || house.getUrl().equals("Not Empty")){
-            Picasso.get().load(R.drawable.examplehouse).noFade().into(holder.imgHouse);
-            return;
-        }
-        Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).error(R.drawable.examplehouse).noFade().into(holder.imgHouse);
-
+        Picasso.get().load(R.drawable.examplehouse).into(holder.imgHouse);
+        holder.txtAddress.setText(house.getLocation().getAddress());
+        holder.txtSecondaryAddress.setText(house.getLocation().getFormattedSecondaryLocation());
     }
 
     @Override
@@ -60,11 +55,13 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
 
         ImageView imgHouse;
         TextView txtAddress;
+        TextView txtSecondaryAddress;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgHouse = itemView.findViewById(R.id.imgHouse);
             txtAddress = itemView.findViewById(R.id.txtAddress);
+            txtSecondaryAddress = itemView.findViewById(R.id.txtAddressSecondary);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -84,11 +81,10 @@ public class HouseRecyclerviewAdapter extends RecyclerView.Adapter<HouseRecycler
         }
     }
 
-
-    public void removeHouse(House house) {
-        this.data.remove(house);
-        notifyDataSetChanged();
+    public House getItemAtPostion(int position){
+        return this.data.get(position);
     }
+
 
     public void setLongClickItemListener(LongClickItemListener longClickItemListener) {
         this.longClickItemListener = longClickItemListener;

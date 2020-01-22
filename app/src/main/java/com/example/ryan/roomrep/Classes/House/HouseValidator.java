@@ -8,13 +8,14 @@ import java.util.Map;
 public class HouseValidator implements Validator {
 
     @Override
-    public <T> Map<Integer, String> validator(T object) {
+    public <T> Map<Integer, String> validate(T object) {
         House house = (House) object;
         Map<Integer, String> validator = new LinkedHashMap<>();
-        validator.put(0, isAddressEmpty(house.getAddress()));
-        //validator.put(1, isAddressValid(house.getAddress()));
-        validator.put(2, isRentGreaterThanZero(house.getRent()));
+        //validator.put(0, isAddressEmpty(house.getAddress()));
+        //validate.put(1, isAddressValid(house.getAddress()));
+        //validator.put(2, isRentGreaterThanZero(house.getRent()));
         validator.put(3, isSizeGreaterThanZero(house.getSize()));
+        validator.put(4, isUnitTypeEmpty(house.getUnitType()));
         return validator;
     }
 
@@ -43,6 +44,13 @@ public class HouseValidator implements Validator {
     private String isRentGreaterThanZero(int rent) {
         if (rent <= 0) {
             return "Please enter a rent greater than 0.";
+        }
+        return "";
+    }
+
+    private String isUnitTypeEmpty(String unitType){
+        if (unitType.length() == 0){
+            return "Please enter a unit type.";
         }
         return "";
     }

@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SearchValidator implements Validator {
     @Override
-    public <T> Map<Integer, String> validator(T object) {
+    public <T> Map<Integer, String> validate(T object) {
         Search search = (Search) object;
         Map<Integer, String> validator = new LinkedHashMap<>();
         validator.put(0, isProvinceSelected(search.getProvince()));

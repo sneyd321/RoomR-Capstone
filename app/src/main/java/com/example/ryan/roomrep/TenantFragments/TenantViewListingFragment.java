@@ -3,9 +3,9 @@ package com.example.ryan.roomrep.TenantFragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Adapters.RepairRecyclerViewAdapter;
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.House.Utility;
+import com.example.ryan.roomrep.Classes.House.Utility.Utility;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Router.ProfileRouter;
 import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.R;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TenantViewListingFragment extends Fragment implements FragmentEventListener {
@@ -76,13 +73,13 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         btnContactLandlord.setOnClickListener(onContactLandlord);
         btnGoBack = view.findViewById(R.id.btnTenantViewListingsGoBack);
         btnGoBack.setOnClickListener(onGoBack);
-        txtAddress.setText(house.getAddress());
-        Picasso.get().load(house.getUrl()).into(imgHouseImage);
-        txtRent.setText(Integer.toString(house.getRent()));
+        //txtAddress.setText(house.getLocation().getAddress());
+
+        //txtRent.setText(Integer.toString(house.getRent().getBaseRent()));
         txtSize.setText(Integer.toString(house.getSize()));
         txtBeds.setText(Integer.toString(house.getBedNumber()));
         txtBaths.setText(Integer.toString(house.getBathNumber()));
-        txtDescription.setText(house.getDescription());
+        //txtDescription.setText(house.getDescription());
         txtHydro.setText("Not Included");
         txtElectrical.setText("Not Included");
         txtInternet.setText("Not Included");
@@ -92,22 +89,7 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         isLandlordAlreadyNotified();
 
 
-        for (Utility utility : house.getUtilities()){
-            switch (utility.getName()){
-                case "Hydro":
-                    txtHydro.setText("Included");
-                    break;
-                case "Electrical":
-                    txtElectrical.setText("Included");
-                    break;
-                case "Internet":
-                    txtInternet.setText("Included");
-                    break;
-                case "Phone Line":
-                    txtPhoneLine.setText("Included");
-                    break;
-            }
-        }
+
 
 
 
@@ -125,7 +107,7 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     }
 
     private void isLandlordAlreadyNotified() {
-        List<Profile> profiles = house.getProfiles();
+        List<Profile> profiles = new ArrayList<>();
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         String email = (sharedPref.getString("ProfileEmail", ""));
 
@@ -156,11 +138,9 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
             String email = (sharedPref.getString("ProfileEmail", ""));
             String bio = (sharedPref.getString("ProfileBio", ""));
             Profile profile = new Profile(firstName, lastName, email, bio);
-            profile.setHouseAddress(house.getAddress());
             network.contactLandlord(profile);
             Toast.makeText(getActivity(), "Landlord Notified", Toast.LENGTH_SHORT).show();
             btnContactLandlord.setVisibility(View.INVISIBLE);
-            house.addProfile(profile);
 
         }
     };

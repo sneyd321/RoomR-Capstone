@@ -22,7 +22,7 @@ public class Profile {
 
     public Map<Integer, String> getValidator() {
         Validator validator = new ProfileValidator();
-        return validator.validator(this);
+        return validator.validate(this);
     }
 
     public String getLastName() {

@@ -1,10 +1,10 @@
 package com.example.ryan.roomrep.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.Adapter;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,14 +39,7 @@ public class TenantListingsRecyclerViewAdapter extends Adapter<TenantListingsRec
     @Override
     public void onBindViewHolder(@NonNull TenantListingsRecyclerViewAdapter.ViewHolder holder, int position) {
         House house = data.get(position);
-        holder.txtAddress.setText(house.getAddress());
-        holder.txtRent.setText(Integer.toString(house.getRent()));
-        holder.txtDescription.setText(house.getDescription());
-        if (house.getUrl().isEmpty() || house.getUrl().equals("Not Empty")){
-            Picasso.get().load(R.drawable.examplehouse).noFade().into(holder.imgHouse);
-            return;
-        }
-        Picasso.get().load(house.getUrl()).placeholder(R.drawable.examplehouse).error(R.drawable.examplehouse).noFade().into(holder.imgHouse);
+
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Map;
 public class TestLandlord {
 
 
-
+    /*
     @Test
     public void FirstNameEmptyTest(){
         Landlord landlord = new Landlord("", "Sneyd", "aaaaaa", "aaaaaa", "a@s.com");
@@ -107,7 +107,7 @@ public class TestLandlord {
         Map<Integer, String> map = landlord.getLandlordValidator();
         Assert.assertEquals("Error in email validation.", map.get(8), "");
     }
-
+    */
 
 
 

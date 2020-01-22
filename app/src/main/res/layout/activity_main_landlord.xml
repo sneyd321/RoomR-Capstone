@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,11 +12,13 @@
     tools:context=".MainActivityLandlord">
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
+
+
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarLandlord"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -29,18 +31,21 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
+        <fragment
+            android:id="@+id/nav_landlord_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@+id/navBarLandlord"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarLandlord" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLandlord"
+            app:navGraph="@navigation/landlord_nav_graph" />
 
 
 
-        <android.support.design.widget.BottomNavigationView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navBarLandlord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,12 +61,13 @@
             app:menu="@menu/bottom_navigation_landlord" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/nav_view"
+
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/landlord_drawer_menu" />
@@ -72,7 +78,7 @@
 
 
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
 
 
 

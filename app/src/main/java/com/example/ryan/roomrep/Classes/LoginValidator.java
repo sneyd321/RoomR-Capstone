@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class LoginValidator implements Validator {
     @Override
-    public <T> Map<Integer, String> validator(T object) {
+    public <T> Map<Integer, String> validate(T object) {
         Login login = (Login) object;
         Map<Integer, String> validator = new LinkedHashMap<>();
         validator.put(0, isEmailEmpty(login.getUserName()));

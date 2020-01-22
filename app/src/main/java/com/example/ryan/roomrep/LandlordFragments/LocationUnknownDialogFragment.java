@@ -5,7 +5,7 @@ import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +59,7 @@ public class LocationUnknownDialogFragment extends DialogFragment {
         btnUpdateHouse = view.findViewById(R.id.btnLocationDialogUpdateLocation);
         btnUpdateHouse.setOnClickListener(onUpdateHouse);
 
-        txtAddressLabel.setText("Please Select a location for " + house.getAddress());
+        //txtAddressLabel.setText("Please Select a location for " + house.getLocation().getAddress());
 
         ArrayAdapter<String> provinceAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.provinces));
         provinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -82,7 +82,7 @@ public class LocationUnknownDialogFragment extends DialogFragment {
         public void onClick(View v) {
             if (provinceSelected != null && citySelected != null) {
                 Network network = Network.getInstance();
-                network.updateHouse(provinceSelected, citySelected, house.getAddress());
+
                 dismiss();
             }
         }

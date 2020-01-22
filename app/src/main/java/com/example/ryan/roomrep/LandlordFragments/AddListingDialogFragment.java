@@ -5,9 +5,9 @@ import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -61,7 +61,7 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
         List<House> filteredHouses = new ArrayList<>();
         for (House house : houses){
             //if is posted is false
-            if (!house.getPosted()){
+            if (!house.isPosted()){
                 filteredHouses.add(house);
             }
         }
@@ -96,7 +96,7 @@ public class AddListingDialogFragment extends DialogFragment implements ItemClic
     @Override
     public void onItemClick(View view, int position) {
         selectedHouse = adapter.getHouseAtPosition(position);
-        selectedHouse.setPosted(true);
+
         Network network = Network.getInstance();
         network.registerObserver(AddListingDialogFragment.this);
         network.postListing(selectedHouse);

@@ -3,7 +3,7 @@ package com.example.ryan.roomrep.TenantFragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.House.Utility;
+import com.example.ryan.roomrep.Classes.House.Utility.Utility;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Rent.Payment;
@@ -54,9 +54,9 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pay_rent, container, false);
-        Utility utility = new Utility("Hydro", 150, "Weekly");
+        //Utility utility = new Utility("Hydro", 150, "Weekly");
         List<Utility> utilities = new ArrayList<>();
-        utilities.add(utility);
+        //utilities.add(utility);
         //house = new House("3327 Raspberry Bush Trail", 600, 0, 0, 0, null, utilities, "rts1234567@hotmail.com", "", "", false, null, null);
 
 
@@ -64,11 +64,10 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
         txtMonth = view.findViewById(R.id.txtPayRentMonthRent);
         txtMonth.setText(getCurrentMonth() + " Payment:");
         txtFinalAmount = view.findViewById(R.id.txtPayRentFinalAmount);
-        txtFinalAmount.setText("$" + getFinalAmount(house));
         txtDueDate = view.findViewById(R.id.txtPayRentDueDate);
         txtDueDate.setText(getDueDate());
         txtRentPrice = view.findViewById(R.id.txtPayRentRentPrice);
-        txtRentPrice.setText(formatRent(house.getRent()));
+        //txtRentPrice.setText(formatRent(house.getRent().getBaseRent()));
         txtHydroPrice = view.findViewById(R.id.txtPayRentHydroPrice);
         txtHydroPrice.setText("$0.00");
         txtInternetPrice = view.findViewById(R.id.txtPayRentInternetPrice);
@@ -77,9 +76,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
         txtCablePrice.setText("$0.00");
         txtPhoneLine = view.findViewById(R.id.txtPayRentPhonePrice);
         txtPhoneLine.setText("$0.00");
-        for (Utility util : house.getUtilities()) {
-            parseUtility(util);
-        }
+
         getProgress();
         btnPayRent = view.findViewById(R.id.btnPayRentPay);
         btnPayRent.setOnClickListener(onPayRent);
@@ -102,14 +99,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
         progressBar.setProgressWithAnimation(value, duration);
     }
 
-    private String getFinalAmount(House house) {
-        int amount = house.getRent();
-        for (Utility util : house.getUtilities()) {
-            amount += util.getDoubleAmount();
-        }
-        finalAmount = amount;
-        return Integer.toString(amount);
-    }
+
 
 
     private String getCurrentMonth() {
@@ -133,16 +123,16 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
     private void parseUtility(Utility utility) {
         switch (utility.getName()){
             case "Hydro":
-                txtHydroPrice.setText(utility.getAmount());
+                //txtHydroPrice.setText(utility.getAmount());
                 break;
             case "Internet":
-                txtInternetPrice.setText(utility.getAmount());
+                //txtInternetPrice.setText(utility.getAmount());
                 break;
             case "Cable":
-                txtCablePrice.setText(utility.getAmount());
+                //txtCablePrice.setText(utility.getAmount());
                 break;
             case "Phone Line":
-                txtPhoneLine.setText(utility.getAmount());
+                //txtPhoneLine.setText(utility.getAmount());
                 break;
         }
     }
@@ -158,9 +148,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
             Network network = Network.getInstance();
             network.registerObserver(PayRentFragment.this);
             String tenantName = tenant.getFirstName() + " " + tenant.getLastName();
-            Payment payment = new Payment(tenantName, house.getAddress(), getDueDate(), house.getLandlordEmail(), finalAmount,null);
 
-            network.makePayment(payment);
         }
     };
 
