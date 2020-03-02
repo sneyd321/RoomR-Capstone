@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ryan.roomrep.Adapters.StatePagerAdapter;
-import com.example.ryan.roomrep.Classes.House.RentBuilder;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 public class AddHouseStatePagerFragment extends Fragment {
 
 
-    RentBuilder rentBuilder = new RentBuilder();
 
     StatePagerAdapter adapter;
 

@@ -16,10 +16,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Router.TenantRouter;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.gson.Gson;
@@ -34,14 +32,12 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
-    TenantRouter router;
     ProgressDialog progressDialog;
 
     Tenant tenant;
 
     //private List<Repair> repairs;
     Toolbar toolbar;
-    House house;
     public String chatPeopleName = "Ziheng He";
     public String chatRoomNameInMainActivityTenant = "TheRegularOne";
     public String chatRoomType = "Test";
@@ -77,25 +73,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         Bundle bundle = getIntent().getExtras();
 
         tenant = bundle.getParcelable("TENANT_DATA");
-        if (router == null) {
 
-            chatPeopleName = tenant.getFirstName() + " " + tenant.getLastName();
-            //chatRoomNameInMainActivityTenant = house.getAddress();
-            //chatRoomNameInMainActivityTenant = tenant.getHouseAddress();
-            if (chatRoomNameInMainActivityTenant == null) {
-                chatPeopleName = "Ryan Sneyd";
-            }
-
-
-            addToSharedPreferences(tenant);
-            Network network = Network.getInstance();
-            network.registerObserver(this);
-            network.getTenantHouse(tenant);
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("Loading house data...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
 
 
         if (savedInstanceState == null) {
@@ -114,7 +92,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         String appLinkAction = intent.getAction();
         Uri appLinkData = intent.getData();
         if (Intent.ACTION_VIEW.equals(appLinkAction) && appLinkData != null){
-            router.onNavigateToCompleteRent();
+
         }
     }
 
@@ -124,7 +102,6 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
                 case R.id.lblRent:
-                    router.onNavigateToPayRent(tenant);
                     break;
                 case R.id.lblRepair:
 
@@ -153,7 +130,6 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         }
 
 
-        router.popBackStack();
     }
 
     public void addToSharedPreferences(Tenant tenant) {
@@ -168,15 +144,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         editor.apply();
     }
 
-    public void setTenantAndHouse(Tenant tenant, House house) {
-        this.house = house;
-        this.tenant = tenant;
-        if (router == null) {
-            router.setTenantAndHouse(tenant, house);
-            return;
-        }
-        router.setTenantAndHouse(tenant, house);
-    }
+
 
 
 
@@ -191,7 +159,6 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
                     item.setChecked(true);
                     break;
                 case R.id.lblHome:
-                    router.onNavigateToTenantLanding(house, tenant);
                     item.setChecked(true);
                     break;
                 case R.id.navRating:
@@ -211,9 +178,7 @@ public class MainActivityTenant extends AppCompatActivity implements FragmentEve
         progressDialog.dismiss();
         JSONObject jsonObject = convertStringToJSONObject(response);
         Gson gson = new Gson();
-        house = gson.fromJson(jsonObject.toString(), House.class);
 
-        router.onNavigateToTenantLanding(house, tenant);
 
 
     }

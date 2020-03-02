@@ -5,21 +5,10 @@ import com.example.ryan.roomrep.Classes.Tenant.Validator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ProfileValidator implements Validator {
+public class ProfileValidator implements Validator<Profile> {
 
 
-    @Override
-    public <T> Map<Integer, String> validate(T object) {
-        Profile profile = (Profile) object;
-        Map<Integer, String> validator = new LinkedHashMap<>();
-        validator.put(0, isFirstNameEmpty(profile.getFirstName()));
-        validator.put(1, isLastNameEmpty(profile.getLastName()));
-        validator.put(2, isEmailEmpty(profile.getEmail()));
-        validator.put(3, isBioEmpty(profile.getBio()));
-        validator.put(4, isBioTooLong(profile.getBio()));
 
-        return validator;
-    }
 
 
 
@@ -60,4 +49,15 @@ public class ProfileValidator implements Validator {
     }
 
 
+    @Override
+    public Map<Integer, String> validate(Profile profile) {
+        Map<Integer, String> validator = new LinkedHashMap<>();
+        validator.put(0, isFirstNameEmpty(profile.getFirstName()));
+        validator.put(1, isLastNameEmpty(profile.getLastName()));
+        validator.put(2, isEmailEmpty(profile.getEmail()));
+        validator.put(3, isBioEmpty(profile.getBio()));
+        validator.put(4, isBioTooLong(profile.getBio()));
+
+        return validator;
+    }
 }

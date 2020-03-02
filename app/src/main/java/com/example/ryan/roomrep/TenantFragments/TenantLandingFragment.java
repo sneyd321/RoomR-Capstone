@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.TenantLandingTenantNameAdapter;
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
 
@@ -24,7 +23,6 @@ public class TenantLandingFragment extends Fragment {
     RecyclerView rcyTenantName;
 
     Tenant tenant;
-    House house;
 
 
     @Nullable
@@ -49,9 +47,6 @@ public class TenantLandingFragment extends Fragment {
     }
 
 
-    public void setHouse(House house) {
-        this.house = house;
-    }
 
 
     public void setTenant(Tenant tenant) {

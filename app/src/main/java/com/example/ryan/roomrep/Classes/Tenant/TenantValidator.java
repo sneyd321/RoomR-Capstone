@@ -3,27 +3,8 @@ package com.example.ryan.roomrep.Classes.Tenant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class TenantValidator implements Validator {
+public class TenantValidator implements Validator<Tenant> {
 
-
-    @Override
-    public <T> Map<Integer, String> validate(T object) {
-        Tenant tenant = (Tenant) object;
-        Map <Integer,String> map = new LinkedHashMap<>();
-        map.put(0, isFirstNameEmpty(tenant.getFirstName()));
-        //map.put(1, isFirstNameValid(landlord.getFirstName()));
-        map.put(2, isLastNameEmpty(tenant.getLastName()));
-        //map.put(3, isLastNameValid(landlord.getLastName()));
-        map.put(4, isPasswordEmpty(tenant.getPassword()));
-        map.put(5, isPasswordLongEnough(tenant.getPassword()));
-        map.put(6, isPassword2Empty(tenant.getPassword2()));
-        map.put(7, doPasswordsMatch(tenant.getPassword(), tenant.getPassword2()));
-        map.put(8, isLandlordEmailEmpty(tenant.getTenantEmail()));
-        //map.put(9, isEmailValid(landlord.getTenantEmail()));
-        map.put(10, isTenantEmailEmpty(tenant.getTenantEmail()));
-
-        return map;
-    }
 
 
 
@@ -115,4 +96,21 @@ public class TenantValidator implements Validator {
     }
 
 
+    @Override
+    public Map<Integer, String> validate(Tenant tenant) {
+        Map <Integer,String> map = new LinkedHashMap<>();
+        map.put(0, isFirstNameEmpty(tenant.getFirstName()));
+        //map.put(1, isFirstNameValid(landlord.getFirstName()));
+        map.put(2, isLastNameEmpty(tenant.getLastName()));
+        //map.put(3, isLastNameValid(landlord.getLastName()));
+        map.put(4, isPasswordEmpty(tenant.getPassword()));
+        map.put(5, isPasswordLongEnough(tenant.getPassword()));
+        map.put(6, isPassword2Empty(tenant.getPassword2()));
+        map.put(7, doPasswordsMatch(tenant.getPassword(), tenant.getPassword2()));
+        map.put(8, isLandlordEmailEmpty(tenant.getTenantEmail()));
+        //map.put(9, isEmailValid(landlord.getTenantEmail()));
+        map.put(10, isTenantEmailEmpty(tenant.getTenantEmail()));
+
+        return map;
+    }
 }

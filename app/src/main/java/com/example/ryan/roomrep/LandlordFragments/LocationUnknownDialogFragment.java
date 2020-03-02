@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.R;
 
@@ -30,7 +29,7 @@ public class LocationUnknownDialogFragment extends DialogFragment {
 
     ArrayAdapter<String> cityAdapter;
 
-    House house;
+
 
     String provinceSelected;
     String citySelected;
@@ -73,9 +72,6 @@ public class LocationUnknownDialogFragment extends DialogFragment {
         return view;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
-    }
 
     View.OnClickListener onUpdateHouse = new View.OnClickListener() {
         @Override

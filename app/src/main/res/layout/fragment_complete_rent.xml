@@ -31,7 +31,6 @@
         android:layout_marginEnd="96dp"
         android:indeterminate="false"
         android:progressDrawable="@drawable/progressbar_drawable"
-        app:cpb_background_progressbar_color="@color/LightGreen"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress="0"
         app:cpb_progress_direction="to_right"

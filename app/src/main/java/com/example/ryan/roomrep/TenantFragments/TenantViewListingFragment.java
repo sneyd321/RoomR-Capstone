@@ -14,12 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.House.Utility.Utility;
+
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.R;
 
 import org.json.JSONException;
@@ -47,8 +45,7 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     Button btnContactLandlord;
     Button btnGoBack;
 
-    House house;
-    ProfileRouterAction routerActionListener;
+
     String rating;
 
 
@@ -76,9 +73,7 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         //txtAddress.setText(house.getLocation().getAddress());
 
         //txtRent.setText(Integer.toString(house.getRent().getBaseRent()));
-        txtSize.setText(Integer.toString(house.getSize()));
-        txtBeds.setText(Integer.toString(house.getBedNumber()));
-        txtBaths.setText(Integer.toString(house.getBathNumber()));
+
         //txtDescription.setText(house.getDescription());
         txtHydro.setText("Not Included");
         txtElectrical.setText("Not Included");
@@ -121,9 +116,7 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     View.OnClickListener onGoBack = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (routerActionListener != null) {
-                routerActionListener.popBackStack();
-            }
+
         }
     };
 
@@ -146,9 +139,7 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     };
 
 
-    public void setHouse(House house) {
-        this.house = house;
-    }
+
 
     @Override
     public void update(String response) {
@@ -172,7 +163,5 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
         }
     }
 
-    public void setRouterAction(ProfileRouterAction routerActionListener) {
-        this.routerActionListener = routerActionListener;
-    }
+
 }

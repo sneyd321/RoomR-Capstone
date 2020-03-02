@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.House.Utility.Utility;
+
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Rent.Payment;
-import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
+
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -32,7 +31,6 @@ import java.util.Locale;
 public class PayRentFragment extends Fragment implements FragmentEventListener {
 
 
-    House house;
     TextView txtMonth;
     TextView txtFinalAmount;
     TextView txtDueDate;
@@ -48,14 +46,12 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
 
 
     private Tenant tenant;
-    private TenantRouterAction actionListener;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pay_rent, container, false);
         //Utility utility = new Utility("Hydro", 150, "Weekly");
-        List<Utility> utilities = new ArrayList<>();
         //utilities.add(utility);
         //house = new House("3327 Raspberry Bush Trail", 600, 0, 0, 0, null, utilities, "rts1234567@hotmail.com", "", "", false, null, null);
 
@@ -120,26 +116,6 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
 
     }
 
-    private void parseUtility(Utility utility) {
-        switch (utility.getName()){
-            case "Hydro":
-                //txtHydroPrice.setText(utility.getAmount());
-                break;
-            case "Internet":
-                //txtInternetPrice.setText(utility.getAmount());
-                break;
-            case "Cable":
-                //txtCablePrice.setText(utility.getAmount());
-                break;
-            case "Phone Line":
-                //txtPhoneLine.setText(utility.getAmount());
-                break;
-        }
-    }
-
-    public void setHouse(House house) {
-        this.house = house;
-    }
 
 
     private View.OnClickListener onPayRent = new View.OnClickListener() {
@@ -152,9 +128,7 @@ public class PayRentFragment extends Fragment implements FragmentEventListener {
         }
     };
 
-    public void setActionListener(TenantRouterAction actionListener) {
-        this.actionListener = actionListener;
-    }
+
 
 
     @Override

@@ -9,6 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,12 +26,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Router.LandlordRouter;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.gson.Gson;
 
@@ -45,10 +44,8 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 {
     BottomNavigationView bottomMenu;
     DrawerLayout drawerLayout;
-    NavigationView navigationView;
 
     Toolbar myToolbar;
-    LandlordRouter router;
     Landlord landlord;
 
 
@@ -65,7 +62,6 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         myToolbar.setTitleTextColor(getResources().getColor(R.color.White));
         drawerLayout = findViewById(R.id.landlord_drawer_layout);
         bottomMenu = findViewById(R.id.navBarLandlord);
-        navigationView = findViewById(R.id.nav_view);
 
 
 
@@ -80,7 +76,6 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         }
 
 
-        navigationView.setNavigationItemSelectedListener(onNavigationMenu);
         bottomMenu.setOnNavigationItemSelectedListener(onBottomMenu);
 
         setSupportActionBar(myToolbar);
@@ -92,7 +87,6 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).setDrawerLayout(drawerLayout).build();
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupWithNavController(bottomMenu, navController);
 
 
@@ -102,8 +96,6 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
         if (savedInstanceState == null) {
             bottomMenu.getMenu().getItem(1).setChecked(true);
         }
-        router = new LandlordRouter(getSupportFragmentManager(), new ArrayList<House>());
-        router.onNavigateToHouses(landlord);
     }
 
     @Override
@@ -130,22 +122,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
 
 
-    private NavigationView.OnNavigationItemSelectedListener onNavigationMenu = new NavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-                case R.id.nav_listings:
-                    router.onNavigateToLandlordListings(landlord);
-                    break;
-                case R.id.nav_logout:
-                    Intent intent = new Intent(MainActivityLandlord.this, LoginActivity.class);
-                    startActivity(intent);
-            }
-            drawerLayout.closeDrawer(GravityCompat.START);
 
-            return true;
-        }
-    };
 
     private BottomNavigationView.OnNavigationItemSelectedListener onBottomMenu = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -157,7 +134,6 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
                     break;
                 case R.id.navHouses:
-                    router.onNavigateToHouses(landlord);
                     item.setChecked(true);
                     break;
                 case R.id.navNotifyR:
@@ -174,15 +150,7 @@ public class MainActivityLandlord extends AppCompatActivity implements FragmentE
 
     @Override
     public void update(String response) {
-        final List<House> networkHouses = new ArrayList<>();
-        JSONArray jsonArray = convertStringToJSONArray(response);
-        Gson gson = new Gson();
-        Iterator iterator = new JSONArrayIterator(jsonArray);
-        while (iterator.hasNext()){
-            House house = gson.fromJson(iterator.next().toString(), House.class);
 
-            networkHouses.add(house);
-        }
         progressDialog.dismiss();
 
 

@@ -2,8 +2,8 @@ package com.example.ryan.roomrep.Classes.Tenant;
 
 import java.util.Map;
 
-public interface Validator {
+public interface Validator<T> {
 
-    <T> Map<Integer, String> validate(T object);
+    Map<Integer, String> validate(T object);
 
 }

@@ -7,16 +7,8 @@ import com.example.ryan.roomrep.Classes.Tenant.Validator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LoginValidator implements Validator {
-    @Override
-    public <T> Map<Integer, String> validate(T object) {
-        Login login = (Login) object;
-        Map<Integer, String> validator = new LinkedHashMap<>();
-        validator.put(0, isEmailEmpty(login.getUserName()));
-        validator.put(1, isPasswordEmpty(login.getPassword()));
-        validator.put(2, isPasswordLogEnough(login.getPassword()));
-        return validator;
-    }
+public class LoginValidator implements Validator<Login> {
+
 
     private String isEmailEmpty(String email) {
         if(email.isEmpty()) {
@@ -40,4 +32,12 @@ public class LoginValidator implements Validator {
     }
 
 
+    @Override
+    public Map<Integer, String> validate(Login object) {
+        Map<Integer, String> validator = new LinkedHashMap<>();
+        validator.put(0, isEmailEmpty(object.getUserName()));
+        validator.put(1, isPasswordEmpty(object.getPassword()));
+        validator.put(2, isPasswordLogEnough(object.getPassword()));
+        return validator;
+    }
 }

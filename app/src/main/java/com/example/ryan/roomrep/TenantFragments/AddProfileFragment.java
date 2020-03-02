@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.example.ryan.roomrep.R;
 
@@ -39,7 +38,6 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
     TextView txtErrorMessage;
     TextView txtGoBack;
 
-    ProfileRouterAction routerAction;
     Profile profile;
 
 
@@ -130,9 +128,7 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
         }
     };
 
-    public void setRouterAction(ProfileRouterAction profileRouterAction) {
-        this.routerAction = profileRouterAction;
-    }
+
 
 
     public void addToSharedPreferences(Profile profile) {
@@ -163,18 +159,14 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
                                 Network network = Network.getInstance();
                                 network.updateProfile(profile);
                                 alertDialog.dismiss();
-                                if (routerAction != null) {
-                                    routerAction.onNavigateToSearchListings();
-                                }
+
                             }
                         });
                         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Don't Update", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 alertDialog.dismiss();
-                                if (routerAction != null) {
-                                    routerAction.onNavigateToSearchListings();
-                                }
+
                             }
                         });
                         alertDialog.show();
@@ -182,9 +174,7 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
                 });
             }
             else {
-                if (routerAction != null) {
-                    routerAction.onNavigateToSearchListings();
-                }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -5,13 +5,11 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.ryan.roomrep.Classes.Router.ProfileRouter;
 import com.example.ryan.roomrep.R;
 
 
 public class ProfileActivity extends AppCompatActivity  {
 
-    ProfileRouter profileRouter;
 
 
     @Override
@@ -19,8 +17,7 @@ public class ProfileActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        profileRouter = new ProfileRouter(getSupportFragmentManager());
-        profileRouter.onNavigateToAddProfile();
+
 
     }
 
@@ -33,6 +30,6 @@ public class ProfileActivity extends AppCompatActivity  {
             startActivity(intent);
             return;
         }
-        profileRouter.popBackStack();
+
     }
 }

@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
-import com.example.ryan.roomrep.Adapters.TenantListingsRecyclerViewAdapter;
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
-import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.R;
 
 import java.util.List;
@@ -26,8 +23,6 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
     RecyclerView rcyTenantListings;
     TextView txtNoHouses;
     Button btnExitListings;
-    ProfileRouterAction profileRouterAction;
-    List<House> houses;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,15 +34,7 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
 
         rcyTenantListings.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        TenantListingsRecyclerViewAdapter adapter = new TenantListingsRecyclerViewAdapter(getActivity(), houses);
-        if (adapter.getItemCount() != 0){
-            txtNoHouses.setVisibility(View.INVISIBLE);
-            adapter.setItemClickListener(this);
-            rcyTenantListings.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            return view;
 
-        }
 
         txtNoHouses.setVisibility(View.VISIBLE);
         return view;
@@ -56,20 +43,11 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
     View.OnClickListener onExitListings = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (profileRouterAction != null){
-                profileRouterAction.popBackStack();
-            }
+
         }
     };
 
 
-    public void setRouterAction(ProfileRouterAction profileRouterAction) {
-        this.profileRouterAction = profileRouterAction;
-    }
-
-    public void setHouses(List<House> houses){
-        this.houses = houses;
-    }
 
 
 
@@ -81,8 +59,6 @@ public class ListingsFragment extends Fragment implements ItemClickListener, Fra
 
     @Override
     public void onItemClick(View view, int position) {
-        if (profileRouterAction != null)  {
-            profileRouterAction.onNavigateToViewListings(houses.get(position));
-        }
+        
     }
 }

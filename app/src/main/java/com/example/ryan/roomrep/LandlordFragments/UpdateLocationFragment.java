@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.House.Location;
-import com.example.ryan.roomrep.Classes.HouseViewModel;
+import com.example.ryan.roomrep.Classes.Location.Location;
 import com.example.ryan.roomrep.R;
 
 import androidx.annotation.NonNull;
@@ -22,10 +20,6 @@ public class UpdateLocationFragment extends Fragment {
 
     EditText edtAddress, edtCity, edtProvince, edtPostalCode;
     Button btnUpdatLocation;
-
-    HouseViewModel houseViewModel;
-
-    House house;
 
     private void initUI(View view){
         edtAddress = view.findViewById(R.id.edtUpdateHouseLocationAddress);
@@ -41,13 +35,8 @@ public class UpdateLocationFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_house_detail_update_location, container, false);
         initUI(view);
-        houseViewModel = ViewModelProviders.of(getActivity()).get(HouseViewModel.class);
-        house = houseViewModel.getSelected().getValue();
 
-        edtAddress.setText(house.getLocation().getAddress());
-        edtCity.setText(house.getLocation().getCity());
-        edtProvince.setText(house.getLocation().getProvince());
-        edtPostalCode.setText(house.getLocation().getPostalCode());
+
 
 
         return view;
@@ -57,12 +46,7 @@ public class UpdateLocationFragment extends Fragment {
     private View.OnClickListener onUpdateLocation = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Location location = new Location(edtAddress.getText().toString(),
-                    edtCity.getText().toString(),
-                    edtProvince.getText().toString(),
-                    edtPostalCode.getText().toString());
-            house.setLocation(location);
-            houseViewModel.update(house);
+
             NavHostFragment.findNavController(UpdateLocationFragment.this).navigate(R.id.action_updateLocationFragment_to_houseDetailStatePagerFragment);
         }
     };

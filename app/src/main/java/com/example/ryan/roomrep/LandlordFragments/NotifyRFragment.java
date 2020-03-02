@@ -19,7 +19,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.ryan.roomrep.Adapters.LandlordPaymentRecyclerviewAdapter;
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Iterator.JSONArrayIterator;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
@@ -46,8 +45,6 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
     List<Payment> payments;
 
     Button btnGoBack;
-
-    List<House> houses;
     private String TAG;
 
 
@@ -59,9 +56,6 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
         rcyPayments = view.findViewById(R.id.rcyNotifyRPayments);
         btnGoBack = view.findViewById(R.id.btnNotifyRGoBack);
         spnTenants = view.findViewById(R.id.spnNotifyRListTenants);
-        ArrayAdapter<String> tenantAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, convertHousesToAddressList(houses));
-        tenantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnTenants.setAdapter(tenantAdapter);
         spnTenants.setOnItemSelectedListener(onListTenants);
 
 
@@ -80,21 +74,6 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
     }
 
 
-    private List<String> convertHousesToAddressList(List<House> houses) {
-        List<String> addresses = new ArrayList<>();
-        addresses.add("- Select An Address -");
-        for (House house : houses){
-            //addresses.add(house.getLocation().getAddress());
-        }
-        return addresses;
-    }
-
-    private House getHouseFromAddress(String address) {
-        for (House house : houses) {
-
-        }
-        return null;
-    }
 
     private List<String> convertTenantsToNameList(List<Tenant> tenants) {
         List<String> tenantNames = new ArrayList<>();
@@ -114,10 +93,8 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
             if (selectedAddress.equals("- Select An Address -")){
                 return;
             }
-            final House house = getHouseFromAddress(selectedAddress);
-            if (house == null){
-                return;
-            }
+
+
             List<String> tenantNames = convertTenantsToNameList(new ArrayList<>());
             if (!tenantNames.isEmpty()){
                 final String[] items = tenantNames.toArray(new String[tenantNames.size()]);
@@ -169,9 +146,7 @@ public class NotifyRFragment extends Fragment implements FragmentEventListener
         this.landlord = landlord;
     }
 
-    public void setHouse(List<House> houses) {
-        this.houses = houses;
-    }
+
 
     @Override
     public void update(String response) {

@@ -21,6 +21,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+    }
+
+
 }
 
 dependencies {
@@ -33,8 +39,6 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation files('libs/mysql-connector.jar')
     implementation 'com.google.firebase:firebase-firestore:21.3.1'
@@ -52,7 +56,7 @@ dependencies {
     implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
     implementation 'com.github.lecho:hellocharts-android:v1.5.8'
     implementation 'androidx.cardview:cardview:1.0.0'
-
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
     implementation 'com.daimajia.easing:library:2.1@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
     implementation 'com.google.android.libraries.places:places:2.0.0'
@@ -65,6 +69,44 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+
+    // Core library
+    androidTestImplementation 'androidx.test:core:1.0.0'
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit:1.0.0'
+    androidTestImplementation 'androidx.test.ext:truth:1.0.0'
+    androidTestImplementation 'com.google.truth:truth:0.42'
+    implementation group: 'org.checkerframework', name: 'checker-compat-qual', version: '2.5.5'
+
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.1.0'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.1.0'
+
+    // required if you want to use Mockito for unit tests
+    implementation 'org.mockito:mockito-core:3.2.4'
+    androidTestImplementation 'org.mockito:mockito-android:3.2.4'
+
+
+    // The following Espresso dependency can be either "implementation"
+    // or "androidTestImplementation", depending on whether you want the
+    // dependency to appear on your APK's compile classpath or the test APK
+    // classpath.
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.1.0'
+
+    def fragment_version = "1.2.0"
+    // ...
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
 
 }

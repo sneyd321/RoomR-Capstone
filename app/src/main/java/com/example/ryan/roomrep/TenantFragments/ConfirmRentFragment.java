@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.ryan.roomrep.Classes.Router.TenantRouterAction;
 import com.example.ryan.roomrep.R;
 
 
@@ -15,7 +14,6 @@ public class ConfirmRentFragment extends Fragment {
 
     Button Confirm;
 
-    private TenantRouterAction actionListener;
 
 
     @Override
@@ -40,7 +38,5 @@ public class ConfirmRentFragment extends Fragment {
 
     }
 
-    public void setActionListener(TenantRouterAction actionListener) {
-        this.actionListener = actionListener;
-    }
+
 }

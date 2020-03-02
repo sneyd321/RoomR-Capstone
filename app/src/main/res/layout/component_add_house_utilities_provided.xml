@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/general_text"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Responsibility Of:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView39"
+        style="@style/general_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="8dp"
+        android:text="Water"
+        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseWaterUtility"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/swtAddHouseWaterUtility" />
+
+    <Switch
+        android:id="@+id/swtAddHouseWaterUtility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layoutDirection="ltr"
+        android:text="Tenant"
+        android:switchPadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView46" />
+
+
+    <TextView
+        android:id="@+id/textView45"
+        style="@style/general_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="Electricity"
+        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseElectricityUtility"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/swtAddHouseElectricityUtility" />
+
+    <Switch
+        android:id="@+id/swtAddHouseElectricityUtility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layoutDirection="ltr"
+        android:text="Tenant"
+        android:switchPadding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseWaterUtility" />
+
+
+    <TextView
+        android:id="@+id/textView44"
+        style="@style/general_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Heat"
+        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseHeatUtility"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/swtAddHouseHeatUtility" />
+
+    <Switch
+        android:id="@+id/swtAddHouseHeatUtility"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layoutDirection="ltr"
+        android:switchPadding="8dp"
+        android:text="Tenant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseElectricityUtility" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

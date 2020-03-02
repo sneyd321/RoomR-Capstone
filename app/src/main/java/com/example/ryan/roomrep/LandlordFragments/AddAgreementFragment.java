@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.example.ryan.roomrep.Classes.House.Amenities.Amenity;
 import com.example.ryan.roomrep.R;
 
 import java.text.SimpleDateFormat;

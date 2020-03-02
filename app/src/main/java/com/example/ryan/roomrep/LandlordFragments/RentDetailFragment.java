@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ryan.roomrep.Adapters.HouseDetailRecyclerViewAdapter;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
-import com.example.ryan.roomrep.Classes.House.HouseDetail;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
@@ -31,15 +29,6 @@ public class RentDetailFragment extends Fragment implements ItemClickListener {
         View view = inflater.inflate(R.layout.fragment_house_detail_house_detail, container, false);
         rcyHouseDetail = view.findViewById(R.id.rcyHouseDetailHouseDetails);
 
-        List<HouseDetail> houseDetails = new ArrayList<>();
-        houseDetails.add(new HouseDetail(getResources().getDrawable(R.drawable.ic_power_black_24dp), "Edit Utility"));
-        houseDetails.add(new HouseDetail(getResources().getDrawable(R.drawable.ic_hotel_black_24dp), "Edit Services"));
-        houseDetails.add(new HouseDetail(getResources().getDrawable(R.drawable.ic_monetization_on_black_24dp), "Edit Rent"));
-
-        rcyHouseDetail.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        HouseDetailRecyclerViewAdapter adapter = new HouseDetailRecyclerViewAdapter(getActivity(), houseDetails);
-        adapter.setOnCLickListener(this);
-        rcyHouseDetail.setAdapter(adapter);
 
         return view;
     }

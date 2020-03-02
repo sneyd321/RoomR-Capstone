@@ -53,9 +53,7 @@ public class HouseDetailStatePagerFragment extends Fragment {
 
     private StatePagerAdapter setupViewPager(){
         StatePagerAdapter adapter = new StatePagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new HouseDetailFragment(), "");
         adapter.addFragment(new RentDetailFragment(), "");
-        adapter.addFragment(new AgreementDetailFragment(), "");
         return adapter;
     }
 }

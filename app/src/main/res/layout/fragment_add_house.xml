@@ -1,460 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <ScrollView
-
-        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="2dp"
         android:fadeScrollbars="false"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddHouseAddHouse"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView26"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Address:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <include layout="@layout/component_add_house_unit_location" />
 
-            <AutoCompleteTextView
-                android:id="@+id/edtAddress"
-                style="@style/sign_up_edittext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/button_border"
-                android:completionThreshold="3"
-                android:hint="Ex. 11 Bronte Rd"
-                android:textColor="@color/Black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                android:background="?android:attr/listDivider" />
 
-            <TextView
-                android:id="@+id/textView29"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Postal Code:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtAddress" />
+            <include layout="@layout/component_add_house_homeowner_location" />
 
-            <EditText
-                android:id="@+id/edtAddHousePostalCode"
-                style="@style/sign_up_edittext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/button_border"
-                android:ems="10"
-                android:hint="Ex. L6L 0E1"
-                android:inputType="textPostalAddress"
-                android:textColor="@color/Black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView29" />
-
-            <TextView
-                android:id="@+id/textView27"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Unit:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtAddHousePostalCode" />
-
-            <EditText
-                android:id="@+id/edtAddHouseUnitType"
-                style="@style/sign_up_edittext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/button_border"
-                android:ems="10"
-                android:hint="Ex. Basement, Unit 207"
-                android:inputType="textPersonName"
-                android:textColor="@color/Black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView27" />
+                android:background="?android:attr/listDivider" />
 
-            <TextView
-                android:id="@+id/textView35"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Base Rent:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtAddHouseUnitType" />
+            <include layout="@layout/component_add_house_rent" />
 
-            <EditText
-                android:id="@+id/edtAddHouseRentAmount"
-                style="@style/sign_up_edittext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/button_border"
-                android:ems="10"
-                android:hint="Ex 2500"
-                android:inputType="number"
-                android:textColor="@color/Black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView35" />
-
-
-            <TextView
-                android:id="@+id/textView39"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Length of Term:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtAddHouseRentAmount" />
-
-
-            <TableLayout
-                android:id="@+id/tableLayout2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:stretchColumns="*"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView39">
+                android:background="?android:attr/listDivider" />
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <include layout="@layout/component_add_house_services" />
 
-
-                    <EditText
-                        android:id="@+id/edtAddHouseStartDate"
-                        style="@style/sign_up_edittext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight=".5"
-                        android:background="@drawable/button_border"
-                        android:clickable="true"
-                        android:editable="false"
-                        android:ems="10"
-                        android:focusable="false"
-                        android:hint="Start Date"
-                        android:textColor="@color/Black" />
-
-                    <EditText
-                        android:id="@+id/edtAddHouseEndDate"
-                        style="@style/sign_up_edittext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight=".5"
-                        android:background="@drawable/button_border"
-                        android:clickable="true"
-                        android:editable="false"
-                        android:ems="10"
-                        android:focusable="false"
-                        android:hint="End Date"
-                        android:textColor="@color/Black" />
-                </TableRow>
-
-
-            </TableLayout>
-
-            <TextView
-                android:id="@+id/textView2"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/add_house_bathrooms_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tableLayout2" />
-
-
-            <HorizontalScrollView
-                android:id="@+id/horizontalScrollView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:fadeScrollbars="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2">
+                android:background="?android:attr/listDivider" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_border"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+            <include layout="@layout/component_add_house_utilities_provided" />
 
-                    <Button
-                        android:id="@+id/btnAddHouseBathroomSelection1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="1"
-                        android:textColor="@color/Green" />
-
-
-                    <Button
-                        android:id="@+id/btnAddHouseBathroomSelection2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="2"
-                        android:textColor="@color/Green" />
-
-
-                    <Button
-                        android:id="@+id/btnAddHouseBathroomSelection3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="3"
-                        android:textColor="@color/Green" />
-
-
-                    <Button
-                        android:id="@+id/btnAddHouseBathroomSelection4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="4"
-                        android:textColor="@color/Green" />
-
-                    <Button
-                        android:id="@+id/btnAddHouseBathroomSelection5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="5"
-                        android:textColor="@color/Green" />
-
-                    <Button
-                        android:id="@+id/btnAddHouseBathroomSelection6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="6+"
-                        android:textColor="@color/Green" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <TextView
-                android:id="@+id/textView17"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/add_house_bedrooms_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
-
-            <HorizontalScrollView
-                android:id="@+id/horizontalScrollView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:fadeScrollbars="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17">
+                android:background="?android:attr/listDivider" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_border"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+            <include layout="@layout/component_add_house_additional_terms" />
 
-                    <Button
-                        android:id="@+id/btnAddHouseBedroomSelection1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="1"
-                        android:textColor="@color/Green" />
-
-
-                    <Button
-                        android:id="@+id/btnAddHouseBedroomSelection2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="2"
-                        android:textColor="@color/Green" />
-
-
-                    <Button
-                        android:id="@+id/btnAddHouseBedroomSelection3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="3"
-                        android:textColor="@color/Green" />
-
-
-                    <Button
-                        android:id="@+id/btnAddHouseBedroomSelection4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="4"
-                        android:textColor="@color/Green" />
-
-                    <Button
-                        android:id="@+id/btnAddHouseBedroomSelection5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="5"
-                        android:textColor="@color/Green" />
-
-                    <Button
-                        android:id="@+id/btnAddHouseBedroomSelection6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/normal_slide_button"
-                        android:text="6+"
-                        android:textColor="@color/Green" />
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-
-            <TextView
-                android:id="@+id/textView25"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnAddHouseAddHouse"
+                style="@style/update_primary_action"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Size:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
-
-            <EditText
-                android:id="@+id/edtAddHouseSize"
-                style="@style/sign_up_edittext"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/button_border"
-                android:ems="10"
-                android:hint="Ex. 4000"
-                android:inputType="number"
-                android:textColor="@color/Black"
+                android:layout_margin="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Add House"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/textView9"
-                style="@style/general_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/add_house_sqft"
-                app:layout_constraintBottom_toBottomOf="@+id/edtAddHouseSize"
-                app:layout_constraintStart_toEndOf="@+id/edtAddHouseSize"
-                app:layout_constraintTop_toTopOf="@+id/edtAddHouseSize" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnAddHouseAddHouse"
-        style="@style/update_primary_action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Add House"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
+
+
 
 
 

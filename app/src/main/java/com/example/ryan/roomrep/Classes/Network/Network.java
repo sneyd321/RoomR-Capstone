@@ -1,7 +1,7 @@
 package com.example.ryan.roomrep.Classes.Network;
 
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
+import com.example.ryan.roomrep.Classes.Lease.House;
 import com.example.ryan.roomrep.Classes.Login;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.Classes.Rent.Payment;

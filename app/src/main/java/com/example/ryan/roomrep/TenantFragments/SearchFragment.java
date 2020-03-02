@@ -15,10 +15,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Router.ProfileRouterAction;
 import com.example.ryan.roomrep.Classes.Search.Search;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
@@ -31,7 +29,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.ryan.roomrep.LandlordFragments.AddHouseFragment.MAX_RENT;
 
 
 public class SearchFragment extends Fragment implements FragmentEventListener
@@ -59,7 +56,6 @@ public class SearchFragment extends Fragment implements FragmentEventListener
 
 
 
-    private ProfileRouterAction actionListener;
     private ProgressDialog progressDialog;
 
     @Override
@@ -86,7 +82,7 @@ public class SearchFragment extends Fragment implements FragmentEventListener
         spnCities.setEnabled(false);
 
         skbRent.setOnSeekBarChangeListener(onPriceSelected);
-        skbRent.setMax(MAX_RENT);
+
 
         checkBoxList = new ArrayList<>();
         checkBoxList.add(view.findViewById(R.id.chkSearchAmenity1));
@@ -255,44 +251,17 @@ public class SearchFragment extends Fragment implements FragmentEventListener
     View.OnTouchListener onExitSearch = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (actionListener != null) {
-                actionListener.popBackStack();
-            }
+
             return false;
         }
     };
 
 
-    public void setActionListener(ProfileRouterAction actionListener) {
-        this.actionListener = actionListener;
-    }
+
 
     @Override
     public void update(String response) {
         progressDialog.dismiss();
-        List<House> houses = new ArrayList<>();
-        JSONArray jsonArray;
-        try {
-            jsonArray = new JSONArray(response);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return;
-        }
-        Gson gson = new Gson();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                houses.add(gson.fromJson(jsonArray.get(i).toString(), House.class));
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        if (actionListener != null) {
-
-
-            actionListener.onNavigateToProfileListings(houses);
-        }
     }
 }

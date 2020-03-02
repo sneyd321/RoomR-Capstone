@@ -17,11 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Adapters.HouseRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LongClickItemListener;
-import com.example.ryan.roomrep.Classes.House.House;
-import com.example.ryan.roomrep.Classes.HouseViewModel;
 import com.example.ryan.roomrep.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,14 +34,14 @@ public class HousesFragment extends Fragment implements ItemClickListener, LongC
 
 
 
-    HouseRecyclerviewAdapter adapter;
-    HouseViewModel viewModel;
+
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_house, container, false);
+
 
 
         txtLandlordGreeting = view.findViewById(R.id.txtHousesGreetingName);
@@ -57,21 +54,7 @@ public class HousesFragment extends Fragment implements ItemClickListener, LongC
         btnAddHouse.setOnClickListener(onAddHouse);
 
 
-        viewModel = ViewModelProviders.of(getActivity()).get(HouseViewModel.class);
-        viewModel.getAllHouses().observe(getActivity(), new Observer<List<House>>() {
-            @Override
-            public void onChanged(List<House> houses) {
-                if (houses.size() == 0) {
-                    txtNoHouses.setVisibility(View.VISIBLE);
-                    return;
-                }
-                txtNoHouses.setVisibility(View.GONE);
-                adapter = new HouseRecyclerviewAdapter(getActivity(), houses);
-                adapter.setOnItemClickListener(HousesFragment.this);
-                adapter.setLongClickItemListener(HousesFragment.this);
-                rcyHouses.setAdapter(adapter);
-            }
-        });
+
 
         return view;
     }
@@ -89,7 +72,6 @@ public class HousesFragment extends Fragment implements ItemClickListener, LongC
 
     @Override
     public void onItemClick(View view, int position) {
-        viewModel.select(adapter.getItemAtPostion(position));
         NavHostFragment.findNavController(HousesFragment.this).navigate(R.id.action_housesFragment_to_houseDetailStatePagerFragment);
     }
 
@@ -115,4 +97,8 @@ public class HousesFragment extends Fragment implements ItemClickListener, LongC
         alertDialog.show();
         return true;
     }
+
+
+
+
 }

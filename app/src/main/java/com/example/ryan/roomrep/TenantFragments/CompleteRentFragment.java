@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
@@ -97,8 +96,6 @@ public class CompleteRentFragment extends Fragment implements FragmentEventListe
         progressDialog.dismiss();
         JSONObject jsonObject = convertStringToJSONObject(response);
         Gson gson = new Gson();
-        House house = gson.fromJson(jsonObject.toString(), House.class);
-        ((MainActivityTenant)getActivity()).setTenantAndHouse(tenant, house);
     }
 
     private JSONObject convertStringToJSONObject(String response) {

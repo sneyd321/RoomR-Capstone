@@ -15,28 +15,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
-import com.example.ryan.roomrep.Adapters.LandlordListingsRecyclerviewAdapter;
 import com.example.ryan.roomrep.Adapters.LongClickItemListener;
-import com.example.ryan.roomrep.Classes.House.House;
 import com.example.ryan.roomrep.Classes.Landlord.Landlord;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Router.LandlordRouterAction;
 import com.example.ryan.roomrep.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LandlordListingsFragment extends Fragment implements ItemClickListener, AddListingDialogActionListener, LongClickItemListener {
+public class LandlordListingsFragment extends Fragment implements ItemClickListener, LongClickItemListener {
 
 
     RecyclerView rcyLandlordListings;
     Button btnPostListing;
     TextView txtNoListings;
 
-    private LandlordRouterAction routerActionListener;
-    private List<House> houses;
-    private List<House> listedHouses;
-    private LandlordListingsRecyclerviewAdapter adapter;
+
 
     private Landlord landlord;
 
@@ -50,52 +44,26 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
         btnPostListing = view.findViewById(R.id.btnLandlordListingsPostListing);
         btnPostListing.setOnClickListener(onAddListing);
 
-        listedHouses = new ArrayList<>();
-        for (House house : houses){
-            if (house.isPosted()){
-                listedHouses.add(house);
-            }
-        }
-
-
-        if (listedHouses.size() != 0){
-            txtNoListings.setVisibility(View.INVISIBLE);
-
-            adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), listedHouses);
-
-            adapter.setItemClickListener(this);
-            adapter.setLongClickItemListener(this);
-            rcyLandlordListings.setAdapter(adapter);
-            return view;
-        }
 
         txtNoListings.setVisibility(View.VISIBLE);
         return view;
     }
 
 
-    public void setRouterAction(LandlordRouterAction routerActionListener) {
-        this.routerActionListener = routerActionListener;
-    }
+
 
 
 
 
     @Override
     public void onItemClick(View view, int position) {
-        if (routerActionListener != null){
-            House house = listedHouses.get(position);
-            routerActionListener.onNavigateToTenantProfile(house);
-        }
+
     }
 
     View.OnClickListener onAddListing = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AddListingDialogFragment addListingDialogFragment = new AddListingDialogFragment();
-            addListingDialogFragment.setHouses(houses);
-            addListingDialogFragment.setAddListingDialogActionListener(LandlordListingsFragment.this);
-            addListingDialogFragment.show(getActivity().getFragmentManager(), null);
+
 
 
         }
@@ -106,21 +74,8 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
     }
 
 
-    public void setHouses(List<House> houses) {
-        this.houses = houses;
-    }
 
-    @Override
-    public void onAddListing(House house) {
-        txtNoListings.setVisibility(View.INVISIBLE);
-        if (listedHouses.size() == 0){
-            adapter = new LandlordListingsRecyclerviewAdapter(getActivity(), listedHouses);
-            adapter.setItemClickListener(this);
-            adapter.setLongClickItemListener(this);
-            rcyLandlordListings.setAdapter(adapter);
-        }
-        adapter.addHouse(house, adapter.getItemCount());
-    }
+
 
 
     @Override
@@ -133,14 +88,6 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                House house = listedHouses.get(position);
-
-                Network network = Network.getInstance();
-                network.postListing(house);
-                adapter.removeHouse(house);
-                if (listedHouses.isEmpty()){
-                    txtNoListings.setVisibility(View.VISIBLE);
-                }
                 alertDialog.dismiss();
             }
         });

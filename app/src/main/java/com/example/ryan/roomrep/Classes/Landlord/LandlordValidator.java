@@ -5,25 +5,9 @@ import com.example.ryan.roomrep.Classes.Tenant.Validator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class LandlordValidator implements Validator {
+public class LandlordValidator implements Validator<Landlord> {
 
 
-    @Override
-    public <T> Map<Integer, String> validate(T object) {
-        Landlord landlord = (Landlord) object;
-        Map <Integer,String> map = new LinkedHashMap<>();
-        map.put(0, isFirstNameEmpty(landlord.getFirstName()));
-        //map.put(1, isFirstNameValid(landlord.getFirstName()));
-        map.put(2, isLastNameEmpty(landlord.getLastName()));
-        //map.put(3, isLastNameValid(landlord.getLastName()));
-        map.put(4, isPasswordEmpty(landlord.getPassword()));
-        map.put(5, isPasswordLongEnough(landlord.getPassword()));
-        map.put(6, isPassword2Empty(landlord.getPassword2()));
-        map.put(7, doPasswordsMatch(landlord.getPassword(), landlord.getPassword2()));
-        map.put(8, isEmailEmpty(landlord.getEmail()));
-        //map.put(9, isEmailValid(landlord.getTenantEmail()));
-        return map;
-    }
 
 
 
@@ -101,5 +85,19 @@ public class LandlordValidator implements Validator {
     }
 
 
-
+    @Override
+    public Map<Integer, String> validate(Landlord object) {
+        Map <Integer,String> map = new LinkedHashMap<>();
+        map.put(0, isFirstNameEmpty(object.getFirstName()));
+        //map.put(1, isFirstNameValid(landlord.getFirstName()));
+        map.put(2, isLastNameEmpty(object.getLastName()));
+        //map.put(3, isLastNameValid(landlord.getLastName()));
+        map.put(4, isPasswordEmpty(object.getPassword()));
+        map.put(5, isPasswordLongEnough(object.getPassword()));
+        map.put(6, isPassword2Empty(object.getPassword2()));
+        map.put(7, doPasswordsMatch(object.getPassword(), object.getPassword2()));
+        map.put(8, isEmailEmpty(object.getEmail()));
+        //map.put(9, isEmailValid(landlord.getTenantEmail()));
+        return map;
+    }
 }
