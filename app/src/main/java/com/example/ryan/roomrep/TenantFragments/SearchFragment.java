@@ -15,14 +15,10 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Search.Search;
 import com.example.ryan.roomrep.R;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -31,7 +27,7 @@ import java.util.Map;
 
 
 
-public class SearchFragment extends Fragment implements FragmentEventListener
+public class SearchFragment extends Fragment implements NetworkObserver
 {
 
 
@@ -240,7 +236,6 @@ public class SearchFragment extends Fragment implements FragmentEventListener
 
             Network network = Network.getInstance();
             network.registerObserver(SearchFragment.this);
-            network.searchListing(search);
             progressDialog.setMessage("Searching...");
             progressDialog.setCancelable(false);
             progressDialog.show();

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.R;
@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TenantViewListingFragment extends Fragment implements FragmentEventListener {
+public class TenantViewListingFragment extends Fragment implements NetworkObserver {
 
 
     TextView txtAddress;
@@ -96,9 +96,8 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
     }
 
     public void  getThatbread(String address){
-        Network network = new Network();
-        network.registerObserver(this);
-        network.getLandlordRating(address);
+
+
     }
 
     private void isLandlordAlreadyNotified() {
@@ -131,7 +130,6 @@ public class TenantViewListingFragment extends Fragment implements FragmentEvent
             String email = (sharedPref.getString("ProfileEmail", ""));
             String bio = (sharedPref.getString("ProfileBio", ""));
             Profile profile = new Profile(firstName, lastName, email, bio);
-            network.contactLandlord(profile);
             Toast.makeText(getActivity(), "Landlord Notified", Toast.LENGTH_SHORT).show();
             btnContactLandlord.setVisibility(View.INVISIBLE);
 

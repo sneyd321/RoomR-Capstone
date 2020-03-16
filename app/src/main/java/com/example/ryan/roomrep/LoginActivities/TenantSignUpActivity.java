@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
@@ -23,7 +23,7 @@ import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.Map;
 
-public class TenantSignUpActivity extends AppCompatActivity implements FragmentEventListener {
+public class TenantSignUpActivity extends AppCompatActivity implements NetworkObserver {
 
 
     EditText edtFirstName;
@@ -136,7 +136,6 @@ public class TenantSignUpActivity extends AppCompatActivity implements FragmentE
 
                 // Get new Instance ID token
                 String token = task.getResult().getToken();
-                network.signupTenant(tenant, token);
                 Intent intent = new Intent(TenantSignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
 

@@ -1,27 +1,27 @@
 package com.example.ryan.roomrep.Classes.Lease;
 
-import com.example.ryan.roomrep.Classes.Rent.Payment;
-
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class RentDetail {
 
     private String rentDueDate;
     private int baseRent;
     private String rentMadePayable;
-    private boolean paymentOption1;
-    private boolean paymentOption2;
-    private boolean paymentOption3;
+    private boolean paymentMethod1;
+    private boolean paymentMethod2;
+    private boolean paymentMethod3;
 
-    public RentDetail(String rentDueDate, int baseRent, String rentMadePayable, boolean paymentOption1, boolean paymentOption2, boolean paymentOption3) {
+    public RentDetail(String rentDueDate, int baseRent, String rentMadePayable, boolean paymentOption1, boolean paymentMethod2, boolean paymentOption3) {
         this.rentDueDate = rentDueDate;
         this.baseRent = baseRent;
         this.rentMadePayable = rentMadePayable;
-        this.paymentOption1 = paymentOption1;
-        this.paymentOption2 = paymentOption2;
-        this.paymentOption3 = paymentOption3;
+        this.paymentMethod1 = paymentOption1;
+        this.paymentMethod2 = paymentMethod2;
+        this.paymentMethod3 = paymentOption3;
 
     }
+
 
     public String getRentDueDate() {
         return rentDueDate;
@@ -36,15 +36,17 @@ public class RentDetail {
     }
 
 
-    public boolean isPaymentOption1() {
-        return paymentOption1;
+    public boolean isPaymentMethod1() {
+        return paymentMethod1;
     }
 
-    public boolean isPaymentOption2() {
-        return paymentOption2;
+    public boolean isPaymentMethod2() {
+        return paymentMethod2;
     }
 
-    public boolean isPaymentOption3() {
-        return paymentOption3;
+    public boolean isPaymentMethod3() {
+        return paymentMethod3;
     }
+
+
 }

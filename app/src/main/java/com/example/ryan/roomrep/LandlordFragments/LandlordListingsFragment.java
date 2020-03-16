@@ -16,12 +16,7 @@ import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
 import com.example.ryan.roomrep.Adapters.LongClickItemListener;
-import com.example.ryan.roomrep.Classes.Landlord.Landlord;
-import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LandlordListingsFragment extends Fragment implements ItemClickListener, LongClickItemListener {
 
@@ -32,7 +27,7 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
 
 
 
-    private Landlord landlord;
+
 
     @Nullable
     @Override
@@ -69,9 +64,6 @@ public class LandlordListingsFragment extends Fragment implements ItemClickListe
         }
     };
 
-    public void setLandlord(Landlord landlord) {
-        this.landlord = landlord;
-    }
 
 
 

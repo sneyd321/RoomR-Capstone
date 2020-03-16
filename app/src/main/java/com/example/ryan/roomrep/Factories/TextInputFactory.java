@@ -6,6 +6,11 @@ import android.view.View;
 import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TextInput.AutoCompleteTextView.AddressAutoCompleteTextInput;
 import com.example.ryan.roomrep.TextInput.AutoCompleteTextView.CityAutoCompleteTextInput;
+import com.example.ryan.roomrep.TextInput.NormalTextInput.EmailTextInput;
+import com.example.ryan.roomrep.TextInput.NormalTextInput.FirstNameTextInput;
+import com.example.ryan.roomrep.TextInput.NormalTextInput.LastNameTextInput;
+import com.example.ryan.roomrep.TextInput.NormalTextInput.PasswordTextInput;
+import com.example.ryan.roomrep.TextInput.NormalTextInput.PhoneNumberTextInput;
 import com.example.ryan.roomrep.TextInput.NormalTextInput.PoBoxTextInput;
 import com.example.ryan.roomrep.TextInput.NormalTextInput.PostalCodeTextInput;
 import com.example.ryan.roomrep.TextInput.NormalTextInput.RentMadePayableTextInput;
@@ -52,6 +57,20 @@ public class TextInputFactory extends AbstractFactory {
                 return new PoBoxTextInput(getView(), R.id.tilAddHousePOBox, editTextResourceId);
             case R.id.edtAddHouseRentMadePayable:
                 return new RentMadePayableTextInput(getView(), R.id.tilAddHouseRentMadePayable, editTextResourceId);
+            case R.id.edtLSUFirstName:
+                return new FirstNameTextInput(getView(), R.id.tilLSUFirstName, editTextResourceId);
+            case R.id.edtLSULastName:
+                return new LastNameTextInput(getView(), R.id.tilLSULastName, editTextResourceId);
+            case R.id.edtLSUEmail:
+                return new EmailTextInput(getView(), R.id.tilLSUEmail, editTextResourceId);
+            case R.id.edtLSUPhoneNumber:
+                return new PhoneNumberTextInput(getView(), R.id.tilLSUPhoneNumber, editTextResourceId);
+            case R.id.edtLSUPassword:
+                return new PasswordTextInput(getView(), R.id.tilLSUPassword, editTextResourceId);
+            case R.id.edtLoginEmail:
+                return new EmailTextInput(getView(), R.id.tilLoginEmail, editTextResourceId);
+            case R.id.edtLoginPassword:
+                return new PasswordTextInput(getView(), R.id.tilLoginPassword, editTextResourceId);
             default:
                 return null;
         }

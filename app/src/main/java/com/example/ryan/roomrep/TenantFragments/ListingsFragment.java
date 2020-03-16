@@ -11,13 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ryan.roomrep.Adapters.ItemClickListener;
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.R;
 
-import java.util.List;
 
-
-public class ListingsFragment extends Fragment implements ItemClickListener, FragmentEventListener {
+public class ListingsFragment extends Fragment implements ItemClickListener, NetworkObserver {
 
 
     RecyclerView rcyTenantListings;

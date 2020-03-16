@@ -13,7 +13,6 @@ public class InputSanitizer {
         return instance;
     }
 
-
     public String sanitizeString(String s) {
         if (!s.isEmpty()) {
             StringBuilder builder = new StringBuilder();

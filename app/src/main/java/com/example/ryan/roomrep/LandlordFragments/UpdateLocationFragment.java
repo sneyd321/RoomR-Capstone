@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.ryan.roomrep.Classes.Location.Location;
 import com.example.ryan.roomrep.R;
 
 import androidx.annotation.NonNull;

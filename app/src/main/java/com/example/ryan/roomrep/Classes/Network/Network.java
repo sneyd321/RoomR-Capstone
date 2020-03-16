@@ -1,799 +1,189 @@
 package com.example.ryan.roomrep.Classes.Network;
 
-import com.example.ryan.roomrep.Classes.Landlord.Landlord;
-import com.example.ryan.roomrep.Classes.Lease.House;
-import com.example.ryan.roomrep.Classes.Login;
-import com.example.ryan.roomrep.Classes.Profile.Profile;
-import com.example.ryan.roomrep.Classes.Rent.Payment;
-import com.example.ryan.roomrep.Classes.Search.Search;
-import com.example.ryan.roomrep.Classes.Tenant.Tenant;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import com.example.ryan.roomrep.Classes.App;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.net.SocketTimeoutException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Network implements NetworkObservable {
+public class Network<T> implements NetworkObservable {
 
     //private final String SERVER_URL2 = "http://10.16.25.62:8080/";
-    private final String SERVER_URL = "https://roomr-222721.appspot.com/";
-    //private final String SERVER_URL = "http://10.16.27.21:8080/";
+    //private final String SERVER_URL = "https://roomr-222721.appspot.com/";
+    private final String SERVER_URL = "http://192.168.0.106:8080/v1/";
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
 
-
-
-
-    private static Network NETWORK_INSTANCE = null;
+    private static Network instance = null;
 
     public static Network getInstance() {
-        if (NETWORK_INSTANCE == null) {
-            NETWORK_INSTANCE = new Network();
+        if (instance == null) {
+            instance = new Network();
         }
-        return NETWORK_INSTANCE;
+        return instance;
     }
 
-    private FragmentEventListener fragmentEventListener;
+    private NetworkObserver networkObserver;
+    private Gson gson;
+    private OkHttpClient client;
+    RequestBody body;
+    HttpUrl.Builder urlBuilder;
+
+    private Network() {
+        gson = new Gson();
+        client = new OkHttpClient();
+        urlBuilder = HttpUrl.parse(SERVER_URL).newBuilder();
+    }
+
+    public boolean isNetworkAvailable() {
+        final ConnectivityManager cm = (ConnectivityManager) App.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) {
+            return false;
+        }
+        final NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
+    }
 
     @Override
-    public void registerObserver(FragmentEventListener fragmentEventListener) {
-        this.fragmentEventListener = fragmentEventListener;
+    public void registerObserver(NetworkObserver networkObserver) {
+        this.networkObserver = networkObserver;
     }
 
     @Override
     public void clearObserver() {
-       this.fragmentEventListener = null;
+       this.networkObserver = null;
     }
 
     @Override
     public void notifyObserver(String response) {
-        if (fragmentEventListener != null){
-            this.fragmentEventListener.update(response);
+        if (networkObserver != null){
+            this.networkObserver.update(response);
             clearObserver();
         }
 
     }
 
-    public void uploadHouse(final House house) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            Gson gson = new Gson();
-            String json = gson.toJson(house);
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "AddHouse/" + user.getUid())
-                    .post(body)
-                    .build();
-
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        fragmentEventListener.update(response.body().string());
-                    }
-                    response.close();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-
-    }
-
-
-    public void getLandlordHouses(Landlord landlord){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            Gson gson = new Gson();
-            String json = gson.toJson(landlord);
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "GetHouse/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        fragmentEventListener.update(response.body().string());
-                    }
-                    response.close();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-    public void signUpLandlord(final Landlord landlord){
-
-        Gson gson = new Gson();
-        String json = gson.toJson(landlord);
-        RequestBody body = RequestBody.create(JSON, json);
+    public void post(final T t, String route) {
+        String json = gson.toJson(t);
+        body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(SERVER_URL + "SignUpTempLandlord/")
+                .url(SERVER_URL + route)
                 .post(body)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
         client.newCall(request).enqueue(new Callback() {
-
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
-
-                }
-                response.close();
+                onSuccess(response);
             }
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
+                onFailed(e);
             }
         });
-
-
     }
 
-    public void getLandlord(Login login) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(login);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "GetLandlord/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        fragmentEventListener.update(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
+    public void addQueryParam(String name, String value) {
+        urlBuilder.addQueryParameter(name, value);
     }
 
-    public void getTenant(Login login) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(login);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "GetTenant/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        fragmentEventListener.update(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-    public void addProfile(Profile profile) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(profile);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "AddProfile/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        fragmentEventListener.update(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-
-    public void postListing(House house) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(house);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "PostListing/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-
-
-    public void uploadRepairImage(File photo, String language) {
-        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-        JSONObject jsonObject = null;
-
-        String formatJson = "{'Language': '" + language +"'}";
-        try {
-            jsonObject = new JSONObject(formatJson);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //Look at request body for .addFormDataPart to send Json
-        MultipartBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("Photo", "TestNetworkRepair.png", RequestBody.create(MEDIA_TYPE_PNG, photo))
-                .addFormDataPart("Language", jsonObject.toString())
-                .build();
-
+    public void get(String route) {
         Request request = new Request.Builder()
-                .url(SERVER_URL + "AddPhoto")
-                .post(requestBody)
+                .url(urlBuilder.build().toString() + route)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
+
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                onSuccess(response);
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    notifyObserver(response.body().string());
-                }
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                onFailed(e);
             }
         });
+
     }
 
 
 
-
-    public void contactLandlord(Profile profile) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(profile);
-            RequestBody body = RequestBody.create(JSON, json);
-
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "ContactLandlord/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
+    private void onSuccess(Response response) throws IOException{
+        switch (response.code()) {
+            case 401:
+                notifyObserver("Authorization failed.");
+                break;
+            case 403:
+                notifyObserver("Permission denied.");
+                break;
+            case 404:
+                notifyObserver("Invalid API route.");
+                break;
+            case 409:
+                notifyObserver("Conflicting request. Try again later.");
+                break;
         }
-
-    }
-
-    public void searchListing(Search search) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            String json = search.convertToJSON();
-            RequestBody body = RequestBody.create(JSON, json);
-
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "SearchListings/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
+        if (response.isSuccessful()){
+            notifyObserver(formatResponse(response.body().string()));
         }
-
+        response.close();
     }
 
-    public void contactProfile(Profile profile) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            String json = profile.convertToJSON();
-            RequestBody body = RequestBody.create(JSON, json);
 
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "ContactProfile/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
+    private void onFailed(IOException e) {
+        if(e instanceof SocketTimeoutException){
+            notifyObserver("Socket timeout error");
+            return;
         }
-
+        notifyObserver("500 Server error");
     }
 
 
-
-
-
-
-    public void convertProfileToTenant(Profile profile) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(profile);
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "ConvertProfileToTenant/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-
-    private JSONObject addClientTokenToTenantRequest(Tenant tenant, String token) throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put("firstName", tenant.getFirstName());
-        json.put("lastName", tenant.getLastName());
-        json.put("tenantEmail", tenant.getTenantEmail());
-        json.put("landlordEmail", tenant.getLandlordEmail());
-        json.put("password", tenant.getPassword());
-        json.put("password2", tenant.getPassword2());
-        json.put("tenantRating", tenant.getTenantRating());
-        json.put("token", token);
-        return json;
-
-    }
-
-    public void signupTenant(Tenant tenant, String token) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            JSONObject json;
-            try {
-                json = addClientTokenToTenantRequest(tenant, token);
-            } catch (JSONException e) {
-                return;
-            }
-
-
-            RequestBody body = RequestBody.create(JSON, json.toString());
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "SignUpTenant/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-    public void makePayment(Payment payment) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(payment);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "MakePayment/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-    public void getPayments(Landlord landlord) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(landlord);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "GetLandlordPayments/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-    public void getTenantHouse(Tenant tenant) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(tenant);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "GetTenantHouse/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                    }
-                    response.close();
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-
-        }
-
-    }
-
-    public void sendPaymentReminder(Tenant tenant) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(tenant);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "SendPaymentNotification/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-
-    }
-
-
-
-    public void updateProfile(Profile profile) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            final Gson gson = new Gson();
-            String json = gson.toJson(profile);
-            RequestBody body = RequestBody.create(JSON, json);
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "UpdateProfile/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
+    private String formatResponse(String response) {
+        switch (getJSONResult(response)) {
+            case "House added.":
+                return "House added successfully.";
+            case "House already exists":
+                return "Error: House already exists";
+            case "Temporary account created.":
+                return  "Temporary account create. Please check email.";
+            case "Homeowner already exists.":
+                return  "Error: Homeowner account already exists with that email.";
+            default:
+                return response;
         }
     }
 
-    public void getLandlordRating(String houseAddress) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put("houseAddress",houseAddress);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
 
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "GetLandlordWithHouseAddress")
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-                        notifyObserver(response.body().string());
-                        response.close();
-
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-    }
-
-    public void updateHouse(String province, String city, String houseAddress) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            JSONObject jsonObject = formatLocationObject(province, city, houseAddress);
-            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
-
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "AddLocationToHouse/" + user.getUid())
-                    .post(body)
-                    .build();
-            OkHttpClient client = new OkHttpClient();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-            });
-        }
-    }
-
-    private JSONObject formatLocationObject(String province, String city, String houseAddress) {
-        JSONObject jsonObject = new JSONObject();
-
+    private String getJSONResult(String response) {
+        JSONObject jsonObject;
         try {
-            jsonObject.put("province", province);
-            jsonObject.put("city", city);
-            jsonObject.put("houseAddress", houseAddress);
+            jsonObject = new JSONObject(response);
+            return jsonObject.getString("Result");
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
-        return jsonObject;
     }
-
-    public void removeHouse(House house) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null){
-            Gson gson = new Gson();
-            String json = gson.toJson(house);
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder()
-                    .url(SERVER_URL + "RemoveHouse/" + user.getUid())
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-
-            client.newCall(request).enqueue(new Callback() {
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()){
-
-                    }
-                }
-               @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                }
-
-            });
-        }
-
-    }
-
 
 }

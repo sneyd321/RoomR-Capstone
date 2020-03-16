@@ -92,6 +92,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_app_to_home">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_housesFragment_to_addHouseFragment">
                               <value>
                                 <LayoutPositions />

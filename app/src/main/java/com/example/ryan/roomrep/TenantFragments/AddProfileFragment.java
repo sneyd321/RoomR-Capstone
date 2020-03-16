@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Profile.Profile;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-public class AddProfileFragment extends Fragment implements FragmentEventListener {
+public class AddProfileFragment extends Fragment implements NetworkObserver {
 
     EditText edtFirstName;
     EditText edtLastName;
@@ -121,7 +121,6 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
 
                 Network network = Network.getInstance();
                 network.registerObserver(AddProfileFragment.this);
-                network.addProfile(profile);
 
             }
 
@@ -157,7 +156,6 @@ public class AddProfileFragment extends Fragment implements FragmentEventListene
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Network network = Network.getInstance();
-                                network.updateProfile(profile);
                                 alertDialog.dismiss();
 
                             }

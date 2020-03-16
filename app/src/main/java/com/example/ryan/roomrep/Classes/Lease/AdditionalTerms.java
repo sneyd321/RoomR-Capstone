@@ -1,5 +1,8 @@
 package com.example.ryan.roomrep.Classes.Lease;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class AdditionalTerms {
 
     private boolean receiveNotice;
@@ -17,4 +20,6 @@ public class AdditionalTerms {
     public boolean isDayToDayCommunication() {
         return dayToDayCommunication;
     }
+
+
 }

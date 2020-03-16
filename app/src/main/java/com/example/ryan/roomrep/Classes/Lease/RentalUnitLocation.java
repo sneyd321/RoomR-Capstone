@@ -1,21 +1,33 @@
 package com.example.ryan.roomrep.Classes.Lease;
 
-import com.example.ryan.roomrep.Classes.Validation.ValidationFacade;
 
 public class RentalUnitLocation extends Location {
 
+    private String unitName;
     private boolean isCondo;
     private int parkingSpaces;
-    private String unitName;
-
 
     public RentalUnitLocation(String address, String city, String province, String postalCode, String unitName, boolean isCondo, int parkingSpaces) {
         super(address, city, province, postalCode);
+        this.unitName = unitName;
         this.isCondo = isCondo;
         this.parkingSpaces = parkingSpaces;
-        this.unitName = unitName;
     }
 
+    public RentalUnitLocation(int streetNumber, String streetName, String city, String province, String postalCode, String unitName, boolean isCondo, int parkingSpaces) {
+        super(streetNumber, streetName, city, province, postalCode);
+        this.unitName = unitName;
+        this.isCondo = isCondo;
+        this.parkingSpaces = parkingSpaces;
+    }
+
+    public String getFormattedPrimaryAddress() {
+        return getStreetNumber() + " " + getStreetName();
+    }
+
+    public String getFormattedSecondaryAddress() {
+        return getCity() + ", " + getProvince() + " " + getPostalCode();
+    }
 
     public boolean isCondo() {
         return isCondo;
@@ -25,5 +37,19 @@ public class RentalUnitLocation extends Location {
         return parkingSpaces;
     }
 
+    public void setCondo(boolean condo) {
+        isCondo = condo;
+    }
 
+    public void setParkingSpaces(int parkingSpaces) {
+        this.parkingSpaces = parkingSpaces;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
+    }
 }

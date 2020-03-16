@@ -5,24 +5,36 @@ import com.example.ryan.roomrep.Classes.App;
 public abstract class Validator<T> {
 
 
-    protected T value;
+    protected int threshold;
+    protected String errorMessage;
 
-    protected int resourceId;
 
-
-    public Validator(T t) {
-        this.value = t;
+    public Validator() {
+        this.threshold = 0;
     }
 
-    public abstract boolean validate();
+    public abstract boolean validate(T t);
 
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
+    protected void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
-    public abstract String getErrorMessage();
+    protected void setThreshold(int threshold) {
+        this.threshold = threshold;
+    }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 
+    protected boolean tryParse(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex){
+            return false;
+        }
+    }
 
 
 }

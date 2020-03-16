@@ -16,8 +16,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
-import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.LoginActivities.LoginActivity;
 import com.google.gson.Gson;
@@ -25,7 +24,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivityTenant extends AppCompatActivity implements FragmentEventListener {
+public class MainActivityTenant extends AppCompatActivity implements NetworkObserver {
 
 
     BottomNavigationView bottomMenu;

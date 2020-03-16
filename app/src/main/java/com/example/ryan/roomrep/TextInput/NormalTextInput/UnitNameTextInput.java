@@ -5,43 +5,15 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.ryan.roomrep.Classes.App;
+import com.example.ryan.roomrep.R;
 import com.example.ryan.roomrep.TextInput.TextInput;
 
 public class UnitNameTextInput extends TextInput {
     public UnitNameTextInput(View view, int layoutId, int editTextId) {
         super(view, layoutId, editTextId);
-        getEditText().setOnFocusChangeListener(onFocusChangeListener);
-        getEditText().addTextChangedListener(textWatcher);
+        setEmptyValidator(R.string.empty_unit_name_error);
+        setTooShortValidator(2, R.string.unit_name_too_short_error);
+        setTooLongValidator(20, R.string.unit_name_too_long_error);
     }
-
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            getLayout().setError(validationFacade.validateUnitName(charSequence.toString()));
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
-
-    EditText.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View view, boolean b) {
-            //If edittext does not have focus
-            if (!b) {
-                getLayout().setErrorEnabled(true);
-                getLayout().setError(validationFacade.validateUnitName(getText()));
-                return;
-
-            }
-            getLayout().setErrorEnabled(false);
-        }
-    };
 }

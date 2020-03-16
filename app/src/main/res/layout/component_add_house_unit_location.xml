@@ -10,14 +10,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilAddHouseAddress"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:padding="4dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Unit Address"
-        app:boxStrokeWidth="1dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Address"
+        android:padding="4dp"
+        android:theme="@style/AppTheme.NoActionBar"
         app:boxStrokeColor="@color/colorPrimary"
+        app:boxStrokeWidth="1dp"
+        app:startIconDrawable="@drawable/ic_home_black_24dp"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
         app:helperText="Ex. 11 Bronte Rd."
@@ -28,13 +31,9 @@
         <com.google.android.material.textview.MaterialAutoCompleteTextView
             android:id="@+id/edtAddHouseAddress"
             style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:completionThreshold="1"
-            android:textSize="16sp" />
+            android:completionThreshold="1" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
             android:layout_weight="1"
-            android:hint="Unit Province"
+            android:hint="Province"
             android:enabled="false"
             app:helperText="Ex. Ontario"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +81,8 @@
             android:layout_marginStart="2dp"
             android:layout_weight="1"
             app:endIconMode="clear_text"
-            android:hint="Unit City"
+            app:startIconDrawable="@drawable/ic_location_city_black_24dp"
+            android:hint="City"
             app:errorEnabled="true"
             app:helperText="Ex. Oakville"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,13 +91,9 @@
             <com.google.android.material.textview.MaterialAutoCompleteTextView
                 android:id="@+id/edtAddHouseCity"
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:completionThreshold="1"
-                android:textSize="16sp" />
+                android:completionThreshold="1" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -121,7 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:hint="Unit Postal Code"
+            app:startIconDrawable="@drawable/ic_markunread_mailbox_black_24dp"
+            android:hint="Postal Code"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:helperText="Ex. L6L 0E1"
@@ -150,6 +147,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Unit Name"
+        app:startIconDrawable="@drawable/ic_label_black_24dp"
         app:errorEnabled="true"
         app:endIconMode="clear_text"
         app:helperText="Ex. Basement, Unit 207"
@@ -182,6 +180,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layoutDirection="ltr"
+        android:text="Not Selected"
+        android:switchPadding="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView34"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView34" />
@@ -208,7 +209,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:hint="Unit Parking Spaces"
+            app:startIconDrawable="@drawable/ic_local_parking_black_24dp"
+            android:hint="Parking Spaces"
             app:counterMaxLength="2"
             app:endIconMode="clear_text"
             app:errorEnabled="true"

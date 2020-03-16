@@ -4,7 +4,7 @@ package com.example.ryan.roomrep.Classes.Lease;
 import com.example.ryan.roomrep.Classes.Lease.Services.Service;
 import com.example.ryan.roomrep.Classes.Lease.Utilities.Utility;
 
-import java.util.List;
+import java.util.Collections;
 
 public class OntarioLeaseBuilder extends LeaseBuilder {
 
@@ -21,12 +21,10 @@ public class OntarioLeaseBuilder extends LeaseBuilder {
     }
 
     @Override
-    public OntarioLeaseBuilder setHomeownerLocation(HomeOwnerLocation homeOwnerLocation) {
+    public OntarioLeaseBuilder setHomeownerLocation(HomeownerLocation homeOwnerLocation) {
         this.ontarioLease.setHomeownerLocation(homeOwnerLocation);
         return this;
     }
-
-
 
     @Override
     public OntarioLeaseBuilder setRentDetail(RentDetail rentDetail) {
@@ -35,19 +33,26 @@ public class OntarioLeaseBuilder extends LeaseBuilder {
     }
 
     @Override
-    public OntarioLeaseBuilder setServices(List<Service> services) {
-        this.ontarioLease.setServices(services);
+    public OntarioLeaseBuilder addService(Service service) {
+        this.ontarioLease.addService(service);
         return this;
     }
 
     @Override
-    public OntarioLeaseBuilder setUtilities(List<Utility> utilities) {
-        this.ontarioLease.setUtilities(utilities);
+    public OntarioLeaseBuilder addUtility(Utility utility) {
+        this.ontarioLease.addUtility(utility);
         return this;
     }
+
+
     @Override
     public OntarioLeaseBuilder setAdditionalTerms(AdditionalTerms additionalTerms) {
         this.ontarioLease.setAdditionalTerms(additionalTerms);
         return this;
+    }
+
+    public OntarioLease build() {
+        this.ontarioLease.getServices().removeAll(Collections.singleton(null));
+        return this.ontarioLease;
     }
 }

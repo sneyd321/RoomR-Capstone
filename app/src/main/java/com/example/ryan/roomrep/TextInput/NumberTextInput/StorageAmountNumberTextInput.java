@@ -5,43 +5,15 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.ryan.roomrep.R;
+
 public class StorageAmountNumberTextInput extends NumberTextInput {
     public StorageAmountNumberTextInput(View view, int layoutId, int editTextId) {
         super(view, layoutId, editTextId);
-        getEditText().setOnFocusChangeListener(onFocusChangeListener);
-        getEditText().addTextChangedListener(textWatcher);
+        setEmptyIntValidator(R.string.empty_storage_amount_empty_error);
+        setTooLowValidator(0, R.string.storage_amount_too_short_error);
+        setTooHighValidator(50, R.string.storage_amount_too_long_error);
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            getLayout().setError(validationFacade.validateStorageAmount(getNumber()));
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
-
-    EditText.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View view, boolean b) {
-            //If edittext does not have focus
-            if (!b) {
-                getLayout().setErrorEnabled(true);
-                getLayout().setError(validationFacade.validateStorageAmount(getNumber()));
-                getEditText().setText(getText().equals("") ? "0" : Integer.toString(getNumber()));
-                return;
-
-            }
-            getEditText().setText(getText().equals("0") ? "" : Integer.toString(getNumber()));
-            getLayout().setErrorEnabled(false);
-        }
-    };
 }

@@ -1,226 +1,149 @@
 package com.example.ryan.roomrep.LoginActivities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ryan.roomrep.Classes.Landlord.Landlord;
-import com.example.ryan.roomrep.Classes.Login;
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
-import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.Dialog.ErrorDialog;
+import com.example.ryan.roomrep.Classes.Login.Login;
+import com.example.ryan.roomrep.Classes.Login.UserType;
+import com.example.ryan.roomrep.Classes.Network.Network;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
+import com.example.ryan.roomrep.Classes.Permission;
+import com.example.ryan.roomrep.CompoundButtonInput.CompoundButtonInput;
+import com.example.ryan.roomrep.Factories.AbstractFactory;
+import com.example.ryan.roomrep.Factories.CompoundButtonFactory;
+import com.example.ryan.roomrep.Factories.FactoryType;
+import com.example.ryan.roomrep.Factories.TextInputFactory;
 import com.example.ryan.roomrep.MainActivityLandlord;
-import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
+import com.example.ryan.roomrep.TextInput.TextInput;
+import com.example.ryan.roomrep.TextInput.UITextInputValidation;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import static com.example.ryan.roomrep.Classes.Permission.INTERNET_PERMISSION_REQUEST_CODE;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements FragmentEventListener {
+public class LoginActivity extends AppCompatActivity implements NetworkObserver {
 
-    Button login;
-    Button listings;
-    TextView signup;
-    EditText edtPassword;
-    EditText edtUserName;
-    RadioButton rbtnLandlord;
-    RadioButton rbtnTenant;
+    Button btnLogin;
+    Button btnSignup;
+    Button btnListings;
+
 
     TextView txtShowError;
 
+    TextInput email, password;
+    CompoundButtonInput userType;
+    Network<Login> network;
+    Permission permission;
+    UITextInputValidation uiTextInputValidation;
 
-    ProgressDialog progressDialog;
-    FirebaseAuth auth;
-
+    private void initUI() {
+        View view = getWindow().getDecorView().getRootView();
+        TextInputFactory textInputFactory = (TextInputFactory) AbstractFactory.getFactory(view, FactoryType.TextInput);
+        uiTextInputValidation = new UITextInputValidation();
+        email = textInputFactory.getTextInput(R.id.edtLoginEmail);
+        uiTextInputValidation.addTextInput(email);
+        password = textInputFactory.getTextInput(R.id.edtLoginPassword);
+        uiTextInputValidation.addTextInput(password);
+        CompoundButtonFactory compoundButtonFactory = (CompoundButtonFactory) AbstractFactory.getFactory(view, FactoryType.CompoundButtonInput);
+        userType = compoundButtonFactory.getRadioButtonCompoundButtonInput(R.id.rdgLogin);
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        login = findViewById(R.id.btnLogin);
-        login.setOnClickListener(onLogin);
-        listings = findViewById(R.id.btnViewListings);
-        listings.setOnClickListener(onViewListings);
-        rbtnLandlord = findViewById(R.id.rbtnLandlord);
-        rbtnTenant = findViewById(R.id.rbtnTenant);
-        signup = findViewById(R.id.txtSignUp);
-        signup.setOnTouchListener(onSignUp);
-        edtPassword = findViewById(R.id.edtPassword);
-        edtUserName = findViewById(R.id.edtUsername);
-        txtShowError = findViewById(R.id.txtLoginShowError);
-
-        progressDialog = new ProgressDialog(this);
-
-        auth = FirebaseAuth.getInstance();
+        initUI();
+        btnLogin = findViewById(R.id.btnLoginLogin);
+        btnLogin.setOnClickListener(onLogin);
+        btnSignup = findViewById(R.id.btnLoginSignup);
+        btnSignup.setOnClickListener(onSignUp);
+        btnListings = findViewById(R.id.btnLoginListings);
+        btnListings.setOnClickListener(onViewListings);
+        network = Network.getInstance();
+        network.registerObserver(LoginActivity.this);
+        permission = new Permission(this);
     }
 
 
-
-    View.OnTouchListener onSignUp = new View.OnTouchListener() {
+    View.OnClickListener onSignUp = new OnClickListener() {
         @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            Toast.makeText(LoginActivity.this, "Sign Up", Toast.LENGTH_SHORT).show();
+        public void onClick(View view) {
             Intent intent = new Intent(LoginActivity.this, ChooseAccountActivity.class);
             startActivity(intent);
-            return false;
         }
     };
+
 
     View.OnClickListener onViewListings = new OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+
             startActivity(intent);
         }
     };
+
+    private Login createLogin() {
+        if (userType.getText().equals("Landlord")){
+            return new Login(email.getText(), password.getText(), UserType.Landlord);
+        }
+        return new Login(email.getText(), password.getText(), UserType.Tenant);
+    }
 
 
     View.OnClickListener onLogin = new OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            final Login login = new Login(edtUserName.getText().toString(), edtPassword.getText().toString());
+            if (!uiTextInputValidation.validateUI(btnLogin)){
+                return;
+            }
+            if (!permission.doesHaveInternetPermission()){
+                permission.requestInternetPermission();
+                return;
+            }
+            if (!network.isNetworkAvailable()) {
+                ErrorDialog.buildAlertDialog(LoginActivity.this, "No internet.");
+                return;
+            }
+            network.post(createLogin(), "auth/login");
             Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
+            intent.putExtra("HOMEOWNER_EMAIL", email.getText());
             startActivity(intent);
-            /*
-            Map<Integer, String> validate = login.getValidator();
-            boolean isValid = true;
-            for (Map.Entry<Integer, String> entry : validate.entrySet()) {
-                if (!entry.getValue().isEmpty()) {
-                    switch (entry.getKey()) {
-                        case 0:
-                            edtUserName.setError(entry.getValue());
-                            isValid = false;
-                            break;
-                        case 1:
-                            edtPassword.setError(entry.getValue());
-                            isValid = false;
-                            break;
-                        case 2:
-                            edtPassword.setError(entry.getValue());
-                            isValid = false;
-                            break;
-                    }
-                }
-            }
-            if (isValid) {
-                final Network network = new Network();
-                network.registerObserver(LoginActivity.this);
-                progressDialog.setMessage("Logging in...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-
-                if (rbtnLandlord.isChecked()){
-                    auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                network.getLandlord(login);
-                            }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            txtShowError.setText("Invalid Username or Password");
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-                else if(rbtnTenant.isChecked()){
-                    auth.signInWithEmailAndPassword(login.getUserName(), login.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()){
-                                network.getTenant(login);
-                            }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            txtShowError.setText("Invalid Username or Password");
-                            progressDialog.dismiss();
-                        }
-                    });
-                }
-            }
-
-             */
-
         }
     };
 
-    @Override
-    public void onBackPressed() {
-
-    }
 
     @Override
     public void update(String response) {
-        if (rbtnLandlord.isChecked()){
-            Gson gson = new Gson();
-            Landlord landlord = gson.fromJson(response, Landlord.class);
-            if (landlord.getEmail() == null){
-                promptInvalidCredentials(response);
-                progressDialog.dismiss();
-                return;
-            }
-            progressDialog.dismiss();
-            Intent intent = new Intent(LoginActivity.this, MainActivityLandlord.class);
-            intent.putExtra("LANDLORD_DATA", landlord);
-            startActivity(intent);
-        }
-        else if (rbtnTenant.isChecked()){
-
-            Gson gson = new Gson();
-            Tenant tenant = gson.fromJson(response, Tenant.class);
-            if (tenant.getTenantEmail() == null){
-                promptInvalidCredentials(response);
-                progressDialog.dismiss();
-                return;
-            }
-            progressDialog.dismiss();
-            Intent intent = new Intent(LoginActivity.this, MainActivityTenant.class);
-            intent.putExtra("TENANT_DATA", tenant);
-            startActivity(intent);
-        }
-
-    }
-
-    private void promptInvalidCredentials(String response) {
-
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-            final String result = jsonObject.getString("Result");
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    txtShowError.setText(result);
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
 
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == INTERNET_PERMISSION_REQUEST_CODE)  {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Internet permission GRANTED", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Internet permission DENIED", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
 }
 

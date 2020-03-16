@@ -11,9 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Rent.Payment;
 
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
 import com.example.ryan.roomrep.R;
@@ -22,13 +21,11 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 
-public class PayRentFragment extends Fragment implements FragmentEventListener {
+public class PayRentFragment extends Fragment implements NetworkObserver {
 
 
     TextView txtMonth;

@@ -5,44 +5,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.ryan.roomrep.R;
+
 public class ParkingAmountNumberTextInput extends NumberTextInput {
     public ParkingAmountNumberTextInput(View view, int layoutId, int editTextId) {
         super(view, layoutId, editTextId);
-        getEditText().setOnFocusChangeListener(onFocusChangeListener);
-        getEditText().addTextChangedListener(textWatcher);
-
+        setEmptyIntValidator(R.string.parking_amount_empty_error);
+        setTooLowValidator(0, R.string.parking_amount_too_short_error);
+        setTooHighValidator(50, R.string.parking_amount_too_long_error);
     }
-
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            getLayout().setError(validationFacade.validateParkingAmount(getNumber()));
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
-
-    EditText.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View view, boolean b) {
-            //If edittext does not have focus
-            if (!b) {
-                getLayout().setErrorEnabled(true);
-                getLayout().setError(validationFacade.validateParkingAmount(getNumber()));
-                getEditText().setText(getText().equals("") ? "0" : Integer.toString(getNumber()));
-                return;
-
-            }
-            getEditText().setText(getText().equals("0") ? "" : Integer.toString(getNumber()));
-            getLayout().setErrorEnabled(false);
-        }
-    };
 }

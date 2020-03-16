@@ -14,11 +14,11 @@ public class AnimatedCompoundButtonInput extends CompoundButtonInput {
 
     private LinearLayout layout;
     private EditText editText;
-    public AnimatedCompoundButtonInput(View view, int compoundButton, int layout) {
+    public AnimatedCompoundButtonInput(View view, int compoundButton, int layout, int editText) {
         super(view, compoundButton);
         this.compoundButton.setOnCheckedChangeListener(onChecked);
         this.layout = view.findViewById(layout);
-        editText = view.findViewById(R.id.edtAddHouseParkingAmount);
+        this.editText = view.findViewById(editText);
     }
 
     private CompoundButton.OnCheckedChangeListener onChecked = new CompoundButton.OnCheckedChangeListener() {
@@ -27,7 +27,6 @@ public class AnimatedCompoundButtonInput extends CompoundButtonInput {
             if (b) {
                 layout.setEnabled(true);
                 layout.setVisibility(View.VISIBLE);
-                editText.setText("0");
                 YoYo.with(Techniques.FadeInDown).duration(700).playOn(layout);
                 return;
             }
@@ -42,7 +41,6 @@ public class AnimatedCompoundButtonInput extends CompoundButtonInput {
                 public void call(Animator animator) {
                     layout.setVisibility(View.GONE);
                     compoundButton.setEnabled(true);
-                    editText.setText("");
                 }
             }).playOn(layout);
         }

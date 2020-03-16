@@ -9,6 +9,9 @@
         android:name="com.example.ryan.roomrep.LandlordFragments.HousesFragment"
         android:label="Houses"
         tools:layout="@layout/fragment_house" >
+        <action android:id="@+id/action_app_to_home"
+            app:destination="@id/housesFragment"
+            app:popUpTo="@id/housesFragment"/>
         <action
             android:id="@+id/action_housesFragment_to_addHouseFragment"
             app:destination="@id/addHouseFragment"

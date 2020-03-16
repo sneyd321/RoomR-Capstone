@@ -5,15 +5,16 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.ryan.roomrep.Classes.Validation.ValidationFacade;
+import com.example.ryan.roomrep.R;
 
 public class AddressAutoCompleteTextInput extends AutoCompleteTextInput {
 
 
     public AddressAutoCompleteTextInput(View view, int layoutId, int editTextId) {
         super(view, layoutId, editTextId);
-        editText.setOnFocusChangeListener(onFocusChangeListener);
-        editText.addTextChangedListener(textWatcher);
+        setEmptyValidator(R.string.empty_address_error);
+        setTooShortValidator(3, R.string.address_too_short_error);
+        setTooLongValidator(20, R.string.address_too_long_error);
 
     }
 
@@ -22,37 +23,7 @@ public class AddressAutoCompleteTextInput extends AutoCompleteTextInput {
 
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            getLayout().setError(validationFacade.validateAddress(charSequence.toString()));
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
-
-    EditText.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
-        @Override
-        public void onFocusChange(View view, boolean b) {
-            //If edittext does not have focus
-            if (!b) {
-                getLayout().setErrorEnabled(true);
-                getLayout().setError(validationFacade.validateAddress(getText()));
-                getEditText().setText(getText());
-                return;
-
-            }
-            getLayout().setErrorEnabled(false);
-        }
-    };
 
 
 }

@@ -9,14 +9,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilAddHouseHomeOwnerAddress"
-        android:theme="@style/AppTheme.NoActionBar"
-        android:padding="4dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="Homeowner Address"
-        app:boxStrokeWidth="1dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Address"
+        android:theme="@style/AppTheme.NoActionBar"
+        app:startIconDrawable="@drawable/ic_home_black_24dp"
         app:boxStrokeColor="@color/colorPrimary"
+        app:boxStrokeWidth="1dp"
         app:counterEnabled="true"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
@@ -28,13 +30,9 @@
         <com.google.android.material.textview.MaterialAutoCompleteTextView
             android:id="@+id/edtAddHouseHomeownerAddress"
             style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:text="11 Bronte Rd."
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:completionThreshold="1"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +51,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilAddHouseHomeownerProvince"
             android:theme="@style/AppTheme.NoActionBar"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
@@ -81,8 +78,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:layout_weight="1"
+            app:startIconDrawable="@drawable/ic_location_city_black_24dp"
             app:endIconMode="clear_text"
-            android:hint="Homeowner City"
+            android:hint="City"
             app:errorEnabled="true"
             app:helperText="Ex. Oakville"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,9 +93,8 @@
                 android:layout_marginEnd="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:completionThreshold="1"
-                android:textSize="16sp" />
+                android:text="Oakville"
+                android:completionThreshold="1" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -120,7 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:hint="Homeowner Postal Code"
+            android:hint="Postal Code"
+            app:startIconDrawable="@drawable/ic_markunread_mailbox_black_24dp"
             android:theme="@style/AppTheme.NoActionBar"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
@@ -133,6 +131,7 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="L6L 0E1"
                 android:inputType="textPostalAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -163,7 +162,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:hint="Homeowner Unit Number"
+            app:startIconDrawable="@drawable/ic_home_black_24dp"
+            android:hint="Unit Number"
             android:theme="@style/AppTheme.NoActionBar"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
@@ -176,6 +176,7 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="123"
                 android:inputType="textPostalAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -187,7 +188,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight=".5"
-            android:hint="Homeowner PO Box"
+            android:hint="PO Box"
+            app:startIconDrawable="@drawable/ic_markunread_mailbox_black_24dp"
             android:theme="@style/AppTheme.NoActionBar"
             app:endIconMode="clear_text"
             app:errorEnabled="true"
@@ -200,6 +202,7 @@
                 style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="123"
                 android:inputType="textPostalAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>

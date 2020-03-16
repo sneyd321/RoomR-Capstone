@@ -15,10 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Classes.Network.FragmentEventListener;
+import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Tenant.Tenant;
-import com.example.ryan.roomrep.MainActivityTenant;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -27,7 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class CompleteRentFragment extends Fragment implements FragmentEventListener {
+public class CompleteRentFragment extends Fragment implements NetworkObserver {
 
 
 
@@ -67,7 +66,6 @@ public class CompleteRentFragment extends Fragment implements FragmentEventListe
 
         Network network = Network.getInstance();
         network.registerObserver(this);
-        network.getTenantHouse(tenant);
 
 
         long duration = 2000;
