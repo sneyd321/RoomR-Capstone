@@ -21,6 +21,9 @@
             android:id="@+id/action_housesFragment_to_houseDetailStatePagerFragment"
             app:destination="@id/houseDetailStatePagerFragment"
             app:popUpTo="@id/housesFragment"/>
+        <action
+            android:id="@+id/action_housesFragment_to_leaseStatePagerFragment2"
+            app:destination="@id/leaseStatePagerFragment2" />
     </fragment>
     <fragment
         android:id="@+id/addHouseFragment"
@@ -42,15 +45,12 @@
             android:id="@+id/action_houseDetailStatePagerFragment_to_updateLocationFragment"
             app:destination="@id/updateLocationFragment" />
         <action
-            android:id="@+id/action_houseDetailStatePagerFragment_to_editHouseDetailFragment"
-            app:destination="@id/editHouseDetailFragment" />
-        <action
-            android:id="@+id/action_houseDetailStatePagerFragment_to_rentDetailAddUtilityFragment"
-            app:destination="@id/rentDetailAddUtilityFragment" />
+            android:id="@+id/action_houseDetailStatePagerFragment_to_generateLeaseFragment"
+            app:destination="@id/generateLeaseFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateLocationFragment"
-        android:name="com.example.ryan.roomrep.LandlordFragments.UpdateLocationFragment"
+        android:name="com.example.ryan.roomrep.LandlordFragments.UpdateRentalUnitLocationFragment"
         android:label="Edit Location"
         tools:layout="@layout/fragment_house_detail_update_location" >
         <action
@@ -58,17 +58,22 @@
             app:destination="@id/houseDetailStatePagerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/editHouseDetailFragment"
-        android:name="com.example.ryan.roomrep.LandlordFragments.EditHouseDetailFragment"
-        android:label="Edit House"
-        tools:layout="@layout/fragment_edit_house_detail" >
+        android:id="@+id/addTenantFragment"
+        android:name="com.example.ryan.roomrep.LandlordFragments.AddTenantFragment"
+        android:label="Add Tenant"
+        tools:layout="@layout/fragment_add_tenant" />
+    <fragment
+        android:id="@+id/generateLeaseFragment"
+        android:name="com.example.ryan.roomrep.LandlordFragments.GenerateLeaseFragment"
+        android:label="Generate Lease"
+        tools:layout="@layout/fragment_generate_lease" >
         <action
-            android:id="@+id/action_editHouseDetailFragment_to_houseDetailStatePagerFragment"
+            android:id="@+id/action_generateLeaseFragment_to_houseDetailStatePagerFragment"
             app:destination="@id/houseDetailStatePagerFragment" />
     </fragment>
     <fragment
-        android:id="@+id/rentDetailAddUtilityFragment"
-        android:name="com.example.ryan.roomrep.LandlordFragments.RentDetailAddUtilityFragment"
-        android:label="fragment_add_utilities"
-        tools:layout="@layout/fragment_add_utilities" />
+        android:id="@+id/leaseStatePagerFragment2"
+        android:name="com.example.ryan.roomrep.LandlordFragments.LeaseStatePagerFragment"
+        android:label="lease_state_pager"
+        tools:layout="@layout/lease_state_pager" />
 </navigation>

@@ -18,33 +18,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView48"
-        style="@style/general_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="8dp"
-        android:text="Air Conditioning"
-        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseAirConditioning"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/swtAddHouseAirConditioning" />
-
-    <Switch
-        android:id="@+id/swtAddHouseAirConditioning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layoutDirection="ltr"
-        android:switchPadding="8dp"
-        android:text="Not Selected"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView49" />
-
-
-
-    <TextView
         android:id="@+id/textView50"
         style="@style/general_text"
         android:layout_width="wrap_content"
@@ -67,7 +40,7 @@
         android:switchPadding="8dp"
         android:text="Not Selected"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseAirConditioning" />
+        app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilAddHouseParkingAmount"
@@ -96,22 +69,21 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <TextView
-        android:id="@+id/textView52"
+        android:id="@+id/textView48"
         style="@style/general_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
-        android:layout_weight=".5"
-        android:text="Guest Parking"
-        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseGuestParking"
+        android:text="Gas"
+        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseGas"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/swtAddHouseGuestParking" />
+        app:layout_constraintTop_toTopOf="@+id/swtAddHouseGas" />
 
     <Switch
-        android:id="@+id/swtAddHouseGuestParking"
+        android:id="@+id/swtAddHouseGas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -124,13 +96,39 @@
 
 
     <TextView
+        android:id="@+id/textView52"
+        style="@style/general_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
+        android:layout_weight=".5"
+        android:text="Air Conditioning"
+        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseAirConditioning"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/swtAddHouseAirConditioning" />
+
+    <Switch
+        android:id="@+id/swtAddHouseAirConditioning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layoutDirection="ltr"
+        android:switchPadding="8dp"
+        android:text="Not Selected"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseGas" />
+
+
+    <TextView
         android:id="@+id/textView51"
         style="@style/general_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
-        android:text="Storage"
+        android:text="Additional Storage Space"
         app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseStorage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/swtAddHouseStorage" />
@@ -145,36 +143,7 @@
         android:switchPadding="8dp"
         android:text="Not Selected"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseGuestParking" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilAddHouseStorageAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:enabled="false"
-        android:hint="Storage Amount"
-        android:visibility="gone"
-        android:theme="@style/AppTheme.NoActionBar"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:helperText="Ex. $50"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseStorage"
-        app:prefixText="$">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtAddHouseStorageAmount"
-            style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseAirConditioning" />
 
     <TextView
         android:id="@+id/textView54"
@@ -184,32 +153,7 @@
         android:layout_gravity="center_vertical"
 
         android:layout_marginStart="8dp"
-        android:text="Smoking"
-        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseSmoking"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/swtAddHouseSmoking" />
-
-    <Switch
-        android:id="@+id/swtAddHouseSmoking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layoutDirection="ltr"
-        android:switchPadding="8dp"
-        android:text="Not Selected"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilAddHouseStorageAmount" />
-
-
-    <TextView
-        android:id="@+id/textView53"
-        style="@style/general_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="8dp"
-        android:text="Laundry"
+        android:text="OnSite Laundry"
         app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseLaundry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/swtAddHouseLaundry" />
@@ -224,24 +168,23 @@
         android:switchPadding="8dp"
         android:text="Not Selected"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseSmoking" />
+        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseStorage" />
 
 
     <TextView
-        android:id="@+id/textView55"
+        android:id="@+id/textView53"
         style="@style/general_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
-        android:layout_weight=".5"
-        android:text="Tenant Insurance"
-        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseTenantInsurance"
+        android:text="Guest Parking"
+        app:layout_constraintBottom_toBottomOf="@+id/swtAddHouseGuestParking"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swtAddHouseLaundry" />
+        app:layout_constraintTop_toTopOf="@+id/swtAddHouseGuestParking" />
 
     <Switch
-        android:id="@+id/swtAddHouseTenantInsurance"
+        android:id="@+id/swtAddHouseGuestParking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

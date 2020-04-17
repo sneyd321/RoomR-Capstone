@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.ryan.roomrep.LoginFragments.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpStatePagerFragment"
+            app:destination="@id/signUpStatePagerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpStatePagerFragment"
+        android:name="com.example.ryan.roomrep.LoginFragments.SignUpStatePagerFragment"
+        android:label="sign_up_state_pager_fragment"
+        tools:layout="@layout/fragment_sign_up_state_pager" >
+        <action
+            android:id="@+id/action_signUpStatePagerFragment_to_homeownerSignUpFragment2"
+            app:destination="@id/homeownerSignUpFragment2" />
+        <action
+            android:id="@+id/action_signUpStatePagerFragment_to_tenantSignUpFragment2"
+            app:destination="@id/tenantSignUpFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/tenantSignUpFragment2"
+        android:name="com.example.ryan.roomrep.LoginFragments.TenantSignUpFragment"
+        android:label="tenant_sign_up_fragment"
+        tools:layout="@layout/fragment_tenant_sign_up" >
+        <action
+            android:id="@+id/action_tenantSignUpFragment2_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeownerSignUpFragment2"
+        android:name="com.example.ryan.roomrep.LoginFragments.HomeownerSignUpFragment"
+        android:label="homeowner_sign_up_fragment"
+        tools:layout="@layout/fragment_homeowner_sign_up" >
+        <action
+            android:id="@+id/action_homeownerSignUpFragment2_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+</navigation>

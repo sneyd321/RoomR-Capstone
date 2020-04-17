@@ -3,7 +3,7 @@ package com.example.ryan.roomrep.ViewModels;
 import android.app.Application;
 
 import com.example.ryan.roomrep.Classes.Database.HouseRepository;
-import com.example.ryan.roomrep.Classes.Lease.House;
+import com.example.ryan.roomrep.Classes.House.House;
 
 import java.util.List;
 

@@ -57,8 +57,6 @@
             android:layout_marginEnd="8dp"
             android:background="?android:attr/listDivider" />
 
-        <include layout="@layout/component_add_house_additional_terms" />
-
         <Button
             android:id="@+id/btnAddHouseAddHouse"
             style="@style/update_primary_action"

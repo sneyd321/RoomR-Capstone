@@ -5,69 +5,68 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.fragment.NavHostFragment;
+import okhttp3.Request;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.ryan.roomrep.CompoundButtonInput.AnimatedSelectedNotSelectedSwitchInput;
-import com.example.ryan.roomrep.CompoundButtonInput.SelectedNotSelectedSwitchInput;
-import com.example.ryan.roomrep.Dialog.ErrorDialog;
-import com.example.ryan.roomrep.Classes.Lease.AdditionalTerms;
-import com.example.ryan.roomrep.Classes.Lease.House;
-import com.example.ryan.roomrep.Classes.Lease.Lease;
-import com.example.ryan.roomrep.Classes.Lease.OntarioLeaseBuilder;
-import com.example.ryan.roomrep.Classes.Lease.Services.AirConditioningService;
-import com.example.ryan.roomrep.Classes.Lease.Services.GuestParkingService;
-import com.example.ryan.roomrep.Classes.Lease.Services.LaundryService;
-import com.example.ryan.roomrep.Classes.Lease.Services.ParkingService;
-import com.example.ryan.roomrep.Classes.Lease.RentDetail;
-import com.example.ryan.roomrep.Classes.Lease.RentalUnitLocation;
-import com.example.ryan.roomrep.Classes.Lease.Services.SmokingService;
-import com.example.ryan.roomrep.Classes.Lease.Services.StorageService;
-import com.example.ryan.roomrep.Classes.Lease.Services.TenantInsuranceService;
-import com.example.ryan.roomrep.Classes.Lease.Utilities.ElectricityUtility;
-import com.example.ryan.roomrep.Classes.Lease.Utilities.HeatUtility;
-import com.example.ryan.roomrep.Classes.Lease.Utilities.WaterUtility;
+import com.example.ryan.roomrep.Activities.MainActivityLandlord;
+import com.example.ryan.roomrep.Classes.House.OntarioLease;
+import com.example.ryan.roomrep.Classes.House.Service;
+import com.example.ryan.roomrep.Classes.House.Utility;
+import com.example.ryan.roomrep.Classes.Login.Login;
+import com.example.ryan.roomrep.Classes.Users.Homeowner;
+import com.example.ryan.roomrep.App.CompoundButtonInput.AnimatedSelectedNotSelectedSwitchInput;
+import com.example.ryan.roomrep.App.CompoundButtonInput.SelectedNotSelectedSwitchInput;
+import com.example.ryan.roomrep.App.Dialog.Dialog;
+import com.example.ryan.roomrep.Classes.House.AdditionalTerms;
+import com.example.ryan.roomrep.Classes.House.House;
+import com.example.ryan.roomrep.Classes.House.OntarioLeaseBuilder;
+import com.example.ryan.roomrep.Classes.House.RentDetail;
+import com.example.ryan.roomrep.Classes.House.RentalUnitLocation;
 import com.example.ryan.roomrep.Classes.Network.Network;
 import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
-import com.example.ryan.roomrep.Classes.Permission;
-import com.example.ryan.roomrep.CompoundButtonInput.AnimatedCompoundButtonInput;
-import com.example.ryan.roomrep.Factories.CompoundButtonFactory;
-import com.example.ryan.roomrep.CompoundButtonInput.NormalCheckboxInput;
-import com.example.ryan.roomrep.CompoundButtonInput.NormalSwitchInput;
-import com.example.ryan.roomrep.CompoundButtonInput.RadioButtonCompoundButtonInput;
-import com.example.ryan.roomrep.CompoundButtonInput.TenantHomeownerSwitchInput;
-import com.example.ryan.roomrep.Factories.AbstractFactory;
-import com.example.ryan.roomrep.Factories.FactoryType;
-import com.example.ryan.roomrep.TextInput.NumberTextInput.NumberTextInput;
-import com.example.ryan.roomrep.TextInput.TextInput;
+import com.example.ryan.roomrep.App.Permission;
+import com.example.ryan.roomrep.App.CompoundButtonInput.AnimatedCompoundButtonInput;
+import com.example.ryan.roomrep.App.Factories.CompoundButtonFactory;
+import com.example.ryan.roomrep.App.CompoundButtonInput.NormalCheckboxInput;
+import com.example.ryan.roomrep.App.CompoundButtonInput.RadioButtonCompoundButtonInput;
+import com.example.ryan.roomrep.App.CompoundButtonInput.TenantHomeownerSwitchInput;
+import com.example.ryan.roomrep.App.Factories.AbstractFactory;
+import com.example.ryan.roomrep.App.Factories.FactoryType;
+import com.example.ryan.roomrep.App.TextInput.NumberTextInput.NumberTextInput;
+import com.example.ryan.roomrep.App.TextInput.TextInput;
 import com.example.ryan.roomrep.R;
-import com.example.ryan.roomrep.Factories.TextInputFactory;
-import com.example.ryan.roomrep.TextInput.UITextInputValidation;
+import com.example.ryan.roomrep.App.Factories.TextInputFactory;
+import com.example.ryan.roomrep.App.UI.UITextInputValidation;
+import com.example.ryan.roomrep.ViewModels.HomeownerViewModel;
 import com.example.ryan.roomrep.ViewModels.HouseViewModel;
 
 
 public class AddHouseFragment extends Fragment implements NetworkObserver {
 
     private TextInput unitAddress, unitCity, unitPostalCode, unitName, rentMadePayable;
-    private NumberTextInput parkingSpaces, parkingAmount, storageAmount, rentAmount;
-    private SelectedNotSelectedSwitchInput isCondo, swtAirConditioning, swtGuestParking, swtSmoking, swtLaundry, swtTenantInsurance, additionalTerm1, additionalTerm2;
+    private NumberTextInput parkingSpaces, parkingAmount, rentAmount;
+    private SelectedNotSelectedSwitchInput isCondo, swtAirConditioning, swtGuestParking, swtLaundry, swtGas, swtStorage;
     private RadioButtonCompoundButtonInput rentDueDate;
     private NormalCheckboxInput chkPaymentMethod1, chkPaymentMethod3;
     private AnimatedCompoundButtonInput chkPaymentMethod2;
-    private AnimatedSelectedNotSelectedSwitchInput swtParking, swtStorage;
+    private AnimatedSelectedNotSelectedSwitchInput swtParking;
     private TenantHomeownerSwitchInput swtWater, swtElectricity, swtHeat;
 
     private UITextInputValidation uiTextInputValidation;
-    private HouseViewModel viewModel;
+    private HouseViewModel houseViewModel;
+    private HomeownerViewModel homeownerViewModel;
     private House house;
-    private Network<House> network;
+    private Network network;
     private Permission permission;
     private Button btnAddHouse;
+    private Homeowner homeowner;
 
 
     private void initUI(View view) {
@@ -89,8 +88,7 @@ public class AddHouseFragment extends Fragment implements NetworkObserver {
         uiTextInputValidation.addTextInput(rentAmount);
         parkingAmount = textInputFactory.getNumberTextInput(R.id.edtAddHouseParkingAmount);
         uiTextInputValidation.addTextInput(parkingAmount);
-        storageAmount = textInputFactory.getNumberTextInput(R.id.edtAddHouseStorageAmount);
-        uiTextInputValidation.addTextInput(storageAmount);
+
 
         CompoundButtonFactory compoundButtonFactory = (CompoundButtonFactory) AbstractFactory.getFactory(view, FactoryType.CompoundButtonInput);
         isCondo = compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseIsCondo);
@@ -100,16 +98,14 @@ public class AddHouseFragment extends Fragment implements NetworkObserver {
         chkPaymentMethod3 =  compoundButtonFactory.getNormalCheckboxInput(R.id.chkAddHouseRentPaymentMethod3);
         swtAirConditioning =  compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseAirConditioning);
         swtParking = compoundButtonFactory.getAnimatedSelectedNotSelectedSwitchInput(R.id.swtAddHouseParking);
+        swtGas = compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseGas);
         swtGuestParking =  compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseGuestParking);
-        swtStorage =  compoundButtonFactory.getAnimatedSelectedNotSelectedSwitchInput(R.id.swtAddHouseStorage);
-        swtSmoking =  compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseSmoking);
+        swtStorage =  compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseStorage);
         swtLaundry =  compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseLaundry);
-        swtTenantInsurance =  compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseTenantInsurance);
         swtWater =  compoundButtonFactory.getTenantHomeownerSwitchInput(R.id.swtAddHouseWaterUtility);
         swtElectricity =  compoundButtonFactory.getTenantHomeownerSwitchInput(R.id.swtAddHouseElectricityUtility);
         swtHeat = compoundButtonFactory.getTenantHomeownerSwitchInput(R.id.swtAddHouseHeatUtility);
-        additionalTerm1 = compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseAdditionalTerm1);
-        additionalTerm2 = compoundButtonFactory.getSelectedNotSelectedSwitchInput(R.id.swtAddHouseAdditionalTerm2);
+
     }
 
     @Nullable
@@ -122,7 +118,15 @@ public class AddHouseFragment extends Fragment implements NetworkObserver {
         network = Network.getInstance();
         network.registerObserver(AddHouseFragment.this);
         permission = new Permission(getActivity());
-        viewModel = ViewModelProviders.of(getActivity()).get(HouseViewModel.class);
+        houseViewModel = ViewModelProviders.of(getActivity()).get(HouseViewModel.class);
+        homeownerViewModel = ViewModelProviders.of(getActivity()).get(HomeownerViewModel.class);
+        Login login = ((MainActivityLandlord)getActivity()).getLogin();
+        homeownerViewModel.getHomeowner(login.getEmail()).observe(getActivity(), new Observer<Homeowner>() {
+            @Override
+            public void onChanged(Homeowner homeowner) {
+                AddHouseFragment.this.homeowner = homeowner;
+            }
+        });
         return view;
     }
 
@@ -147,26 +151,22 @@ public class AddHouseFragment extends Fragment implements NetworkObserver {
                 chkPaymentMethod3.getChecked());
     }
 
-    private AdditionalTerms createAdditionalTerms() {
-        return new AdditionalTerms(additionalTerm1.getChecked(), additionalTerm2.getChecked());
-    }
 
-    private Lease buildLease() {
+
+    private OntarioLease buildLease() {
         OntarioLeaseBuilder leaseBuilder = new OntarioLeaseBuilder();
         return leaseBuilder.setRentalUnitLocation(createRentalUnitLocation())
-                .setHomeownerLocation(null)
+                .setHomeownerLocation(homeowner.getHomeownerLocation())
                 .setRentDetail(createRentDetail())
-                .addService(swtAirConditioning.getChecked() ? new AirConditioningService(0) : null)
-                .addService(swtParking.getChecked() ? new ParkingService(parkingAmount.getNumber()) : null)
-                .addService(swtGuestParking.getChecked() ? new GuestParkingService(0) : null)
-                .addService(swtStorage.getChecked() ? new StorageService(storageAmount.getNumber()) : null)
-                .addService(swtSmoking.getChecked() ? new SmokingService(0) : null)
-                .addService(swtLaundry.getChecked() ? new LaundryService(0) : null)
-                .addService(swtTenantInsurance.getChecked() ? new TenantInsuranceService(0) : null)
-                .addUtility(new WaterUtility(swtWater.getText()))
-                .addUtility(new ElectricityUtility(swtElectricity.getText()))
-                .addUtility(new HeatUtility(swtHeat.getText()))
-                .setAdditionalTerms(createAdditionalTerms())
+                .addService(new Service("Parking", parkingAmount.getNumber(), swtParking.getChecked()))
+                .addService(new Service("Gas", 0, swtGas.getChecked()))
+                .addService(new Service("Air Conditioning", 0, swtAirConditioning.getChecked()))
+                .addService(new Service("Storage", 0, swtStorage.getChecked()))
+                .addService(new Service("On-Site Laundry", 0, swtLaundry.getChecked()))
+                .addService(new Service("Guest Parking", 0, swtGuestParking.getChecked()))
+                .addUtility(new Utility("Hydro", swtWater.getText()))
+                .addUtility(new Utility("Electricity", swtElectricity.getText()))
+                .addUtility(new Utility("Heat", swtHeat.getText()))
                 .build();
     }
 
@@ -180,13 +180,16 @@ public class AddHouseFragment extends Fragment implements NetworkObserver {
                 permission.requestInternetPermission();
                 return;
             }
-            if (!network.isNetworkAvailable()) {
-                ErrorDialog.buildAlertDialog(getActivity(), "No internet.").show();
+            if (!network.isNetworkAvailable(getActivity().getApplication())) {
+                Dialog dialog = new Dialog(getActivity());
+                dialog.setMessage("No Internet");
+                dialog.buildErrorDialog().show();
                 return;
             }
 
-            house = new House(buildLease());
-            network.post(house, "api/AddHouse");
+            house = new House(unitAddress.getText(), buildLease());
+            Request request = network.buildPostRequest(house, "House");
+            network.send(request);
         }
     };
 
@@ -195,11 +198,14 @@ public class AddHouseFragment extends Fragment implements NetworkObserver {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (response.equals("House added successfully.")){
+                if (response.equals("Success")){
                     NavHostFragment.findNavController(AddHouseFragment.this).navigate(R.id.action_addHouseFragment_to_housesFragment);
+                    houseViewModel.insert(house);
                     return;
                 }
-                ErrorDialog.buildAlertDialog(getActivity(), response).show();
+                Dialog dialog = new Dialog(getActivity());
+                dialog.setMessage(response);
+                dialog.buildErrorDialog().show();
             }
         });
     }

@@ -3,12 +3,11 @@ package com.example.ryan.roomrep.Classes.Database;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import com.example.ryan.roomrep.Classes.Lease.House;
+import com.example.ryan.roomrep.Classes.House.House;
 
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Room;
 
 public class HouseRepository {
 

@@ -18,7 +18,7 @@ import android.widget.Spinner;
 
 import com.example.ryan.roomrep.Classes.Network.NetworkObserver;
 import com.example.ryan.roomrep.Classes.Network.Network;
-import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.Classes.Users.Tenant;
 import com.example.ryan.roomrep.R;
 import com.google.gson.Gson;
 
@@ -26,7 +26,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class NotifyRFragment extends Fragment implements NetworkObserver

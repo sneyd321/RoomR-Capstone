@@ -29,18 +29,30 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="editHouseDetailFragment">
+                  <entry key="addTenantFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-593" />
-                            <option name="y" value="-704" />
+                            <option name="x" value="-635" />
+                            <option name="y" value="55" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="generateLeaseFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="297" />
+                            <option name="y" value="-400" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_editHouseDetailFragment_to_houseDetailStatePagerFragment">
+                            <entry key="action_generateLeaseFragment_to_houseDetailStatePagerFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -61,12 +73,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_houseDetailStatePagerFragment_to_editHouseDetailFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_houseDetailStatePagerFragment_to_rentDetailAddUtilityFragment">
+                            <entry key="action_houseDetailStatePagerFragment_to_generateLeaseFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -107,18 +114,23 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_housesFragment_to_leaseStatePagerFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="rentDetailAddUtilityFragment">
+                  <entry key="leaseStatePagerFragment2">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-159" />
-                            <option name="y" value="-718" />
+                            <option name="x" value="-307" />
+                            <option name="y" value="-500" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -136,6 +148,105 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_updateLocationFragment_to_houseDetailStatePagerFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </LayoutPositions>
+          </value>
+        </entry>
+        <entry key="login_nav_graph.xml">
+          <value>
+            <LayoutPositions>
+              <option name="myPositions">
+                <map>
+                  <entry key="homeownerSignUpFragment2">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="346" />
+                            <option name="y" value="-128" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_homeownerSignUpFragment2_to_loginFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="loginFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-54" />
+                            <option name="y" value="147" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_loginFragment_to_signUpStatePagerFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="signUpStatePagerFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="151" />
+                            <option name="y" value="141" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_signUpStatePagerFragment_to_homeownerSignUpFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_signUpStatePagerFragment_to_tenantSignUpFragment2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="tenantSignUpFragment2">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="399" />
+                            <option name="y" value="214" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_tenantSignUpFragment2_to_loginFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

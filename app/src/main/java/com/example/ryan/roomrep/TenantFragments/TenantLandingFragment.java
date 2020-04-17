@@ -11,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ryan.roomrep.Adapters.TenantLandingTenantNameAdapter;
-import com.example.ryan.roomrep.Classes.Tenant.Tenant;
+import com.example.ryan.roomrep.Classes.Users.Tenant;
 import com.example.ryan.roomrep.R;
 
 public class TenantLandingFragment extends Fragment {
@@ -37,7 +36,7 @@ public class TenantLandingFragment extends Fragment {
 
 
         rcyTenantName.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //TenantLandingTenantNameAdapter adapter = new TenantLandingTenantNameAdapter(getActivity(), house.getTenants());
+        //TenantNameRecyclerViewAdapter adapter = new TenantNameRecyclerViewAdapter(getActivity(), house.getTenants());
         //rcyTenantName.setAdapter(adapter);
         //adapter.notifyDataSetChanged();
 

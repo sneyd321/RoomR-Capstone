@@ -86,6 +86,7 @@
             style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="555"
             android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
